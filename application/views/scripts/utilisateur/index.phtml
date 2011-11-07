@@ -1,0 +1,23 @@
+<div class="grid_6 sep">
+    <h2>
+        Bienvenue,
+        <?php
+            echo $this->personne->get_prenom() . ' ' . $this->personne->get_nom();
+        ?>
+    </h2>
+</div>
+<div class="clear"></div>
+<div class="prefix_1 ">
+    <h4 class="sep">Modifier des informations du profil</h4>
+    <div class="prefix_1">
+        <ul>
+            <li class="sep">Pour modifier votre mot de passe :
+                <a class="enSavoirPlus" href="/utilisateur/modifMdp">Changer de Mot de Passe</a>
+            </li>
+            <li class="sep">Pour vérifier votre profil :
+                <a href="/utilisateur/profil" class="sep enSavoirPlus">Profil</a>
+            </li>
+        </ul>
+    </div>
+
+</div>

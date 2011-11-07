@@ -1,0 +1,9 @@
+<br/><h1>Formulaire de contact : </h1>
+<?php
+if (isset($this->messageError)) {
+    foreach ($this->messageError as $msg) {
+        echo $msg;
+    }
+}
+echo ($this->contactForm->render());
+?>

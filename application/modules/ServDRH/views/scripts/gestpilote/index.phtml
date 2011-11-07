@@ -1,0 +1,38 @@
+<h1>Gestion des pilotes </h1>
+<?php
+if (!empty($this->AllPersonne)) {
+    echo "<table>
+    <tr>
+        <div class='sep'>
+        <td>Nom|</td>
+        <td>Pr&eacute;nom|</td>
+        <td>Pr&eacute;nom 2|</td>
+        <td>Pr&eacute;nom 3|</td>
+        <td>date de naissance|</td>
+        <td>Num&eacute;ro INSEE|</td>
+        <td>E-mail|</td>
+        <td>  </td>
+        <td>  </td>
+        </div>
+    </tr>";
+//echo var_dump($this->AllPersonne);
+    
+    foreach ($this->AllPersonne as $res){
+        
+          echo "<tr>
+        <td>" . $res->get_nom(). "</td>
+        <td>" . $res->get_prenom(). "</td>
+        <td>" . $res->get_prenom2(). "</td>
+        <td>" . $res->get_prenom3(). "</td>
+        <td>" . $res->get_dateNaissance(). "</td>
+        <td>" . $res->get_noINSEE(). "</td>
+        <td>" . $res->get_email(). "</td>
+       
+        <td><a class='enSavoirPlus' href='gestpilote/updpilote?id=" . $res->get_noPersonne() . "'>Modifier</a></td>
+        <td><a class='enSavoirPlus' href='gestpilote/delpilote?id=" . $res->get_noPersonne() . "'>Supprimer</a></td>
+            
+    </tr>";
+    }
+    echo "</table>";
+}
+?>

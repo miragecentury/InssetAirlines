@@ -1,0 +1,155 @@
+/*
+  960 Grid System ~ Text CSS.
+  Learn more ~ http://960.gs/
+
+  Licensed under GPL and MIT.
+*/
+
+/* Déclaration des fonts spécifiques
+-----------------------------------------------------------------------------
+-----------------Font de texte : Confortaa (licence Libre)--------------------
+-----------------------------------------------------------------------------
+*/
+@font-face {
+    font-family: 'ComfortaaL';
+    src: url('font/Comfortaa_Thin-webfont.eot');
+    src: url('font/Comfortaa_Thin-webfont.eot?#iefix') format('embedded-opentype'),
+         url('font/Comfortaa_Thin-webfont.woff') format('woff'),
+         url('font/Comfortaa_Thin-webfont.ttf') format('truetype'),
+         url('font/Comfortaa_Thin-webfont.svg#ComfortaaThin') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Comfortaa';
+    src: url('font/Comfortaa_Regular-webfont.eot');
+    src: url('font/Comfortaa_Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('font/Comfortaa_Regular-webfont.woff') format('woff'),
+         url('font/Comfortaa_Regular-webfont.ttf') format('truetype'),
+         url('font/Comfortaa_Regular-webfont.svg#ComfortaaRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'ComfortaaB';
+    src: url('font/Comfortaa_Bold-webfont.eot');
+    src: url('font/Comfortaa_Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('font/Comfortaa_Bold-webfont.woff') format('woff'),
+         url('font/Comfortaa_Bold-webfont.ttf') format('truetype'),
+         url('font/Comfortaa_Bold-webfont.svg#ComfortaaBold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+/*
+--------------------------------------------------------------------------------
+------------------------------ Font de titre------------------------------------
+--------------------------BEBAS (Licence Libre)---------------------------------
+--------------------------------------------------------------------------------
+*/
+@font-face {
+    font-family: 'Bebas';
+    src: url('font/BEBAS___-webfont.eot');
+    src: url('font/BEBAS___-webfont.eot?#iefix') format('embedded-opentype'),
+         url('font/BEBAS___-webfont.woff') format('woff'),
+         url('font/BEBAS___-webfont.ttf') format('truetype'),
+         url('font/BEBAS___-webfont.svg#BebasRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+/* `Basic HTML
+----------------------------------------------------------------------------------------------------*/
+
+body {
+  font: 13px 'Comfortaa','Helvetica Neue', Arial, 'Liberation Sans', FreeSans, sans-serif;
+}
+
+pre,
+code {
+  font-family: 'DejaVu Sans Mono', Monaco, Consolas, monospace;
+}
+
+hr {
+  border: 0 #ccc solid;
+  border-top-width: 1px;
+  clear: both;
+  height: 0;
+}
+
+/* `Headings
+----------------------------------------------------------------------------------------------------*/
+
+h1 {
+  font-size: 25px;
+  font-family: Bebas, ComfortaaB, Arial, sans-serif;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: 23px;
+  font-family: Bebas, ComfortaaB, Arial, sans-serif;
+  text-transform: uppercase;
+}
+
+h3 {
+  font-size: 21px;
+  font-family: Bebas, ComfortaaB, Arial, sans-serif;
+  text-transform: uppercase;
+}
+
+h4 {
+  font-size: 19px;
+  font-family: Bebas, ComfortaaB, Arial, sans-serif;
+}
+
+h5 {
+  font-size: 17px;
+  font-family: Bebas, ComfortaaB, Arial, sans-serif;
+}
+
+h6 {
+  font-size: 15px;
+  font-family: Bebas, ComfortaaB, Arial, sans-serif;
+  
+}
+
+/* `Spacing
+----------------------------------------------------------------------------------------------------*/
+
+ol {
+  list-style: decimal;
+}
+
+ul {
+  list-style: disc;
+}
+
+li {
+  margin-left: 30px;
+}
+
+p,
+dl,
+hr,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ol,
+ul,
+pre,
+table,
+address,
+fieldset,
+figure {
+  margin-bottom: 5px;
+}

@@ -1,0 +1,61 @@
+================================================================================
+==================================   TODO   ====================================
+================================================================================
+
+Au vue du manque d'inspiration de chacun pour les tâches à effectuer, je mets à
+disposition ici tous les tâches importantes à faire.
+
+Certaine tâche ne sont pas impérative mais sont un gros plus pour nous au point 
+de vue de la technique et de la présentation et donc améliorer la note.
+
+--------------------------------------------------------------------------------
+
+
+
+T0 : Documentation :
+    - Liste des ressources humaines + aptitude + lacune 
+
+    Partie Résumé de la demande client :
+    - Cahier des charges 'Métier'
+    - Cahier des charges 'Technique' 
+
+    Partie Réponse de la team dév et archi :
+    - Cahier des ressources techniques pour le déploiement
+    - Cahier des ressources de développement utilisé
+    - Liste des Fonctionnalités Métier par Service
+    - Liste des Fonctionnalités Application Web (XP)
+    - Diagramme des Classes Propre + Explication
+    - Schéma de Base de données + Explication
+    - Diagramme des ACL (Liste des Ressources + Rôles + règles
+    - Documentation de maintenabilité
+    - Schéma + Statisque de gain grâce au cache Memcached
+
+    Partie Pré-déploiement:
+    - Documentation de l'Administrateur Système
+    - Documentation de développement ( PHPDoc (Api) + Référence)
+    - Documentation des Erreurs (avec Solution Commune par erreur)
+    - 
+
+T1 : Serveur + Machine de Développement :
+    - script d'installation Serveur (Apache2 + Mysql-Serveur + Memcached)
+    - script de déploiement
+    - script de test post-déploiement avant mise en route
+
+T2 : Machinerie de l'Application :
+    - Log
+    - Cache
+    - Acl
+    - DataBase
+    - module Database_Sauv
+    - panel Admin
+    - test (*)
+
+T3 : Machinerie Métier :
+    - Classe Métier + Mapper  (*)
+    - Layout Métier (*)
+    - View_Helper du Menu métier
+    - Layout Standart
+    - View_Helper du Menu Standart
+
+TOmega (Rajout possible) :
+ - gestionnaire du FrontFace (inssetairlines.spesx.com)

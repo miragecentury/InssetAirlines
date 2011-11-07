@@ -1,0 +1,137 @@
+/*
+    Document   : main.css
+    Created on : 11 oct. 2011, 21:16:21
+    Author     : pewho
+    Description:
+        Feuille de css principale
+*/
+body{
+    background-color: #eee;
+}
+/* Menu Haut*/
+#head{
+    /* Gestion de position, taille */
+    font-family: Comfortaa;
+    width: 100%;
+    height: 30px;
+    margin: 0;
+    padding: 0;
+    /* Gestion Couleur Arrière */
+    background-color: #333;
+    /* Gestion Menu */
+    list-style: none;
+}
+/* Login a droite */
+#login{
+    position:absolute;
+    top: 0;
+    right: 0;
+}
+#login a{
+    color: #eee;
+    line-height: 30px;
+    vertical-align: middle;
+    padding: 5px 20px;
+    text-decoration: none;
+    font-size: 15px;
+    text-align: center;
+}
+#login a:hover,
+#login a:active,
+#login a:focus{
+    color:#ffb800;
+}
+/* Menu de gauche */
+#menu{
+    position:absolute;
+    top:0;
+    left:0;
+}
+#menu li{
+    display: inline;
+    margin-right: 1px;
+    color:#eee;
+}
+#menu li a{
+    padding: 5px 20px;
+    line-height: 30px;
+    vertical-align: middle;
+    font-size: 15px;
+    text-decoration: none;
+    color:#eee;
+    text-align: center;
+}
+#menu li a:hover,
+#menu li a:focus,
+#menu li a:active,
+#menu li a #current{
+    color: #333;
+    background-color:  #ff8b00;;
+}
+
+/* Footer */
+#footer{
+    width: 100%;
+    background-color: #333;
+    color :#eee;
+    font-size: 0.7em;
+    font-variant: small-caps;
+}
+#footer-content{
+    padding: 25px 100px;
+}
+#footer-log{
+    padding: 0px 100px 10px;
+    font-size: 1em;
+}
+/* Stylisation balises */
+body{
+    color:#222;
+}
+h1,h2{
+    color: #ff8b00;
+}
+a{
+    color: #ff8b00;
+}
+a:hover,a:focus,a:active{
+    color : #348dbf;
+}
+a:visited{
+    color:#777;
+}
+p{
+
+}
+ul{
+    list-style-type: square;
+}
+/* Style des classes diverses */
+.enSavoirPlus{
+    padding: 3px 8px;
+    color:#eee;
+    background-color: #ff8b00;
+    text-decoration: none;
+}
+.enSavoirPlus:visited{
+    color:#111;
+}
+.enSavoirPlus:hover, .enSavoirPlus:active{
+    color:#333;
+}
+.sep{
+    margin-bottom: 15px;
+}
+.log{
+    font-family: ComfortaaB;
+    color:white;
+}
+.contentHeight{
+    height: 480px;
+}
+.red{
+    color:red;
+}
+.bold{
+    font-weight: bold;
+}

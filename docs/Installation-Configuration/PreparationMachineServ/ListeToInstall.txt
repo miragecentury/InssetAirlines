@@ -1,0 +1,10 @@
+- Apache2
+    apt-get apache2
+- MySQLd 
+    apt-get mysqld
+- Memcached
+    apt-get install memcached
+    apt-get install libmemcached
+    apt-get install php5-memcached
+- Zend:
+        Min:  http://framework.zend.com/releases/ZendFramework-1.11.11/ZendFramework-1.11.11-minimal.zip

@@ -1,0 +1,2 @@
+Installation de memcached sur Linux:
+====================================

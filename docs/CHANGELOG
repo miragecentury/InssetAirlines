@@ -1,0 +1,79 @@
+================================================================================
+================================== CHANGELOG ===================================
+================================================================================
+
+Au vue des nombres modifications qui peuvent être mis en place sur plusieurs
+commit, il est devenu nécessaire de spécifier les modifications du code et 
+les actions à effectuer par rapport à ces rajouts.
+
+--------------------------------------------------------------------------------
+11/10/11 20:59 : Victorien VANROYE : Commit: 250
+ - modification de l'acl :
+    - le fichier de config .ini sont re-localisé dans /application/configs/
+    - suppression de Insset/Acl dû à la modification du système
+    - re-formatage du fichier .ini
+    - début ré-écriture de Bootstrap _initAcl()
+
+- passage en ignorer du log de development.log 
+
+--------------------------------------------------------------------------------
+11/10/11 20:59 : Victorien VANROYE : Commit: 252
+ - modification du application.ini :
+    - rajout de commentaires
+    - rajout des paramètres pour le cache
+ - modfication du Bootstrap :
+    - _initAcl -> Acl
+    - apparition de _initCache (contiendra les appels cache)
+--------------------------------------------------------------------------------
+11/10/11 23:58 : Victorien VANROYE : Commit : 255
+ - ajout de /docs/TODO XP good night moi aller dodo
+ - ajout du script de creation + creation_FK (une erreur dans creation_FK sur
+les FK de Personne à voir demain)
+
+--------------------------------------------------------------------------------
+12/10/11 11:08 : Victorien VANROYE : Commit : 264
+ - Ajout majeur sur le cache :
+    - action à effectuer:
+        apt-get install php-pear
+        apt-get install memcached
+        apt-get install libmemcached6
+        pecl install memcached
+        cd /etc/apache2/mods-enabled/
+        ln -s ../mods-available/cache.* ./
+        ln -s ../mods-available/mem_cache.* ./
+
+--------------------------------------------------------------------------------
+12/10/11 11:30 : Charles Drappier : Commit : 266
+ - Debut des acl, roles et Ressources intégrer au fichier ini
+ - ajout de l'option cache.active= [false|true] pour activer/desactiver le cache
+--------------------------------------------------------------------------------
+12/10/11 11:56 : pewho Lewok : commit 273
+    - ajout des layouts front et back end
+        - menu / footer géré back end
+        - menu géré front end
+            TODO : class et MeP du corps pour les 2
+--------------------------------------------------------------------------------
+12/10/11 16:51 : Charles Drappier : commit 294
+    - ajout d'un formulaire de contact
+--------------------------------------------------------------------------------
+12/10/11 19:15 : Charles Drappier : commit 320
+    - Mise en place de la détection du language du navigateur 
+--------------------------------------------------------------------------------
+13/10/11 13:45 : Le groupe : commit 324
+    - Ajout des controller et action de base pour le module Logistique 
+        Commerciale
+--------------------------------------------------------------------------------
+17/10/11 19.02 : Camille Renaud : commit 356
+    - Ajout fichier Mapper dans 
+library/Application/Model/Mapper
+    - Ajout des classes de la BDD 
+--------------------------------------------------------------------------------
+26/10/11 15.06 : Charles : commit 450
+    - Ajout au Bootstrap, autoload des modules : initAutoload()
+    - Modification des modules ServExploitation,ServCommercial,ServLogCom et
+du model Avion. Ils sont fonctionnel, cependant camille essaie une methode sans
+attribut _mapper directement dans l'instance. Il reste aussi a voir pour les
+models tels que VolHasAgence ou l'architecture n'est pas la meme que pour le
+reste.
+    - De même pour le ServStrategique,ServPlaning(manque la classe EnVol pour la
+même raison que la classe VolHasAgence.

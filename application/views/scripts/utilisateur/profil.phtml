@@ -1,0 +1,105 @@
+<?php
+//var_dump($this->personne);
+//var_dump($this->adresse);
+//var_dump($this->telephone);
+?>
+<div class="grid_16 sep">
+    <h2>Profil :</h2>
+</div>
+<div class="clear"></div>
+<div class="grid_15 prefix_1">
+    <p class="sep">
+        <?php
+        //construction de la chaine $identite
+        $identite = $this->personne->get_nom() . ' ' . $this->personne->get_prenom();
+        if ($this->personne->get_prenom2() !== null) {
+            $identite = $identite . ' ' . $this->personne->get_prenom2();
+            if ($this->personne->get_prenom3() !== null) {
+                $identite = $identite . ' ' . $this->personne->get_prenom3();
+            }
+        }
+        //affichage
+        echo 'Identité : <span class="bold">' . $identite . '</span>';
+        ?>
+    </p>
+    <p class="sep">
+        <?php
+        $dateNaissance = new DateTime($this->personne->get_dateNaissance());
+        echo 'Date de Naissance : <span class="bold">' . $dateNaissance->format('d/m/Y') . '</span>';
+        ?>
+    </p>
+    <p class="sep">
+        <?php
+        echo 'Numéro de sécurité sociale : <span class="bold">' . $this->personne->get_noINSEE() . '</span>';
+        ?>
+    </p>
+    <div class="alpha grid_6 sep">
+        <p>
+            <?php
+            echo 'Email de contact : <span class="bold">' . $this->personne->get_email() . '</span>';
+            ?>
+        </p>
+    </div>
+    <div class="grid_3">
+         <p>
+                 <?php
+                 echo '<a href="/utilisateur/mod_email" class="enSavoirPlus">Modifier le mail</a>';
+                 ?>
+        </p>
+    </div>
+    <div class="clear">
+
+    </div>
+    <div class="alpha grid_6 sep">
+        <p>
+            <?php
+            $adresse = $this->adresse->get_numero() . ', ' . $this->adresse->get_adresse();
+            $option = null;
+            if ($this->adresse->get_porte() !== null) {
+                $option .= 'porte ' . $this->adresse->get_porte() . ', ';
+            }
+            if ($this->adresse->get_etage() !== null) {
+                $option .= 'etage ' . $this->adresse->get_etage() . ', ';
+            }
+            if ($this->adresse->get_immeuble() !== null) {
+                $option .= 'immeuble ' . $this->adresse->get_immeuble() . ', ';
+            }
+            $region = $this->adresse->get_codepostal() . ' ' .
+                $this->adresse->get_labelVille() . ' ' .
+                $this->adresse->get_labelPays();
+            if ($option !== null) {
+                $adresseTotale = $option . '<br/>' . $adresse . '<br />' . $region;
+            } else {
+                $adresseTotale = $adresse . '<br />' . $region;
+            }
+            echo 'Adresse : <br /><span class="bold">' . $adresseTotale . '</span>';
+            ?>
+        </p>
+    </div>
+    <div class="grid_3">
+        <p>
+            <?php
+            echo '<a class="enSavoirPlus" href="/utilisateur/mod_adresse">Modifier l\'adresse</a>';
+            ?>
+        </p>
+    </div>
+    <div class="clear"></div>
+    <div class="grid_6 alpha sep">
+        <p>
+           <?php
+           foreach($this->telephone as $tel){
+               echo 'Telephone : <span class="bold">' . $tel->get_numTelephone() . '</span><br/>';
+           }
+           ?>
+        </p>
+    </div>
+    <div class="grid_6">
+        <p>
+            <?php
+            echo '<a class="enSavoirPlus" href="/utilisateur/mod_telephone">Modifier le(s) Téléphone(s)</a>';
+            ?>
+        </p>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="clear"></div>

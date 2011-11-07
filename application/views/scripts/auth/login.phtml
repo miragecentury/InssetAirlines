@@ -1,0 +1,14 @@
+<div class="contentHeight prefix_4">
+<h1 style="margin-top: 180px;">Login :</h1>
+<div class="prefix_1">
+<?php
+
+if (isset($this->messageError)) {
+    foreach ($this->messageError as $msg) {
+        echo $msg;
+    }
+}
+echo ($this->loginForm->render());
+?>
+</div>
+</div>

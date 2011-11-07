@@ -1,0 +1,50 @@
+<?php echo $this->doctype('HTML5') . PHP_EOL; ?>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+        <?php
+        //configuration style
+        $this->headLink()->appendStylesheet('/ressource/css/mainfront.css');
+        echo $this->headLink() . PHP_EOL;
+
+        //Affichage du titre
+        echo $this->headTitle() . PHP_EOL;
+        ?>
+        <?php
+        //affichage des scripts js (si il y en a)
+        echo $this->headScript() . PHP_EOL;
+        ?>
+    </head>
+    <body>
+        <div class="container_16">
+            <div id='head'>
+                <div id="imageHead">
+                    <img src="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/media/image/head.png" />
+                </div>
+                <div id="bareH">
+                    <div id="menu" class="grid_13 alpha">
+                        <?php echo $this->placeholder('sidebar'); ?>
+                    </div>
+                    <div id="login" class="grid_3 omega">
+                        <?php echo $this->placeholder('login'); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <?php echo $this->layout()->content; ?>
+            </div>
+            <div id='footer'>
+                <div id='footer-content'>
+                    <p>
+                        <a>Terms of Use </a>| <a>XHTML</a> | <a>CSS</a><br /> 
+                        Copyright © Gr3Insset<br />
+                        Design by Gr3Insset
+                    </p>
+                </div>
+                <div id='footer-log'>
+                    <?php echo Spesx_Log::GetLogHtml(); ?>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

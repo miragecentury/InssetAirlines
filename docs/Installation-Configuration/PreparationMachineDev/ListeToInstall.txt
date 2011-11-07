@@ -1,0 +1,28 @@
+- Java:
+    X64:
+        -java 7  : http://download.oracle.com/otn-pub/java/jdk/7/jdk-7-linux-x64.tar.gz
+        -java 6  : http://download.oracle.com/otn-pub/java/jdk/6u27-b07/jdk-6u27-linux-x64.bin
+    X86:
+        - java 7 : http://download.oracle.com/otn-pub/java/jdk/7/jdk-7-linux-i586.tar.gz
+        - java 6 : http://download.oracle.com/otn-pub/java/jdk/6u27-b07/jdk-6u27-linux-i586.bin
+- MySQLWorkBench
+    X86: http://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-gpl-5.2.35-1ubu1104-i386.deb/from/http://mirrors.ircam.fr/pub/mysql/
+    X64: http://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-gpl-5.2.35-1ubu1104-amd64.deb/from/http://mirrors.ircam.fr/pub/mysql/
+- NetBeans
+    X64/X86:       http://netbeans.org/downloads/start.html?platform=linux&lang=fr&option=all OR http://bits.netbeans.org/7.0.1/community/latest/bundles/netbeans-7.0.1-ml-linux.sh
+- Apache2
+    apt-get apache2
+- MySQLd 
+    apt-get mysqld
+- Memcached
+    apt-get install memcached
+    apt-get install libmemcached
+    apt-get install php5-memcached
+- RapidSVN
+    http://www.rapidsvn.org/download/release/0.12/rapidsvn-0.12.0-1.tar.gz
+- PHPDoc :
+    (A Test): http://downloads.sourceforge.net/project/phpdocu/PhpDoc/phpDocumentor-1.4.3/PhpDocumentor-1.4.3.zip?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fphpdocu%2Ffiles%2F&ts=1317998536&use_mirror=ignum
+- Zend :
+    Full: http://framework.zend.com/releases/ZendFramework-1.11.11/ZendFramework-1.11.11.zip
+    Min:  http://framework.zend.com/releases/ZendFramework-1.11.11/ZendFramework-1.11.11-minimal.zip
+- PHPUnit (à voir si on attend le cours)
