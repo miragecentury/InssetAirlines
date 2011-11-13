@@ -1,6 +1,6 @@
 <?php
 
-class ServLogCom_GestmenuController extends Zend_Controller_Action
+class ServLogCom_MenuController extends Zend_Controller_Action
 {
 
     public function init()

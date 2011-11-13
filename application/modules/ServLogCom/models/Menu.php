@@ -80,6 +80,20 @@ class ServLogCom_Model_Menu
     }
 
     /**
+     * Retourne un Menu sous forme de tableau HTML
+     * 
+     * @access public
+     * @author charles
+     * @return string
+     *  
+     */
+    public function getMenuHTML()
+    {
+        $menu = "<div>Menu : " . $this->get_labelMenu() . "</div>";
+        return $menu;
+    }
+
+    /**
      * Retourne tout les menus, null si il n'y en as pas dans la BD
      * 
      * @access public
@@ -87,14 +101,50 @@ class ServLogCom_Model_Menu
      * @return null|array(ServLogCom_Model_Menu)
      *  
      */
-    public function getListeMenu()
+    public static function getListeMenu()
     {
-        $this->_mapper = Spesx_Mapper_MapperFactory::getMapper("ServLogCom_Model_Menu");
+        $mapper = Spesx_Mapper_MapperFactory::getMapper("ServLogCom_Model_Menu");
         try {
             return $mapper->findAll();
         } catch (Spesx_Mapper_Exception $e) {
             echo $e->getMessage() . " - " . $e->getPrevious()->getMessage();
         }
+    }
+
+    /**
+     * Retourne tous les menus sous forme de tableau html, 
+     * retourne une phrase disant qu'il n'y en a pas dans la bd si c'est le cas
+     * 
+     * @access public
+     * @author charles
+     * @return string
+     *  
+     */
+    public static function getListeMenuHTML()
+    {
+        $allMenu = ServExploitation_Model_Incident::getListeMenu();
+
+
+        if (!empty($allMenu)) {
+            $tableau = "<table>
+                        <tr>
+                            <td>Menu</td>
+                            <td></td>
+                            <td></td>
+                        </tr>";
+
+            foreach ($allMenu as $val) {
+                $tableau .= "<tr>
+                                <td>" . $val->get_labelMenu() . "</td>
+                                <td><a href='/ServLogCom/Menu/upd?id=" . $val->get_labelMenu() . "'>Modifier</a></td>
+                                <td><a href='/ServLogCom/Menu/del?id=" . $val->get_labelMenu() . "'>Supprimer</a></td>
+                            </tr>";
+            }
+            $tableau .= "</table>";
+        } else {
+            $tableau = "<div>Il n'y a pas de menu dans la base de donnée</div>";
+        }
+        return $tableau;
     }
 
     //--------------------------------------------------------------------------

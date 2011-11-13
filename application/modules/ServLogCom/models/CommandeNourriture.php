@@ -98,6 +98,23 @@ class ServLogCom_Model_CommandeNourriture
     }
 
     /**
+     * Retourne une commande de nourriture sous forme de tableau HTML
+     * 
+     * @access public
+     * @author charles
+     * @return string
+     *  
+     */
+    public function getCommandeNourritureHTML()
+    {
+        $Incident = "<div>No Commande Nourriture : " . $this->get_noCommandeNourriture() . "</div>";
+        $Incident.= "<div>Date de livraison : " . $this->get_dateLivraison() . "</div>";
+        $Incident.= "<div>Date de Commande : " . $this->get_dateCommande() . "</div>";
+        $Incident.= "<div>Aeroport de livraison : " . $this->get_labelAeroportLivraison() . "</div>";
+        return $Incident;
+    }
+
+    /**
      * Retourne toutes les commandesNourriture, null si il n'y en as pas dans
      * la BD
      * 
@@ -106,14 +123,55 @@ class ServLogCom_Model_CommandeNourriture
      * @return null|array(AServLogCom_Model_CommandeNourriture)
      *  
      */
-    public function getListeCommandeNourriture()
+    public static function getListeCommandeNourriture()
     {
-        $this->_mapper = Spesx_Mapper_MapperFactory::getMapper("ServLogCom_Model_CommandeNourriture");
+        $mapper = Spesx_Mapper_MapperFactory::getMapper("ServLogCom_Model_CommandeNourriture");
         try {
             return $mapper->findAll();
         } catch (Spesx_Mapper_Exception $e) {
             echo $e->getMessage() . " - " . $e->getPrevious()->getMessage();
         }
+    }
+
+    /**
+     * Retourne tous les incidents sous forme de tableau html, 
+     * retourne une phrase disant qu'il n'y en a pas dans la bd si c'est le cas
+     * 
+     * @access public
+     * @author charles
+     * @return string
+     *  
+     */
+    public static function getListeCommandeNourritureHTML()
+    {
+        $allCN = ServLogCom_Model_CommandeNourriture::getListeCommandeNourriture();
+
+        if (!empty($allCN)) {
+            $tableau = "<table>
+                        <tr>
+                            <td>No de Commande|</td>
+                            <td>Date de livraison|</td>
+                            <td>Date de Commande|</td>
+                            <td>Aeroport de livraison</td>
+                            <td></td>
+                            <td></td>
+                        </tr>";
+
+            foreach ($allCN as $val) {
+                $tableau .= "<tr>
+                                <td>" . $val->get_noCommandeNourriture() . "</td>
+                                <td>" . $val->get_dateLivraison() . "</td>
+                                <td>" . $val->get_dateCommande() . "</td>
+                                <td>" . $val->get_labelAeroportLivraison() . "</td>
+                                <td><a href='/ServLogCom/Commandenourriture/upd?id=" . $val->get_noCommandeNourriture() . "'>Modifier</a></td>
+                                <td><a href='/ServLogCom/Commandenourriture/del?id=" . $val->get_noCommandeNourriture() . "'>Supprimer</a></td>
+                            </tr>";
+            }
+            $tableau .= "</table>";
+        } else {
+            $tableau = "<div>Il n'y a pas de commande dans la base de donnée</div>";
+        }
+        return $tableau;
     }
 
     //--------------------------------------------------------------------------

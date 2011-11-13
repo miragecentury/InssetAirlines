@@ -80,6 +80,20 @@ class ServLogCom_Model_RegimeAlimentaire
     }
 
     /**
+     * Retourne un Regime Alimentaire sous forme de tableau HTML
+     * 
+     * @access public
+     * @author charles
+     * @return string
+     *  
+     */
+    public function getRegimeAlimentaireHTML()
+    {
+        $regimeAlimentaire = "<div>Regime Alimentaire : " . $this->get_labelRegimeAlimentaire() . "</div>";
+        return $regimeAlimentaire;
+    }
+
+    /**
      * Retourne tout les RegimeAlimentaire, null si il n'y en as pas dans la BD
      * 
      * @access public
@@ -87,15 +101,51 @@ class ServLogCom_Model_RegimeAlimentaire
      * @return null|array(ServLogCom_Model_RegimeAlimentaire)
      *  
      */
-    public function getListeRegimeAlimentaire()
+    public static function getListeRegimeAlimentaire()
     {
-        $this->_mapper = Spesx_Mapper_MapperFactory::getMapper("ServLogCom_Model_RegimeAlimentaire");
+        $mapper = Spesx_Mapper_MapperFactory::getMapper("ServLogCom_Model_RegimeAlimentaire");
         try {
             return $mapper->findAll();
         } catch (Spesx_Mapper_Exception $e) {
             echo $e->getMessage() . " - " . $e->getPrevious()->getMessage();
         }
         return $return;
+    }
+
+    /**
+     * Retourne tous les regimeAlimentaire sous forme de tableau html, 
+     * retourne une phrase disant qu'il n'y en a pas dans la bd si c'est le cas
+     * 
+     * @access public
+     * @author charles
+     * @return string
+     *  
+     */
+    public static function getListeRegimeAlimentaire()
+    {
+        $allRA = ServExploitation_Model_Incident::getListeRegimeAlimentaire();
+
+
+        if (!empty($allRA)) {
+            $tableau = "<table>
+                        <tr>
+                            <td>Regime Alimentaire</td>
+                            <td></td>
+                            <td></td>
+                        </tr>";
+
+            foreach ($allRA as $val) {
+                $tableau .= "<tr>
+                                <td>" . $val->get_labelRegimeAlimentaire() . "</td>
+                                <td><a href='/ServLogCom/Regimealimentaire/upd?id=" . $val->get_labelRegimeAlimentaire() . "'>Modifier</a></td>
+                                <td><a href='/ServLogCom/Regimealimentaire/del?id=" . $val->get_labelRegimeAlimentaire() . "'>Supprimer</a></td>
+                            </tr>";
+            }
+            $tableau .= "</table>";
+        } else {
+            $tableau = "<div>Il n'y a pas de Regime Alimentaire dans la base de donnée</div>";
+        }
+        return $tableau;
     }
 
     //--------------------------------------------------------------------------
