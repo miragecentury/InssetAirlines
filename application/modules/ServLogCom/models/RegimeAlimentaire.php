@@ -95,9 +95,17 @@ class ServLogCom_Model_RegimeAlimentaire
      */
     public function getRegimeAlimentaireHTML()
     {
-        $regimeAlimentaire = "<div>Id : " . $this->get_noRegimeAlimentaire() . "</div>";
-        $regimeAlimentaire.= "<div>Regime Alimentaire : " . $this->get_labelRegimeAlimentaire() . "</div>";
-        return $regimeAlimentaire;
+        $html = "<table class='grid_16'>
+                <tr bgcolor='#CCCCCC'>
+                    <td class='grid_3'>Id</td>
+                    <td class='grid_3'>" . $this->get_noRegimeAlimentaire() . "</td>
+                </tr>
+                <tr>
+                    <td class='grid_3'>Label</td>
+                    <td class='grid_3'>" . $this->get_labelRegimeAlimentaire() . "</td>
+                </tr>
+            </table>";
+        return $html;
     }
 
     /**
@@ -130,24 +138,27 @@ class ServLogCom_Model_RegimeAlimentaire
      */
     public static function getListeRegimeAlimentaireHTML()
     {
+        $color = true;
         $allRA = ServLogCom_Model_RegimeAlimentaire::getListeRegimeAlimentaire();
 
-
         if (!empty($allRA)) {
-            $tableau = "<table>
+            $tableau = "<table class='grid_16'>
                         <tr>
-                            <td>Id</td>
-                            <td>Regime Alimentaire</td>
-                            <td></td>
-                            <td></td>
+                            <td class='grid_1'>Id</td>
+                            <td class='grid_2'>Label</td>
+                            <td class='grid_2'></td>
+                            <td class='grid_2'></td>
                         </tr>";
 
             foreach ($allRA as $val) {
-                $tableau .= "<tr>
-                                <td>" . $val->get_noRegimeAlimentaire() . "</td>
-                                <td>" . $val->get_labelRegimeAlimentaire() . "</td>
-                                <td><a href='/ServLogCom/Regimealimentaire/upd?id=" . $val->get_noRegimeAlimentaire() . "'>Modifier</a></td>
-                                <td><a href='/ServLogCom/Regimealimentaire/del?id=" . $val->get_noRegimeAlimentaire() . "'>Supprimer</a></td>
+                if ($color) {
+                    $tableau .= "<tr bgcolor='#CCCCCC'>";
+                }
+                $color = !$color;
+                $tableau .= "   <td class='grid_1'>" . $val->get_noRegimeAlimentaire() . "</td>
+                                <td class='grid_2'>" . $val->get_labelRegimeAlimentaire() . "</td>
+                                <td class='grid_2'><a href='/ServLogCom/Regimealimentaire/upd?id=" . $val->get_noRegimeAlimentaire() . "'>Modifier</a></td>
+                                <td class='grid_2'><a href='/ServLogCom/Regimealimentaire/del?id=" . $val->get_noRegimeAlimentaire() . "'>Supprimer</a></td>
                             </tr>";
             }
             $tableau .= "</table>";

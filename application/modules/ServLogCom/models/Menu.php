@@ -95,9 +95,17 @@ class ServLogCom_Model_Menu
      */
     public function getMenuHTML()
     {
-        $menu = "<div>Id : " . $this->get_idMenu() . "</div>";
-        $menu.= "<div>Menu : " . $this->get_labelMenu() . "</div>";
-        return $menu;
+        $html = "<table class='grid_16'>
+                <tr bgcolor='#CCCCCC'>
+                    <td class='grid_3'>Id</td>
+                    <td class='grid_3'>" . $this->get_idMenu() . "</td>
+                </tr>
+                <tr>
+                    <td class='grid_3'>Label</td>
+                    <td class='grid_3'>" . $this->get_labelMenu() . "</td>
+                </tr>
+            </table>";
+        return $html;
     }
 
     /**
@@ -129,24 +137,27 @@ class ServLogCom_Model_Menu
      */
     public static function getListeMenuHTML()
     {
+        $color = true;
         $allMenu = ServLogCom_Model_Menu::getListeMenu();
 
-
         if (!empty($allMenu)) {
-            $tableau = "<table>
+            $tableau = "<table class='grid_16'>
                         <tr>
-                            <td>Id</td>
-                            <td>Menu</td>
-                            <td></td>
-                            <td></td>
+                            <td class='grid_1'>Id</td>
+                            <td class='grid_2'>Label</td>
+                            <td class='grid_2'></td>
+                            <td class='grid_2'></td>
                         </tr>";
 
             foreach ($allMenu as $val) {
-                $tableau .= "<tr>
-                                <td>" . $val->get_idMenu() . "</td>
-                                <td>" . $val->get_labelMenu() . "</td>
-                                <td><a href='/ServLogCom/Menu/upd?id=" . $val->get_idMenu() . "'>Modifier</a></td>
-                                <td><a href='/ServLogCom/Menu/del?id=" . $val->get_idMenu() . "'>Supprimer</a></td>
+                if ($color) {
+                    $tableau .= "<tr bgcolor='#CCCCCC'>";
+                }
+                $color = !$color;
+                $tableau .= "   <td class='grid_1'>" . $val->get_idMenu() . "</td>
+                                <td class='grid_2'>" . $val->get_labelMenu() . "</td>
+                                <td class='grid_2'><a href='/ServLogCom/Menu/upd?id=" . $val->get_idMenu() . "'>Modifier</a></td>
+                                <td class='grid_2'><a href='/ServLogCom/Menu/del?id=" . $val->get_idMenu() . "'>Supprimer</a></td>
                             </tr>";
             }
             $tableau .= "</table>";

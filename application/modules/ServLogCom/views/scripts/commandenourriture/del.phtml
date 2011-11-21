@@ -1,5 +1,5 @@
-<?php
+<h1>Voulez vous vraiment suprimer cette commande de nourriture?</h1>
+<?php echo $this->item; ?>
 
-    echo $this->item;
-    echo "<div><a href='/ServLogCom/Commandenourriture/'>Non </a><a href='/ServLogCom/Commandenourriture/del?ok=ok&id=" . $this->id . "'>Oui</a></div>";
-?>
+<div><a href='/ServLogCom/Commandenourriture/'>Non </a>
+    <a href='/ServLogCom/Commandenourriture/del?ok=ok&id=<?php echo $this->id; ?>'>Oui</a></div>

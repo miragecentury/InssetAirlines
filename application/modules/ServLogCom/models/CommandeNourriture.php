@@ -107,11 +107,25 @@ class ServLogCom_Model_CommandeNourriture
      */
     public function getCommandeNourritureHTML()
     {
-        $Incident = "<div>No Commande Nourriture : " . $this->get_noCommandeNourriture() . "</div>";
-        $Incident.= "<div>Date de livraison : " . $this->get_dateLivraison() . "</div>";
-        $Incident.= "<div>Date de Commande : " . $this->get_dateCommande() . "</div>";
-        $Incident.= "<div>Aeroport de livraison : " . $this->get_labelAeroportLivraison() . "</div>";
-        return $Incident;
+        $html = "<table class='grid_16'>
+                <tr bgcolor='#CCCCCC'>
+                    <td class='grid_3'>Id</td>
+                    <td class='grid_3'>" . $this->get_noCommandeNourriture() . "</td>
+                </tr>
+                <tr>
+                    <td class='grid_3'>Date de livraison</td>
+                    <td class='grid_3'>" . $this->get_dateLivraison() . "</td>
+                </tr>
+                <tr bgcolor='#CCCCCC'>
+                    <td class='grid_3'>Date de Commande</td>
+                    <td class='grid_3'>" . $this->get_dateCommande() . "</td>
+                </tr>
+                <tr>
+                    <td class='grid_3'>Aeroport de livraison</td>
+                    <td class='grid_3'>" . $this->get_labelAeroportLivraison() . "</td>
+                </tr>
+            </table>";
+        return $html;
     }
 
     /**
@@ -145,26 +159,29 @@ class ServLogCom_Model_CommandeNourriture
     public static function getListeCommandeNourritureHTML()
     {
         $allCN = ServLogCom_Model_CommandeNourriture::getListeCommandeNourriture();
-
+        $color = true;
         if (!empty($allCN)) {
-            $tableau = "<table>
+            $tableau = "<table class='grid_16'>
                         <tr>
-                            <td>No de Commande|</td>
-                            <td>Date de livraison|</td>
-                            <td>Date de Commande|</td>
-                            <td>Aeroport de livraison</td>
-                            <td></td>
-                            <td></td>
+                            <td class='grid_1'>Id</td>
+                            <td class='grid_3'>Date de livraison</td>
+                            <td class='grid_3'>Date de Commande</td>
+                            <td class='grid_3'>Aeroport de livraison</td>
+                            <td class='grid_2'></td>
+                            <td class='grid_2'></td>
                         </tr>";
 
             foreach ($allCN as $val) {
-                $tableau .= "<tr>
-                                <td>" . $val->get_noCommandeNourriture() . "</td>
-                                <td>" . $val->get_dateLivraison() . "</td>
-                                <td>" . $val->get_dateCommande() . "</td>
-                                <td>" . $val->get_labelAeroportLivraison() . "</td>
-                                <td><a href='/ServLogCom/Commandenourriture/upd?id=" . $val->get_noCommandeNourriture() . "'>Modifier</a></td>
-                                <td><a href='/ServLogCom/Commandenourriture/del?id=" . $val->get_noCommandeNourriture() . "'>Supprimer</a></td>
+                if ($color) {
+                    $tableau .= "<tr bgcolor='#CCCCCC'>";
+                }
+                $color = !$color;
+                $tableau .= "<td class='grid_1'>" . $val->get_noCommandeNourriture() . "</td>
+                                <td class='grid_3'>" . $val->get_dateLivraison() . "</td>
+                                <td class='grid_3'>" . $val->get_dateCommande() . "</td>
+                                <td class='grid_3'>" . $val->get_labelAeroportLivraison() . "</td>
+                                <td class='grid_2'><a href='/ServLogCom/Commandenourriture/upd?id=" . $val->get_noCommandeNourriture() . "'>Modifier</a></td>
+                                <td class='grid_2'><a href='/ServLogCom/Commandenourriture/del?id=" . $val->get_noCommandeNourriture() . "'>Supprimer</a></td>
                             </tr>";
             }
             $tableau .= "</table>";
