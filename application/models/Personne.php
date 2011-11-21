@@ -161,6 +161,26 @@ class Application_Model_Personne
     }
 
     /**
+     * Récupère une personne suivant son id
+     * @param int $id
+     * @return Personne
+     * @author pewho
+     * @access public
+     * @static
+     */
+    public static function getPersonneById($id)
+    {
+        $mapper = Spesx_Mapper_MapperFactory::getMapper('Application_Model_Personne');
+        try {
+            $return = $mapper->find($id);
+        } catch (Spesx_Mapper_Exception $e) {
+            Spesx_Log::Log(
+                $e->getMessage() . $e->getPrevious()->getMessage(), Zend_Log::ERR);
+        }
+        return $return;
+    }
+
+    /**
      * Recupere une personne suivant son email
      * @param string $mail
      * @return Personne

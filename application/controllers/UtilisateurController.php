@@ -125,6 +125,42 @@ class UtilisateurController extends Zend_Controller_Action
         }
     }
 
+    public function modifadresseAction()
+    {
+        //Récupération de la personne actuelle
+        $pers = $this->_getPersonneActuelle(); //chargement de la form
+        //Chargement de la vue
+        $changeAdresseForm = new Application_Form_Utilisateur_ModifAdresse();
+        $this->view->changeAdresseForm = $changeAdresseForm;
+        $this->view->personne = $pers;
+
+        //recupération de l'adresse
+        $adresse = Application_Model_Adresse::getAdresse($pers->get_noAdresse);
+
+        //Si le formulaire est valide
+        if (!empty($_POST) && $changeAdresseForm->isValid($_POST)) {
+            $adresse->set_numero($changeAdresseForm->getValue('numero'));
+            $adresse->set_porte($changeAdresseForm->getValue('porte'));
+            $adresse->set_etage($changeAdresseForm->getValue('etage'));
+            $adresse->set_immeuble($changeAdresseForm->getValue('immeuble'));
+            $adresse->set_adresse($changeAdresseForm->getValue('adresse'));
+            $adresse->set_codepostal($changeAdresseForm->getValue('codePostal'));
+            $adresse->set_labelVille($changeAdresseForm->getValue('ville'));
+            $adresse->set_etatProvince($changeAdresseForm->getValue('etatProvince'));
+            $adresse->set_labelPays($changeAdresseForm->getValue('pays'));
+            $adresse->set_commentaire($changeAdresseForm->getValue('comentaire'));
+
+            $adresse->addAdresse();
+
+            //reinit
+            $this->_redirect('/');
+            $this->_PersonneActuelle = null;
+        }
+        else{
+            $this->viev->errorMessage('Le formulaire est invalide !');
+        }
+    }
+
     //GETTERS
     protected function _get_email()
     {

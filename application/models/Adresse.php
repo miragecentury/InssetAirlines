@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Modele de l'objet adresse
  * @author pewho
  */
 class Application_Model_Adresse
 {
+
     //--------------------------------------------------------------------------
     //Attributs
     //--------------------------------------------------------------------------
@@ -87,7 +89,7 @@ class Application_Model_Adresse
      */
     public function __construct()
     {
-       $this->_mapper = Spesx_Mapper_MapperFactory::getMapper('Application_Model_Adresse');
+        $this->_mapper = Spesx_Mapper_MapperFactory::getMapper('Application_Model_Adresse');
     }
 
     //--------------------------------------------------------------------------
@@ -103,8 +105,14 @@ class Application_Model_Adresse
      */
     public function addAdresse()
     {
-        $this->_mapper->save($this,'noAdresse');
+        try {
+            $this->_mapper->save($this, 'noAdresse');
+        } catch (Spesx_Mapper_Exception $e) {
+            Spesx_Log::Log(
+                $e->getMessage() . $e->getPrevious()->getMessage(), Zend_Log::ERR);
+        }
     }
+
     /**
      * Retourne un objet adresse correspondant à l'id fourni en parametre
      * Si l'id n'existe pas, retourne 'null'
@@ -116,7 +124,12 @@ class Application_Model_Adresse
      */
     public static function getAdresse($id)
     {
-        $mapper = Spesx_Mapper_MapperFactory::getMapper('Application_Model_Adresse');
+        try {
+            $mapper = Spesx_Mapper_MapperFactory::getMapper('Application_Model_Adresse');
+        } catch (Spesx_Mapper_Exception $e) {
+            Spesx_Log::Log(
+                $e->getMessage() . $e->getPrevious()->getMessage(), Zend_Log::ERR);
+        }
         return $mapper->find($id);
     }
 
@@ -154,7 +167,6 @@ class Application_Model_Adresse
     {
         $this->_porte = $_porte;
         return $this;
-
     }
 
     public function get_adresse()
@@ -246,4 +258,5 @@ class Application_Model_Adresse
     }
 
 }
+
 ?>
