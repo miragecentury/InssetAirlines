@@ -7,6 +7,12 @@ class ServLogCom_Model_RegimeAlimentaire
     //Attributs
     //--------------------------------------------------------------------------
     /**
+     * id du regimeAlimentaire
+     * @var int
+     */
+    protected $_idRegimeAlimentaire;
+
+    /**
      * label du regimeAlimentaire
      * @var string
      */
@@ -151,6 +157,17 @@ class ServLogCom_Model_RegimeAlimentaire
     //--------------------------------------------------------------------------
     // Getter / setter
     //--------------------------------------------------------------------------
+    public function get_idRegimeAlimentaire()
+    {
+        return $this->_idRegimeAlimentaire;
+    }
+
+    public function set_idRegimeAlimentaire($_idRegimeAlimentaire)
+    {
+        $this->_idRegimeAlimentaire = $_idRegimeAlimentaire;
+        return $this;
+    }
+
     public function get_labelRegimeAlimentaire()
     {
         return $this->_labelRegimeAlimentaire;

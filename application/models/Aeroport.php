@@ -7,6 +7,12 @@ class Application_Model_Aeroport
     //Attributs
     //--------------------------------------------------------------------------
     /**
+     * id de l'aéroport
+     * @var int
+     */
+    protected $_noAeroport;
+
+    /**
      * label de l'aéroport
      * @var string
      */
@@ -126,8 +132,7 @@ class Application_Model_Aeroport
             $Aeroports = Application_Model_Aeroport::getListeAeroport();
             $labelAeroport = new Zend_Form_Element_Select($name);
             foreach ($Aeroports as $Aeroport) {
-                $labelAeroport->addMultiOption($Aeroport->get_labelAeroport(), 
-                    $Aeroport->get_labelAeroport());
+                $labelAeroport->addMultiOption($Aeroport->get_labelAeroport(), $Aeroport->get_labelAeroport());
             }
             $labelAeroport->setRequired();
             $labelAeroport->setLabel($label);
@@ -140,6 +145,17 @@ class Application_Model_Aeroport
     //--------------------------------------------------------------------------
     // Getter / setter
     //--------------------------------------------------------------------------
+    public function get_noAeroport()
+    {
+        return $this->_noAeroport;
+    }
+
+    public function set_noAeroport($_noAeroport)
+    {
+        $this->_noAeroport = $_noAeroport;
+        return $this;
+    }
+
     public function get_labelAeroport()
     {
         return $this->_labelAeroport;

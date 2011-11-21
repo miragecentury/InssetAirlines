@@ -7,6 +7,12 @@ class ServLogCom_Model_Menu
     //Attributs
     //--------------------------------------------------------------------------
     /**
+     * id du Menu
+     * @var int
+     */
+    protected $_idMenu;
+
+    /**
      * label du Menu
      * @var string
      */
@@ -150,6 +156,17 @@ class ServLogCom_Model_Menu
     //--------------------------------------------------------------------------
     // Getter / setter
     //--------------------------------------------------------------------------
+    public function get_idMenu()
+    {
+        return $this->_idMenu;
+    }
+
+    public function set_idMenu($_idMenu)
+    {
+        $this->_idMenu = $_idMenu;
+        return $this;
+    }
+
     public function get_labelMenu()
     {
         return $this->_labelMenu;
