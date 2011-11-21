@@ -46,7 +46,7 @@ class UtilisateurController extends Zend_Controller_Action
         $this->view->personne = $pers;
 
         //si le formulaire est valide
-        if ($changeMdpForm->isValid($_POST)) {
+        if (!empty($_POST) && $changeMdpForm->isValid($_POST)) {
             $ancienMdp = $changeMdpForm->getValue('ancienMdp');
             //si le mot de passe courant et le mot de passe renseigné dans la form est ==
             if ($ancienMdp === $pers->get_password()) {
@@ -92,6 +92,29 @@ class UtilisateurController extends Zend_Controller_Action
 
         //passage des numéros de tel à la vue;
         $this->view->telephone = $telephone;
+    }
+
+    public function modifEmailAction()
+    {
+        //Récupération de la personne actuelle
+        $pers = $this->_getPersonneActuelle(); //chargement de la form
+        //Chargement de la vue
+        $changeEmailForm = new Application_Form_Utilisateur_ModifEmail();
+        $this->view->changeEmailForm = $changeEmailForm;
+        $this->view->personne = $pers;
+
+        //Si le form est valide :
+        if (!empty($_POST) && $changeMdpForm->isValid($_POST)) {
+            if (isset($pers->get_noPersonne()) && !empty($pers->get_noPersonne())) {
+                $email = $changeEmailForm->getValue('email');
+                $pers->set_email($email);
+                $pers->savePersonneById($pers->get_noPersonne());
+            } else {
+                $this->view->errorMessage = "Non connecté, veuiller vous logger";
+            }
+        } else {
+            $this->view->errorMessage = "Veuiller remplirle formulaire";
+        }
     }
 
     //GETTERS
