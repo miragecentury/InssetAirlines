@@ -130,12 +130,12 @@ class UtilisateurController extends Zend_Controller_Action
         //Récupération de la personne actuelle
         $pers = $this->_getPersonneActuelle(); //chargement de la form
         //Chargement de la vue
-        $changeAdresseForm = new Application_Form_Utilisateur_ModifAdresse();
+        $changeAdresseForm = new Application_Form_Utilisateur_modifAdresse();
         $this->view->changeAdresseForm = $changeAdresseForm;
         $this->view->personne = $pers;
 
         //recupération de l'adresse
-        $adresse = Application_Model_Adresse::getAdresse($pers->get_noAdresse);
+        $adresse = Application_Model_Adresse::getAdresse($pers->get_noAdresse());
 
         //Si le formulaire est valide
         if (!empty($_POST) && $changeAdresseForm->isValid($_POST)) {
@@ -157,7 +157,7 @@ class UtilisateurController extends Zend_Controller_Action
             $this->_PersonneActuelle = null;
         }
         else{
-            $this->viev->errorMessage('Le formulaire est invalide !');
+            $this->view->errorMessage = 'Le formulaire est invalide !';
         }
     }
 

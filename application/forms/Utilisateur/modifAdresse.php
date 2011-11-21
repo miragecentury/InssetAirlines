@@ -8,114 +8,145 @@
 class Application_Form_Utilisateur_modifAdresse extends Zend_Form
 {
 
-    private $_capsule;
-    private $_capsuleReboot;
-    private $_formDeco = array("ViewHelper",
-        array("HtmlTag", array('tag' => 'div', 'class' => 'grid_14 preffix_1 suffix_1')));
-    );
+    protected $_capsule;
+    protected $_petiteCapsule;
+    protected $_capsuleReboot;
+protected $_submitCapsule;
 
     public function init()
     {
-
-//Methode du form
-        $this->setMethod('POST');
-        $this->addDecorator($this->_formDeco);
-
 //init
+        $this->_petiteCapsule = array(
+            "ViewHelper",
+            array("Label", array('requiredPrefix' => '*', 'tag' => 'span', 'class' => 'grid_2')),
+            array("Errors", array('tag' => 'span', 'class' => 'red')),
+            array("HtmlTag", array('tag' => 'div', 'class' => 'sep grid_4')));
         $this->_capsule = array(
             "ViewHelper",
-            array("Label", array('requiredPrefix' => '*', 'tag' => 'span')),
+            array("Label", array('requiredPrefix' => '*', 'tag' => 'span', 'class' => 'grid_2')),
             array("Errors", array('tag' => 'span', 'class' => 'red')),
             array("HtmlTag", array('tag' => 'div', 'class' => 'sep grid_7')));
         $this->_capsuleReboot = array(
             "ViewHelper",
-            array("Label", array('requiredPrefix' => '*', 'tag' => 'span')),
+            array("Label", array( 'tag' => 'hr')),
             array("Errors", array('tag' => 'span', 'class' => 'red')),
-            array("HtmlTag", array('tag' => 'div', 'class' => 'sep grid_7')));
+            array("HtmlTag", array('tag' => 'div', 'class' => 'clear sep')));
+        $this->_submitCapsule = array(
+            "ViewHelper",
+            array("HtmlTag", array('tag' => 'div', 'class' => 'prefix_6')));
 
+//Methode du form
+        $this->setMethod('POST');
 //1er element
         $numero = new Zend_Form_Element_Text('numero');
-        $numero->isRequired(true)
-            ->setLabel('*Numero : ')
-            ->setValidators(array(new Zend_Validate_Alnum()))
-            ->addDecorator($this->_capsule);
+        $numero->setRequired(true);
+        $numero->setAttrib('size', '4');
+        $numero->setLabel('Numero : ');
+        $numero->setValidators(array(new Zend_Validate_Alnum()));
+        $numero->setDecorators($this->_petiteCapsule);
 
         $this->addElement($numero);
 
 //2e ..
         $porte = new Zend_Form_Element_Text('porte');
-        $porte->isRequired(false)
-            ->setLabel('Numéro de porte :')
+        $porte->setRequired(false)
+            ->setLabel('Porte :')
+            ->setAttrib('size', '4')
             ->setValidators(array(new Zend_Validate_Alnum()))
-            ->addDecorator($this->_capsule);
+            ->setDecorators($this->_petiteCapsule);
         $this->addElement($porte);
 
 
 //4e ..
         $etage = new Zend_Form_Element_Text('etage');
-        $etage->isRequired(false)
+        $etage->setRequired(false)
             ->setLabel('Etage : ')
+            ->setAttrib('size', '4')
             ->setValidators(array(new Zend_Validate_Int()))
-            ->addDecorator($this->_capsule);
+            ->setDecorators($this->_petiteCapsule);
         $this->addElement($etage);
 
 //5 ..
         $immeuble = new Zend_Form_Element_Text('immeuble');
-        $immeuble->isRequired(false)
+        $immeuble->setRequired(false)
             ->setLabel('Immeuble : ')
+            ->setAttrib('size', '10')
             ->setValidators(array(new Zend_Validate_Int()))
-            ->addDecorator($this->_capsule);
+            ->setDecorators($this->_capsule);
         $this->addElement($immeuble);
 
+        //clear
+        $hidden = new Zend_Form_Element_Hidden('clear');
+        $hidden->setDecorators($this->_capsuleReboot);
+
+       $this->addElement($hidden);
 //6 ..
         $adresse = new Zend_Form_Element_Text('adresse');
-        $adresse->isRequired(true)
-            ->setLabel('*Adresse : ')
+        $adresse->setRequired(true)
+            ->setLabel('Adresse : ')
+            ->setAttrib('size', '14')
             ->setValidators(array(new Zend_Validate_Alnum()))
-            ->addDecorator($this->_capsule);
+            ->setDecorators($this->_capsule);
         $this->addElement($adresse);
 
 //7 ..
         $codePostal = new Zend_Form_Element_Text('codePostal');
-        $codePostal->isRequired(true)
-            ->setLabel('*Code Postal : ')
-            ->setValidators(array(new Zend_Validate_Int()))
-            ->addDecorator($this->_capsule);
+        $codePostal->setRequired(true)
+            ->setLabel('Code Postal : ')
+            ->setAttrib('size', '5')
+            ->setValidators(array(new Zend_Validate_PostCode('fr_FR')))
+            ->setDecorators($this->_capsule);
         $this->addElement($codePostal);
 
 //8 ..
         $labelVille = new Zend_Form_Element_Text('ville');
-        $labelVille->isRequired(true)
-            ->setLabel('*Ville : ')
+        $labelVille->setRequired(true)
+            ->setLabel('Ville : ')
+            ->setAttrib('size', '14')
             ->setValidators(array(new Zend_Validate_Alpha()))
-            ->addDecorator($this->_capsule);
+            ->setDecorators($this->_capsule);
         $this->addElement($labelVille);
 
 //9..
         $etatProvince = new Zend_Form_Element_Text('etatProvince');
-        $etatProvince->isRequired(false)
+        $etatProvince->setRequired(false)
             ->setLabel('Etat / Province : ')
+            ->setAttrib('size', '14')
             ->setValidators(array(new Zend_Validate_Alpha()))
-            ->addDecorator($this->_capsule);
+            ->setDecorators($this->_capsule);
         $this->addElement($etatProvince);
 
 //10 ..
         $labelPays = new Zend_Form_Element_Text('pays');
-        $labelPays->isRequired(true)
-            ->setLAbel('*Pays : ')
+        $labelPays->setRequired(true)
+            ->setLAbel('Pays : ')
+            ->setAttrib('size', '14')
             ->setValidators(array(new Zend_Validate_Alpha()))
-            ->addDecorator($this->_capsule);
+            ->setDecorators($this->_capsule);
         $this->addElement($labelPays);
 
 //11e ..
-        $commentaire = Zend_Form_Element_Textarea('commentaire');
-        $commentaire->isRequired(false)
+        $commentaire = new Zend_Form_Element_Textarea('commentaire');
+        $commentaire->setRequired(false)
             ->setLabel('Commentaires : ')
-            ->setValidators(array(Zend_Validate_Alnum()))
-            ->addDecorator($this->_capsule);
+            ->setAttrib('cols', '35')
+            ->setAttrib('rows', '4')
+            ->setDecorators($this->_capsule)
+            ->setValidators(array(new Zend_Validate_Alnum()));
         $this->addElement($commentaire);
 
+        //clear
+        $hidden2 = new Zend_Form_Element_Hidden('clear2');
+        $hidden2->setDecorators($this->_capsuleReboot);
+
+       $this->addElement($hidden2);
+
 //Submit ..
-        $this->addElement('submit', 'valider', array('label' => 'Valider'));
+        $submit = new Zend_Form_Element_Submit('valider');
+        $submit->setLabel('Valider')
+        ->setDecorators($this->_submitCapsule);
+
+       $this->addElement($submit);
     }
+
 }
