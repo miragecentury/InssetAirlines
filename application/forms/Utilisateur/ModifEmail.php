@@ -17,7 +17,7 @@ class Application_Form_Utilisateur_ModifEmail extends Zend_Form
         $email = new Zend_Form_Element_Text('email');
         $email->isRequired(true);
         $email->setLabel('nouvel email');
-        $email->setValidator(new Zend_Validate_EmailAddress());
+        $email->setValidators(array(new Zend_Validate_EmailAddress()));
         $this->addElement($email);
 
         //Submit..

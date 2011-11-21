@@ -53,6 +53,7 @@ class UtilisateurController extends Zend_Controller_Action
                 $pers->set_password($changeMdpForm->getValue('nouveauMdp'));
                 if (null !== $pers->get_noPersonne()) {
                     $pers->savePersonneById($pers->get_noPersonne());
+                    $this->_personneActuelle = null;
                     $this->_redirect('utilisateur');
                 } else {
                     $this->view->errorMessage = "Erreur lors de l'enregistrement du mot de passe";
@@ -94,7 +95,7 @@ class UtilisateurController extends Zend_Controller_Action
         $this->view->telephone = $telephone;
     }
 
-    public function modifEmailAction()
+    public function modifemailAction()
     {
         //Récupération de la personne actuelle
         $pers = $this->_getPersonneActuelle(); //chargement de la form
@@ -104,16 +105,23 @@ class UtilisateurController extends Zend_Controller_Action
         $this->view->personne = $pers;
 
         //Si le form est valide :
-        if (!empty($_POST) && $changeMdpForm->isValid($_POST)) {
-            if (isset($pers->get_noPersonne()) && !empty($pers->get_noPersonne())) {
+        if (!empty($_POST) && $changeEmailForm->isValid($_POST)) {
+            $idPers = $pers->get_noPersonne();
+            if (isset($idPers) && !empty($idPers)) {
                 $email = $changeEmailForm->getValue('email');
                 $pers->set_email($email);
                 $pers->savePersonneById($pers->get_noPersonne());
+                //Changement de login pour la ssesion en cours
+                $authSession = new Zend_Session_Namespace('Zend_Auth');
+                $authSession->storage = $email;
+                //reinit
+                $this->_personneActuelle = null;
+                $this->_redirect('../');
             } else {
                 $this->view->errorMessage = "Non connecté, veuiller vous logger";
             }
         } else {
-            $this->view->errorMessage = "Veuiller remplirle formulaire";
+            $this->view->errorMessage = "Veuiller remplir le formulaire";
         }
     }
 

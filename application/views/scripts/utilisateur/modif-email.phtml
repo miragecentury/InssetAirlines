@@ -1,12 +1,16 @@
 <div class="grid_6 sep">
     <h2>
-        Changement de Mot de Passe
+        Changement d'Email
     </h2>
     <h6>
         <?php
             echo $this->personne->get_prenom() . ' ' . $this->personne->get_nom();
         ?>
     </h6>
+    <p class="red">
+        ATTENTION : Changer d'email revient à changer de login, et cela
+        dès la validation du formulaire !"
+    </p>
 </div>
 <div class="clear"></div>
 <div class="prefix_1 ">
@@ -14,6 +18,6 @@
         if(!empty($_POST) && isset($this->errorMessage)){
             echo "<p class='red'>" . $this->errorMessage . "</p>";
         }
-    echo $this->changeMdpForm->render();
+    echo $this->changeEmailForm->render();
     ?>
 </div>
