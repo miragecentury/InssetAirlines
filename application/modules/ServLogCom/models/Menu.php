@@ -47,7 +47,7 @@ class ServLogCom_Model_Menu
      */
     public function addMenu()
     {
-        $this->_mapper->save($this, 'labelMenu');
+        $this->_mapper->save($this, 'idMenu');
     }
 
     /**
@@ -59,10 +59,10 @@ class ServLogCom_Model_Menu
      * @param string $val, string col
      *
      */
-    public function delMenu($labelMenu)
+    public function delMenu($idMenu)
     {
         try {
-            $this->_mapper->delete('labelMenu', $labelMenu);
+            $this->_mapper->delete('idMenu', $idMenu);
         } catch (Zend_Exception $e) {
             echo 'ServLogCom_Models_Menu_delMenu() 
                 Exception - ' .
@@ -80,9 +80,9 @@ class ServLogCom_Model_Menu
      * @return null|ServLogCom_Model_Menu
      *  
      */
-    public function getMenu($labelMenu)
+    public function getMenu($idMenu)
     {
-        return $this->_mapper->find($labelMenu);
+        return $this->_mapper->find($idMenu);
     }
 
     /**
@@ -95,7 +95,8 @@ class ServLogCom_Model_Menu
      */
     public function getMenuHTML()
     {
-        $menu = "<div>Menu : " . $this->get_labelMenu() . "</div>";
+        $menu = "<div>Id : " . $this->get_idMenu() . "</div>";
+        $menu.= "<div>Menu : " . $this->get_labelMenu() . "</div>";
         return $menu;
     }
 
@@ -128,12 +129,13 @@ class ServLogCom_Model_Menu
      */
     public static function getListeMenuHTML()
     {
-        $allMenu = ServExploitation_Model_Incident::getListeMenu();
+        $allMenu = ServLogCom_Model_Menu::getListeMenu();
 
 
         if (!empty($allMenu)) {
             $tableau = "<table>
                         <tr>
+                            <td>Id</td>
                             <td>Menu</td>
                             <td></td>
                             <td></td>
@@ -141,9 +143,10 @@ class ServLogCom_Model_Menu
 
             foreach ($allMenu as $val) {
                 $tableau .= "<tr>
+                                <td>" . $val->get_idMenu() . "</td>
                                 <td>" . $val->get_labelMenu() . "</td>
-                                <td><a href='/ServLogCom/Menu/upd?id=" . $val->get_labelMenu() . "'>Modifier</a></td>
-                                <td><a href='/ServLogCom/Menu/del?id=" . $val->get_labelMenu() . "'>Supprimer</a></td>
+                                <td><a href='/ServLogCom/Menu/upd?id=" . $val->get_idMenu() . "'>Modifier</a></td>
+                                <td><a href='/ServLogCom/Menu/del?id=" . $val->get_idMenu() . "'>Supprimer</a></td>
                             </tr>";
             }
             $tableau .= "</table>";

@@ -44,7 +44,8 @@ class ServLogCom_CommandenourritureController extends Zend_Controller_Action
             $this->view->form = $form;
         } else {
             $item = new ServLogCom_Model_CommandeNourriture();
-            $item->set_dateLivraison($request->getParam('dateLivraison'))
+            $item->set_noCommandeNourriture($request->getParam('id'))
+                    ->set_dateLivraison($request->getParam('dateLivraison'))
                     ->set_dateCommande($request->getParam('dateCommande'))
                     ->set_labelAeroportLivraison($request->getParam('labelAeroportLivraison'));
             $item->addCommandeNourriture();

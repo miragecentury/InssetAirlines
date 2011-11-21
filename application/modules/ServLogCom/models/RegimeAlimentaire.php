@@ -10,7 +10,7 @@ class ServLogCom_Model_RegimeAlimentaire
      * id du regimeAlimentaire
      * @var int
      */
-    protected $_idRegimeAlimentaire;
+    protected $_noRegimeAlimentaire;
 
     /**
      * label du regimeAlimentaire
@@ -47,7 +47,7 @@ class ServLogCom_Model_RegimeAlimentaire
      */
     public function addRegimeAlimentaire()
     {
-        $this->_mapper->save($this, 'labelRegimeAlimentaire');
+        $this->_mapper->save($this, 'noRegimeAlimentaire');
     }
 
     /**
@@ -59,10 +59,10 @@ class ServLogCom_Model_RegimeAlimentaire
      * @param string $val, string col
      *
      */
-    public function delRegimeAlimentaire($labelRegimeAlimentaire)
+    public function delRegimeAlimentaire($noRegimeAlimentaire)
     {
         try {
-            $this->_mapper->delete('labelRegimeAlimentaire', $labelRegimeAlimentaire);
+            $this->_mapper->delete('noRegimeAlimentaire', $noRegimeAlimentaire);
         } catch (Zend_Exception $e) {
             echo 'ServLogCom_Models_RegimeAlimentaire_delRegimeAlimentaire() 
                 Exception - ' .
@@ -80,9 +80,9 @@ class ServLogCom_Model_RegimeAlimentaire
      * @return null|ServLogCom_Model_RegimeAlimentaire
      *  
      */
-    public function getRegimeAlimentaire($labelRegimeAlimentaire)
+    public function getRegimeAlimentaire($noRegimeAlimentaire)
     {
-        return $this->_mapper->find($labelRegimeAlimentaire);
+        return $this->_mapper->find($noRegimeAlimentaire);
     }
 
     /**
@@ -95,7 +95,8 @@ class ServLogCom_Model_RegimeAlimentaire
      */
     public function getRegimeAlimentaireHTML()
     {
-        $regimeAlimentaire = "<div>Regime Alimentaire : " . $this->get_labelRegimeAlimentaire() . "</div>";
+        $regimeAlimentaire = "<div>Id : " . $this->get_noRegimeAlimentaire() . "</div>";
+        $regimeAlimentaire.= "<div>Regime Alimentaire : " . $this->get_labelRegimeAlimentaire() . "</div>";
         return $regimeAlimentaire;
     }
 
@@ -127,14 +128,15 @@ class ServLogCom_Model_RegimeAlimentaire
      * @return string
      *  
      */
-    public static function getListeRegimeAlimentaire()
+    public static function getListeRegimeAlimentaireHTML()
     {
-        $allRA = ServExploitation_Model_Incident::getListeRegimeAlimentaire();
+        $allRA = ServLogCom_Model_RegimeAlimentaire::getListeRegimeAlimentaire();
 
 
         if (!empty($allRA)) {
             $tableau = "<table>
                         <tr>
+                            <td>Id</td>
                             <td>Regime Alimentaire</td>
                             <td></td>
                             <td></td>
@@ -142,9 +144,10 @@ class ServLogCom_Model_RegimeAlimentaire
 
             foreach ($allRA as $val) {
                 $tableau .= "<tr>
+                                <td>" . $val->get_noRegimeAlimentaire() . "</td>
                                 <td>" . $val->get_labelRegimeAlimentaire() . "</td>
-                                <td><a href='/ServLogCom/Regimealimentaire/upd?id=" . $val->get_labelRegimeAlimentaire() . "'>Modifier</a></td>
-                                <td><a href='/ServLogCom/Regimealimentaire/del?id=" . $val->get_labelRegimeAlimentaire() . "'>Supprimer</a></td>
+                                <td><a href='/ServLogCom/Regimealimentaire/upd?id=" . $val->get_noRegimeAlimentaire() . "'>Modifier</a></td>
+                                <td><a href='/ServLogCom/Regimealimentaire/del?id=" . $val->get_noRegimeAlimentaire() . "'>Supprimer</a></td>
                             </tr>";
             }
             $tableau .= "</table>";
@@ -157,14 +160,14 @@ class ServLogCom_Model_RegimeAlimentaire
     //--------------------------------------------------------------------------
     // Getter / setter
     //--------------------------------------------------------------------------
-    public function get_idRegimeAlimentaire()
+    public function get_noRegimeAlimentaire()
     {
-        return $this->_idRegimeAlimentaire;
+        return $this->_noRegimeAlimentaire;
     }
 
-    public function set_idRegimeAlimentaire($_idRegimeAlimentaire)
+    public function set_noRegimeAlimentaire($_noRegimeAlimentaire)
     {
-        $this->_idRegimeAlimentaire = $_idRegimeAlimentaire;
+        $this->_noRegimeAlimentaire = $_noRegimeAlimentaire;
         return $this;
     }
 
