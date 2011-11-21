@@ -116,7 +116,7 @@ class UtilisateurController extends Zend_Controller_Action
                 $authSession->storage = $email;
                 //reinit
                 $this->_personneActuelle = null;
-                $this->_redirect('../');
+                $this->_redirect('/');
             } else {
                 $this->view->errorMessage = "Non connecté, veuiller vous logger";
             }
