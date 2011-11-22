@@ -10,7 +10,7 @@
        AllowOverride None
        Order allow,deny
        Allow from all
-       php_value include_path ".:/var/www/PhoenixLibrairie/:/var/www/Library/ZendFramework-1.11.11/library/"
+       php_value include_path ".:/var/www/PHPLibrary/:/var/www/Library/ZendFramework-1.11.11/library/"
 
        RewriteEngine On
        RewriteCond %{REQUEST_FILENAME} -s [OR]
