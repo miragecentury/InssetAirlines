@@ -92,6 +92,45 @@ class ServCommercial_Model_Agence
     }
 
     /**
+     * Retourne une Agence sous forme de tableau HTML
+     * 
+     * @access public
+     * @author charles
+     * @return string
+     *  
+     */
+    public function getAgenceHTML()
+    {
+        $Incident = "<table class='grid_16'>
+                <tr bgcolor='#CCCCCC'>
+                    <td class='grid_3'>Id</td>
+                    <td class='grid_3'>" . $this->get_noAgence() . "</td>
+                </tr>
+                <tr>
+                    <td class='grid_3'>Label</td>
+                    <td class='grid_3'>" . $this->get_labelAgence() . "</td>
+                </tr>
+                <tr bgcolor='#CCCCCC'>
+                    <td class='grid_3'>Date de Lancement</td>
+                    <td class='grid_3'>" . $this->get_dateLancement() . "</td>
+                </tr>
+                <tr>
+                    <td class='grid_3'>Date de Cloture</td>
+                    <td class='grid_3'>" . $this->get_dateCloture() . "</td>
+                </tr>
+                <tr bgcolor='#CCCCCC'>
+                    <td class='grid_3'>Acces Extranet</td>
+                    <td class='grid_3'>" . $this->get_accesExtranet() . "</td>
+                </tr>
+                <tr>
+                    <td class='grid_3'>No Adresse</td>
+                    <td class='grid_3'>" . $this->get_noAdresse() . "</td>
+                </tr>
+            </table>";
+        return $Incident;
+    }
+
+    /**
      * Retourne une Agence a partir de son noAgence
      * Si elle n'existe pas, retourne null.
      * 
@@ -104,6 +143,64 @@ class ServCommercial_Model_Agence
     public function getAgence($noAgence)
     {
         return $this->_mapper->find($noAgence);
+    }
+
+    /**
+     * Retourne tous les incidents sous forme de tableau html, 
+     * retourne une phrase disant qu'il n'y en a pas dans la bd si c'est le cas
+     * 
+     * @access public
+     * @author charles
+     * @return string
+     *  
+     */
+    public static function getListeAgenceHTML()
+    {
+        $html = ServCommercial_Model_Agence::getListeAgence();
+        $color = true;
+
+        if (!empty($html)) {
+            $tableau = "<table class='grid_16'>
+                        <tr>
+                            <td class='grid_1'>Id</td>
+                            <td class='grid_3'>Label</td>
+                            <td class='grid_2'>Lancement</td>
+                            <td class='grid_2'>Date de Cloture</td>
+                            <td class='grid_1'>Extranet</td>
+                            <td class='grid_1'>Adresse</td>
+                            <td class='grid_1'></td>
+                            <td class='grid_2'></td>
+                        </tr>";
+
+            foreach ($html as $val) {
+                if ($color) {
+                    $tableau .= "<tr bgcolor='#CCCCCC'>";
+                }
+                $color = !$color;
+                $tableau .= "<td class='grid_1'>" . $val->get_noAgence() . "</td>
+                                <td class='grid_3'>" . $val->get_labelAgence() . "</td>
+                                <td class='grid_2'>" . $val->get_dateLancement() . "</td>";
+                if ($val->get_dateCloture() != null) {
+                    $tableau .= "<td class='grid_2'>" . $val->get_dateCloture() . "</td>";
+                } else {
+                    $tableau .= "<td class='grid_2'>Actif</td>";
+                }
+                $tableau .= "<td class='grid_1'>";
+                if ($val->get_accesExtranet() == 1)
+                    $tableau .= "Actif";
+                else
+                    $tableau .= "Inactif";
+                $tableau .= "</td>
+                                <td class='grid_1'>" . $val->get_noAdresse() . "</td>
+                                <td class='grid_1'><a href='/ServCommercial/Agence/upd?id=" . $val->get_noAgence() . "'>Modifier</a></td>
+                                <td class='grid_2'><a href='/ServCommercial/Agence/del?id=" . $val->get_noAgence() . "'>Supprimer</a></td>
+                            </tr>";
+            }
+            $tableau .= "</table>";
+        } else {
+            $tableau = "<div>Il n'y a pas d'incident dans la base de donnée</div>";
+        }
+        return $tableau;
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-class ServCommercial_GestagenceController extends Zend_Controller_Action {
+class ServCommercial_ReservationController extends Zend_Controller_Action {
 
     public function init() {
         $this->view->setLfiProtection(false);
@@ -12,16 +12,19 @@ class ServCommercial_GestagenceController extends Zend_Controller_Action {
         
     }
 
-    public function newagenceAction() {
+    public function newreservationAction() {
         
     }
 
-    public function updagenceAction() {
+    public function updreservationAction() {
         
     }
 
-    public function delagenceAction() {
+    public function delreservationAction() {
         
     }
 
+    public function validreservationAction() {
+        
+    }
 }
