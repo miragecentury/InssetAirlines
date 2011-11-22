@@ -132,7 +132,7 @@ class Application_Model_Aeroport
             $Aeroports = Application_Model_Aeroport::getListeAeroport();
             $labelAeroport = new Zend_Form_Element_Select($name);
             foreach ($Aeroports as $Aeroport) {
-                $labelAeroport->addMultiOption($Aeroport->get_labelAeroport(), $Aeroport->get_labelAeroport());
+                $labelAeroport->addMultiOption($Aeroport->get_noAeroport(), $Aeroport->get_labelAeroport());
             }
             $labelAeroport->setRequired();
             $labelAeroport->setLabel($label);
