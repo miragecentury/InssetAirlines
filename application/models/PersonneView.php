@@ -7,7 +7,7 @@
  *
  * @author pewho
  */
-class PersonneView
+class Application_Model_PersonneView
 {
 
     //--------
@@ -50,17 +50,17 @@ class PersonneView
     //Constructeur
     public function __construct()
     {
-        $this->_mapper = Spesx_Mapper_MapperFactory::getMapper( 'Application_Model_PersonneView' );
+        $this->_mapper = Spesx_Mapper_MapperFactory::getMapper('Application_Model_PersonneView');
     }
 
     //-------
     //Methode
-    public static function getTelephonesByPersonne( $id )
+    public static function getTelephonesByPersonne($id)
     {
         //recupération du mapper
-        $mapper = Spesx_Mapper_MapperFactory::getMapper( 'Application_Model_PersonneView' );
-        $return = $mapper->getByPersonne( $id );
-        if ( is_array( $return ) || ($return instanceof Application_Model_PersonneView) ) {
+        $mapper = Spesx_Mapper_MapperFactory::getMapper('Application_Model_PersonneView');
+        $return = $mapper->getByPersonne($id);
+        if (is_array($return) || ($return instanceof Application_Model_PersonneView)) {
             return $return;
         } else {
             return false;
@@ -74,9 +74,10 @@ class PersonneView
         return $this->_noPersonne;
     }
 
-    public function set_noPersonne( $_noPersonne )
+    public function set_noPersonne($_noPersonne)
     {
         $this->_noPersonne = $_noPersonne;
+        return $this;
     }
 
     public function get_noTelephone()
@@ -84,9 +85,10 @@ class PersonneView
         return $this->_noTelephone;
     }
 
-    public function set_noTelephone( $_noTelephone )
+    public function set_noTelephone($_noTelephone)
     {
         $this->_noTelephone = $_noTelephone;
+        return $this;
     }
 
     public function get_numTelephone()
@@ -94,9 +96,10 @@ class PersonneView
         return $this->_numTelephone;
     }
 
-    public function set_numTelephone( $_numTelephone )
+    public function set_numTelephone($_numTelephone)
     {
         $this->_numTelephone = $_numTelephone;
+        return $this;
     }
 
     public function get_labelTelephone()
@@ -104,9 +107,10 @@ class PersonneView
         return $this->_labelTelephone;
     }
 
-    public function set_labelTelephone( $_labelTelephone )
+    public function set_labelTelephone($_labelTelephone)
     {
         $this->_labelTelephone = $_labelTelephone;
+        return $this;
     }
 
     public function get_mapper()
@@ -114,9 +118,10 @@ class PersonneView
         return $this->_mapper;
     }
 
-    public function set_mapper( $_mapper )
+    public function set_mapper($_mapper)
     {
         $this->_mapper = $_mapper;
+        return $this;
     }
 
 }

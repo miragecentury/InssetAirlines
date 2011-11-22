@@ -41,10 +41,10 @@
         </p>
     </div>
     <div class="grid_3">
-         <p>
-                 <?php
-                 echo '<a href="/utilisateur/modifEmail" class="enSavoirPlus">Modifier le mail</a>';
-                 ?>
+        <p>
+            <?php
+            echo '<a href="/utilisateur/modifEmail" class="enSavoirPlus">Modifier le mail</a>';
+            ?>
         </p>
     </div>
     <div class="clear">
@@ -84,21 +84,58 @@
         </p>
     </div>
     <div class="clear"></div>
-    <div class="grid_6 alpha sep">
-        <p>
-           <?php
-           foreach($this->telephone as $tel){
-               echo 'Telephone : <span class="bold">' . $tel->get_numTelephone() . '</span><br/>';
-           }
-           ?>
-        </p>
+    <div class="grid_12 alpha omega sep">
+        <?php
+        foreach ($this->telephones as $tel) {
+            echo '<div class="grid_6 sep alpha">';
+                echo '<p>';
+                echo 'Telephone : <span class="bold">' .
+                    $tel->get_labelTelephone() .
+                    ' : ' .
+                    $tel->get_numTelephone() . '</span><br/>';
+                echo '</p>';
+            echo '</div>';
+            echo '<div class="grid_6 omega">';
+                echo '<a href="/utilisateur/modifTelephone/id/' .
+                    $tel->get_noTelephone() .
+                    '" class="enSavoirPlus">Modifier</a>';
+                echo '<a href="utilisateur/delTelephone/id/' .
+                    $tel->get_noTelephone() .
+                    '" class="enSavoirPlus">Supprimer</a>';
+                    //Version POST (non fonctionnel, probleme des boutons submit
+//                echo '<form action="/utilisateur/mod_telephone" method="POST">';
+//                    echo '<input type="hidden" name="mode" value="mod" />';
+//                    echo '<input type="hidden" name="id" value="' .
+//                        $tel->get_noTelephone() .
+//                        '" />';
+//                    echo '<input type="submit" class="enSavoirPlus" value="modifier"/>';
+//                echo '</form>';
+//                echo '<form action="/utilisateur/mod_telephone" method="POST">';
+//                    echo '<input type="hidden" name="mode" value="rm" />';
+//                    echo '<input type="hidden" name="id" value="' .
+//                        $tel->get_noTelephone() .
+//                        '" />';
+//                    echo '<input type="hidden" name="idPers" value="' .
+//                        $tel->get_noPersonne() .
+//                        '"/>';
+//                    echo '<input type="submit" class="enSavoirPlus" value="supprimer"/>';
+//                echo '</form>';
+            echo '</div>';
+            echo '<div class="clear"></div>';
+        }
+        ?>
     </div>
-    <div class="grid_6">
-        <p>
-            <?php
-            echo '<a class="enSavoirPlus" href="/utilisateur/mod_telephone">Modifier le(s) Téléphone(s)</a>';
-            ?>
-        </p>
+    <div class="clear"></div>
+    <div class="grid_6 prefix_6 alpha omega">
+        <!--
+        <form action="/utilisateur/mod_telephone" method="POST">
+            <input type="hidden" name="mode" value="add" />
+            <input type="hidden" name="id" value="
+            <?php //echo $tel->get_noPersonne(); ?>" />
+            <input type="submit" value="ajouter un telphone" />
+        </form>
+        -->
+        <a href="/utilisateur/addTelephone" class="enSavoirPlus">ajouter un Telephone</a>
     </div>
     <div class="clear"></div>
 </div>

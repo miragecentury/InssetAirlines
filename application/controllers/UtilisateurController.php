@@ -80,19 +80,13 @@ class UtilisateurController extends Zend_Controller_Action
 
         //récupération des id Telephone associés à personne
 
-        $noTels =
-            Application_Model_PersonneHasTelephoneMapper::getTelephonesByIdPersonne(
-                $pers->get_noPersonne());
-
-        //recupération des num de telephone associés
-        $telephone = array();
-        foreach ($noTels as $noTel) {
-            $idTel = intval($noTel['noTelephone']);
-            $telephone[] = Application_Model_Telephone::getTelephone($idTel);
-        }
+        $telephones =
+            Application_Model_PersonneView::getTelephonesByPersonne(
+                $pers->get_noPersonne()
+        );
 
         //passage des numéros de tel à la vue;
-        $this->view->telephone = $telephone;
+        $this->view->telephones = $telephones;
     }
 
     public function modifemailAction()
@@ -150,16 +144,40 @@ class UtilisateurController extends Zend_Controller_Action
             $adresse->set_etatProvince($changeAdresseForm->getValue('etatProvince'));
             $adresse->set_labelPays($changeAdresseForm->getValue('pays'));
             $adresse->set_commentaire($changeAdresseForm->getValue('commentaire'));
-            
+
             $adresse->addAdresse();
 
             //reinit
             //$this->_redirect('/');
             $this->_PersonneActuelle = null;
-        }
-        else{
+        } else {
             $this->view->errorMessage = 'Le formulaire est invalide !';
         }
+    }
+
+    public function modifTelephoneAction(){
+        //recupération de la personne courante
+        $pers = $this->_getPersonneActuelle();
+
+        //chargement de la form
+        $changeTelephoneForm = new Application_Form_Utilisateur_ModifTelephone();
+        $this->view->changeTelephoneForm = $changeTelephoneForm;
+        $this->view->personne = $pers;
+
+        //Modif 1 : numéro de téléphone
+        //récupération de l'objet telephone concerné
+        $tel = Application_Model_Telephone::getTelephone(
+            $this->getRequest()->getParam('id'));
+
+        //Modif 2 : label de téléphone
+        //récupération de l'objet Personne_has_Telephone
+        /*
+         * TODO : création de personneHasTelepehone
+         */
+        $assoc = Application_Model_PersonneHasTelephone::getAssoc(
+            $this->getRequest()->getParam('id'),
+            $pers->get_noPersonne());
+
     }
 
     //GETTERS

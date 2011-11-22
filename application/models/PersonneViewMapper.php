@@ -16,7 +16,7 @@ class Application_Model_PersonneViewMapper extends Spesx_Mapper_Mapper
     protected function _createItemFromRow( Zend_Db_Table_Row $row )
     {
 
-        $item = new Application_Model_PersonneView();
+        $item = new Application_Model_PersonneView;
         $item->set_noPersonne( $row->noPersonne )
             ->set_noTelephone( $row->noTelephone )
             ->set_numTelephone( $row->numTelephone )
@@ -39,7 +39,11 @@ class Application_Model_PersonneViewMapper extends Spesx_Mapper_Mapper
     public function getByPersonne( $id )
     {
         try {
-            $select = $this->find( $id );
+            $select = $this->getDbTable()->fetchAll(
+                $this->getDbTable()->select()->where('noPersonne = ?',$id)
+                );
+            $return = $this->_createItemsFromRowset($select);
+
         } catch ( Spesx_Mapper_Exception $e ) {
             Spesx_Log::Log(
                 'PersonneViewMapper :' .
@@ -47,7 +51,7 @@ class Application_Model_PersonneViewMapper extends Spesx_Mapper_Mapper
                 $e->getPrevious()->getMessage(),
                 Zend_Log::ERR);
         }
-        return $select;
+        return $return;
     }
 
 }

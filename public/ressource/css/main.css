@@ -131,6 +131,7 @@ ul{
 /* Style des classes diverses */
 .enSavoirPlus{
     padding: 3px 8px;
+    margin:2px 3px;
     color:#eee;
     background-color: #ff8b00;
     text-decoration: none;
