@@ -25,10 +25,10 @@ class ServLogCom_Model_CommandeNourriture
     protected $_dateCommande;
 
     /**
-     * label de l'aeroport de livraison
-     * @var string
+     * id de l'aeroport de livraison
+     * @var int
      */
-    protected $_labelAeroportLivraison;
+    protected $_idAeroportLivraison;
 
     /**
      * Mapper de l'objet
@@ -167,7 +167,8 @@ class ServLogCom_Model_CommandeNourriture
                             <td class='grid_3'>Date de livraison</td>
                             <td class='grid_3'>Date de Commande</td>
                             <td class='grid_3'>Aeroport de livraison</td>
-                            <td class='grid_2'></td>
+                            <td class='grid_1'></td>
+                            <td class='grid_1'></td>
                             <td class='grid_2'></td>
                         </tr>";
 
@@ -180,7 +181,8 @@ class ServLogCom_Model_CommandeNourriture
                                 <td class='grid_3'>" . $val->get_dateLivraison() . "</td>
                                 <td class='grid_3'>" . $val->get_dateCommande() . "</td>
                                 <td class='grid_3'>" . $val->get_labelAeroportLivraison() . "</td>
-                                <td class='grid_2'><a href='/ServLogCom/Commandenourriture/upd?id=" . $val->get_noCommandeNourriture() . "'>Modifier</a></td>
+                                <td class='grid_1'><a href='/ServLogCom/Commandenourriture/detail?id=" . $val->get_noCommandeNourriture() . "'>Detail</a></td>
+                                <td class='grid_1'><a href='/ServLogCom/Commandenourriture/upd?id=" . $val->get_noCommandeNourriture() . "'>Modifier</a></td>
                                 <td class='grid_2'><a href='/ServLogCom/Commandenourriture/del?id=" . $val->get_noCommandeNourriture() . "'>Supprimer</a></td>
                             </tr>";
             }
@@ -227,15 +229,24 @@ class ServLogCom_Model_CommandeNourriture
         return $this;
     }
 
-    public function get_labelAeroportLivraison()
+    public function get_idAeroportLivraison()
     {
-        return $this->_labelAeroportLivraison;
+        return $this->_idAeroportLivraison;
     }
 
-    public function set_labelAeroportLivraison($_labelAeroportLivraison)
+    public function set_idAeroportLivraison($_idAeroportLivraison)
     {
-        $this->_labelAeroportLivraison = $_labelAeroportLivraison;
+        $this->_idAeroportLivraison = $_idAeroportLivraison;
         return $this;
+    }
+    
+    public function get_labelAeroportLivraison()
+    {
+        $item = new Application_Model_Aeroport;
+        $item = $item->getAeroport($this->get_idAeroportLivraison());
+        if ($item != null)
+            return $item->get_labelAeroport();
+        return "Aeroport Incorect";
     }
 
 }

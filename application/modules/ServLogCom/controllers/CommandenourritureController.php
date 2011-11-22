@@ -25,7 +25,7 @@ class ServLogCom_CommandenourritureController extends Zend_Controller_Action
             $item = new ServLogCom_Model_CommandeNourriture();
             $item->set_dateLivraison($request->getParam('dateLivraison'))
                     ->set_dateCommande($request->getParam('dateCommande'))
-                    ->set_labelAeroportLivraison($request->getParam('labelAeroportLivraison'));
+                    ->set_idAeroportLivraison($request->getParam('idAeroportLivraison'));
             $item->addCommandeNourriture();
             $this->_redirect('ServLogCom/Commandenourriture');
         }
@@ -40,14 +40,14 @@ class ServLogCom_CommandenourritureController extends Zend_Controller_Action
             $form = new ServLogCom_Form_CommandeNourriture();
             $form->getElement('dateLivraison')->setValue($item->get_dateLivraison());
             $form->getElement('dateCommande')->setValue($item->get_dateCommande());
-            $form->getElement('labelAeroportLivraison')->setValue($item->get_labelAeroportLivraison());
+            $form->getElement('idAeroportLivraison')->setValue($item->get_idAeroportLivraison());
             $this->view->form = $form;
         } else {
             $item = new ServLogCom_Model_CommandeNourriture();
             $item->set_noCommandeNourriture($request->getParam('id'))
                     ->set_dateLivraison($request->getParam('dateLivraison'))
                     ->set_dateCommande($request->getParam('dateCommande'))
-                    ->set_labelAeroportLivraison($request->getParam('labelAeroportLivraison'));
+                    ->set_idAeroportLivraison($request->getParam('idAeroportLivraison'));
             $item->addCommandeNourriture();
             $this->_redirect('ServLogCom/Commandenourriture');
         }
@@ -66,6 +66,14 @@ class ServLogCom_CommandenourritureController extends Zend_Controller_Action
             $this->view->item = $item->getCommandeNourritureHTML();
             $this->view->id = $request->getParam('id');
         }
+    }
+
+    public function detailAction()
+    {
+        $Mod = new ServLogCom_Model_CommandeNourriture;
+        $item = $Mod->getCommandeNourriture($this->getRequest()->getParam('id'));
+        $this->view->item = $item->getCommandeNourritureHTML();
+        $this->view->id = $this->getRequest()->getParam('id');
     }
 
 }
