@@ -1,6 +1,6 @@
 <?php
 
-class Application_Module_ServDRH_Model_Employe
+class ServDRH_Model_Employe
 {
     protected $_Personne_noPersonne;
     protected $_labelMetier;
@@ -9,9 +9,7 @@ class Application_Module_ServDRH_Model_Employe
         $mapper = new ServDRH_Model_EmployeMapper();
         return $mapper->findAll();
     }
-    
-    
-    
+        
     //Permet de récupérer la liste des congés de l'employé
      public function get_listeConges()
     {
