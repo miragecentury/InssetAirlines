@@ -1,7 +1,7 @@
 <h1>Gestion des pilotes </h1>
 <?php
-echo "coucou";
-if (!empty($this->AllPersonne)) {
+echo"<p align=right><a class='enSavoirPlus' href='gestpilote/newpilote'>Ajouter un nouveau pilote</a></p>";
+if (!empty($this->AllPilotes)) {
     echo "<table>
     <tr>
         <div class='sep'>
@@ -18,7 +18,7 @@ if (!empty($this->AllPersonne)) {
     </tr>";
 //echo var_dump($this->AllPersonne);
     
-    foreach ($this->AllPersonne as $res){
+    foreach ($this->AllPilotes as $res){
         
           echo "<tr>
         <td>" . $res->get_nom(). "</td>
