@@ -42,7 +42,7 @@ protected $_submitCapsule;
         $numero->setRequired(true);
         $numero->setAttrib('size', '4');
         $numero->setLabel('Numero : ');
-        $numero->setValidators(array(new Zend_Validate_Alnum()));
+        $numero->setValidators(array(new Zend_Validate_Int()));
         $numero->setDecorators($this->_petiteCapsule);
 
         $this->addElement($numero);
@@ -52,7 +52,7 @@ protected $_submitCapsule;
         $porte->setRequired(false)
             ->setLabel('Porte :')
             ->setAttrib('size', '4')
-            ->setValidators(array(new Zend_Validate_Alnum()))
+            ->setValidators(array(new Zend_Validate_Alnum(array('allowWhiteSpace' => true))))
             ->setDecorators($this->_petiteCapsule);
         $this->addElement($porte);
 
@@ -71,7 +71,7 @@ protected $_submitCapsule;
         $immeuble->setRequired(false)
             ->setLabel('Immeuble : ')
             ->setAttrib('size', '10')
-            ->setValidators(array(new Zend_Validate_Int()))
+            ->setValidators(array(new Zend_Validate_Alnum(array('allowWhiteSpace' => true))))
             ->setDecorators($this->_capsule);
         $this->addElement($immeuble);
 
@@ -85,7 +85,7 @@ protected $_submitCapsule;
         $adresse->setRequired(true)
             ->setLabel('Adresse : ')
             ->setAttrib('size', '14')
-            ->setValidators(array(new Zend_Validate_Alnum()))
+            ->setValidators(array(new Zend_Validate_Alnum(array('allowWhiteSpace' => true))))
             ->setDecorators($this->_capsule);
         $this->addElement($adresse);
 
@@ -103,7 +103,7 @@ protected $_submitCapsule;
         $labelVille->setRequired(true)
             ->setLabel('Ville : ')
             ->setAttrib('size', '14')
-            ->setValidators(array(new Zend_Validate_Alpha()))
+            ->setValidators(array(new Zend_Validate_Alpha(array('allowWhiteSpace' => true))))
             ->setDecorators($this->_capsule);
         $this->addElement($labelVille);
 
@@ -112,7 +112,7 @@ protected $_submitCapsule;
         $etatProvince->setRequired(false)
             ->setLabel('Etat / Province : ')
             ->setAttrib('size', '14')
-            ->setValidators(array(new Zend_Validate_Alpha()))
+            ->setValidators(array(new Zend_Validate_Alpha(array('allowWhiteSpace' => true))))
             ->setDecorators($this->_capsule);
         $this->addElement($etatProvince);
 
@@ -121,7 +121,7 @@ protected $_submitCapsule;
         $labelPays->setRequired(true)
             ->setLAbel('Pays : ')
             ->setAttrib('size', '14')
-            ->setValidators(array(new Zend_Validate_Alpha()))
+            ->setValidators(array(new Zend_Validate_Alpha(array('allowWhiteSpace' => true))))
             ->setDecorators($this->_capsule);
         $this->addElement($labelPays);
 
@@ -132,7 +132,7 @@ protected $_submitCapsule;
             ->setAttrib('cols', '35')
             ->setAttrib('rows', '4')
             ->setDecorators($this->_capsule)
-            ->setValidators(array(new Zend_Validate_Alnum()));
+            ->setValidators(array(new Zend_Validate_Alnum(array('allowWhiteSpace' => true))));
         $this->addElement($commentaire);
 
         //clear

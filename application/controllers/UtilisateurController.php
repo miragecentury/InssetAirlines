@@ -139,6 +139,7 @@ class UtilisateurController extends Zend_Controller_Action
 
         //Si le formulaire est valide
         if (!empty($_POST) && $changeAdresseForm->isValid($_POST)) {
+
             $adresse->set_numero($changeAdresseForm->getValue('numero'));
             $adresse->set_porte($changeAdresseForm->getValue('porte'));
             $adresse->set_etage($changeAdresseForm->getValue('etage'));
@@ -148,12 +149,12 @@ class UtilisateurController extends Zend_Controller_Action
             $adresse->set_labelVille($changeAdresseForm->getValue('ville'));
             $adresse->set_etatProvince($changeAdresseForm->getValue('etatProvince'));
             $adresse->set_labelPays($changeAdresseForm->getValue('pays'));
-            $adresse->set_commentaire($changeAdresseForm->getValue('comentaire'));
-
+            $adresse->set_commentaire($changeAdresseForm->getValue('commentaire'));
+            
             $adresse->addAdresse();
 
             //reinit
-            $this->_redirect('/');
+            //$this->_redirect('/');
             $this->_PersonneActuelle = null;
         }
         else{

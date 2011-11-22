@@ -25,6 +25,7 @@ class Application_Model_AdresseMapper extends Spesx_Mapper_Mapper
     {
         return array(
             'noAdresse' => $item->get_noAdresse(),
+            'numero' => $item->get_numero(),
             'porte' => $item->get_porte(),
             'adresse' => $item->get_adresse(),
             'etage' => $item->get_etage(),
