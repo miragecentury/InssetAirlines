@@ -101,7 +101,7 @@ class ServCommercial_Model_Agence
      */
     public function getAgenceHTML()
     {
-        $Incident = "<table class='grid_16'>
+        $Agence = "<table class='grid_16'>
                 <tr bgcolor='#CCCCCC'>
                     <td class='grid_3'>Id</td>
                     <td class='grid_3'>" . $this->get_noAgence() . "</td>
@@ -127,7 +127,7 @@ class ServCommercial_Model_Agence
                     <td class='grid_3'>" . $this->get_noAdresse() . "</td>
                 </tr>
             </table>";
-        return $Incident;
+        return $Agence;
     }
 
     /**
@@ -146,7 +146,7 @@ class ServCommercial_Model_Agence
     }
 
     /**
-     * Retourne tous les incidents sous forme de tableau html, 
+     * Retourne tous les agence sous forme de tableau html, 
      * retourne une phrase disant qu'il n'y en a pas dans la bd si c'est le cas
      * 
      * @access public
@@ -198,7 +198,7 @@ class ServCommercial_Model_Agence
             }
             $tableau .= "</table>";
         } else {
-            $tableau = "<div>Il n'y a pas d'incident dans la base de donnée</div>";
+            $tableau = "<div>Il n'y a pas d'agence dans la base de donnée</div>";
         }
         return $tableau;
     }
@@ -216,6 +216,32 @@ class ServCommercial_Model_Agence
         $mapper = Spesx_Mapper_MapperFactory::getMapper("ServCommercial_Model_Agence");
         try {
             return $mapper->findAll();
+        } catch (Spesx_Mapper_Exception $e) {
+            echo $e->getMessage() . " - " . $e->getPrevious()->getMessage();
+        }
+    }
+
+    /**
+     * Retourne toutes les agences sous forme de select, retourne un select 
+     * vide s'il n'y en a pas
+     * 
+     * @access public
+     * @author charles
+     * @param string $name, string $label
+     * @return Zend_Form_Element_Select
+     *  
+     */
+    public static function getSelectAgence($name, $label)
+    {
+        try {
+            $Agences = ServCommercial_Model_Agence::getListeAgence();
+            $labelAgence = new Zend_Form_Element_Select($name);
+            foreach ($Agences as $Agence) {
+                $labelAgence->addMultiOption($Agence->get_noAgence(), $Agence->get_labelAgence());
+            }
+            $labelAgence->setRequired();
+            $labelAgence->setLabel($label);
+            return $labelAgence;
         } catch (Spesx_Mapper_Exception $e) {
             echo $e->getMessage() . " - " . $e->getPrevious()->getMessage();
         }

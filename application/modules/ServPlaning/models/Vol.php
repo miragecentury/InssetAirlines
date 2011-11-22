@@ -105,6 +105,53 @@ class ServPlaning_Model_Vol
     }
 
     /**
+     * Retourne un Vol sous forme de tableau HTML
+     * 
+     * @access public
+     * @author charles
+     * @return string
+     *  
+     */
+    public function getVolHTML()
+    {
+        $Aero = "<table class='grid_16'>
+                <tr bgcolor='#CCCCCC'>
+                    <td class='grid_3'>Id</td>
+                    <td class='grid_3'>" . $this->get_noVol() . "</td>
+                </tr>
+                <tr>
+                    <td class='grid_3'>Label</td>
+                    <td class='grid_3'>" . $this->get_labelvol() . "</td>
+                </tr>
+                <tr bgcolor='#CCCCCC'>
+                    <td class='grid_3'>Aeroport de départ</td>
+                    <td class='grid_3'>" . $this->get_labelAeroportDeco() . "</td>
+                </tr>
+                <tr>
+                    <td class='grid_3'>Aeroport d'arrivée</td>
+                    <td class='grid_3'>" . $this->get_labelAeroportAtte() . "</td>
+                </tr>
+                <tr bgcolor='#CCCCCC'>
+                    <td class='grid_3'>Avion</td>
+                    <td class='grid_3'>" . $this->get_noAvion() . "</td>
+                </tr>
+                <tr>
+                    <td class='grid_3'>Ligne</td>
+                    <td class='grid_3'>" . $this->get_noLigne() . "</td>
+                </tr>
+                <tr bgcolor='#CCCCCC'>
+                    <td class='grid_3'>Heure depart</td>
+                    <td class='grid_3'>" . $this->get_heuredecollage() . "</td>
+                </tr>
+                <tr>
+                    <td class='grid_3'>Heure arrivée</td>
+                    <td class='grid_3'>" . $this->get_heureAtterissage() . "</td>
+                </tr>
+            </table>";
+        return $Aero;
+    }
+
+    /**
      * Retourne un vol a partir de son noVol.
      * S'il n'existe pas, retourne null.
      * 
@@ -153,8 +200,7 @@ class ServPlaning_Model_Vol
             $Vols = ServPlaning_Model_Vol::getListeVol();
             $noVol = new Zend_Form_Element_Select($name);
             foreach ($Vols as $Vol) {
-                $noVol->addMultiOption($Vol->get_noVol(), 
-                    $Vol->get_noVol());
+                $noVol->addMultiOption($Vol->get_noVol(), $Vol->get_noVol());
             }
             $noVol->setRequired();
             $noVol->setLabel($label);
@@ -162,6 +208,59 @@ class ServPlaning_Model_Vol
         } catch (Spesx_Mapper_Exception $e) {
             echo $e->getMessage() . " - " . $e->getPrevious()->getMessage();
         }
+    }
+
+    /**
+     * Retourne tous les vols sous forme de tableau html, 
+     * retourne une phrase disant qu'il n'y en a pas dans la bd si c'est le cas
+     * 
+     * @access public
+     * @author charles
+     * @return string
+     *  
+     */
+    public static function getListeVolHTML()
+    {
+        $all = ServPlaning_Model_Vol::getListeVol();
+        $color = true;
+
+        if (!empty($all)) {
+            $tableau = "<table class='grid_16'>
+                        <tr>
+                            <td class='grid_1'>Id</td>
+                            <td class='grid_2'>Label</td>
+                            <td class='grid_3'>Aeroport de départ</td>
+                            <td class='grid_3'>Aeroport d'arrivée</td>
+                            <td class='grid_1'>Avion</td>
+                            <td class='grid_1'>Ligne</td>
+                            <td class='grid_1'>Depart</td>
+                            <td class='grid_1'>Arrivée</td>
+                            <td class='grid_2'></td>
+                            <td class='grid_2'></td>
+                        </tr>";
+
+            foreach ($all as $val) {
+                if ($color) {
+                    $tableau .= "<tr bgcolor='#CCCCCC'>";
+                }
+                $color = !$color;
+                $tableau .= "   <td class='grid_1'>" . $val->get_noVol() . "</td>
+                                <td class='grid_2'>" . $val->get_labelvol() . "</td>
+                                <td class='grid_3'>" . $val->get_labelAeroportDeco() . "</td>
+                                <td class='grid_3'>" . $val->get_labelAeroportAtte() . "</td>
+                                <td class='grid_1'>" . $val->get_noAvion() . "</td>
+                                <td class='grid_1'>" . $val->get_noLigne() . "</td>
+                                <td class='grid_1'>" . $val->get_heuredecollage() . "</td>
+                                <td class='grid_1'>" . $val->get_heureAtterissage() . "</td>
+                                <td class='grid_2'><a href='/ServPlaning/Vol/upd?id=" . $val->get_noVol() . "'>Modifier</a></td>
+                                <td class='grid_2'><a href='/ServPlaning/Vol/del?id=" . $val->get_noVol() . "'>Supprimer</a></td>
+                            </tr>";
+            }
+            $tableau .= "</table>";
+        } else {
+            $tableau = "<div>Il n'y a pas d'incident dans la base de donnée</div>";
+        }
+        return $tableau;
     }
 
     //--------------------------------------------------------------------------

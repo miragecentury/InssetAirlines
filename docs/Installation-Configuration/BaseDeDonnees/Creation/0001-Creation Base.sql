@@ -658,3 +658,4 @@ CREATE TABLE IF NOT EXISTS `Vol_has_Agence` (
 
 ALTER TABLE `CommandeNourriture` CHANGE `noCommandeNourriture` `noCommandeNourriture` INT( 11 ) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `RegimeAlimentaire` CHANGE `noRegimeAlimentaire` `noRegimeAlimentaire` INT( 11 ) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `Place` CHANGE `noPlace` `noPlace` INT( 11 ) NOT NULL AUTO_INCREMENT 
