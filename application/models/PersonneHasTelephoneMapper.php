@@ -5,17 +5,21 @@ class Application_Model_PersonneHasTelephoneMapper extends Spesx_Mapper_Mapper
 
     protected function _createItemFromRow(Zend_Db_Table_Row $row)
     {
-        $item = array(
-            'noPersonne' => $row->noPersonne,
-            'noTelephone' => $row->noTelephone,
-            'labelTelephone' => $row->labelTelephone
-        );
+        $item = new Application_Model_PersonneHasTelephone();
+            $item->set_noPersonne( $row->noPersonne)
+            ->set_noTelephone( $row->noTelephone)
+            ->set_labelTelephone($row->labelTelephone);
         return $item;
     }
 
+
     protected function _getDataArrayFromItem($item)
     {
-        return $item;
+        $data = array(
+            'noPersonne' => $item->get_noPersonne(),
+            'noTelephone' => $item->get_noTelephone(),
+            'labelTelephone' => $item->get_labelTelephone()
+        );
     }
 
     public static function getTelephonesByIdPersonne($id)
@@ -40,6 +44,7 @@ class Application_Model_PersonneHasTelephoneMapper extends Spesx_Mapper_Mapper
 
     public function find($id)
     {
+
         try {
             $result = $this->getDbTable()->find($id[0], $id[1]);
         } catch (Zend_Db_Exception $e) {
@@ -49,20 +54,19 @@ class Application_Model_PersonneHasTelephoneMapper extends Spesx_Mapper_Mapper
                     $e);
         }
         if (0 == count($result)) {
-            return;
+            return false;
         }
         return $this->_createItemFromRow($result->current());
     }
 
-    public function save($item, $id)
+    public function save($item)
     {
-        $filter = new Spesx_Filter_SQL;
-//Vérification de l'existence dans la BDD de l'enregistrement
+    //Vérification de l'existence dans la BDD de l'enregistrement
         try {
             $selectVerif = $this->getDbTable()
                     ->select()
-                    ->where('noPersonne = ?', $filter->filter($item['noPersonne']))
-                    ->where('noTelephone = ?', $filter->filter($item['noTelephone']));
+                    ->where('noPersonne = ?', $item->get_noPersonne())
+                    ->where('noTelephone = ?', $item->get_noTelephone());
             $result = $this->_dbTable->fetchAll($selectVerif);
         } catch (Zend_Db_Exception $e) {
             throw new Spesx_Mapper_Exception(
@@ -73,7 +77,7 @@ class Application_Model_PersonneHasTelephoneMapper extends Spesx_Mapper_Mapper
         if (0 == count($result)) {
 //enregistrement en temps qu'insert
             try {
-                $this->getDbTable()->insert($item);
+                $this->getDbTable()->insert($this->_getDataArrayFromItem($item));
             } catch (Zend_Db_Exception $e) {
                 throw new Spesx_Mapper_Exception(
                         'PersonneHasTelephone : Echec Insertion methode save',
@@ -86,12 +90,12 @@ class Application_Model_PersonneHasTelephoneMapper extends Spesx_Mapper_Mapper
                 $whereUpdate[] = $this->_dbTable
                         ->getAdapter()
                         ->quoteInto(
-                        'noPersonne = ?', $filter->filter($item['noPersonne']));
+                        'noPersonne = ?', $item->get_noPersonne());
                 $whereUpdate[] = $this->_dbTable
                         ->getAdapter()
                         ->quoteInto(
-                        'noTelephone = ?', $filter->filter($item['noTelephone']));
-                $this->_dbTable->update($item, $whereUpdate);
+                        'noTelephone = ?', $item->get_noTelephone());
+                $this->_dbTable->update($this->_getDataArrayFromItem($item), $whereUpdate);
             } catch (Zend_Db_Exception $e) {
                 throw new Spesx_Mapper_Exception(
                         'PersonneHasTelephone : Echec Update methode save',

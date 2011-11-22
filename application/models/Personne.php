@@ -131,13 +131,13 @@ class Application_Model_Personne
     /**
      * Recuperation des id des numéros de téléphond'une personne
      * @param int $id
-     * @return array $return Tableau de tableau
+     * @return array $return Tableau de Application_Model_PersonneView
      * @access protected
      * @author pewho
      */
     protected function _getNoTelephoneForPersonne($id)
     {
-        $return = Application_Model_PersonneHasTelephoneMapper::getTelephonesByIdPersonne($id);
+        $return = Application_Model_PersonneView::getTelephonesByPersonne($id);
         return $return;
     }
 
