@@ -66,6 +66,16 @@ class Application_Model_PersonneView
             return false;
         }
     }
+    public static function find($idPers,$idTelphone){
+        $mapper = Spesx_Mapper_MapperFactory::getMapper('Application_Model_PersonneView');
+        $return = $mapper->find($idPers,$idTelphone);
+        if ($return instanceof Application_Model_PersonneView){
+            return $return;
+        }
+        else {
+            return false;
+        }
+    }
 
     //------------------
     //GETTERS / SETTERS

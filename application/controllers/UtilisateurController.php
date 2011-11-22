@@ -161,23 +161,31 @@ class UtilisateurController extends Zend_Controller_Action
 
         //chargement de la form
         $changeTelephoneForm = new Application_Form_Utilisateur_ModifTelephone();
-        $this->view->changeTelephoneForm = $changeTelephoneForm;
+
         $this->view->personne = $pers;
 
-        //Modif 1 : numéro de téléphone
+
         //récupération de l'objet telephone concerné
         $tel = Application_Model_Telephone::getTelephone(
             $this->getRequest()->getParam('id'));
 
-        //Modif 2 : label de téléphone
         //récupération de l'objet Personne_has_Telephone
-        /*
-         * TODO : création de personneHasTelepehone
-         */
         $assoc = Application_Model_PersonneHasTelephone::getAssoc(
             $this->getRequest()->getParam('id'),
             $pers->get_noPersonne());
 
+        //preremplissage de la form
+        $changeTelephoneForm->setDefaults(array(
+           'labelTelephone' => $assoc->get_labelTelephone(),
+            'numTelephone' => $tel->get_numTelephone()
+        ));
+
+        //chargement de la form (fin)
+        $this->view->changeTelephoneForm = $changeTelephoneForm;
+
+        //Modif 1 : numéro de téléphone
+
+        //Modif 2 : label de téléphone
     }
 
     //GETTERS
