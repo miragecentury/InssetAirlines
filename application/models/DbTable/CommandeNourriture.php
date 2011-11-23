@@ -5,9 +5,9 @@ class Application_Model_DbTable_CommandeNourriture extends Zend_Db_Table_Abstrac
     protected $_primaryKey = 'noCommandeNourriture';
     protected $_foreignKey = array(
         'fkAeroport' => array (
-            'Columns' => 'labelAeroportLivraison',
+            'Columns' => 'idAeroportLivraison',
             'refTableClass' => 'Aeroport',
-            'refColumns' => 'labelAeroport',
+            'refColumns' => 'noAeroport',
         )
     );
 }
