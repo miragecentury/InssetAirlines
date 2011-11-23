@@ -193,6 +193,46 @@ class ServLogCom_Model_CommandeNourriture
         return $tableau;
     }
 
+    /**
+     * Retourne tous les incidents sous forme de tableau html, 
+     * retourne une phrase disant qu'il n'y en a pas dans la bd si c'est le cas
+     * 
+     * @access public
+     * @author charles
+     * @return string
+     *  
+     */
+    public static function getListeCommandeNourritureUser()
+    {
+        $allCN = ServLogCom_Model_CommandeNourriture::getListeCommandeNourriture();
+        $color = true;
+        if (!empty($allCN)) {
+            $tableau = "<table class='grid_16'>
+                        <tr>
+                            <td class='grid_1'>Id</td>
+                            <td class='grid_3'>Date de livraison</td>
+                            <td class='grid_3'>Date de Commande</td>
+                            <td class='grid_3'>Aeroport de livraison</td>
+                        </tr>";
+
+            foreach ($allCN as $val) {
+                if ($color) {
+                    $tableau .= "<tr bgcolor='#CCCCCC'>";
+                }
+                $color = !$color;
+                $tableau .= "<td class='grid_1'>" . $val->get_noCommandeNourriture() . "</td>
+                                <td class='grid_3'>" . $val->get_dateLivraison() . "</td>
+                                <td class='grid_3'>" . $val->get_dateCommande() . "</td>
+                                <td class='grid_3'>" . $val->get_labelAeroportLivraison() . "</td>
+                             </tr>";
+            }
+            $tableau .= "</table>";
+        } else {
+            $tableau = "<div>Il n'y a pas de commande dans la base de donnée</div>";
+        }
+        return $tableau;
+    }
+
     //--------------------------------------------------------------------------
     // Getter / setter
     //--------------------------------------------------------------------------

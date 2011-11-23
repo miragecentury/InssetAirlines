@@ -263,6 +263,55 @@ class ServPlaning_Model_Vol
         return $tableau;
     }
 
+    /**
+     * Retourne tous les vols sous forme de tableau html, 
+     * retourne une phrase disant qu'il n'y en a pas dans la bd si c'est le cas
+     * 
+     * @access public
+     * @author charles
+     * @return string
+     *  
+     */
+    public static function getListeVolUser()
+    {
+        $all = ServPlaning_Model_Vol::getListeVol();
+        $color = true;
+
+        if (!empty($all)) {
+            $tableau = "<table class='grid_16'>
+                        <tr>
+                            <td class='grid_1'>Id</td>
+                            <td class='grid_3'>Label</td>
+                            <td class='grid_3'>Aeroport de départ</td>
+                            <td class='grid_3'>Aeroport d'arrivée</td>
+                            <td class='grid_1'>Avion</td>
+                            <td class='grid_1'>Ligne</td>
+                            <td class='grid_1'>Depart</td>
+                            <td class='grid_1'>Arrivée</td>
+                        </tr>";
+
+            foreach ($all as $val) {
+                if ($color) {
+                    $tableau .= "<tr bgcolor='#CCCCCC'>";
+                }
+                $color = !$color;
+                $tableau .= "   <td class='grid_1'>" . $val->get_noVol() . "</td>
+                                <td class='grid_3'>" . $val->get_labelvol() . "</td>
+                                <td class='grid_3'>" . $val->get_labelAeroportDeco() . "</td>
+                                <td class='grid_3'>" . $val->get_labelAeroportAtte() . "</td>
+                                <td class='grid_1'>" . $val->get_noAvion() . "</td>
+                                <td class='grid_1'>" . $val->get_noLigne() . "</td>
+                                <td class='grid_1'>" . $val->get_heuredecollage() . "</td>
+                                <td class='grid_1'>" . $val->get_heureAtterissage() . "</td>
+                                </tr>";
+            }
+            $tableau .= "</table>";
+        } else {
+            $tableau = "<div>Il n'y a pas d'incident dans la base de donnée</div>";
+        }
+        return $tableau;
+    }
+
     //--------------------------------------------------------------------------
     // Getter / setter
     //--------------------------------------------------------------------------

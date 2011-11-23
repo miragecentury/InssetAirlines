@@ -1,6 +1,6 @@
 <?php
 
-class ServLogCom_IndexController extends Zend_Controller_Action
+class ServPlaning_UserController extends Zend_Controller_Action
 {
 
     public function init()
@@ -12,9 +12,9 @@ class ServLogCom_IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        
+        $this->view->all = ServPlaning_Model_Vol::getListeVolUser();
     }
 
-
+    
 }
 

@@ -1,6 +1,6 @@
 <?php
 
-class ServLogCom_IndexController extends Zend_Controller_Action
+class ServLogCom_UserController extends Zend_Controller_Action
 {
 
     public function init()
@@ -12,9 +12,8 @@ class ServLogCom_IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        
+        $this->view->all = ServLogCom_Model_CommandeNourriture::getListeCommandeNourritureUser();
     }
-
 
 }
 
