@@ -171,52 +171,83 @@ class UtilisateurController extends Zend_Controller_Action
                 $this->getRequest()->getParam( 'id' ) );
 
         //récupération de l'objet Personne_has_Telephone
-        //TODO : faire une protection pour l'id en get
         $assoc = Application_Model_PersonneHasTelephone::getAssoc(
-                $this->getRequest()->getParam( 'id' ), $pers->get_noPersonne() );
-
-        //preremplissage de la form
-        $changeTelephoneForm->setDefaults( array(
-            'labelTelephone' => $assoc->get_labelTelephone(),
-            'numTelephone' => $tel->get_numTelephone(),
-        ) );
-
-        //chargement de la form (fin)
-        $this->view->changeTelephoneForm = $changeTelephoneForm;
-
-        //Si le formulaire est valide
-        if ( isset( $_POST ) &&
-            !empty( $_POST ) &&
-            $changeTelephoneForm->isValid( $_POST ) ) {
-
-            //Modif 1 : numéro de téléphone changé
-            if ( isset( $_POST[ 'numTelephone' ] ) &&
-                !empty( $_POST[ 'numTelephone' ] ) ) {
-                //setter
-                $tel->set_numTelephone( $this->_request->getParam( 'numTelephone' ) );
-
-                //sauvegarde
-                $tel->addTelephone();
-            }
-
-            //Modif 2 : label de téléphone
-            if ( isset( $_POST[ 'labelTelephone' ] ) &&
-                !empty( $_POST[ 'labelTelephone' ] ) ) {
-                //setter
-                $assoc->set_labelTelephone( $this->_request->getParam(  'labelTelephone' ) );
-
-                //sauvegarde
-                $assoc->addAssoc();
-            }
-            //conservation de l'id
-            $this->getRequest()->setParam('id', $this->getRequest()->getParam( 'id' ));
-
-            //réinit
-            $this->_redirect( '/utilisateur/profil/' );
-            $this->_PersonneActuelle = null;
+                $pers->get_noPersonne(), $this->getRequest()->getParam( 'id' ) );
+        //Pretection du parametre en get (id)
+        //Si l'association n'existe pas, id changé a la main -> annulation de la requete
+        if ( $assoc == null ) {
+            $this->view->changeTelephoneForm = $changeTelephoneForm;
+            $this->view->errorMessage = "Annulation de la requete,
+                ce numero ne vous appartient pas ou n'existe pas!";
+            $this->getResponse()->setHeader('refresh', '2,URL=../../');
         } else {
-            $this->view->errorMessage = 'Le formulaire est invalide !';
+
+            //preremplissage de la form
+            $changeTelephoneForm->setDefaults( array(
+                'labelTelephone' => $assoc->get_labelTelephone(),
+                'numTelephone' => $tel->get_numTelephone(),
+            ) );
+
+            //chargement de la form (fin)
+            $this->view->changeTelephoneForm = $changeTelephoneForm;
+
+            //Si le formulaire est valide
+            if ( isset( $_POST ) &&
+                !empty( $_POST ) &&
+                $changeTelephoneForm->isValid( $_POST ) ) {
+
+                //Modif 1 : numéro de téléphone changé
+                if ( isset( $_POST[ 'numTelephone' ] ) &&
+                    !empty( $_POST[ 'numTelephone' ] ) ) {
+                    //setter
+                    $tel->set_numTelephone( $this->_request->getParam( 'numTelephone' ) );
+
+                    //sauvegarde
+                    $tel->addTelephone();
+                }
+
+                //Modif 2 : label de téléphone
+                if ( isset( $_POST[ 'labelTelephone' ] ) &&
+                    !empty( $_POST[ 'labelTelephone' ] ) ) {
+                    //setter
+                    $assoc->set_labelTelephone( $this->_request->getParam( 'labelTelephone' ) );
+
+                    //sauvegarde
+                    $assoc->addAssoc();
+                }
+                //conservation de l'id
+                $this->getRequest()->setParam( 'id', $this->getRequest()->getParam( 'id' ) );
+
+                //réinit
+                $this->_redirect( '/utilisateur/profil/' );
+                $this->_PersonneActuelle = null;
+            } else {
+                $this->view->errorMessage = 'Le formulaire est invalide !';
+            }
         }
+    }
+
+    public function deletetelephoneAction()
+    {
+        //recupération de la personne courante
+        $pers = $this->_getPersonneActuelle();
+        $this->view->personne = $pers;
+
+        //récupération de l'objet Personne_has_Telephone
+        $assoc = Application_Model_PersonneHasTelephone::getAssoc(
+            $pers->get_noPersonne(), $this->getRequest()->getParam( 'id' ) );
+        if ( $assoc == null ) {
+
+            $this->view->errorMessage = "Annulation de la requete,
+                ce numero ne vous appartient pas ou n'existe pas!";
+            $this->getResponse()->setHeader( 'refresh', '2,url=../../' );
+        } else {
+            $assoc->delAssoc();
+            unset( $assoc );
+        }
+
+        //réinit
+        $this->_PersonneActuelle = null;
     }
 
     //GETTERS

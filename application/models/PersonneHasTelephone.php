@@ -71,6 +71,16 @@ class Application_Model_PersonneHasTelephone
                 $e->getPrevious()->getMessage(), Zend_Log::ERR );
         }
     }
+    public function delAssoc(){
+        try{
+        $this->_mapper->deleteAssoc($this);
+        } catch ( Spesx_Mapper_Exception $e ) {
+            Spesx_Log::log( "Erreur de suppression dans l'association Persone <> Telephone : " .
+                $e->getMessage() .
+                ':' .
+                $e->getPrevious()->getMessage(), Zend_Log::ERR );
+        }
+    }
 
     //-----------------
     //GETTERS / SETTERS
