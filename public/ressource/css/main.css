@@ -158,3 +158,10 @@ ul{
 .bold{
     font-weight: bold;
 }
+.success{
+        font-weight: bold;
+        color : green;
+        background-color: lightgreen;
+        border: 1px solid green;
+        padding: 10px 15px;
+}
