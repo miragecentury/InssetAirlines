@@ -27,7 +27,7 @@ class Application_Model_Telephone
     //Constructeur : instancie le mapper
     public function __construct()
     {
-        $this->_mapper = Spesx_Mapper_MapperFactory::getMapper('Application_Model_Telephone');
+        $this->_mapper = Spesx_Mapper_MapperFactory::getMapper( 'Application_Model_Telephone' );
     }
 
     //--------------------------------------------------------------------------
@@ -39,10 +39,10 @@ class Application_Model_Telephone
      * @return Application_Model_Telephone
      * @access public
      */
-    public static function getTelephone($id)
+    public static function getTelephone( $id )
     {
-        $mapper = Spesx_Mapper_MapperFactory::getMapper('Application_Model_Telephone');
-        return $mapper->find($id);
+        $mapper = Spesx_Mapper_MapperFactory::getMapper( 'Application_Model_Telephone' );
+        return $mapper->find( $id );
     }
 
     /**
@@ -52,8 +52,16 @@ class Application_Model_Telephone
      */
     public function addTelephone()
     {
-        $this->_mapper->save($this, 'noTelephone');
+        try {
+            $this->_mapper->save( $this, 'noTelephone' );
+        } catch ( Spesx_Mapper_Exception $e ) {
+            Spesx_Log::log( "Erreur de modification du telephone : " .
+                $e->getMessage() .
+                ':' .
+                $e->getPrevious()->getMessage() ,  Zend_Log::ERR);
+        }
     }
+
     //--------------------------------------------------------------------------
     //GETTER / SETTER
     //--------------------------------------------------------------------------
@@ -62,7 +70,7 @@ class Application_Model_Telephone
         return $this->_noTelephone;
     }
 
-    public function set_noTelephone($_noTelephone)
+    public function set_noTelephone( $_noTelephone )
     {
         $this->_noTelephone = $_noTelephone;
         return $this;
@@ -73,7 +81,7 @@ class Application_Model_Telephone
         return $this->_numTelephone;
     }
 
-    public function set_numTelephone($_numTelephone)
+    public function set_numTelephone( $_numTelephone )
     {
         $this->_numTelephone = $_numTelephone;
         return $this;

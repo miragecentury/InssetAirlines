@@ -44,16 +44,31 @@ class Application_Model_PersonneHasTelephone
 
     //------------
     //CONSTRUCTEUR
-    public function __construct(){
-     $this->_mapper = Spesx_Mapper_MapperFactory::getMapper('Application_Model_PersonneHasTelephone');
+    public function __construct()
+    {
+        $this->_mapper = Spesx_Mapper_MapperFactory::getMapper( 'Application_Model_PersonneHasTelephone' );
     }
+
     //--------
     //METHODES
-    public static function getAssoc($idTelephone,$idPersonne){
-        $id = array($idTelephone,$idPersonne);
-        $mapper = Spesx_Mapper_MapperFactory::getMapper('Application_Model_PersonneHasTelephone');
-        $return = $mapper->find($id);
+    public static function getAssoc( $idTelephone, $idPersonne )
+    {
+        $id = array( $idTelephone, $idPersonne );
+        $mapper = Spesx_Mapper_MapperFactory::getMapper( 'Application_Model_PersonneHasTelephone' );
+        $return = $mapper->find( $id );
         return $return;
+    }
+
+    public static function addAssoc()
+    {
+        try {
+            $this->_mapper->save( $this );
+        } catch ( Spesx_Mapper_Exception $e ) {
+            Spesx_Log::log( "Erreur de modification de l'association Persone <> Telephone : " .
+                $e->getMessage() .
+                ':' .
+                $e->getPrevious()->getMessage(), Zend_Log::ERR );
+        }
     }
 
     //-----------------
@@ -63,9 +78,10 @@ class Application_Model_PersonneHasTelephone
         return $this->_noPersonne;
     }
 
-    public function set_noPersonne($_noPersonne)
+    public function set_noPersonne( $_noPersonne )
     {
         $this->_noPersonne = $_noPersonne;
+        return $this;
     }
 
     public function get_noTelephone()
@@ -73,9 +89,10 @@ class Application_Model_PersonneHasTelephone
         return $this->_noTelephone;
     }
 
-    public function set_noTelephone($_noTelephone)
+    public function set_noTelephone( $_noTelephone )
     {
         $this->_noTelephone = $_noTelephone;
+        return $this;
     }
 
     public function get_labelTelephone()
@@ -83,9 +100,10 @@ class Application_Model_PersonneHasTelephone
         return $this->_labelTelephone;
     }
 
-    public function set_labelTelephone($_labelTelephone)
+    public function set_labelTelephone( $_labelTelephone )
     {
         $this->_labelTelephone = $_labelTelephone;
+        return $this;
     }
 
     public function get_mapper()
@@ -93,10 +111,12 @@ class Application_Model_PersonneHasTelephone
         return $this->_mapper;
     }
 
-    public function set_mapper($_mapper)
+    public function set_mapper( $_mapper )
     {
         $this->_mapper = $_mapper;
+        return $this;
     }
+
 }
 
 ?>

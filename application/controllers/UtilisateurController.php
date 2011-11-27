@@ -14,10 +14,10 @@ class UtilisateurController extends Zend_Controller_Action
 
     public function init()
     {
-        $this->view->render('user/_sidebar.phtml');
-        $this->view->render('user/_utilisateurSidebar.phtml');
-        $this->view->render('user/_login.phtml');
-        $this->_acl = Zend_Registry::get('Acl');
+        $this->view->render( 'user/_sidebar.phtml' );
+        $this->view->render( 'user/_utilisateurSidebar.phtml' );
+        $this->view->render( 'user/_login.phtml' );
+        $this->_acl = Zend_Registry::get( 'Acl' );
 
         //Rediredtion auto si pas authentifié
         /* TODO : A activer lorsque le probleme des acl (heritage) sera reglé
@@ -46,15 +46,15 @@ class UtilisateurController extends Zend_Controller_Action
         $this->view->personne = $pers;
 
         //si le formulaire est valide
-        if (!empty($_POST) && $changeMdpForm->isValid($_POST)) {
-            $ancienMdp = $changeMdpForm->getValue('ancienMdp');
+        if ( !empty( $_POST ) && $changeMdpForm->isValid( $_POST ) ) {
+            $ancienMdp = $changeMdpForm->getValue( 'ancienMdp' );
             //si le mot de passe courant et le mot de passe renseigné dans la form est ==
-            if ($ancienMdp === $pers->get_password()) {
-                $pers->set_password($changeMdpForm->getValue('nouveauMdp'));
-                if (null !== $pers->get_noPersonne()) {
-                    $pers->savePersonneById($pers->get_noPersonne());
+            if ( $ancienMdp === $pers->get_password() ) {
+                $pers->set_password( $changeMdpForm->getValue( 'nouveauMdp' ) );
+                if ( null !== $pers->get_noPersonne() ) {
+                    $pers->savePersonneById( $pers->get_noPersonne() );
                     $this->_personneActuelle = null;
-                    $this->_redirect('utilisateur');
+                    $this->_redirect( 'utilisateur' );
                 } else {
                     $this->view->errorMessage = "Erreur lors de l'enregistrement du mot de passe";
                 }
@@ -73,7 +73,7 @@ class UtilisateurController extends Zend_Controller_Action
         $this->view->personne = $pers;
 
         //recupération de l'adresse associé à la personne
-        $adresse = Application_Model_Adresse::getAdresse($pers->get_noAdresse());
+        $adresse = Application_Model_Adresse::getAdresse( $pers->get_noAdresse() );
 
         //passage des info sur l'addresse à la vue
         $this->view->adresse = $adresse;
@@ -99,18 +99,18 @@ class UtilisateurController extends Zend_Controller_Action
         $this->view->personne = $pers;
 
         //Si le form est valide :
-        if (!empty($_POST) && $changeEmailForm->isValid($_POST)) {
+        if ( !empty( $_POST ) && $changeEmailForm->isValid( $_POST ) ) {
             $idPers = $pers->get_noPersonne();
-            if (isset($idPers) && !empty($idPers)) {
-                $email = $changeEmailForm->getValue('email');
-                $pers->set_email($email);
-                $pers->savePersonneById($pers->get_noPersonne());
+            if ( isset( $idPers ) && !empty( $idPers ) ) {
+                $email = $changeEmailForm->getValue( 'email' );
+                $pers->set_email( $email );
+                $pers->savePersonneById( $pers->get_noPersonne() );
                 //Changement de login pour la ssesion en cours
-                $authSession = new Zend_Session_Namespace('Zend_Auth');
+                $authSession = new Zend_Session_Namespace( 'Zend_Auth' );
                 $authSession->storage = $email;
                 //reinit
                 $this->_personneActuelle = null;
-                $this->_redirect('/');
+                $this->_redirect( '/' );
             } else {
                 $this->view->errorMessage = "Non connecté, veuiller vous logger";
             }
@@ -129,33 +129,34 @@ class UtilisateurController extends Zend_Controller_Action
         $this->view->personne = $pers;
 
         //recupération de l'adresse
-        $adresse = Application_Model_Adresse::getAdresse($pers->get_noAdresse());
+        $adresse = Application_Model_Adresse::getAdresse( $pers->get_noAdresse() );
 
         //Si le formulaire est valide
-        if (!empty($_POST) && $changeAdresseForm->isValid($_POST)) {
+        if ( !empty( $_POST ) && $changeAdresseForm->isValid( $_POST ) ) {
 
-            $adresse->set_numero($changeAdresseForm->getValue('numero'));
-            $adresse->set_porte($changeAdresseForm->getValue('porte'));
-            $adresse->set_etage($changeAdresseForm->getValue('etage'));
-            $adresse->set_immeuble($changeAdresseForm->getValue('immeuble'));
-            $adresse->set_adresse($changeAdresseForm->getValue('adresse'));
-            $adresse->set_codepostal($changeAdresseForm->getValue('codePostal'));
-            $adresse->set_labelVille($changeAdresseForm->getValue('ville'));
-            $adresse->set_etatProvince($changeAdresseForm->getValue('etatProvince'));
-            $adresse->set_labelPays($changeAdresseForm->getValue('pays'));
-            $adresse->set_commentaire($changeAdresseForm->getValue('commentaire'));
+            $adresse->set_numero( $changeAdresseForm->getValue( 'numero' ) );
+            $adresse->set_porte( $changeAdresseForm->getValue( 'porte' ) );
+            $adresse->set_etage( $changeAdresseForm->getValue( 'etage' ) );
+            $adresse->set_immeuble( $changeAdresseForm->getValue( 'immeuble' ) );
+            $adresse->set_adresse( $changeAdresseForm->getValue( 'adresse' ) );
+            $adresse->set_codepostal( $changeAdresseForm->getValue( 'codePostal' ) );
+            $adresse->set_labelVille( $changeAdresseForm->getValue( 'ville' ) );
+            $adresse->set_etatProvince( $changeAdresseForm->getValue( 'etatProvince' ) );
+            $adresse->set_labelPays( $changeAdresseForm->getValue( 'pays' ) );
+            $adresse->set_commentaire( $changeAdresseForm->getValue( 'commentaire' ) );
 
             $adresse->addAdresse();
 
             //reinit
-            //$this->_redirect('/');
+            $this->_redirect( '/' );
             $this->_PersonneActuelle = null;
         } else {
             $this->view->errorMessage = 'Le formulaire est invalide !';
         }
     }
 
-    public function modifTelephoneAction(){
+    public function modiftelephoneAction()
+    {
         //recupération de la personne courante
         $pers = $this->_getPersonneActuelle();
 
@@ -167,45 +168,73 @@ class UtilisateurController extends Zend_Controller_Action
 
         //récupération de l'objet telephone concerné
         $tel = Application_Model_Telephone::getTelephone(
-            $this->getRequest()->getParam('id'));
+                $this->getRequest()->getParam( 'id' ) );
 
         //récupération de l'objet Personne_has_Telephone
+        //TODO : faire une protection pour l'id en get
         $assoc = Application_Model_PersonneHasTelephone::getAssoc(
-            $this->getRequest()->getParam('id'),
-            $pers->get_noPersonne());
+                $this->getRequest()->getParam( 'id' ), $pers->get_noPersonne() );
 
         //preremplissage de la form
-        $changeTelephoneForm->setDefaults(array(
-           'labelTelephone' => $assoc->get_labelTelephone(),
+        $changeTelephoneForm->setDefaults( array(
+            'labelTelephone' => $assoc->get_labelTelephone(),
             'numTelephone' => $tel->get_numTelephone()
-        ));
+        ) );
 
         //chargement de la form (fin)
         $this->view->changeTelephoneForm = $changeTelephoneForm;
 
-        //Modif 1 : numéro de téléphone
+        //Si le formulaire est valide
+        if ( isset( $_POST ) &&
+            !empty( $_POST ) &&
+            $changeTelephoneForm->isValid( $_POST ) ) {
 
-        //Modif 2 : label de téléphone
+            //Modif 1 : numéro de téléphone changé
+            if ( isset( $_POST[ 'numTelephone' ] ) &&
+                !empty( $_POST[ 'numTelephone' ] ) ) {
+                //setter
+                $tel->set_numTelephone( $this->_request->getParam( 'numTelephone' ) );
+
+                //sauvegarde
+                $tel->addTelephone();
+            }
+
+            //Modif 2 : label de téléphone
+            if ( isset( $_POST[ 'labelTelephone' ] ) &&
+                !empty( $_POST[ 'labelTelephone' ] ) ) {
+                //setter
+                $assoc->set_labelTelephone( $this->_request->getParam(  'labelTelephone' ) );
+
+                //sauvegarde
+                $assoc->addAssoc();
+            }
+
+            //réinit
+            $this->_redirect( '/' );
+            $this->_PersonneActuelle = null;
+        } else {
+            $this->view->errorMessage = 'Le formulaire est invalide !';
+        }
     }
 
     //GETTERS
     protected function _get_email()
     {
 
-        $authSession = new Zend_Session_Namespace('Zend_Auth');
-        if (!empty($authSession->storage) && isset($authSession->storage)) {
+        $authSession = new Zend_Session_Namespace( 'Zend_Auth' );
+        if ( !empty( $authSession->storage ) && isset( $authSession->storage ) ) {
             $this->_email = $authSession->storage;
         } else {
-            $this->_redirect('/');
+            $this->_redirect( '/' );
         }
     }
 
     protected function _getPersonneActuelle()
     {
         //TODO : creer un systeme permetant sa perenité apres chargement ...(session)
-        if ($this->_personneActuelle === null) {
+        if ( $this->_personneActuelle === null ) {
             $this->_get_email();
-            $pers = Application_Model_Personne::getPersonneByMail($this->_email);
+            $pers = Application_Model_Personne::getPersonneByMail( $this->_email );
             $this->_personneActuelle = $pers;
         }
         return $this->_personneActuelle;
