@@ -54,7 +54,7 @@ class UtilisateurController extends Zend_Controller_Action
                 if ( null !== $pers->get_noPersonne() ) {
                     $pers->savePersonneById( $pers->get_noPersonne() );
                     $this->_personneActuelle = null;
-                    $this->_redirect( 'utilisateur' );
+                    $this->_redirect( '/utilisateur' );
                 } else {
                     $this->view->errorMessage = "Erreur lors de l'enregistrement du mot de passe";
                 }
@@ -110,7 +110,7 @@ class UtilisateurController extends Zend_Controller_Action
                 $authSession->storage = $email;
                 //reinit
                 $this->_personneActuelle = null;
-                $this->_redirect( '/' );
+                $this->_redirect( '/utilisateur/profil/' );
             } else {
                 $this->view->errorMessage = "Non connecté, veuiller vous logger";
             }
@@ -148,7 +148,7 @@ class UtilisateurController extends Zend_Controller_Action
             $adresse->addAdresse();
 
             //reinit
-            $this->_redirect( '/' );
+            $this->_redirect( '/utilisateur/profil/' );
             $this->_PersonneActuelle = null;
         } else {
             $this->view->errorMessage = 'Le formulaire est invalide !';
@@ -178,7 +178,7 @@ class UtilisateurController extends Zend_Controller_Action
         //preremplissage de la form
         $changeTelephoneForm->setDefaults( array(
             'labelTelephone' => $assoc->get_labelTelephone(),
-            'numTelephone' => $tel->get_numTelephone()
+            'numTelephone' => $tel->get_numTelephone(),
         ) );
 
         //chargement de la form (fin)
@@ -208,9 +208,11 @@ class UtilisateurController extends Zend_Controller_Action
                 //sauvegarde
                 $assoc->addAssoc();
             }
+            //conservation de l'id
+            $this->getRequest()->setParam('id', $this->getRequest()->getParam( 'id' ));
 
             //réinit
-            $this->_redirect( '/' );
+            $this->_redirect( '/utilisateur/profil/' );
             $this->_PersonneActuelle = null;
         } else {
             $this->view->errorMessage = 'Le formulaire est invalide !';

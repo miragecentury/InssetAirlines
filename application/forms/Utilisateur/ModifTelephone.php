@@ -11,7 +11,7 @@ class Application_Form_Utilisateur_ModifTelephone extends Zend_Form
     public function init(){
 
         //Init
-        $this->setAction('POST');
+        //$this->setAction();
 
         //1er element
         $labelTelephone = new Zend_Form_Element_Text('labelTelephone');
@@ -26,6 +26,8 @@ class Application_Form_Utilisateur_ModifTelephone extends Zend_Form
         $numTelephone->setRequired(true)
             ->setLabel('Numéro :')
             ->setValidators(array(new Zend_Validate_Regex(array('pattern' => '/^\+[0-9]{11}$|^[0-9]{10}$/'))));
+
+        $this->addElement($numTelephone);
 
         //Submit ..
          $this->addElement('submit','valider',array('label' => 'Valider'));

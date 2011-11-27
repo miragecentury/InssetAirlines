@@ -59,10 +59,11 @@ class Application_Model_PersonneHasTelephone
         return $return;
     }
 
-    public static function addAssoc()
+    public function addAssoc()
     {
         try {
-            $this->_mapper->save( $this );
+            //var_dump($this);
+            $this->_mapper->saveAssoc( $this );
         } catch ( Spesx_Mapper_Exception $e ) {
             Spesx_Log::log( "Erreur de modification de l'association Persone <> Telephone : " .
                 $e->getMessage() .
