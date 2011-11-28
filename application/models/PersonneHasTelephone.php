@@ -51,9 +51,9 @@ class Application_Model_PersonneHasTelephone
 
     //--------
     //METHODES
-    public static function getAssoc( $idTelephone, $idPersonne )
+    public static function getAssoc( $idPersonne, $idTelephone )
     {
-        $id = array( $idTelephone, $idPersonne );
+        $id = array( $idPersonne, $idTelephone);
         $mapper = Spesx_Mapper_MapperFactory::getMapper( 'Application_Model_PersonneHasTelephone' );
         $return = $mapper->find( $id );
         return $return;

@@ -53,13 +53,14 @@ class Application_Model_Telephone
     public function addTelephone()
     {
         try {
-            $this->_mapper->save( $this, 'noTelephone' );
+            $return = $this->_mapper->save( $this, 'noTelephone' );
         } catch ( Spesx_Mapper_Exception $e ) {
             Spesx_Log::log( "Erreur de modification du telephone : " .
                 $e->getMessage() .
                 ':' .
                 $e->getPrevious()->getMessage() ,  Zend_Log::ERR);
         }
+        return $return;
     }
 
     //--------------------------------------------------------------------------
