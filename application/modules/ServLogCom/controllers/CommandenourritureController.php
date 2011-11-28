@@ -12,7 +12,7 @@ class ServLogCom_CommandenourritureController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $this->view->all = ServLogCom_Model_CommandeNourriture::getListeCommandeNourritureHTML();
+        $this->view->all = ServLogCom_Model_CommandeNourriture::getListeCommandeNourritureUser();
     }
 
     public function newAction()
@@ -27,7 +27,7 @@ class ServLogCom_CommandenourritureController extends Zend_Controller_Action
                     ->set_dateCommande($request->getParam('dateCommande'))
                     ->set_idAeroportLivraison($request->getParam('idAeroportLivraison'));
             $item->addCommandeNourriture();
-            $this->_redirect('ServLogCom/Commandenourriture');
+            $this->_redirect('ServLogCom/Commandenourriture/admin');
         }
     }
 
@@ -49,7 +49,7 @@ class ServLogCom_CommandenourritureController extends Zend_Controller_Action
                     ->set_dateCommande($request->getParam('dateCommande'))
                     ->set_idAeroportLivraison($request->getParam('idAeroportLivraison'));
             $item->addCommandeNourriture();
-            $this->_redirect('ServLogCom/Commandenourriture');
+            $this->_redirect('ServLogCom/Commandenourriture/admin');
         }
     }
 
@@ -59,7 +59,7 @@ class ServLogCom_CommandenourritureController extends Zend_Controller_Action
         if ($request->getParam('ok') === "ok") {
             $Mod = new ServLogCom_Model_CommandeNourriture;
             $Mod->delCommandeNourriture($request->getParam('id'));
-            $this->_redirect('ServLogCom/Commandenourriture');
+            $this->_redirect('ServLogCom/Commandenourriture/admin');
         } else {
             $Mod = new ServLogCom_Model_CommandeNourriture;
             $item = $Mod->getCommandeNourriture($request->getParam('id'));
@@ -76,5 +76,9 @@ class ServLogCom_CommandenourritureController extends Zend_Controller_Action
         $this->view->id = $this->getRequest()->getParam('id');
     }
 
+    public function adminAction()
+    {
+        $this->view->all = ServLogCom_Model_CommandeNourriture::getListeCommandeNourritureHTML();
+    }
 }
 

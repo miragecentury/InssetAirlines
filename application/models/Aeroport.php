@@ -71,10 +71,10 @@ class Application_Model_Aeroport
      * @param string $val, string col
      *
      */
-    public function delAeroport($labelAeroport)
+    public function delAeroport($noAeroport)
     {
         try {
-            $this->_mapper->delete('noAeroport', $labelAeroport);
+            $this->_mapper->delete('noAeroport', $noAeroport);
         } catch (Zend_Exception $e) {
             echo 'Application_Models_Aeroport_delAeroport() Exception - ' .
             $e->getMessage() . ' - ' . $e->getPrevious();
@@ -91,9 +91,9 @@ class Application_Model_Aeroport
      * @return null|Application_Model_Aeroport
      *  
      */
-    public function getAeroport($labelAeroport)
+    public function getAeroport($noAeroport)
     {
-        $return = $this->_mapper->find($labelAeroport);
+        $return = $this->_mapper->find($noAeroport);
         return $return;
     }
 
