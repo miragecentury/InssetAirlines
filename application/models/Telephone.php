@@ -38,11 +38,22 @@ class Application_Model_Telephone
      * @param int $id
      * @return Application_Model_Telephone
      * @access public
+     * @static
      */
     public static function getTelephone( $id )
     {
         $mapper = Spesx_Mapper_MapperFactory::getMapper( 'Application_Model_Telephone' );
         return $mapper->find( $id );
+    }
+    /**
+     * Récupère un objet Telephone à partir du numéro
+     * @param string $num
+     * @author pewho
+     * @access public
+     * @static
+     */
+    public static function getTelephoneByNum($num){
+        
     }
 
     /**
