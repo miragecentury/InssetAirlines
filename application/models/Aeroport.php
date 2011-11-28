@@ -155,22 +155,22 @@ class Application_Model_Aeroport
      * @return string
      *  
      */
-    public static function getListeAeroportHTML()
+    public static function getListeAeroportHTML($admin=true)
     {
         $all = Application_Model_Aeroport::getListeAeroport();
         $color = true;
-
         if (!empty($all)) {
             $tableau = "<table class='grid_16'>
                         <tr>
                             <td class='grid_1'>Id</td>
                             <td class='grid_2'>Label</td>
                             <td class='grid_2'>Ville</td>
-                            <td class='grid_2'>Pays</td>
+                            <td class='grid_2'>Pays</td>";
+            if ($admin)
+                $tableau .= "<td class='grid_1'></td>
                             <td class='grid_1'></td>
-                            <td class='grid_1'></td>
-                            <td class='grid_2'></td>
-                        </tr>";
+                            <td class='grid_2'></td>";
+            $tableau .= "</tr>";
 
             foreach ($all as $val) {
                 if ($color) {
@@ -180,11 +180,12 @@ class Application_Model_Aeroport
                 $tableau .= "<td class='grid_1'>" . $val->get_noAeroport() . "</td>
                              <td class='grid_2'>" . $val->get_labelAeroport() . "</td>
                              <td class='grid_2'>" . $val->get_labelVille() . "</td>
-                             <td class='grid_2'>" . $val->get_labelPays() . "</td>
-                             <td class='grid_1'><a href='/Aeroport/detail?id=" . $val->get_noAeroport() . "'>Détail</a></td>
+                             <td class='grid_2'>" . $val->get_labelPays() . "</td>";
+                if ($admin)
+                    $tableau .="<td class='grid_1'><a href='/Aeroport/detail?id=" . $val->get_noAeroport() . "'>Détail</a></td>
                              <td class='grid_1'><a href='/Aeroport/upd?id=" . $val->get_noAeroport() . "'>Modifier</a></td>
-                             <td class='grid_2'><a href='/Aeroport/del?id=" . $val->get_noAeroport() . "'>Supprimer</a></td>
-                            </tr>";
+                             <td class='grid_2'><a href='/Aeroport/del?id=" . $val->get_noAeroport() . "'>Supprimer</a></td>";
+                $tableau .="</tr>";
             }
             $tableau .= "</table>";
         } else {
