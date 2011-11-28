@@ -1,6 +1,6 @@
 <div class="grid_6 sep">
     <h2>
-        Modification d'un numero de telephone
+        Ajout d'un numero de telephone
     </h2>
     <h6>
         <?php
@@ -12,13 +12,9 @@
 <div class="clear"></div>
 <div class="prefix_1 ">
     <?php
-    if ( isset( $this->errorMessage ) && $this->errormessage == "Annulation de la requete,
-                ce numero ne vous appartient pas ou n'existe pas!" ) {
-        echo "<p class='red'>" . $this->errorMessage . "</p>";
-    }
     if ( !empty( $_POST ) && isset( $this->errorMessage ) ) {
         echo "<p class='red'>" . $this->errorMessage . "</p>";
     }
-    echo $this->changeTelephoneForm->render();
+    echo $this->addTelephoneForm->render();
     ?>
 </div>
