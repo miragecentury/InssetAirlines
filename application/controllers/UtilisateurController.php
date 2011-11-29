@@ -176,10 +176,10 @@ class UtilisateurController extends Zend_Controller_Action
             //Setter Telephone
             $tel->set_numTelephone($this->_request->getParam('numTelephone'));
             //si le numéro existe en BDD
-            if (($tel =
+            if (($telObj =
                 Application_Model_Telephone::getTelephoneByNum($tel->get_numTelephone()))
                     instanceof Application_Model_Telephone) {
-                $idTel = $tel->get_noTelephone();
+                $idTel = $telObj->get_noTelephone();
             } else {
                 //Insertion du telephone en bdd
                 $idTel = $tel->addTelephone();
