@@ -176,16 +176,16 @@ class UtilisateurController extends Zend_Controller_Action
             //Setter Telephone
             $tel->set_numTelephone($this->_request->getParam('numTelephone'));
             //si le numéro existe en BDD
-            if (($telObj =
-                Application_Model_Telephone::getTelephoneByNum($tel->get_numTelephone()))
-                    instanceof Application_Model_Telephone) {
+
+            $telObj =
+                Application_Model_Telephone::getTelephoneByNum($tel->get_numTelephone());
+            if ($telObj instanceof Application_Model_Telephone) {
                 $idTel = $telObj->get_noTelephone();
             } else {
                 //Insertion du telephone en bdd
                 $idTel = $tel->addTelephone();
             }
             //Setter assoc
-            var_dump($idTel);
             $assoc->set_noPersonne($pers->get_noPersonne());
             $assoc->set_noTelephone($idTel);
             $assoc->set_labelTelephone($this->_request->getParam('labelTelephone'));
@@ -294,13 +294,15 @@ class UtilisateurController extends Zend_Controller_Action
 
             $this->view->errorMessage = "Annulation de la requete,
                 ce numero ne vous appartient pas ou n'existe pas!";
-            $this->getResponse()->setHeader('refresh', '2,url=../../');
+
+
         } else {
             $assoc->delAssoc();
             unset($assoc);
         }
 
 //réinit
+        $this->getResponse()->setHeader('refresh', '3,url=../../');
         $this->_PersonneActuelle = null;
     }
 

@@ -45,6 +45,7 @@ class Application_Model_Telephone
         $mapper = Spesx_Mapper_MapperFactory::getMapper( 'Application_Model_Telephone' );
         return $mapper->find( $id );
     }
+
     /**
      * Récupère un objet Telephone à partir du numéro
      * @param string $num
@@ -52,8 +53,18 @@ class Application_Model_Telephone
      * @access public
      * @static
      */
-    public static function getTelephoneByNum($num){
-        
+    public static function getTelephoneByNum( $num )
+    {
+        try {
+            $mapper = Spesx_Mapper_MapperFactory::getMapper( 'Application_Model_Telephone' );
+            $return = $mapper->fetch($num);
+        } catch ( Spesx_Mapper_Exception $e ) {
+            Spesx_Log::log( "Erreur de selection du telephone(à partir du numéro) : " .
+                $e->getMessage() .
+                ':' .
+                $e->getPrevious()->getMessage(), Zend_Log::ERR );
+        }
+        return $return;
     }
 
     /**
@@ -69,7 +80,7 @@ class Application_Model_Telephone
             Spesx_Log::log( "Erreur de modification du telephone : " .
                 $e->getMessage() .
                 ':' .
-                $e->getPrevious()->getMessage() ,  Zend_Log::ERR);
+                $e->getPrevious()->getMessage(), Zend_Log::ERR );
         }
         return $return;
     }
