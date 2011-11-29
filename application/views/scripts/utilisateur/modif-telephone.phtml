@@ -12,10 +12,6 @@
 <div class="clear"></div>
 <div class="prefix_1 ">
     <?php
-    if ( isset( $this->errorMessage ) && $this->errormessage == "Annulation de la requete,
-                ce numero ne vous appartient pas ou n'existe pas!" ) {
-        echo "<p class='red'>" . $this->errorMessage . "</p>";
-    }
     if ( !empty( $_POST ) && isset( $this->errorMessage ) ) {
         echo "<p class='red'>" . $this->errorMessage . "</p>";
     }

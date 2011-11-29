@@ -228,6 +228,7 @@ class UtilisateurController extends Zend_Controller_Action
                 $pers->get_noPersonne(), $this->getRequest()->getParam('id'));
 //Protection du parametre en get (id)
 //Si l'association n'existe pas, id changé a la main -> annulation de la requete
+        //TODO : Afficher le message d'erreur proprement => redirect , message invisible
         if ($assoc == null) {
             $this->view->changeTelephoneForm = $changeTelephoneForm;
             $this->view->errorMessage = "Annulation de la requete,
