@@ -134,7 +134,7 @@ class ServCommercial_Model_Place
      * @return string
      *  
      */
-    public static function getListePlaceHTML()
+    public static function getListePlaceHTML($admin=true)
     {
         $html = ServCommercial_Model_Place::getListePlace();
         $color = true;
@@ -145,10 +145,12 @@ class ServCommercial_Model_Place
                             <td class='grid_2'>Place</td>
                             <td class='grid_2'>Agence</td>
                             <td class='grid_2'>Personne</td>
-                            <td class='grid_2'>Vol</td>
+                            <td class='grid_2'>Vol</td>";
+            if ($admin)
+            $tableau .= "<td class='grid_2'></td>
                             <td class='grid_2'></td>
-                            <td class='grid_2'></td>
-                        </tr>";
+                            <td class='grid_2'></td>";
+            $tableau .= "</tr>";
 
             foreach ($html as $val) {
                 if ($color) {
@@ -158,10 +160,12 @@ class ServCommercial_Model_Place
                 $tableau .= "   <td class='grid_2'>" . $val->get_noPlace() . "</td>
                                 <td class='grid_2'>" . $val->get_labelAgence() . "</td>
                                 <td class='grid_2'>" . $val->get_Personne_noPersonne() . "</td>
-                                <td class='grid_2'>" . $val->get_noVol() . "</td>
+                                <td class='grid_2'>" . $val->get_noVol() . "</td>";
+                if ($admin)
+                    $tableau .="<td class='grid_2'><a href='/ServCommercial/Place/detail?id=" . $val->get_noPlace() . "'>Detail</a></td>
                                 <td class='grid_2'><a href='/ServCommercial/Place/upd?id=" . $val->get_noPlace() . "'>Modifier</a></td>
-                                <td class='grid_2'><a href='/ServCommercial/Place/del?id=" . $val->get_noPlace() . "'>Supprimer</a></td>
-                            </tr>";
+                                <td class='grid_2'><a href='/ServCommercial/Place/del?id=" . $val->get_noPlace() . "'>Supprimer</a></td>";
+                $tableau .="</tr>";
             }
             $tableau .= "</table>";
         } else {
@@ -201,12 +205,12 @@ class ServCommercial_Model_Place
         $this->_noPlace = $_noPlace;
         return $this;
     }
-    
+
     public function get_labelAgence()
     {
         $Agence = new ServCommercial_Model_Agence();
         $Agence = $Agence->getAgence($this->get_noAgence());
-        
+
         return $Agence->get_labelAgence();
     }
 

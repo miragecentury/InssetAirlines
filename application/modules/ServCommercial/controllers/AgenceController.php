@@ -12,7 +12,34 @@ class ServCommercial_AgenceController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $this->view->all = ServCommercial_Model_Agence::getListeAgenceHTML();
+        try {
+            $all = ServCommercial_Model_Agence::getListeAgenceHTML(false);
+        } catch (Zend_Exception $e) {
+            Zend_Registry::get('Log')->log('AgenceController : index : Acces a la base de donnée impossible', Zend_Log::ALERT);
+            return FALSE;
+        }
+        if ($all != null)
+            $this->view->all = $all;
+        else
+            $this->view->all = "Erreur dans la base de donnée, 
+                veuillez contacter l'administrateur du site via le 
+                formulaire de contact.<br/>";
+    }
+
+    public function adminAction()
+    {
+        try {
+            $all = ServCommercial_Model_Agence::getListeAgenceHTML();
+        } catch (Zend_Exception $e) {
+            Zend_Registry::get('Log')->log('AgenceController : index : Acces a la base de donnée impossible', Zend_Log::ALERT);
+            return FALSE;
+        }
+        if ($all != null)
+            $this->view->all = $all;
+        else
+            $this->view->all = "Erreur dans la base de donnée, 
+                veuillez contacter l'administrateur du site via le 
+                formulaire de contact.<br/>";
     }
 
     public function newAction()
@@ -27,10 +54,15 @@ class ServCommercial_AgenceController extends Zend_Controller_Action
                     ->set_dateLancement($request->getParam('dateLancement'))
                     ->set_accesExtranet($request->getParam('accesExtranet'))
                     ->set_noAdresse($request->getParam('noAdresse'));
-            if($request->getParam('dateCloture')!=null)
+            if ($request->getParam('dateCloture') != null)
                 $item->set_dateCloture($request->getParam('dateCloture'));
-            $item->addAgence();
-            $this->_redirect('ServCommercial/Agence');
+            try {
+                $item->addAgence();
+            } catch (Zend_Exception $e) {
+                Zend_Registry::get('Log')->log('AgenceController : new : Acces a la base de donnée impossible', Zend_Log::ALERT);
+                return FALSE;
+            }
+            $this->_redirect('ServCommercial/Agence/admin');
         }
     }
 
@@ -39,7 +71,12 @@ class ServCommercial_AgenceController extends Zend_Controller_Action
         $request = $this->getRequest();
         if ($request->getParam('submit') != "Valider") {
             $item = new ServCommercial_Model_Agence();
-            $item = $item->getAgence($request->getParam('id'));
+            try {
+                $item = $item->getAgence($request->getParam('id'));
+            } catch (Zend_Exception $e) {
+                Zend_Registry::get('Log')->log('AgenceController : upd : Acces a la base de donnée impossible', Zend_Log::ALERT);
+                return FALSE;
+            }
             $form = new ServCommercial_Form_Agence();
             $form->getElement('labelAgence')->setValue($item->get_labelAgence());
             $form->getElement('dateLancement')->setValue($item->get_dateLancement());
@@ -54,9 +91,14 @@ class ServCommercial_AgenceController extends Zend_Controller_Action
                     ->set_dateLancement($request->getParam('dateLancement'))
                     ->set_accesExtranet($request->getParam('accesExtranet'))
                     ->set_noAdresse($request->getParam('noAdresse'));
-            if($request->getParam('dateCloture')!=null)
+            if ($request->getParam('dateCloture') != null)
                 $item->set_dateCloture($request->getParam('dateCloture'));
-            $item->addAgence();
+            try {
+                $item->addAgence();
+            } catch (Zend_Exception $e) {
+                Zend_Registry::get('Log')->log('AgenceController : upd : Acces a la base de donnée impossible', Zend_Log::ALERT);
+                return FALSE;
+            }
             $this->_redirect('ServCommercial/Agence');
         }
     }
@@ -66,14 +108,41 @@ class ServCommercial_AgenceController extends Zend_Controller_Action
         $request = $this->getRequest();
         if ($request->getParam('ok') === "ok") {
             $Mod = new ServCommercial_Model_Agence();
-            $Mod->delAgence($request->getParam('id'));
+            try {
+                $Mod->delAgence($request->getParam('id'));
+            } catch (Zend_Exception $e) {
+                Zend_Registry::get('Log')->log('AgenceController : del : Acces a la base de donnée impossible', Zend_Log::ALERT);
+                return FALSE;
+            }
             $this->_redirect('ServCommercial/Agence');
         } else {
             $Mod = new ServCommercial_Model_Agence();
-            $item = $Mod->getAgence($request->getParam('id'));
+            try {
+                $item = $Mod->getAgence($request->getParam('id'));
+            } catch (Zend_Exception $e) {
+                Zend_Registry::get('Log')->log('AgenceController : del : Acces a la base de donnée impossible', Zend_Log::ALERT);
+                return FALSE;
+            }
             $this->view->item = $item->getAgenceHTML();
             $this->view->id = $request->getParam('id');
         }
+    }
+
+    public function detailAction()
+    {
+        $Mod = new ServCommercial_Model_Agence;
+        try {
+            $item = $Mod->getAgence($this->getRequest()->getParam('id'));
+        } catch (Zend_Exception $e) {
+            Zend_Registry::get('Log')->log('AgenceController : detail : Acces a la base de donnée impossible', Zend_Log::ALERT);
+            return FALSE;
+        }
+        if ($item != null) {
+            $this->view->item = $item->getAgenceHTML();
+        } else {
+            $this->view->item = "Cet Incident n'existe pas dans la base de donnée!<br/>";
+        }
+        $this->view->id = $this->getRequest()->getParam('id');
     }
 
 }

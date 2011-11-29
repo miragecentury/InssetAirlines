@@ -154,7 +154,7 @@ class ServCommercial_Model_Agence
      * @return string
      *  
      */
-    public static function getListeAgenceHTML()
+    public static function getListeAgenceHTML($admin = true)
     {
         $html = ServCommercial_Model_Agence::getListeAgence();
         $color = true;
@@ -167,10 +167,12 @@ class ServCommercial_Model_Agence
                             <td class='grid_2'>Lancement</td>
                             <td class='grid_2'>Date de Cloture</td>
                             <td class='grid_1'>Extranet</td>
-                            <td class='grid_1'>Adresse</td>
+                            <td class='grid_1'>Adresse</td>";
+            if ($admin)
+                $tableau .= "   <td class='grid_1'></td>
                             <td class='grid_1'></td>
-                            <td class='grid_2'></td>
-                        </tr>";
+                            <td class='grid_2'></td>";
+            $tableau .= "</tr>";
 
             foreach ($html as $val) {
                 if ($color) {
@@ -191,10 +193,12 @@ class ServCommercial_Model_Agence
                 else
                     $tableau .= "Inactif";
                 $tableau .= "</td>
-                                <td class='grid_1'>" . $val->get_noAdresse() . "</td>
+                                <td class='grid_1'>" . $val->get_noAdresse() . "</td>";
+                if ($admin)
+                    $tableau .="<td class='grid_1'><a href='/ServCommercial/Agence/detail?id=" . $val->get_noAgence() . "'>Detail</a></td>
                                 <td class='grid_1'><a href='/ServCommercial/Agence/upd?id=" . $val->get_noAgence() . "'>Modifier</a></td>
-                                <td class='grid_2'><a href='/ServCommercial/Agence/del?id=" . $val->get_noAgence() . "'>Supprimer</a></td>
-                            </tr>";
+                                <td class='grid_2'><a href='/ServCommercial/Agence/del?id=" . $val->get_noAgence() . "'>Supprimer</a></td>";
+                $tableau .="</tr>";
             }
             $tableau .= "</table>";
         } else {

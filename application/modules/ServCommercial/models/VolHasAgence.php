@@ -75,10 +75,10 @@ class ServCommercial_Model_VolHasAgence
      * @param int $noAgence
      *
      */
-    public function delReservation($noVol,$noAgence)
+    public function delReservation($noVol, $noAgence)
     {
         try {
-            $this->_mapper->delete($noVol,$noAgence);
+            $this->_mapper->delete($noVol, $noAgence);
         } catch (Zend_Exception $e) {
             echo 'Serv_Commercial_Models_VolHasAgence_delReservation() Exception - ' .
             $e->getMessage() . ' - ' . $e->getPrevious();
@@ -96,6 +96,7 @@ class ServCommercial_Model_VolHasAgence
     {
         $this->_mapper->update($this);
     }
+
     public function getReservationHTML()
     {
         $Place = "<table class='grid_16'>
@@ -122,6 +123,7 @@ class ServCommercial_Model_VolHasAgence
             </table>";
         return $Place;
     }
+
     //--------------------------------------------------------------------------
     // Methodes
     //--------------------------------------------------------------------------
@@ -149,7 +151,7 @@ class ServCommercial_Model_VolHasAgence
      * @return string
      *  
      */
-    public static function getListeReservationHTML()
+    public static function getListeReservationHTML($admin=true)
     {
         $html = ServCommercial_Model_VolHasAgence::getListeReservation();
         $color = true;
@@ -157,28 +159,32 @@ class ServCommercial_Model_VolHasAgence
         if (!empty($html)) {
             $tableau = "<table class='grid_16'>
                         <tr>
-                            <td class='grid_2'>Vol</td>
-                            <td class='grid_2'>Agence</td>
-                            <td class='grid_3'>Nombre de place</td>
+                            <td class='grid_1'>Vol</td>
+                            <td class='grid_1'>Agence</td>
+                            <td class='grid_2'>Nombre de place</td>
                             <td class='grid_2'>Traitement</td>
-                            <td class='grid_2'>Validation</td>
-                            <td class='grid_2'></td>
-                            <td class='grid_2'></td>
-                        </tr>";
+                            <td class='grid_1'>Validation</td>";
+            if ($admin)
+                $tableau .= " <td class='grid_1'></td>
+                              <td class='grid_1'></td>
+                              <td class='grid_2'></td>";
+            $tableau .= " </tr>";
 
             foreach ($html as $val) {
                 if ($color) {
                     $tableau .= "<tr bgcolor='#CCCCCC'>";
                 }
                 $color = !$color;
-                $tableau .= "   <td class='grid_2'>" . $val->get_Vol_noVol() . "</td>
-                                <td class='grid_2'>" . $val->get_Agence_noAgence() . "</td>
-                                <td class='grid_3'>" . $val->get_nbReservation() . "</td>
+                $tableau .= "   <td class='grid_1'>" . $val->get_Vol_noVol() . "</td>
+                                <td class='grid_1'>" . $val->get_Agence_noAgence() . "</td>
+                                <td class='grid_2'>" . $val->get_nbReservation() . "</td>
                                 <td class='grid_2'>" . $val->get_enAttentedeTraitement() . "</td>
-                                <td class='grid_2'>" . $val->get_valider() . "</td>
-                                <td class='grid_2'><a href='/ServCommercial/Reservation/upd?id[]=" . $val->get_Vol_noVol() . "&id[]=" . $val->get_Agence_noAgence() . "'>Modifier</a></td>
-                                <td class='grid_2'><a href='/ServCommercial/Reservation/del?id[]=" . $val->get_Vol_noVol() . "&id[]=" . $val->get_Agence_noAgence() . "'>Supprimer</a></td>
-                            </tr>";
+                                <td class='grid_1'>" . $val->get_valider() . "</td>";
+                if ($admin)
+                    $tableau .= "   <td class='grid_1'><a href='/ServCommercial/Reservation/detail?id[]=" . $val->get_Vol_noVol() . "&id[]=" . $val->get_Agence_noAgence() . "'>Detail</a></td>
+                                    <td class='grid_1'><a href='/ServCommercial/Reservation/upd?id[]=" . $val->get_Vol_noVol() . "&id[]=" . $val->get_Agence_noAgence() . "'>Modifier</a></td>
+                                    <td class='grid_2'><a href='/ServCommercial/Reservation/del?id[]=" . $val->get_Vol_noVol() . "&id[]=" . $val->get_Agence_noAgence() . "'>Supprimer</a></td>";
+                $tableau .= " </tr>";
             }
             $tableau .= "</table>";
         } else {
