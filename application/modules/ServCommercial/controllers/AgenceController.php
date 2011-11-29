@@ -78,11 +78,13 @@ class ServCommercial_AgenceController extends Zend_Controller_Action
                 return FALSE;
             }
             $form = new ServCommercial_Form_Agence();
-            $form->getElement('labelAgence')->setValue($item->get_labelAgence());
-            $form->getElement('dateLancement')->setValue($item->get_dateLancement());
-            $form->getElement('dateCloture')->setValue($item->get_dateCloture());
-            $form->getElement('accesExtranet')->setValue($item->get_accesExtranet());
-            $form->getElement('noAdresse')->setValue($item->get_noAdresse());
+            if ($item != null) {
+                $form->getElement('labelAgence')->setValue($item->get_labelAgence());
+                $form->getElement('dateLancement')->setValue($item->get_dateLancement());
+                $form->getElement('dateCloture')->setValue($item->get_dateCloture());
+                $form->getElement('accesExtranet')->setValue($item->get_accesExtranet());
+                $form->getElement('noAdresse')->setValue($item->get_noAdresse());
+            }
             $this->view->form = $form;
         } else {
             $item = new ServCommercial_Model_Agence();
@@ -114,7 +116,7 @@ class ServCommercial_AgenceController extends Zend_Controller_Action
                 Zend_Registry::get('Log')->log('AgenceController : del : Acces a la base de donnée impossible', Zend_Log::ALERT);
                 return FALSE;
             }
-            $this->_redirect('ServCommercial/Agence');
+            $this->_redirect('ServCommercial/Agence/admin');
         } else {
             $Mod = new ServCommercial_Model_Agence();
             try {
@@ -123,7 +125,11 @@ class ServCommercial_AgenceController extends Zend_Controller_Action
                 Zend_Registry::get('Log')->log('AgenceController : del : Acces a la base de donnée impossible', Zend_Log::ALERT);
                 return FALSE;
             }
-            $this->view->item = $item->getAgenceHTML();
+            if ($item != null) {
+                $this->view->item = $item->getAgenceHTML();
+            } else {
+                $this->view->item = "Cette Agence n'existe pas dans la base de donnée!<br/>";
+            }
             $this->view->id = $request->getParam('id');
         }
     }
@@ -140,7 +146,7 @@ class ServCommercial_AgenceController extends Zend_Controller_Action
         if ($item != null) {
             $this->view->item = $item->getAgenceHTML();
         } else {
-            $this->view->item = "Cet Incident n'existe pas dans la base de donnée!<br/>";
+            $this->view->item = "Cette Agence n'existe pas dans la base de donnée!<br/>";
         }
         $this->view->id = $this->getRequest()->getParam('id');
     }

@@ -74,11 +74,12 @@ class ServCommercial_PlaceController extends Zend_Controller_Action
                 Zend_Registry::get('Log')->log('PlaceController : upd : Acces a la base de donnée impossible', Zend_Log::ALERT);
                 return FALSE;
             }
-            $item = $item->getPlace($request->getParam('id'));
             $form = new ServCommercial_Form_Place();
-            $form->getElement('noVol')->setValue($item->get_noVol());
-            $form->getElement('noAgence')->setValue($item->get_noAgence());
-            $form->getElement('noPersonne')->setValue($item->get_Personne_noPersonne());
+            if ($item != null) {
+                $form->getElement('noVol')->setValue($item->get_noVol());
+                $form->getElement('noAgence')->setValue($item->get_noAgence());
+                $form->getElement('noPersonne')->setValue($item->get_Personne_noPersonne());
+            }
             $this->view->form = $form;
         } else {
             $item = new ServCommercial_Model_Place();
@@ -116,7 +117,11 @@ class ServCommercial_PlaceController extends Zend_Controller_Action
                 Zend_Registry::get('Log')->log('PlaceController : del : Acces a la base de donnée impossible', Zend_Log::ALERT);
                 return FALSE;
             }
-            $this->view->item = $item->getPlaceHTML();
+            if ($item != null) {
+                $this->view->item = $item->getPlaceHTML();
+            } else {
+                $this->view->item = "Cette Place n'existe pas dans la base de donnée!<br/>";
+            }
             $this->view->id = $request->getParam('id');
         }
     }
@@ -133,7 +138,7 @@ class ServCommercial_PlaceController extends Zend_Controller_Action
         if ($item != null) {
             $this->view->item = $item->getPlaceHTML();
         } else {
-            $this->view->item = "Cet Incident n'existe pas dans la base de donnée!<br/>";
+            $this->view->item = "Cette Place n'existe pas dans la base de donnée!<br/>";
         }
         $this->view->id = $this->getRequest()->getParam('id');
     }

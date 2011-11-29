@@ -78,11 +78,13 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
                 return FALSE;
             }
             $form = new ServCommercial_Form_Reservation();
-            $form->getElement('noVol')->setValue($item->get_Vol_noVol())->setAttrib('readonly', 'readonly');
-            $form->getElement('noAgence')->setValue($item->get_Agence_noAgence())->setAttrib('readonly', 'readonly');
-            $form->getElement('nbReservation')->setValue($item->get_nbReservation());
-            $form->getElement('enAttentedeTraitement')->setValue($item->get_enAttentedeTraitement());
-            $form->getElement('valider')->setValue($item->get_valider());
+            if ($item != null) {
+                $form->getElement('noVol')->setValue($item->get_Vol_noVol())->setAttrib('readonly', 'readonly');
+                $form->getElement('noAgence')->setValue($item->get_Agence_noAgence())->setAttrib('readonly', 'readonly');
+                $form->getElement('nbReservation')->setValue($item->get_nbReservation());
+                $form->getElement('enAttentedeTraitement')->setValue($item->get_enAttentedeTraitement());
+                $form->getElement('valider')->setValue($item->get_valider());
+            }
             $this->view->form = $form;
         } else {
             $item = new ServCommercial_Model_VolHasAgence();
@@ -123,11 +125,16 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
                 Zend_Registry::get('Log')->log('ReservationController : del : Acces a la base de donnée impossible', Zend_Log::ALERT);
                 return FALSE;
             }
-            $this->view->item = $item->getReservationHTML();
+            if ($item != null) {
+                $this->view->item = $item->getReservationHTML();
+            } else {
+                $this->view->item = "Cette reservation n'existe pas dans la base de donnée!<br/>";
+            }
             $this->view->id0 = $id[0];
             $this->view->id1 = $id[1];
         }
     }
+
     public function detailAction()
     {
         $request = $this->getRequest();
