@@ -160,34 +160,34 @@ class Application_Model_Aeroport
         $all = Application_Model_Aeroport::getListeAeroport();
         $color = true;
         if (!empty($all)) {
-            $tableau = "<table class='grid_16'>
-                        <tr>
-                            <td class='grid_1'>Id</td>
-                            <td class='grid_2'>Label</td>
-                            <td class='grid_2'>Ville</td>
-                            <td class='grid_2'>Pays</td>";
+            $tableau = "    <table class='grid_16'>
+                                <tr>
+                                    <td class='grid_1'>Id</td>
+                                    <td class='grid_2'>Label</td>
+                                    <td class='grid_2'>Ville</td>
+                                    <td class='grid_2'>Pays</td>";
             if ($admin)
-                $tableau .= "<td class='grid_1'></td>
-                            <td class='grid_1'></td>
-                            <td class='grid_2'></td>";
-            $tableau .= "</tr>";
+                $tableau .="        <td class='grid_1'></td>
+                                    <td class='grid_1'></td>
+                                    <td class='grid_2'></td>";
+            $tableau .= "       </tr>";
 
             foreach ($all as $val) {
                 if ($color) {
-                    $tableau .= "<tr bgcolor='#CCCCCC'>";
+                    $tableau .="<tr bgcolor='#CCCCCC'>";
                 }
                 $color = !$color;
-                $tableau .= "<td class='grid_1'>" . $val->get_noAeroport() . "</td>
-                             <td class='grid_2'>" . $val->get_labelAeroport() . "</td>
-                             <td class='grid_2'>" . $val->get_labelVille() . "</td>
-                             <td class='grid_2'>" . $val->get_labelPays() . "</td>";
+                $tableau .= "       <td class='grid_1'>" . $val->get_noAeroport() . "</td>
+                                    <td class='grid_2'>" . $val->get_labelAeroport() . "</td>
+                                    <td class='grid_2'>" . $val->get_labelVille() . "</td>
+                                    <td class='grid_2'>" . $val->get_labelPays() . "</td>";
                 if ($admin)
-                    $tableau .="<td class='grid_1'><a href='/Aeroport/detail?id=" . $val->get_noAeroport() . "'>Détail</a></td>
-                             <td class='grid_1'><a href='/Aeroport/upd?id=" . $val->get_noAeroport() . "'>Modifier</a></td>
-                             <td class='grid_2'><a href='/Aeroport/del?id=" . $val->get_noAeroport() . "'>Supprimer</a></td>";
-                $tableau .="</tr>";
+                    $tableau .="    <td class='grid_1'><a href='/Aeroport/detail?id=" . $val->get_noAeroport() . "'>Détail</a></td>
+                                    <td class='grid_1'><a href='/Aeroport/upd?id=" . $val->get_noAeroport() . "'>Modifier</a></td>
+                                    <td class='grid_2'><a href='/Aeroport/del?id=" . $val->get_noAeroport() . "'>Supprimer</a></td>";
+                $tableau .="    </tr>";
             }
-            $tableau .= "</table>";
+            $tableau .= "   </table>";
         } else {
             $tableau = "<div>Il n'y a pas d'incident dans la base de donnée</div>";
         }
@@ -205,23 +205,23 @@ class Application_Model_Aeroport
     public function getAeroportHTML()
     {
         $html = "<table class='grid_16'>
-                <tr bgcolor='#CCCCCC'>
-                    <td class='grid_3'>Id</td>
-                    <td class='grid_3'>" . $this->get_noAeroport() . "</td>
-                </tr>
-                <tr>
-                    <td class='grid_3'>Label</td>
-                    <td class='grid_3'>" . $this->get_labelAeroport() . "</td>
-                </tr>
-                <tr bgcolor='#CCCCCC'>
-                    <td class='grid_3'>Ville</td>
-                    <td class='grid_3'>" . $this->get_labelVille() . "</td>
-                </tr>
-                <tr>
-                    <td class='grid_3'>Pays</td>
-                    <td class='grid_3'>" . $this->get_labelPays() . "</td>
-                </tr>
-            </table>";
+                    <tr bgcolor='#CCCCCC'>
+                        <td class='grid_3'>Id</td>
+                        <td class='grid_3'>" . $this->get_noAeroport() . "</td>
+                    </tr>
+                    <tr>
+                        <td class='grid_3'>Label</td>
+                        <td class='grid_3'>" . $this->get_labelAeroport() . "</td>
+                    </tr>
+                    <tr bgcolor='#CCCCCC'>
+                        <td class='grid_3'>Ville</td>
+                        <td class='grid_3'>" . $this->get_labelVille() . "</td>
+                    </tr>
+                    <tr>
+                        <td class='grid_3'>Pays</td>
+                        <td class='grid_3'>" . $this->get_labelPays() . "</td>
+                    </tr>
+                </table>";
         return $html;
     }
 
