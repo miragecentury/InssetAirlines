@@ -32,7 +32,6 @@ class Application_Model_TelephoneMapper extends Spesx_Mapper_Mapper
         $return = $this->_createItemFromRow( $row );
         return $return;
     }
-
 }
 
 ?>
