@@ -2,7 +2,7 @@
 
 class Application_Model_DbTable_RegimeAlimentaire extends Zend_Db_Table_Abstract {
     protected $_name = 'RegimeAlimentaire';
-    protected $_primaryKey = 'labelRegimeAlimentaire';
+    protected $_primaryKey = 'noRegimeAlimentaire';
       
 }
 

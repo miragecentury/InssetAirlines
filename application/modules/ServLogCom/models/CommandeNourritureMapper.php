@@ -9,7 +9,7 @@ class ServLogCom_Model_CommandeNourritureMapper extends Spesx_Mapper_Mapper
         $item->set_noCommandeNourriture($row->noCommandeNourriture)
             ->set_dateLivraison($row->dateLivraison)
             ->set_dateCommande($row->dateCommande)
-            ->set_labelAeroportLivraison($row->labelAeroportLivraison)
+            ->set_idAeroportLivraison($row->idAeroportLivraison)
         ;
         return $item;
     }
@@ -20,7 +20,7 @@ class ServLogCom_Model_CommandeNourritureMapper extends Spesx_Mapper_Mapper
             'noCommandeNourriture' => $item->get_noCommandeNourriture(),
             'dateLivraison' => $item->get_dateLivraison(),
             'dateCommande' => $item->get_dateCommande(),
-            'labelAeroportLivraison' => $item->get_labelAeroportLivraison(),
+            'idAeroportLivraison' => $item->get_idAeroportLivraison(),
         );
     }
 
