@@ -64,6 +64,9 @@ class Application_Model_Telephone
                 ':' .
                 $e->getPrevious()->getMessage(), Zend_Log::ERR );
         }
+        if ($return == null){
+            $return = false;
+        }
         return $return;
     }
 
