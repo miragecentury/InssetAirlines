@@ -1,19 +1,42 @@
 <?php
 
-class Application_Module_ServDRH_Model_Employe
+class ServDRH_Model_Employe
 {
     protected $_Personne_noPersonne;
     protected $_labelMetier;
     
-     public function getEmployes(){
+    public function saveEmploye() {
+        $mapper = new ServDRH_Model_EmployeMapper();
+        $mapper->saveByLabel($this, 'Personne_noPersonne');
+    }
+    
+    public function delEmploye($noPersonne){
+        $mapper = new ServDRH_Model_EmployeMapper();
+        try {
+           $mapper->delete("Personne_noPersonne", $noPersonne);
+           
+            }
+        catch (Zend_Exception $e) 
+            {
+            echo 'ServDRH_Model_EmployeMapper_delEmploye() 
+                Exception - ' .
+            $e->getMessage() . ' - ' . $e->getPrevious();
+            
+            }         
+    }
+
+    public function getEmployes(){
         $mapper = new ServDRH_Model_EmployeMapper();
         return $mapper->findAll();
     }
     
-    
-    
+    public function getEmployeByPersonneNoPersonne($noPersonne) {
+        $mapper = new ServDRH_Model_EmployeMapper();
+        return $mapper->findByNoPersonne($noPersonne);
+    }
+
     //Permet de récupérer la liste des congés de l'employé
-     public function get_listeConges()
+    public function get_listeConges()
     {
          $conge = new Application_Module_ServDRH_CongeMapper();
          $listeConges = $conge->_getConges($this->_Personne_noPersonne);

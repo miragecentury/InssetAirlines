@@ -1,0 +1,20 @@
+<center><h1>Suppression d'une habilitation</h1></center>
+
+<?php  
+    if ($this->habilitation->get_noHabilitation() != null) {
+        if (!isset($_GET['rep'])) {
+            echo "<div><p>Êtes-sur de vouloir supprimer l'habilitation : 
+                '".$this->habilitation->get_labelHabilitation()."' ?</p>
+                     <p>
+                         <a class='enSavoirPlus' href='delhabilitation?rep=non&id=
+                         ".$_GET['id']."'>Non </a>
+                         <a class='enSavoirPlus' href='delhabilitation?rep=oui&id=
+                         ".$_GET['id']."'>Oui</a>
+                     </p>
+                  </div>";
+        }
+    } else {
+        echo "Habilitation inexistante<br />";
+        echo "<a href='/ServDRH'>Retour</a>"; //Revoir la redirection vers la page gesthabilitation
+    }
+?>

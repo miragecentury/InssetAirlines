@@ -1,0 +1,58 @@
+<center><h1>Gestion des conges</h1>
+<?php
+        if ($this->message != '') {
+            echo $this->message;
+        }
+        $enAttente = true;
+        $conges = new ServDRH_Model_Conge;
+        $conges = $conges->getCongesByNoPersonne($_GET['id']);
+        if (!empty($conges)) {
+            echo "<table>
+                  <tr>
+                    <div class='sep'>
+                        <th>Type congé</th>
+                        <th>Date début</th>
+                        <th>Date fin</th>
+                        <th>Motif</th>
+                        <th>Etat</th>";
+                  foreach ($conges as $conge) {
+                      if ($enAttente == true) {
+                        if ($conge->get_enAttentedeTraitement() == 1) {
+                            echo "<th></th>";
+                            $enAttente = false;
+                        }
+                      }
+                  }
+            echo    "</div>
+                  </tr>";
+            foreach ($conges as $conge) {
+            echo "<tr>
+                    <td>";
+                        echo $conge->get_labelTypeConge();   
+            echo    "</td>
+                     <td>";
+                        echo $conge->get_dateDebut();   
+            echo    "</td>
+                     <td>";
+                        echo $conge->get_dateFin();   
+            echo    "</td>
+                     <td>";
+                        echo $conge->get_motif();   
+            echo    "</td>";
+                        if ($conge->get_enAttentedeTraitement() == 1) {
+                            echo "<td>En attente</td>";
+            echo    "<td>
+                        <a class='enSavoirPlus' href='congespilote?id=".$_GET['id']."&conge=".$conge->get_noConge()."'>Valider</a>
+                     </td>";
+                        } else {
+                            echo "<td>Validé</td>";
+                        }
+            echo    "</tr>";                    
+            }
+            echo "</table>
+                  <br />";
+        } else {
+            echo "<p>Aucun congés</p>";         
+        }
+            echo "<a href='/ServDRH'>Retour</a>";
+?>
