@@ -9,7 +9,7 @@ class IndexController extends Zend_Controller_Action {
     }
 
     public function indexAction() {
-        Zend_Registry::get('Log')->log('test', Zend_Log::ALERT);
+        //Spesx_Log::LogALERT('test');
     }
 
     public function patternAction() {

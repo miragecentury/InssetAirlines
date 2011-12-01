@@ -1,5 +1,4 @@
 data/session/*
 application/configs/application.local.ini
-
 nbrproject/*
 /nbproject/private/
