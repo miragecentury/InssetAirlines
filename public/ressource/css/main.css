@@ -13,15 +13,15 @@ body > #wrap {height: auto; min-height: 100%;}
 #main {padding-bottom: 150px;}  /* must be same height as the footer */
 
 #footer {position: relative;
-	margin-top: -150px; /* negative value of footer height */
-	height: 150px;
-	clear:both;}
+         margin-top: -150px; /* negative value of footer height */
+         height: 150px;
+         clear:both;}
 
 .tweakfoot:after {content: ".";
-	display: block;
-	height: 0;
-	clear: both;
-	visibility: hidden;}
+                  display: block;
+                  height: 0;
+                  clear: both;
+                  visibility: hidden;}
 .tweakfoot {display: inline-block;}
 /* Hides from IE-mac \*/
 * html .tweakfoot { height: 1%;}
@@ -49,20 +49,66 @@ body{
     top: 0;
     right: 0;
 }
-#login a{
-    color: #eee;
+#login ul {
+    height:30px;
+    margin:0;
+    padding:0;
+    list-style-type:none;
+    text-align:center;
+}
+#login li {
+    height:30px;
+    float:left;
+    margin:auto;
+    padding:0;
+    margin:0;
+}
+#login li a, #login li p {
+    height:30px;
+    display:block;
+        width:200px;
+    padding: 0px 10px;
     line-height: 30px;
     vertical-align: middle;
-    padding: 5px 20px;
-    text-decoration: none;
     font-size: 15px;
-    text-align: center;
+    text-decoration: none;
+    color:#eee;
+    background-color: #333;
+    text-align: right;
 }
-#login a:hover,
-#login a:active,
-#login a:focus{
+#login li p {
     color:#ffb800;
 }
+#login hr{
+    color: #333;
+    border: 0;
+    background-color:  #ff8b00;
+    height: 1px;
+    text-align: center;
+    margin:0;
+    padding:0px 2px;
+}
+#login li a:hover {
+    color: #333;
+    background-color:  #ff8b00;
+}
+#login ul li ul {
+    display:none;
+
+}
+#login ul li:hover ul {
+    display:block;
+}
+#login li:hover ul li {
+    float:none;
+}
+#login li:hover ul li a,#login li:hover ul li p{
+    text-align: center;
+}
+#login li ul {
+    position:absolute;
+}
+
 /* Menu de gauche */
 #menu{
     position:absolute;
@@ -88,7 +134,7 @@ body{
 #menu li a:active,
 #menu li a #current{
     color: #333;
-    background-color:  #ff8b00;;
+    background-color:  #ff8b00;
 }
 
 /* Footer */
@@ -159,9 +205,9 @@ ul{
     font-weight: bold;
 }
 .success{
-        font-weight: bold;
-        color : green;
-        background-color: lightgreen;
-        border: 1px solid green;
-        padding: 10px 15px;
+    font-weight: bold;
+    color : green;
+    background-color: lightgreen;
+    border: 1px solid green;
+    padding: 10px 15px;
 }

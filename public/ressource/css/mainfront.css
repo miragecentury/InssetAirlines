@@ -56,18 +56,19 @@ body{
 /* Login a droite */
 #login a{
     color: #eee;
-    line-height: 30px;
+    line-height: 28px;
     vertical-align: middle;
     padding: 5px 20px;
     text-decoration: none;
     font-size: 15px;
-    text-align: center;
+    text-align: right;
 }
 #login a:hover,
 #login a:active,
 #login a:focus{
     color:#ffb800;
 }
+
 /* Footer */
 #footer{
     width: 100%;
