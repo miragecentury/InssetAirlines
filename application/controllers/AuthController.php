@@ -121,7 +121,7 @@ class AuthController extends Zend_Controller_Action
      */
     public function deconnectionAction()
     {
-        $auth = Zend_auth::getInstance();
+        $auth = Zend_Auth::getInstance();
         $auth->clearIdentity();
         $session = Zend_Session::destroy();
         $this->_redirect('/');
