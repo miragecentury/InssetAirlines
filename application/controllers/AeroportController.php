@@ -87,15 +87,14 @@ class AeroportController extends Zend_Controller_Action
 
     public function newAction()
     {
-        $request = $this->getRequest();
-        if ($request->getParam('label') != ""
-                && $request->getParam('pays') != ""
-                && $request->getParam('ville') != ""
-                && $request->getParam('submit') == "Valider") {
+        $form = new Application_Form_Aeroport_Aeroport();
+        if (empty($_POST) || !$form->isValid($_POST)) {
+            $this->view->form = $form;
+        } else {
             $item = new Application_Model_Aeroport;
-            $item->set_labelAeroport($request->getParam('label'))
-                    ->set_labelPays($request->getParam('pays'))
-                    ->set_labelVille($request->getParam('ville'));
+            $item->set_labelAeroport($form->getValue('label'))
+                    ->set_labelPays($form->getValue('pays'))
+                    ->set_labelVille($form->getValue('ville'));
             try {
                 $item->addAeroport();
             } catch (Zend_Exception $e) {
@@ -103,46 +102,38 @@ class AeroportController extends Zend_Controller_Action
                 return FALSE;
             }
             $this->_redirect('/Aeroport/admin');
-        } else {
-            $form = new Application_Form_Aeroport_Aeroport();
-            $this->view->form = $form;
         }
     }
 
     public function updAction()
     {
-        $request = $this->getRequest();
-        if ($request->getParam('label') != ""
-                && $request->getParam('pays') != ""
-                && $request->getParam('ville') != ""
-                && $request->getParam('submit') == "Valider") {
-            $item = new Application_Model_Aeroport;
-            $item->set_noAeroport($request->getParam('id'))
-                    ->set_labelAeroport($request->getParam('label'))
-                    ->set_labelPays($request->getParam('pays'))
-                    ->set_labelVille($request->getParam('ville'));
+        $form = new Application_Form_Aeroport_Aeroport();
+        $item = new Application_Model_Aeroport;
+        if (empty($_POST) || !$form->isValid($_POST)) {
             try {
-                $item->addAeroport();
-            } catch (Zend_Exception $e) {
-                Zend_Registry::get('Log')->log('AeroportController : new : Acces a la base de donnée impossible', Zend_Log::ALERT);
-                return FALSE;
-            }
-            $this->_redirect('/Aeroport/admin');
-        } else {
-            $item = new Application_Model_Aeroport;
-            try {
-                $item = $item->getAeroport($request->getParam('id'));
+                $item = $item->getAeroport($this->getRequest()->getParam('id'));
             } catch (Zend_Exception $e) {
                 Zend_Registry::get('Log')->log('AeroportController : upd : Acces a la base de donnée impossible', Zend_Log::ALERT);
                 return FALSE;
             }
-            $form = new Application_Form_Aeroport_Aeroport();
             if ($item != null) {
                 $form->getElement('label')->setValue($item->get_labelAeroport());
                 $form->getElement('pays')->setValue($item->get_labelPays());
                 $form->getElement('ville')->setValue($item->get_labelVille());
             }
             $this->view->form = $form;
+        } else {
+            $item->set_noAeroport($this->getRequest()->getParam('id'))
+                    ->set_labelAeroport($form->getValue('label'))
+                    ->set_labelPays($form->getValue('pays'))
+                    ->set_labelVille($form->getValue('ville'));
+            try {
+                $item->addAeroport();
+            } catch (Zend_Exception $e) {
+                Zend_Registry::get('Log')->log('AeroportController : new : Acces a la base de donnée impossible', Zend_Log::ALERT);
+                return FALSE;
+            }
+            $this->_redirect('/Aeroport/admin');
         }
     }
 

@@ -44,18 +44,17 @@ class ServCommercial_AgenceController extends Zend_Controller_Action
 
     public function newAction()
     {
-        $request = $this->getRequest();
-        if ($request->getParam('submit') != "Valider") {
-            $form = new ServCommercial_Form_Agence();
+        $form = new ServCommercial_Form_Agence();
+        if (empty($_POST) || !$form->isValid($_POST)) {
             $this->view->form = $form;
         } else {
             $item = new ServCommercial_Model_Agence();
-            $item->set_labelAgence($request->getParam('labelAgence'))
-                    ->set_dateLancement($request->getParam('dateLancement'))
-                    ->set_accesExtranet($request->getParam('accesExtranet'))
-                    ->set_noAdresse($request->getParam('noAdresse'));
-            if ($request->getParam('dateCloture') != null)
-                $item->set_dateCloture($request->getParam('dateCloture'));
+            $item->set_labelAgence($form->getValue('labelAgence'))
+                    ->set_dateLancement($form->getValue('dateLancement'))
+                    ->set_accesExtranet($form->getValue('accesExtranet'))
+                    ->set_noAdresse($form->getValue('noAdresse'));
+            if ($form->getValue('dateCloture') != null)
+                $item->set_dateCloture($form->getValue('dateCloture'));
             try {
                 $item->addAgence();
             } catch (Zend_Exception $e) {
@@ -68,16 +67,15 @@ class ServCommercial_AgenceController extends Zend_Controller_Action
 
     public function updAction()
     {
-        $request = $this->getRequest();
-        if ($request->getParam('submit') != "Valider") {
-            $item = new ServCommercial_Model_Agence();
+        $form = new ServCommercial_Form_Agence();
+        $item = new ServCommercial_Model_Agence();
+        if (empty($_POST) || !$form->isValid($_POST)) {
             try {
-                $item = $item->getAgence($request->getParam('id'));
+                $item = $item->getAgence($this->getRequest()->getParam('id'));
             } catch (Zend_Exception $e) {
                 Zend_Registry::get('Log')->log('AgenceController : upd : Acces a la base de donnée impossible', Zend_Log::ALERT);
                 return FALSE;
             }
-            $form = new ServCommercial_Form_Agence();
             if ($item != null) {
                 $form->getElement('labelAgence')->setValue($item->get_labelAgence());
                 $form->getElement('dateLancement')->setValue($item->get_dateLancement());
@@ -88,20 +86,20 @@ class ServCommercial_AgenceController extends Zend_Controller_Action
             $this->view->form = $form;
         } else {
             $item = new ServCommercial_Model_Agence();
-            $item->set_noAgence($request->getParam('id'))
-                    ->set_labelAgence($request->getParam('labelAgence'))
-                    ->set_dateLancement($request->getParam('dateLancement'))
-                    ->set_accesExtranet($request->getParam('accesExtranet'))
-                    ->set_noAdresse($request->getParam('noAdresse'));
-            if ($request->getParam('dateCloture') != null)
-                $item->set_dateCloture($request->getParam('dateCloture'));
+            $item->set_noAgence($this->getRequest()->getParam('id'))
+                    ->set_labelAgence($form->getValue('labelAgence'))
+                    ->set_dateLancement($form->getValue('dateLancement'))
+                    ->set_accesExtranet($form->getValue('accesExtranet'))
+                    ->set_noAdresse($form->getValue('noAdresse'));
+            if ($this->getRequest()->getParam('dateCloture') != null)
+                $item->set_dateCloture($form->getValue('dateCloture'));
             try {
                 $item->addAgence();
             } catch (Zend_Exception $e) {
                 Zend_Registry::get('Log')->log('AgenceController : upd : Acces a la base de donnée impossible', Zend_Log::ALERT);
                 return FALSE;
             }
-            $this->_redirect('ServCommercial/Agence');
+            $this->_redirect('ServCommercial/Agence/admin');
         }
     }
 

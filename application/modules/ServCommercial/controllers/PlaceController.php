@@ -44,15 +44,14 @@ class ServCommercial_PlaceController extends Zend_Controller_Action
 
     public function newAction()
     {
-        $request = $this->getRequest();
-        if ($request->getParam('submit') != "Valider") {
-            $form = new ServCommercial_Form_Place();
+        $form = new ServCommercial_Form_Place();
+        if (empty($_POST) || !$form->isValid($_POST)) {
             $this->view->form = $form;
         } else {
             $item = new ServCommercial_Model_Place();
-            $item->set_noVol($request->getParam('noVol'))
-                    ->set_noAgence($request->getParam('noAgence'))
-                    ->set_Personne_noPersonne($request->getParam('noPersonne'));
+            $item->set_noVol($form->getValue('noVol'))
+                    ->set_noAgence($form->getValue('noAgence'))
+                    ->set_Personne_noPersonne($form->getValue('noPersonne'));
             try {
                 $item->addPlace();
             } catch (Zend_Exception $e) {
@@ -65,16 +64,15 @@ class ServCommercial_PlaceController extends Zend_Controller_Action
 
     public function updAction()
     {
-        $request = $this->getRequest();
-        if ($request->getParam('submit') != "Valider") {
-            $item = new ServCommercial_Model_Place();
+        $form = new ServCommercial_Form_Place();
+        $item = new ServCommercial_Model_Place();
+        if (empty($_POST) || !$form->isValid($_POST)) {
             try {
-                $item = $item->getPlace($request->getParam('id'));
+                $item = $item->getPlace($this->getRequest()->getParam('id'));
             } catch (Zend_Exception $e) {
                 Zend_Registry::get('Log')->log('PlaceController : upd : Acces a la base de donnée impossible', Zend_Log::ALERT);
                 return FALSE;
             }
-            $form = new ServCommercial_Form_Place();
             if ($item != null) {
                 $form->getElement('noVol')->setValue($item->get_noVol());
                 $form->getElement('noAgence')->setValue($item->get_noAgence());
@@ -82,11 +80,11 @@ class ServCommercial_PlaceController extends Zend_Controller_Action
             }
             $this->view->form = $form;
         } else {
-            $item = new ServCommercial_Model_Place();
-            $item->set_noPlace($request->getParam('id'))
-                    ->set_noVol($request->getParam('noVol'))
-                    ->set_noAgence($request->getParam('noAgence'))
-                    ->set_Personne_noPersonne($request->getParam('noPersonne'));
+            
+            $item->set_noPlace($this->getRequest()->getParam('id'))
+                    ->set_noVol($form->getValue('noVol'))
+                    ->set_noAgence($form->getValue('noAgence'))
+                    ->set_Personne_noPersonne($form->getValue('noPersonne'));
             try {
                 $item->addPlace();
             } catch (Zend_Exception $e) {

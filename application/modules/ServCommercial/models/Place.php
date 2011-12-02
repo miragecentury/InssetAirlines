@@ -210,8 +210,9 @@ class ServCommercial_Model_Place
     {
         $Agence = new ServCommercial_Model_Agence();
         $Agence = $Agence->getAgence($this->get_noAgence());
-
-        return $Agence->get_labelAgence();
+        if($Agence!=null)
+            return $Agence->get_labelAgence();
+        else return "Erreur BD";
     }
 
     public function get_noAgence()

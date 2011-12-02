@@ -44,17 +44,16 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
 
     public function newAction()
     {
-        $request = $this->getRequest();
-        if ($request->getParam('submit') != "Valider") {
-            $form = new ServCommercial_Form_Reservation();
+        $form = new ServCommercial_Form_Reservation();
+        if (empty($_POST) || !$form->isValid($_POST)) {
             $this->view->form = $form;
         } else {
             $item = new ServCommercial_Model_VolHasAgence();
-            $item->set_Vol_noVol($request->getParam('noVol'))
-                    ->set_Agence_noAgence($request->getParam('noAgence'))
-                    ->set_nbReservation($request->getParam('nbReservation'))
-                    ->set_enAttentedeTraitement($request->getParam('enAttentedeTraitement'))
-                    ->set_valider($request->getParam('valider'));
+            $item->set_Vol_noVol($form->getValue('noVol'))
+                    ->set_Agence_noAgence($form->getValue('noAgence'))
+                    ->set_nbReservation($form->getValue('nbReservation'))
+                    ->set_enAttentedeTraitement($form->getValue('enAttentedeTraitement'))
+                    ->set_valider($form->getValue('valider'));
             try {
                 $item->addReservation();
             } catch (Zend_Exception $e) {
@@ -67,17 +66,17 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
 
     public function updAction()
     {
-        $request = $this->getRequest();
-        if ($request->getParam('submit') != "Valider") {
-            $item = new ServCommercial_Model_VolHasAgence();
-            $id = $request->getParam('id');
+        $form = new ServCommercial_Form_Reservation();
+        $item = new ServCommercial_Model_VolHasAgence();
+        if (empty($_POST) || !$form->isValid($_POST)) {
+            $id = $this->getRequest()->getParam('id');
             try {
                 $item = $item->getReservation($id[0], $id[1]);
             } catch (Zend_Exception $e) {
                 Zend_Registry::get('Log')->log('ReservationController : upd : Acces a la base de donnée impossible', Zend_Log::ALERT);
                 return FALSE;
             }
-            $form = new ServCommercial_Form_Reservation();
+
             if ($item != null) {
                 $form->getElement('noVol')->setValue($item->get_Vol_noVol())->setAttrib('readonly', 'readonly');
                 $form->getElement('noAgence')->setValue($item->get_Agence_noAgence())->setAttrib('readonly', 'readonly');
@@ -87,12 +86,11 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
             }
             $this->view->form = $form;
         } else {
-            $item = new ServCommercial_Model_VolHasAgence();
-            $item->set_Vol_noVol($request->getParam('noVol'))
-                    ->set_Agence_noAgence($request->getParam('noAgence'))
-                    ->set_nbReservation($request->getParam('nbReservation'))
-                    ->set_enAttentedeTraitement($request->getParam('enAttentedeTraitement'))
-                    ->set_valider($request->getParam('valider'));
+            $item->set_Vol_noVol($form->getValue('noVol'))
+                    ->set_Agence_noAgence($form->getValue('noAgence'))
+                    ->set_nbReservation($form->getValue('nbReservation'))
+                    ->set_enAttentedeTraitement($form->getValue('enAttentedeTraitement'))
+                    ->set_valider($form->getValue('valider'));
             try {
                 $item->updReservation();
             } catch (Zend_Exception $e) {

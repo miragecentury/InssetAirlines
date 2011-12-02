@@ -12,18 +12,27 @@ class ServCommercial_Form_Agence extends Zend_Form
 
     public function init()
     {
+        $this->setMethod('POST');
+        
+        //Validator
+        $alnum = new Zend_Validate_Alnum(array("allowWhiteSpace"=>true));
+        $date = new Zend_Validate_Date($_format= 'Y-m-d' );
+        
         //Creation du champ permettant de selectionner le label
         $label = new Zend_Form_Element_Text('labelAgence');
         $label->setLabel('Label :');
+        $label->setValidators(array($alnum));
         $label->setRequired();
 
         //Creation du champ permettant de selectionner une date
         $dateL = new Zend_Form_Element_Text('dateLancement');
         $dateL->setLabel('Date de lancement :');
+        $dateL->setValidators(array($date));
         $dateL->setRequired();
         
         //Creation du champ permettant de selectionner une date
         $dateC = new Zend_Form_Element_Text('dateCloture');
+        $dateC->setValidators(array($date));
         $dateC->setLabel('Date de cloture :');
         
         //Acces extranet case a coché

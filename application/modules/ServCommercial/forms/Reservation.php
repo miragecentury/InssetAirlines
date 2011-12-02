@@ -12,19 +12,21 @@ class ServCommercial_Form_Reservation extends Zend_Form
 
     public function init()
     {
-        //Creation du champ permettant de selectionner le label
-        $vol = new Zend_Form_Element_Text('noVol');
-        $vol->setLabel('Vol:');
-        $vol->setRequired();
-
-        //Creation du champ permettant de selectionner une date
-        $agence = new Zend_Form_Element_Text('noAgence');
-        $agence->setLabel('Agence :');
-        $agence->setRequired();
+        $this->setMethod('POST');
         
-        //Creation du champ permettant de selectionner une date
+        //Validator
+        $num = new Zend_Validate_Int;
+        
+        //Creation du champ permettant de selectionner le vol
+        $vol = ServPlaning_Model_Vol::getSelectVol('noVol', 'No Vol :');
+
+        //Creation du champ permettant de selectionner une agence
+        $agence = ServCommercial_Model_Agence::getSelectAgence('noAgence', 'Agence :');
+        
+        //Creation du champ permettant de selectionner un nombre de place
         $reserv = new Zend_Form_Element_Text('nbReservation');
         $reserv->setLabel('Nombre de place :');
+        $reserv->setValidators(array($num));
         
         //Acces extranet case a coché
         $trait = new Zend_Form_Element_Checkbox('enAttentedeTraitement');
