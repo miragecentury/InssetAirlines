@@ -12,6 +12,7 @@ class Application_Form_Utilisateur_ModifTelephone extends Zend_Form
 
         //Init
         //$this->setAction();
+        $this->setMethod('POST');
 
         //1er element
         $labelTelephone = new Zend_Form_Element_Text('labelTelephone');

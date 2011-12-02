@@ -217,6 +217,31 @@ class Application_Model_Personne
         }
     }
 
+    /**
+     * Permet de recuperer l'objet personne associé à l'utilisateur logué
+     *
+     * @author pewho
+     * @access public
+     * @static
+     * @return Application_Model_Personne|false
+     */
+    public static function getPersonneRegistered()
+    {
+        //recupération de la session
+        $authSession = new Zend_Session_Namespace('Zend_Auth');
+
+        //recupération du login stocké en session, si erreur return false
+        if (!empty($authSession->storage) && isset($authSession->storage)) {
+           $mail = $authSession->storage;
+        } else {
+            return false;
+        }
+
+        //recupération de la personne entière
+        $return = Application_Model_Personne::getPersonneByMail($mail);
+        return $return;
+    }
+
     //--------------------------------------------------------------------------
     //GETTER / SETTER
     //--------------------------------------------------------------------------
