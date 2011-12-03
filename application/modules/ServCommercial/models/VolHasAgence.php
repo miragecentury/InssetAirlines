@@ -56,6 +56,78 @@ class ServCommercial_Model_VolHasAgence
     // Methodes
     //--------------------------------------------------------------------------
     /**
+     * Ajoute une reservation dans la BD.
+     *
+     * @author charles
+     * @access public
+     *
+     */
+    public function addReservation()
+    {
+        $this->_mapper->save($this);
+    }
+
+    /**
+     * Suprime une reservation
+     *
+     * @author charles
+     * @access public
+     * @param int $noAgence
+     *
+     */
+    public function delReservation($noVol, $noAgence)
+    {
+        try {
+            $this->_mapper->delete($noVol, $noAgence);
+        } catch (Zend_Exception $e) {
+            echo 'Serv_Commercial_Models_VolHasAgence_delReservation() Exception - ' .
+            $e->getMessage() . ' - ' . $e->getPrevious();
+        }
+    }
+
+    /**
+     * Modifie une reservation dans la BD.
+     *
+     * @author charles
+     * @access public
+     *
+     */
+    public function updReservation()
+    {
+        $this->_mapper->update($this);
+    }
+
+    public function getReservationHTML()
+    {
+        $Place = "<table class='grid_16'>
+                <tr bgcolor='#CCCCCC'>
+                    <td class='grid_3'>Vol</td>
+                    <td class='grid_3'>" . $this->get_Vol_noVol() . "</td>
+                </tr>
+                <tr>
+                    <td class='grid_3'>Agence</td>
+                    <td class='grid_3'>" . $this->get_Agence_noAgence() . "</td>
+                </tr>
+                <tr bgcolor='#CCCCCC'>
+                    <td class='grid_3'>Nombre Reservation</td>
+                    <td class='grid_3'>" . $this->get_nbReservation() . "</td>
+                </tr>
+                <tr>
+                    <td class='grid_3'>Etat Traitement</td>
+                    <td class='grid_3'>" . $this->get_enAttentedeTraitement() . "</td>
+                </tr>
+                <tr>
+                    <td class='grid_3'>Etat Validation</td>
+                    <td class='grid_3'>" . $this->get_valider() . "</td>
+                </tr>                
+            </table>";
+        return $Place;
+    }
+
+    //--------------------------------------------------------------------------
+    // Methodes
+    //--------------------------------------------------------------------------
+    /**
      * Retourne une VolHasAgence a partir de son noVol et de son noAgence
      * Si elle n'existe pas, retourne null.
      * 
@@ -65,13 +137,64 @@ class ServCommercial_Model_VolHasAgence
      * @return null|ServCommercial_Model_Agence_has_AgenceMapper
      *  
      */
-    public function getVolHasAgence($_Vol_noVol, $_Agence_noAgence)
+    public function getReservation($_Vol_noVol, $_Agence_noAgence)
     {
         return $this->_mapper->find(array($_Vol_noVol, $_Agence_noAgence));
     }
 
     /**
-     * Retourne tous les vol de toutes les agences, null si il n'y en as pas 
+     * Retourne tous les places sous forme de tableau html, 
+     * retourne une phrase disant qu'il n'y en a pas dans la bd si c'est le cas
+     * 
+     * @access public
+     * @author charles
+     * @return string
+     *  
+     */
+    public static function getListeReservationHTML($admin=true)
+    {
+        $html = ServCommercial_Model_VolHasAgence::getListeReservation();
+        $color = true;
+
+        if (!empty($html)) {
+            $tableau = "<table class='grid_16'>
+                        <tr>
+                            <td class='grid_1'>Vol</td>
+                            <td class='grid_1'>Agence</td>
+                            <td class='grid_2'>Nombre de place</td>
+                            <td class='grid_2'>Traitement</td>
+                            <td class='grid_1'>Validation</td>";
+            if ($admin)
+                $tableau .= " <td class='grid_1'></td>
+                              <td class='grid_1'></td>
+                              <td class='grid_2'></td>";
+            $tableau .= " </tr>";
+
+            foreach ($html as $val) {
+                if ($color) {
+                    $tableau .= "<tr bgcolor='#CCCCCC'>";
+                }
+                $color = !$color;
+                $tableau .= "   <td class='grid_1'>" . $val->get_Vol_noVol() . "</td>
+                                <td class='grid_1'>" . $val->get_Agence_noAgence() . "</td>
+                                <td class='grid_2'>" . $val->get_nbReservation() . "</td>
+                                <td class='grid_2'>" . $val->get_enAttentedeTraitement() . "</td>
+                                <td class='grid_1'>" . $val->get_valider() . "</td>";
+                if ($admin)
+                    $tableau .= "   <td class='grid_1'><a href='/ServCommercial/Reservation/detail?id[]=" . $val->get_Vol_noVol() . "&id[]=" . $val->get_Agence_noAgence() . "'>Detail</a></td>
+                                    <td class='grid_1'><a href='/ServCommercial/Reservation/upd?id[]=" . $val->get_Vol_noVol() . "&id[]=" . $val->get_Agence_noAgence() . "'>Modifier</a></td>
+                                    <td class='grid_2'><a href='/ServCommercial/Reservation/del?id[]=" . $val->get_Vol_noVol() . "&id[]=" . $val->get_Agence_noAgence() . "'>Supprimer</a></td>";
+                $tableau .= " </tr>";
+            }
+            $tableau .= "</table>";
+        } else {
+            $tableau = "<div>Il n'y a pas de place répertoriées dans la base de donnée</div>";
+        }
+        return $tableau;
+    }
+
+    /**
+     * Retourne tous les vol de toutes les reservation, null si il n'y en as pas 
      * dans la BD
      * 
      * @access public
@@ -79,9 +202,9 @@ class ServCommercial_Model_VolHasAgence
      * @return null|array(Application_Model_VolHasAgence)
      *  
      */
-    public static function getListeVolHasAgence()
+    public static function getListeReservation()
     {
-        Spesx_Mapper_MapperFactory::getMapper("ServCommercial_Model_VolHasAgence");
+        $mapper = Spesx_Mapper_MapperFactory::getMapper("ServCommercial_Model_VolHasAgence");
         try {
             return $mapper->findAll();
         } catch (Spesx_Mapper_Exception $e) {

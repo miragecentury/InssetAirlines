@@ -60,7 +60,7 @@ class ServCommercial_Model_Place
     {
         $this->_mapper->save($this, 'noPlace');
     }
-    
+
     /**
      * Suprime une agence a partir de son noPlace
      *
@@ -80,6 +80,37 @@ class ServCommercial_Model_Place
     }
 
     /**
+     * Retourne une Place sous forme de tableau HTML
+     * 
+     * @access public
+     * @author charles
+     * @return string
+     *  
+     */
+    public function getPlaceHTML()
+    {
+        $Place = "<table class='grid_16'>
+                <tr bgcolor='#CCCCCC'>
+                    <td class='grid_3'>Place</td>
+                    <td class='grid_3'>" . $this->get_noPlace() . "</td>
+                </tr>
+                <tr>
+                    <td class='grid_3'>Agence</td>
+                    <td class='grid_3'>" . $this->get_noAgence() . "</td>
+                </tr>
+                <tr bgcolor='#CCCCCC'>
+                    <td class='grid_3'>Personne</td>
+                    <td class='grid_3'>" . $this->get_Personne_noPersonne() . "</td>
+                </tr>
+                <tr>
+                    <td class='grid_3'>Vol</td>
+                    <td class='grid_3'>" . $this->get_noVol() . "</td>
+                </tr>
+            </table>";
+        return $Place;
+    }
+
+    /**
      * Retourne une Place a partir de son noPlace
      * Si elle n'existe pas, retourne null.
      * 
@@ -95,6 +126,55 @@ class ServCommercial_Model_Place
     }
 
     /**
+     * Retourne tous les places sous forme de tableau html, 
+     * retourne une phrase disant qu'il n'y en a pas dans la bd si c'est le cas
+     * 
+     * @access public
+     * @author charles
+     * @return string
+     *  
+     */
+    public static function getListePlaceHTML($admin=true)
+    {
+        $html = ServCommercial_Model_Place::getListePlace();
+        $color = true;
+
+        if (!empty($html)) {
+            $tableau = "<table class='grid_16'>
+                        <tr>
+                            <td class='grid_2'>Place</td>
+                            <td class='grid_2'>Agence</td>
+                            <td class='grid_2'>Personne</td>
+                            <td class='grid_2'>Vol</td>";
+            if ($admin)
+            $tableau .= "<td class='grid_2'></td>
+                            <td class='grid_2'></td>
+                            <td class='grid_2'></td>";
+            $tableau .= "</tr>";
+
+            foreach ($html as $val) {
+                if ($color) {
+                    $tableau .= "<tr bgcolor='#CCCCCC'>";
+                }
+                $color = !$color;
+                $tableau .= "   <td class='grid_2'>" . $val->get_noPlace() . "</td>
+                                <td class='grid_2'>" . $val->get_labelAgence() . "</td>
+                                <td class='grid_2'>" . $val->get_Personne_noPersonne() . "</td>
+                                <td class='grid_2'>" . $val->get_noVol() . "</td>";
+                if ($admin)
+                    $tableau .="<td class='grid_2'><a href='/ServCommercial/Place/detail?id=" . $val->get_noPlace() . "'>Detail</a></td>
+                                <td class='grid_2'><a href='/ServCommercial/Place/upd?id=" . $val->get_noPlace() . "'>Modifier</a></td>
+                                <td class='grid_2'><a href='/ServCommercial/Place/del?id=" . $val->get_noPlace() . "'>Supprimer</a></td>";
+                $tableau .="</tr>";
+            }
+            $tableau .= "</table>";
+        } else {
+            $tableau = "<div>Il n'y a pas de place répertoriées dans la base de donnée</div>";
+        }
+        return $tableau;
+    }
+
+    /**
      * Retourne tout les places, null si il n'y en as pas dans la BD
      * 
      * @access public
@@ -102,9 +182,9 @@ class ServCommercial_Model_Place
      * @return null|array(Application_Model_Place)
      *  
      */
-    public function getListePlace()
+    public static function getListePlace()
     {
-        $this->_mapper = Spesx_Mapper_MapperFactory::getMapper("ServCommercial_Model_Place");
+        $mapper = Spesx_Mapper_MapperFactory::getMapper("ServCommercial_Model_Place");
         try {
             return $mapper->findAll();
         } catch (Spesx_Mapper_Exception $e) {
@@ -124,6 +204,15 @@ class ServCommercial_Model_Place
     {
         $this->_noPlace = $_noPlace;
         return $this;
+    }
+
+    public function get_labelAgence()
+    {
+        $Agence = new ServCommercial_Model_Agence();
+        $Agence = $Agence->getAgence($this->get_noAgence());
+        if($Agence!=null)
+            return $Agence->get_labelAgence();
+        else return "Erreur BD";
     }
 
     public function get_noAgence()
