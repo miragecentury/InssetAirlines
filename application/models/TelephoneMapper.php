@@ -26,6 +26,9 @@ class Application_Model_TelephoneMapper extends Spesx_Mapper_Mapper
         $select = $this->getDbTable()->select()
             ->where( $where );
         $row = $this->getDbTable()->fetchRow( $select );
+        if ($row == null){
+            return false;
+        }
         $return = $this->_createItemFromRow( $row );
         return $return;
     }
