@@ -9,7 +9,8 @@ class ServMaintenance_IndexController extends Zend_Controller_Action {
     }
 
     public function indexAction() {
-        
+        $acl = Spesx_Acl::ReturnZendAcl();
+
     }
 
     public function aplanifierAction() {
