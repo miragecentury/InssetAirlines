@@ -23,7 +23,21 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
     {
         //Chargement de la liste des lignes existantes
         $lignes = ServStrategique_Model_Ligne::getListeLigne();
+        $aeroport = new Application_Model_Aeroport();
+
+        //parcours de ligne pour remplacer l'id par le nom de la ville
+        foreach ($lignes as $ligne){
+            $aeroport = new Application_Model_Aeroport();
+            $aeroDeco = $aeroport->getAeroport($ligne->get_labelAeroportDeco());
+            $aeroAtt = $aeroport->getAeroport($ligne->get_labelAeroportAtte());
+            $ligne->set_labelAeroportDeco($aeroDeco->get_labelVille());
+            $ligne->set_labelAeroportAtte($aeroAtt->get_labelVille());
+        }
+
+        //envoi de la ligne
         $this->view->lignes = $lignes;
+
+
     }
 
     public function newvolAction()
@@ -72,6 +86,8 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
         //Chargement de la form associé
         $addVolForm = new ServStrategique_Form_addLigne();
         $this->view->form = $addVolForm;
+
+        //session
         $session = new Zend_Session_Namespace('Redirect');
 
         //initialisation d'un objet ligne
@@ -115,11 +131,11 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
 
             //redirection
             if ($reussite) {
-                $session->message = 'La ligne a bien été ajouté !';
+                $session->message = 'La ligne a bien été modifié !';
                 $session->redirection = '/ServStrategique/gestvol';
                 $this->_redirect('/redirection/success');
             } else {
-                $session->message = "Erreur lors de l'ajout de la ligne !";
+                $session->message = "Erreur lors de la modifier de la ligne !";
                 $session->redirection = '/ServStrategique/gestvol';
                 $this->_redirect('/redirection/fail');
             }
@@ -130,6 +146,32 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
 
     public function delvolAction()
     {
+        //session
+        $session = new Zend_Session_Namespace('Redirect');
+
+        //initialisation d'un objet ligne
+        $id = (int) $this->getRequest()->getParam('id');
+        $ligne = ServStrategique_Model_Ligne::getLigne($id);
+
+        //si la ligne n'existe pas
+        if (is_null($ligne)){
+            $session->message = "Erreur : la ligne n'existe pas !";
+            $session->redirection = '/ServStrategique/gestvol';
+            $this->_redirect('/redirection/fail');
+        }
+        //Suppression
+        $reussite = $ligne->delLigne($id);
+
+        //redirection
+        if ($reussite) {
+            $session->message = 'La ligne a bien été supprimé !';
+            $session->redirection = '/ServStrategique/gestvol';
+            $this->_redirect('/redirection/success');
+        } else {
+            $session->message = "Erreur lors de la suppression de la ligne !";
+            $session->redirection = '/ServStrategique/gestvol';
+            $this->_redirect('/redirection/fail');
+        }
 
     }
 

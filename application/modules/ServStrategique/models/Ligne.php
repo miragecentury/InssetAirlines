@@ -102,10 +102,12 @@ class ServStrategique_Model_Ligne
     {
         try {
             $this->_mapper->delete('noLigne',$noLigne);
+            return true;
         } catch (Zend_Exception $e) {
             echo 'ServSrategique_Models_Ligne_delLigne()
                 Exception - ' .
             $e->getMessage() . ' - ' . $e->getPrevious();
+            return false;
         }
     }
 
