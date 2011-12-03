@@ -22,7 +22,10 @@ class UtilisateurController extends Zend_Controller_Action
 
         $authSession = new Zend_Session_Namespace('Zend_Auth');
         if ($authSession->role == null) {
-            $this->_redirect('/');
+            $session = new Zend_Session_Namespace('Redirect');
+            $session->message = "Vous n'êtes pas logué !";
+            $session->redirection = "/";
+            $this->_redirect('/redirection/fail');
         }
     }
 

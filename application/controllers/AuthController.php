@@ -60,10 +60,10 @@ class AuthController extends Zend_Controller_Action
         $dbAdapter = Zend_Registry::get('Db');
         if (isset($_POST) && !empty($_POST) && $loginForm->isValid($_POST)) {
             $adapter = new Zend_Auth_Adapter_DbTable(
-                            $dbAdapter,
-                            'Personne',
-                            'email',
-                            'password'
+                    $dbAdapter,
+                    'Personne',
+                    'email',
+                    'password'
             );
 
 //Récupération des données du formulaire
@@ -77,8 +77,8 @@ class AuthController extends Zend_Controller_Action
 //Recupération du role de l'utilisateur
                 try {
                     $select = $dbAdapter->select()
-                            ->from(array('Personne'), array('role'))
-                            ->where('email = ?', $loginForm->getValue('username'));
+                        ->from(array('Personne'), array('role'))
+                        ->where('email = ?', $loginForm->getValue('username'));
                     $stmt = $dbAdapter->query($select);
                     $resultRole = $stmt->fetchAll();
                 } catch (Zend_Db_Exception $e) {
@@ -87,7 +87,7 @@ class AuthController extends Zend_Controller_Action
                 $role = $resultRole[0]['role'];
                 if (!$this->verificationValidRole($role)) {
                     Zend_Registry::get('Log')->log(
-                            "Auth : Entrée BDD utilisateur corrompue : le role n'existe pas ! role : $role", Zend_Log::ERR
+                        "Auth : Entrée BDD utilisateur corrompue : le role n'existe pas ! role : $role", Zend_Log::ERR
                     );
                 } else {
 //stockage du role en session dans le namespace Zend Auth
@@ -96,7 +96,7 @@ class AuthController extends Zend_Controller_Action
                         $authSession->role = $role;
                     } catch (Zend_Session_Exception $e) {
                         Zend_Registry::get('Log')->log(
-                                'Erreur de stockage du role dans la Session (Auth)', Zend_Log::ERR
+                            'Erreur de stockage du role dans la Session (Auth)', Zend_Log::ERR
                         );
                     }
 
@@ -111,7 +111,8 @@ class AuthController extends Zend_Controller_Action
         }
     }
 
-    public function redirectionAction(){
+    public function redirectionAction()
+    {
         $this->redirectionAcl();
     }
 
@@ -166,7 +167,10 @@ class AuthController extends Zend_Controller_Action
             $this->_redirect('/AgenceVoyage');
         } else {
             //sinon redirection avec message d'erreur sur le front
-            $this->_redirect('/');
+            $session = new Zend_Session_Namespace('Redirect');
+            $session->message = "Vous n'êtes pas logué !";
+            $session->redirection = "/";
+            $this->_redirect('/redirection/fail');
         }
     }
 

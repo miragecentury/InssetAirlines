@@ -233,3 +233,10 @@ background-color: #ffffff;
     border: 1px solid green;
     padding: 10px 15px;
 }
+.fail{
+    font-weight: bold;
+    color : red;
+    background-color : lightpink;
+    border: 1px solid red;
+    padding: 10px 15px;
+}
