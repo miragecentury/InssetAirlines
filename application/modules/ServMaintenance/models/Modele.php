@@ -1,14 +1,17 @@
 <?php
 
-class Modele {
+class ServMaintenance_Model_Modele {
     protected $_label;
     protected $_rayonAction;
-    protected $_distMinAtte;
+    protected $_distMinAtt;
     protected $_distMinDec;
     protected $_dateLancement;
     protected $_labelConstructeur;
     
-    
+    public function getModeles(){
+        $mapper = new ServMaintenance_Model_ModeleMapper();
+        return $mapper->findAll();
+    }
     
     public function get_label() {
         return $this->_label;
@@ -26,12 +29,12 @@ class Modele {
         $this->_rayonAction = $_rayonAction;
     }
 
-    public function get_distMinAtte() {
-        return $this->_distMinAtte;
+    public function get_distMinAtt() {
+        return $this->_distMinAtt;
     }
 
-    public function set_distMinAtte($_distMinAtte) {
-        $this->_distMinAtte = $_distMinAtte;
+    public function set_distMinAtt($_distMinAtt) {
+        $this->_distMinAtt = $_distMinAtt;
     }
 
     public function get_distMinDec() {

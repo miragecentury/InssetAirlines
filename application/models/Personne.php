@@ -122,7 +122,7 @@ class Application_Model_Personne
     //Methodes
     //--------------------------------------------------------------------------
     //Recuperation de l'adresse
-    protected function _getAdresseForPersonne()
+    public function _getAdresseForPersonne()
     {
         $objAdresse = Application_Model_Adresse::getAdresse($this->_noAdresse);
         if (isEmpty($objAdresse) || !isset($objAdresse)) {
@@ -182,6 +182,26 @@ class Application_Model_Personne
                 $e->getMessage() . $e->getPrevious()->getMessage(), Zend_Log::ERR);
         }
         return $return;
+    }
+    
+    /**
+     * Récupère une personne suivant son numéro Insee
+     * @param int $noInsee
+     * @return Personne
+     * @author Camille
+     * @access public
+     * @static
+     */
+    public static function getPersonneByNoInsee($noInsee)
+    {
+        $mapper = Spesx_Mapper_MapperFactory::getMapper('Application_Model_Personne');
+        try {            
+            $personne = $mapper->findByNoInsee($noInsee);            
+        } catch (Spesx_Mapper_Exception $e) {
+            Spesx_Log::Log(
+                $e->getMessage() . $e->getPrevious()->getMessage(), Zend_Log::ERR);
+        }
+        return $personne;
     }
 
     /**
