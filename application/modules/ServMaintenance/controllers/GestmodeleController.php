@@ -21,6 +21,7 @@ class ServMaintenance_GestmodeleController extends Zend_Controller_Action {
                 <td style="width: 120px;">Date Lancement</td>
                 <td> Constructeur </td>
                 <td></td>
+                <td></td>
             <tr>
         ';
         foreach ($liste as $value) {
