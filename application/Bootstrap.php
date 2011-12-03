@@ -30,7 +30,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
      */
     protected function _initLog() {
 
-        //récupération de la configuration
+//récupération de la configuration
         $logConfig = $this->getOption('log');
 
         try {
@@ -41,11 +41,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
             echo $e->getMessage();
         }
 
-        //pare-feu de control
+//pare-feu de control
         if ($Log === null || $Log === FALSE) {
             $Log = new Zend_Log();
             $Log->addWriter(new Zend_Log_Writer_Null());
         };
+        
+        //Retro-compatibilité avec l'ancienne version
+        Zend_Registry::set('Log', $Log);
 
         return $Log;
     }
@@ -55,13 +58,23 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     protected function _initCache() {
 //require l'initialisation de Log (_initLog)
         parent::_executeResource('Log');
-
+        $cache = null;
         $cacheConfig = $this->getOption('cache');
         try {
             $cache = Spesx_Cache::factory($cacheConfig, Spesx_Log::ReturnZendLog());
         } catch (Exception $e) {
-            echo 'Spesx_Cache_Exception XS it\'s bad <br/>';
+            echo 'Spesx_Cache_Exception XS it\'s bad <br/>'.$e->getMessage();
         }
+        
+        //var_dump($cache->save('test', 'test'));
+        //var_dump($cache->load('test'));
+        
+        if ($cache === null | $cache === FALSE) {
+            $cache = Zend_Cache::factory(new Zend_Cache_Core(), new Zend_Cache_Backend_BlackHole());
+            Spesx_Log::LogERR('Spesx_Cache::factory retourne une cache invalide');
+        }
+        
+        
 
         return $cache;
     }
@@ -90,11 +103,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
                 Zend_Db_Table_Abstract::setDefaultAdapter($adapter);
                 return $adapter;
             } catch (Zend_Db_Exception $e) {
-                $message = "Bootstrap : Exception Zend_Db : Impossible de se connecter à la base de données : Fermeture Application";
-                echo $message;
+                echo $e->getMessage();
             } catch (Exception $e) {
-                $message = "Bootstrap : Exception : Fermeture Application";
-                echo $message;
+                echo $e->getMessage();
             }
             return FALSE;
         } else {
@@ -105,11 +116,30 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     }
 
     protected function _initAcl() {
-        //require avant démarrage
+//require avant démarrage
         parent::_executeResource('Log');
         parent::_executeResource('Cache');
+
+        $acl_config = $this->getOption('acl');
+
+        $acl = null;
         
+        try {
+            $acl = Spesx_Acl::factory($acl_config, Spesx_Log::ReturnZendLog(), Spesx_Cache::ReturnZendCache());
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+
+        if ($acl === null || $acl === FALSE || !is_a($acl, 'Zend_Acl')) {
+            $acl = Spesx_Acl::ReturnEmptyAcl();
+        }
+        //echo '<br/>';
+        //var_dump($acl);
+
+        //Retro-compatibilité avec l'ancienne version
+        Zend_Registry::set('Acl', $acl);
         
+        return $acl;
     }
 
     /* |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */

@@ -1,8 +1,8 @@
 <?php $this->placeholder('login')->captureStart();
 if (Zend_Auth::getInstance()->hasIdentity()): ?>
     
-    <a href="http://inssetairlines.spesx.com/auth/deconnection"><?php echo Zend_Auth::getInstance()->getIdentity(); ?></a>
+    <a href="http://<?php echo $this->baseUrl(); echo 'local.inssetairlines';?>/auth/deconnection"><?php echo Zend_Auth::getInstance()->getIdentity(); ?></a>
 <?php else: ?>
-    <a href="http://inssetairlines.spesx.com/auth/login">Connexion</a>
+    <a href="http://<?php echo $this->baseUrl(); echo 'local.inssetairlines';?>/auth/login">Connexion</a>
 <?php endif;
 $this->placeholder('login')->captureEnd(); ?>

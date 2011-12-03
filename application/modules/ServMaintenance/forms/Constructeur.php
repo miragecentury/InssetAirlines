@@ -11,12 +11,19 @@ class ServMaintenance_Form_Constructeur extends Zend_Form {
         
         $this->addElement($label);
         
+        
         $adresse = new Zend_Form_Element_Text('adresse');
         $adresse->setLabel('Adresse:');
         $adresse->addValidator(new Zend_Validate_Int());
         $adresse->addValidator(new Zend_Validate_GreaterThan(0));
         
         $this->addElement($adresse);
+        
+        $submit = new Zend_Form_Element_Submit('submit');
+        $submit->setLabel('Valider');
+        $submit->setIgnore(true);
+        
+        $this->addElement($submit);
         
     }
 
