@@ -38,3 +38,19 @@ ALTER TABLE `INSSET_Airlines`.`TacheMaintenance` DROP COLUMN `labelTypeMaintenan
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+INSERT INTO `Constructeur` (`noConstructeur`, `label`, `noAdresse`) VALUES
+(1, 'AirBus', 1),
+(2, 'Boeing', 2),
+(14, 'Dassault', 1);
+
+
+INSERT INTO `Modele` (`noModele`, `label`, `rayonAction`, `distMinAtt`, `distMinDec`, `dateLancement`, `noConstructeur`) VALUES
+(1, 'A380', 1800, 2500, 2000, 2010, 1),
+(2, '747-400', 9800, 2000, 1500, 2001, 2);
+
+INSERT INTO `Avion` (`noAvion`, `nbPlaceMax`, `nbHeureVol`, `nbIncident`, `label`, `dateMiseService`, `dateHorsService`, `enService`, `noModele`) VALUES
+(1, 400, 0, 0, 'Numero1 747-400', '2011-11-15 00:00:00', NULL, 1, 2),
+(3, 800, 0, 0, 'Numero2-A380', '2011-12-03 00:00:00', NULL, 1, 1);
+
