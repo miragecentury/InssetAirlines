@@ -4,7 +4,7 @@
 </div>
 <div class="clear"></div>
 <div class="prefix_1 grid_15">
-    <table>
+    <table class="sep">
         <tr>
             <th style='min-width:200px;'>Ligne</th>
             <th>Vol par jour</th>
@@ -28,7 +28,7 @@
                 $ligne->set_annees('-');
             }
             //Affichage
-            echo "<tr>";
+            echo "<tr class='sep'>";
                 echo "<td>" . $ligne->get_labelAeroportDeco() ." - ".
                     $ligne->get_labelAeroportAtte() . "</td>";
                 echo "<td>" . $ligne->get_jours() . "</td>";
@@ -46,8 +46,8 @@
     ?>
         </tr>
     </table>
-    <div class="alpha omega grid_2 prefix_13">
-        <a href="/ServStrategique/gestvol/newvol"></a>
+    <div class="alpha omega grid_3 prefix_12">
+        <a href="/ServStrategique/gestvol/newvol" class='enSavoirPlus'>Ajouter une ligne</a>
     </div>
     <div class="clear"></div>
 </div>

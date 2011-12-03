@@ -175,26 +175,27 @@ ul{
     list-style-type: square;
 }
 table {
-border: medium solid #6495ed;
+border:0;
 border-collapse: collapse;
-width: 50%;
+width: 100%;
 text-align: center;
 }
 th {
-font-family: monospace;
-border: thin solid #6495ed;
-width: 50%;
-padding: 5px;
-background-color: #D0E3FA;
-background-image: url(sky.jpg);
+border:0;
+padding: 0px 5px;
+margin:0;
+background-color:#ff8b00;
+color:#111;
+text-align: center;
+vertical-align: middle;
 }
 td {
-font-family: sans-serif;
-border: thin solid #6495ed;
-width: 50%;
-padding: 5px;
+border:0;
+padding: 4px 5px;
 text-align: center;
-background-color: #ffffff;
+}
+tr:nth-child(even){
+    background-color: #DDD;
 }
 /* Style des classes diverses */
 .enSavoirPlus{
