@@ -25,7 +25,7 @@ class ServMaintenance_Model_Modele {
 
     public static function findOne($noModele) {
         self::initialisation();
-        self::$_mapper->find($noModele);
+        return self::$_mapper->find($noModele);
     }
 
     public static function delModele($noModele) {

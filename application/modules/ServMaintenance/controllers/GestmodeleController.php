@@ -48,18 +48,19 @@ class ServMaintenance_GestmodeleController extends Zend_Controller_Action {
     public function updmodeleAction() {
         if (isset($_GET['id']) && !empty($_GET['id'])) {
             if (preg_match('#^[0-9]{1,10}$#', $_GET['id']) && $_GET['id'] > 0) {
-                $this->view->message = 'Modele trouvé';
                 try {
                     $modele = ServMaintenance_Model_Modele::FindOne($_GET['id']);
-                    if (is_a($constructeur, 'ServMaintenance_Model_Modele') && $modele != NULL) {
+                    if (is_a($modele, 'ServMaintenance_Model_Modele') && $modele != NULL) {
                         $form = new ServMaintenance_Form_Modele();
+                        $this->view->form = $form;
                         if (isset($_POST) && !empty($_POST) && $form->isValid($_POST)) {
-                            
+                            $modele = ServMaintenance_Model_Modele::findOne($_GET['id']);
                         } else {
-                            
+                            $form->updateForm($modele);
+                            $this->view->form = $form;
                         }
                     } else {
-                        $this->view->message = 'Aucun Controleur avec cette id';
+                        $this->view->message = 'Aucun Controleur avec cette id ' . $_GET['id'];
                         //Redirect
                     }
                 } catch (Exception $e) {

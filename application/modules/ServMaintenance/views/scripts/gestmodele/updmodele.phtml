@@ -1,1 +1,17 @@
-Service Maintenance gest modele upd
+<div>
+    <p>Service Maintenance: Modifier un modèle:</p>
+    <ul>
+        <li><a href='<?php $this->baseUrl(); ?>/ServMaintenance/'>Retour</a></li>
+    </ul>
+</div>
+<div>
+    <?php 
+    if(isset($this->message)) {
+        echo $this->message;
+    }
+    if(isset($this->form)){
+        echo $this->form;
+    }
+    ?>
+    
+</div>
