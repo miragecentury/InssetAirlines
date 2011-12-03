@@ -70,7 +70,7 @@ class ServMaintenance_Form_Modele extends Zend_Form {
         
         $noConstructeur = new Zend_Form_Element_Select('noConstructeur');
         $noConstructeur->setLabel('Constructeur:');
-        $noConstructeur->setMultiOptions($select_value);
+        $noConstructeur->setMultiOptions($select_value); 
         
         $this->addElement($noConstructeur);
         
