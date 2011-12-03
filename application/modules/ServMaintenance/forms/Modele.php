@@ -10,7 +10,8 @@ class ServMaintenance_Form_Modele extends Zend_Form {
         $label->setLabel('Nom du Modèle:');
         $label->addValidator(new Zend_Validate_Alnum(TRUE));
         $label->addValidator(new Zend_Validate_StringLength(array('min' => 4, 'max' => 25)));
-        $label->isRequired();
+        $label->addValidator(new Zend_Validate_NotEmpty());
+        $label->setRequired(TRUE);
 
         $this->addElement($label);
 
@@ -21,7 +22,8 @@ class ServMaintenance_Form_Modele extends Zend_Form {
         $rA->addValidator(new Zend_Validate_Alnum(FALSE));
         $rA->addValidator(new Zend_Validate_StringLength(array('min' => 0, 'max' => 10)));
         $rA->addValidator(new Zend_Validate_Int());
-        $rA->isRequired();
+        $rA->addValidator(new Zend_Validate_NotEmpty());
+        $rA->setRequired(TRUE);
 
         $this->addElement($rA);
         
@@ -32,7 +34,8 @@ class ServMaintenance_Form_Modele extends Zend_Form {
         $distMinAtt->addValidator(new Zend_Validate_Alnum(FALSE));
         $distMinAtt->addValidator(new Zend_Validate_StringLength(array('min' => 0, 'max' => 10)));
         $distMinAtt->addValidator(new Zend_Validate_Int());
-        $distMinAtt->isRequired();
+        $distMinAtt->setRequired(TRUE);
+        $distMinAtt->addValidator(new Zend_Validate_NotEmpty());
 
         $this->addElement($distMinAtt);
         
@@ -43,7 +46,8 @@ class ServMaintenance_Form_Modele extends Zend_Form {
         $distMinDec->addValidator(new Zend_Validate_Alnum(FALSE));
         $distMinDec->addValidator(new Zend_Validate_StringLength(array('min' => 0, 'max' => 10)));
         $distMinDec->addValidator(new Zend_Validate_Int());
-        $distMinDec->isRequired();
+        $distMinDec->setRequired(TRUE);
+        $distMinDec->addValidator(new Zend_Validate_NotEmpty());
 
         $this->addElement($distMinDec);
         
@@ -54,7 +58,8 @@ class ServMaintenance_Form_Modele extends Zend_Form {
         $dateLancement->addValidator(new Zend_Validate_Alnum(FALSE));
         $dateLancement->addValidator(new Zend_Validate_StringLength(array('min' => 4, 'max' => 4)));
         $dateLancement->addValidator(new Zend_Validate_Int());
-        $dateLancement->isRequired();
+        $dateLancement->setRequired(TRUE);
+        $dateLancement->addValidator(new Zend_Validate_NotEmpty());
         
         $this->addElement($dateLancement);
         
@@ -70,13 +75,15 @@ class ServMaintenance_Form_Modele extends Zend_Form {
         
         $noConstructeur = new Zend_Form_Element_Select('noConstructeur');
         $noConstructeur->setLabel('Constructeur:');
-        $noConstructeur->setMultiOptions($select_value); 
+        $noConstructeur->setMultiOptions($select_value);
+        $noConstructeur->setRequired(TRUE);
+        $noConstructeur->addValidator(new Zend_Validate_NotEmpty());
         
         $this->addElement($noConstructeur);
         
         //**********************************************************************
         
-        $submit = new Zend_Form_Element_Submit('submit');
+        $submit = new Zend_Form_Element_Submit('Valider');
         $submit->setValue('Ajouter');
         
         $this->addElement($submit);
@@ -114,6 +121,8 @@ class ServMaintenance_Form_Modele extends Zend_Form {
         $noConstructeur->setValue($modele->get_noConstructeur());
         
         //**********************************************************************
+        $submit = $this->getElement('Valider');
+        $submit->setName('Modifier');
     }
 
 }

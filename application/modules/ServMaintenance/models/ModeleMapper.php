@@ -19,9 +19,9 @@ class ServMaintenance_Model_ModeleMapper extends Spesx_Mapper_Mapper {
         return array(
             'noModele' => $item->get_noModele(),
             'label' => $item->get_label(),
-            'rayonAction ' => $item->get_rayonAction(),
-            'distMinAtt ' => $item->get_distMinAtt(),
-            'disMindec' => $item->get_distMinDec(),
+            'rayonAction' => $item->get_rayonAction(),
+            'distMinAtt' => $item->get_distMinAtt(),
+            'distMinDec' => $item->get_distMinDec(),
             'dateLancement' => $item->get_dateLancement(),
             'noConstructeur' => $item->get_noConstructeur(),
         );
