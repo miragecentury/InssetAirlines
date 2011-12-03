@@ -79,12 +79,13 @@ class ServStrategique_Model_Ligne
     {
         try{
         $this->_mapper->save($this, 'noLigne');
+        return true;
         } catch (Spesx_Mapper_Exception $e){
             Spesx_Log::log('addligne Exception - ' .
             $e->getMessage() . ' - ' .
             $e->getPrevious()->getMessage(),
             Zend_Log::ERR);
-
+            return false;
         }
     }
 

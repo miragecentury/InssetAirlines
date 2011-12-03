@@ -15,7 +15,7 @@ class ServStrategique_Form_addLigne extends Zend_Form
 
     //1er Element
     $aeroportDep = new Zend_Form_Element_Select('aeroDep');
-    $aeroportDep->addMultiOption($listeAero)
+    $aeroportDep->addMultiOptions($listeAero)
         ->setLabel('Aéroport de départ : ')
         ->setRequired(true);
     $this->addElement($aeroportDep);
@@ -24,13 +24,14 @@ class ServStrategique_Form_addLigne extends Zend_Form
     $aeroAtt = new Zend_Form_Element_Select('aeroAtt');
     $aeroAtt->setLabel("Aéroport d'Atterrissage : ")
         ->setRequired(true)
-        ->addMultiOption($listeAero);
+        ->addMultiOptions($listeAero);
     $this->addElement($aeroAtt);
 
     //3e ..
     $jour = new Zend_Form_Element_Text('jour');
     $jour->setLabel('Nbr de Vol par jour : ')
         ->setRequired(true)
+        ->setValue(0)
         ->setValidators(array(new Zend_Validate_Int()));
 
     $this->addElement($jour);
@@ -39,6 +40,7 @@ class ServStrategique_Form_addLigne extends Zend_Form
     $semaine = new Zend_Form_Element_Text('semaine');
     $semaine->setLabel('Nbr de Vol par semaine :')
         ->setRequired(true)
+        ->setValue(0)
         ->setValidators(array(new Zend_Validate_Int()));
 
     $this->addElement($semaine);
@@ -47,6 +49,7 @@ class ServStrategique_Form_addLigne extends Zend_Form
     $mois = new Zend_Form_Element_Text('mois');
     $mois->setLabel('Nbr de Vol par Mois :')
         ->setRequired(true)
+        ->setValue(0)
         ->setValidators(array(new Zend_Validate_Int()));
 
     $this->addElement($mois);
@@ -55,6 +58,7 @@ class ServStrategique_Form_addLigne extends Zend_Form
     $annee = new Zend_Form_Element_Text('annee');
     $annee->setLabel('Nbr de Vol par Annee :')
         ->setRequired(true)
+        ->setValue(0)
         ->setValidators(array(new Zend_Validate_Int()));
 
     $this->addElement($annee);

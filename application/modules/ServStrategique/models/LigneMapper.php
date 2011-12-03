@@ -24,7 +24,7 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
             'jours' => $item->get_jours(),
             'semaines' => $item->get_semaines(),
             'mois' => $item->get_mois(),
-            'annee' => $item->get_annee(),
+            'annees' => $item->get_annees(),
             /* 'date' => $item->get_jours()
               ->get_semaines()
               ->get_mois()

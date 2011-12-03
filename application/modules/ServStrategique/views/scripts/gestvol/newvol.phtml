@@ -1,1 +1,14 @@
-Service Stratégique new vol
+<div class="grid_6 sep">
+    <h2>
+        Ajout d'une ligne
+    </h2>
+</div>
+<div class="clear"></div>
+<div class="prefix_1 ">
+    <?php
+    if ( !empty( $_POST ) && isset( $this->errorMessage ) ) {
+        echo "<p class='red'>" . $this->errorMessage . "</p>";
+    }
+    echo $this->form->render();
+    ?>
+</div>

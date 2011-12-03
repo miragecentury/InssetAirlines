@@ -7,12 +7,12 @@ class Application_Model_DbTable_Ligne extends Zend_Db_Table_Abstract {
         'fkAeroportDeco' => array (
             'Columns' => 'labelAeroportDeco',
             'refTableClass' => 'Aeroport',
-            'refColumns' => 'labelAeroport',
+            'refColumns' => 'noAeroport',
         ),
         'fkAeroportAtte' => array (
             'Columns' => 'labelAeroportAtte',
             'refTableClass' => 'Aeroport',
-            'refColumns' => 'labelAeroport',
+            'refColumns' => 'noAeroport',
         )
     );
 }
