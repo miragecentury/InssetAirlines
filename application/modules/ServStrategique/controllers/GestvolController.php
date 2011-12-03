@@ -28,10 +28,10 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
         //parcours de ligne pour remplacer l'id par le nom de la ville
         foreach ($lignes as $ligne){
             $aeroport = new Application_Model_Aeroport();
-            $aeroDeco = $aeroport->getAeroport($ligne->get_labelAeroportDeco());
-            $aeroAtt = $aeroport->getAeroport($ligne->get_labelAeroportAtte());
-            $ligne->set_labelAeroportDeco($aeroDeco->get_labelVille());
-            $ligne->set_labelAeroportAtte($aeroAtt->get_labelVille());
+            $aeroDeco = $aeroport->getAeroport($ligne->get_noAeroportDeco());
+            $aeroAtt = $aeroport->getAeroport($ligne->get_noAeroportAtte());
+            $ligne->set_noAeroportDeco($aeroDeco->get_labelVille());
+            $ligne->set_noAeroportAtte($aeroAtt->get_labelVille());
         }
 
         //envoi de la ligne
@@ -57,8 +57,8 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
             //sinon si le formulaire est valide
         } else if (!empty($_POST) && $addVolForm->isValid($_POST)) {
             //setter
-            $ligne->set_labelAeroportAtte($addVolForm->getValue('aeroAtt'))
-                ->set_labelAeroportDeco($addVolForm->getValue('aeroDep'))
+            $ligne->set_noAeroportAtte($addVolForm->getValue('aeroAtt'))
+                ->set_noAeroportDeco($addVolForm->getValue('aeroDep'))
                 ->set_jours($addVolForm->getValue('jour'))
                 ->set_semaines($addVolForm->getValue('semaine'))
                 ->set_mois($addVolForm->getValue('mois'))
@@ -103,8 +103,8 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
 
         //Préremplissage de la form
         $addVolForm->setDefaults(array(
-            'aeroDep' => $ligne->get_labelAeroportDeco(),
-            'aeroAtt' => $ligne->get_labelAeroportAtte(),
+            'aeroDep' => $ligne->get_noAeroportDeco(),
+            'aeroAtt' => $ligne->get_noAeroportAtte(),
             'jour' => $ligne->get_jours(),
             'semaine' => $ligne->get_semaines(),
             'mois' => $ligne->get_mois(),
@@ -119,8 +119,8 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
             //sinon si le formulaire est valide
         } else if (!empty($_POST) && $addVolForm->isValid($_POST)) {
             //setter
-            $ligne->set_labelAeroportAtte($addVolForm->getValue('aeroAtt'))
-                ->set_labelAeroportDeco($addVolForm->getValue('aeroDep'))
+            $ligne->set_noAeroportAtte($addVolForm->getValue('aeroAtt'))
+                ->set_noAeroportDeco($addVolForm->getValue('aeroDep'))
                 ->set_jours($addVolForm->getValue('jour'))
                 ->set_semaines($addVolForm->getValue('semaine'))
                 ->set_mois($addVolForm->getValue('mois'))

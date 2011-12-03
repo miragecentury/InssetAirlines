@@ -18,8 +18,8 @@ class ServStrategique_Model_DemandeLigneMapper extends Spesx_Mapper_Mapper
     {
         return array(
             'noDemandeLigne' => $item->get_noDemandeLigne(),
-            'labelAeroportDeco' => $item->get_labelAeroportDeco(),
-            'labelAeroportAtte' => $item->get_labelAeroportAtte(),
+            'labelAeroportDeco' => $item->get_noAeroportDeco(),
+            'labelAeroportAtte' => $item->get_noAeroportAtte(),
             'motif' => $item->get_motif(),
         );
     }

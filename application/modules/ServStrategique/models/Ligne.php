@@ -40,13 +40,13 @@ class ServStrategique_Model_Ligne
      * label de l'aeroport de depart
      * @var string
      */
-    protected $_labelAeroportDeco;
+    protected $_noAeroportDeco;
 
     /**
      * label de l'aeroport d'arrivee
      * @var string
      */
-    protected $_labelAeroportAtte;
+    protected $_noAeroportAtte;
 
     /**
      * Mapper de l'objet
@@ -204,25 +204,25 @@ class ServStrategique_Model_Ligne
         return $this;
     }
 
-    public function get_labelAeroportDeco()
+    public function get_noAeroportDeco()
     {
-        return $this->_labelAeroportDeco;
+        return $this->_noAeroportDeco;
     }
 
-    public function set_labelAeroportDeco($_labelAeroportDeco)
+    public function set_noAeroportDeco($_labelAeroportDeco)
     {
-        $this->_labelAeroportDeco = $_labelAeroportDeco;
+        $this->_noAeroportDeco = $_labelAeroportDeco;
         return $this;
     }
 
-    public function get_labelAeroportAtte()
+    public function get_noAeroportAtte()
     {
-        return $this->_labelAeroportAtte;
+        return $this->_noAeroportAtte;
     }
 
-    public function set_labelAeroportAtte($_labelAeroportAtte)
+    public function set_noAeroportAtte($_labelAeroportAtte)
     {
-        $this->_labelAeroportAtte = $_labelAeroportAtte;
+        $this->_noAeroportAtte = $_labelAeroportAtte;
         return $this;
     }
 
