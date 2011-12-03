@@ -137,7 +137,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         //var_dump($acl);
 
         //Retro-compatibilité avec l'ancienne version
-        Zend_Registry::set('Acl', $acl);
+        Zend_Registry::set('Acl', Spesx_Acl::ReturnZendAcl());
         
         return $acl;
     }
