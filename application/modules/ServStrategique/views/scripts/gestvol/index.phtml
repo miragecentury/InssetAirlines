@@ -1,1 +1,53 @@
-Service Stratégique Gestion vol
+<div class="grid_16 sep">
+    <h2>Service Strategique</h2>
+    <p class="prefix_1">Listes des lignes :</p>
+</div>
+<div class="clear"></div>
+<div class="prefix_1 grid_15">
+    <table class="sep">
+        <tr>
+            <th style='min-width:200px;'>Ligne</th>
+            <th>Vol par jour</th>
+            <th>Vol par semaine</th>
+            <th>Vol par mois</th>
+            <th>Vol par année</th>
+        </tr>
+    <?php
+        foreach ($this->lignes as $ligne){
+            //Tweak affichage
+            if($ligne->get_jours() == ''){
+               $ligne->set_jours('-');
+            }
+            if ($ligne->get_semaines() == ''){
+                $ligne->set_semaines('-');
+            }
+            if ($ligne->get_mois() == ''){
+                $ligne->set_mois('-');
+            }
+            if ($ligne->get_annees() == ''){
+                $ligne->set_annees('-');
+            }
+            //Affichage
+            echo "<tr class='sep'>";
+                echo "<td>" . $ligne->get_noAeroportDeco() ." - ".
+                    $ligne->get_noAeroportAtte() . "</td>";
+                echo "<td>" . $ligne->get_jours() . "</td>";
+                echo "<td>" . $ligne->get_semaines() . "</td>";
+                echo "<td>" . $ligne->get_mois() . "</td>";
+                echo "<td>" . $ligne->get_annees() . "</td>";
+                echo "<td><a href='/ServStrategique/gestvol/updvol/id/" .
+                    $ligne->get_noLigne() .
+                    "' class='enSavoirPlus'>Modifier</a></td>";
+                echo "<td><a href='/ServStrategique/gestvol/delvol/id/" .
+                    $ligne->get_noLigne() .
+                    "' class='enSavoirPlus'>Supprimer</a></td>";
+            echo "</tr>";
+        }
+    ?>
+        </tr>
+    </table>
+    <div class="alpha omega grid_3 prefix_12">
+        <a href="/ServStrategique/gestvol/newvol" class='enSavoirPlus'>Ajouter une ligne</a>
+    </div>
+    <div class="clear"></div>
+</div>
