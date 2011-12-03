@@ -61,5 +61,24 @@ class Application_Model_PersonneMapper extends Spesx_Mapper_Mapper
         $return = $this->_createItemFromRow($result[0]);
         return $return;
     }
-
+    
+    public function findByNoInsee($noInsee)
+    {
+        try {
+            $select = $this->getDbTable()->select()
+                ->where('noINSEE = ?', $noInsee);
+            $result = $this->getDbTable()->fetchRow($select);           
+        } catch (Zend_Db_Exception $e) {
+            throw new Spesx_Mapper_Exception(
+                'Personne : Echec Methode findByNoInsee',
+                $e->getCode(),
+                $e);
+        }        
+        if ($result != null) {
+            $return = $this->_createItemFromRow($result);       
+        } else {
+            $return = new Application_Model_Personne;
+        }
+        return $return;
+    }
 }

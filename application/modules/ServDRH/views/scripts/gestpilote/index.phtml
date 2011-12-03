@@ -1,38 +1,46 @@
-<h1>Gestion des pilotes </h1>
+<center><h1>Service DRH-Gestion des pilotes </h1>
 <?php
-if (!empty($this->AllPersonne)) {
-    echo "<table>
-    <tr>
-        <div class='sep'>
-        <td>Nom|</td>
-        <td>Pr&eacute;nom|</td>
-        <td>Pr&eacute;nom 2|</td>
-        <td>Pr&eacute;nom 3|</td>
-        <td>date de naissance|</td>
-        <td>Num&eacute;ro INSEE|</td>
-        <td>E-mail|</td>
-        <td>  </td>
-        <td>  </td>
-        </div>
-    </tr>";
-//echo var_dump($this->AllPersonne);
-    
-    foreach ($this->AllPersonne as $res){
-        
-          echo "<tr>
-        <td>" . $res->get_nom(). "</td>
-        <td>" . $res->get_prenom(). "</td>
-        <td>" . $res->get_prenom2(). "</td>
-        <td>" . $res->get_prenom3(). "</td>
-        <td>" . $res->get_dateNaissance(). "</td>
-        <td>" . $res->get_noINSEE(). "</td>
-        <td>" . $res->get_email(). "</td>
-       
-        <td><a class='enSavoirPlus' href='gestpilote/updpilote?id=" . $res->get_noPersonne() . "'>Modifier</a></td>
-        <td><a class='enSavoirPlus' href='gestpilote/delpilote?id=" . $res->get_noPersonne() . "'>Supprimer</a></td>
-            
-    </tr>";
+    if (!empty($this->AllPersonnes)) {
+        echo "<table>";
+        echo "<p align=right><a class='enSavoirPlus' href='gestpilote/newpilote'>Ajouter un nouveau pilote</a></p>";
+        echo "<tr>
+            <div class='sep'>
+            <td>M&eacute;tier</td>
+            <td>Nom</td>
+            <td>Pr&eacute;nom</td>
+            <td>Deuxième pr&eacute;nom</td>
+            <td>Troisième pr&eacute;nom</td>
+            <td>Date de naissance</td>
+            <td>Num&eacute;ro INSEE</td>
+            <td>Adresse</td>
+            <td>Pays</td>
+            <td>E-mail</td>
+            <td></td>
+            <td></td>
+            <td></td>    
+            </div>
+        </tr>";
+        $i = 0;
+        foreach ($this->AllPersonnes as $res){    
+            echo "<tr>
+                <td> ". $this->ListeMetiers[$i]. "</td>     
+                <td>" . $res->get_nom(). "</td>
+                <td>" . $res->get_prenom(). "</td>
+                <td>" . $res->get_prenom2(). "</td>
+                <td>" . $res->get_prenom3(). "</td>
+                <td>" . $res->get_dateNaissance(). "</td>
+                <td>" . $res->get_noINSEE(). "</td>
+                <td>" . '' . "</td>
+                <td>" . $res->get_labelPays(). "</td>
+                <td>" . $res->get_email(). "</td>
+                <td><a class='enSavoirPlus' href='gestpilote/updpilote?id=" . $res->get_noPersonne() . "'>Modifier</a></td>
+                <td><a class='enSavoirPlus' href='gestpilote/congespilote?id=" . $res->get_noPersonne() . "'>Conges</a></td>
+                <td><a class='enSavoirPlus' href='gestpilote/delpilote?id=" . $res->get_noPersonne() . "'>Supprimer</a></td>
+                </tr>";
+            $i++;
+        }
+        echo "</table>
+              <br /><a href='/ServDRH'>Retour</a>
+              </center>";
     }
-    echo "</table>";
-}
 ?>

@@ -1,0 +1,36 @@
+<?php
+    $auth = new Zend_Session_Namespace('Zend_Auth');
+    $roleUtilisateur = $auth->role;
+?>
+<form action='' method='POST'>
+    <center>
+    <table>
+        <tr>
+            <td>
+                <?php echo $this->element->labelHabilitation->renderLabel(); ?>
+            </td>
+            <td>
+                <?php echo $this->element->labelHabilitation->renderViewHelper(); ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?php echo $this->element->labelMetier->renderLabel(); ?>
+            </td>
+            <td>
+                <?php echo $this->element->labelMetier->renderViewHelper(); ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?php echo $this->element->labelModele->renderLabel(); ?>
+            </td>
+            <td>
+                <?php echo $this->element->labelModele->renderViewHelper(); ?>
+            </td>
+        </tr>
+    </table>
+    <?php echo $this->element->enregistrer->renderViewHelper(); ?>
+    <?php echo $this->element->annuler->renderViewHelper(); ?>
+   </center>
+</form>        

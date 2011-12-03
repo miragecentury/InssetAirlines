@@ -7,9 +7,30 @@ class ServDRH_Model_Habilitation
     protected $_labelMetier;
     protected $_Modele_label;
     
-    public function getHabilitations(){
+    public function saveHabilitation() {
+        $mapper = new ServDRH_Model_HabilitationMapper();
+        $mapper->saveByLabel($this, 'noHabilitation');
+    }
+    
+    public static function getHabilitations(){
         $mapper = new ServDRH_Model_HabilitationMapper();
         return $mapper->findAll();
+    }
+    
+    public function getHabilitationById($noHabilitation){
+        $mapper = new ServDRH_Model_HabilitationMapper();
+        return $mapper->find($noHabilitation);
+    }
+    
+    public function delHabilitation($noHabilitation) {
+        $mapper = new ServDRH_Model_HabilitationMapper();
+        try {
+            $mapper->delete('noHabilitation', $noHabilitation);
+        } catch (Zend_Exception $e) {
+            echo 'ServDRH_Model_EmployeMapper_delEmploye() 
+                Exception - ' .
+            $e->getMessage() . ' - ' . $e->getPrevious();            
+        }         
     }
     
     public function get_noHabilitation() 

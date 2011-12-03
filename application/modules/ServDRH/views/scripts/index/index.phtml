@@ -1,6 +1,15 @@
-Ceci n'est pas un code, juste un apercu cependant tres moche!
-
-Direction des ressources humaines.
-<br/><br/>
-<a href="ServDRH/gestpilote">Gestion des pilotes</a><br>
-<a href="ServDRH/gesthabillitation">Gestion des habillitation</a>
+<?php
+    $auth = new Zend_Session_Namespace('Zend_Auth');
+    $roleUtilisateur = $auth->role;
+    if ($roleUtilisateur == 'Serv_DRH' || $roleUtilisateur == 'Serv_DRH_Adm') {
+?>
+        <p align="center"><h1>Direction des ressources humaines.</h1></p>
+        <br/><br/>
+        <a href="ServDRH/gestpilote">Gestion des pilotes</a><br>
+        <a href="ServDRH/gesthabilitation">Gestion des habilitation</a>
+<?php
+    } else {
+        echo "<center>Vous ne disposez pas des droits nécessaires !<br />";
+        echo "<a href='/'>Retour</a></center>";
+    }
+?>

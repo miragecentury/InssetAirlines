@@ -68,22 +68,26 @@ class Application_Model_Personne
      * @var string
      */
     protected $_labelPays;
+
     /**
      *  Mail de la personne (sert de login)
      * @var string
      */
     protected $_email;
+
     /**
      * password de connection de la personne
      * @var string
      */
     protected $_password;
+
     /**
      * role ACL associé (stocké en session apres authentification)
      * @var string
      */
     protected $_role;
     protected $_password_salt;
+
     /**
      * Mapper associé au modele
      * @var Application_Model_PersonneMapper
@@ -118,7 +122,7 @@ class Application_Model_Personne
     //Methodes
     //--------------------------------------------------------------------------
     //Recuperation de l'adresse
-    protected function _getAdresseForPersonne()
+    public function _getAdresseForPersonne()
     {
         $objAdresse = Application_Model_Adresse::getAdresse($this->_noAdresse);
         if (isEmpty($objAdresse) || !isset($objAdresse)) {
@@ -179,6 +183,25 @@ class Application_Model_Personne
         }
         return $return;
     }
+    /**
+     * Récupère une personne suivant son numéro Insee
+     * @param int $noInsee
+     * @return Personne
+     * @author Camille
+     * @access public
+     * @static
+     */
+    public static function getPersonneByNoInsee($noInsee)
+    {
+        $mapper = Spesx_Mapper_MapperFactory::getMapper('Application_Model_Personne');
+        try {
+            $personne = $mapper->findByNoInsee($noInsee);
+        } catch (Spesx_Mapper_Exception $e) {
+            Spesx_Log::Log(
+                $e->getMessage() . $e->getPrevious()->getMessage(), Zend_Log::ERR);
+        }
+        return $personne;
+    }
 
     /**
      * Recupere une personne suivant son email
@@ -194,11 +217,11 @@ class Application_Model_Personne
             $return = $mapper->selectByMail($mail);
         } catch (Spesx_Mapper_Exception $e) {
             Spesx_Log::Log(
-                $e->getMessage() . $e->getPrevious()->getMessage(),
-                Zend_Log::ERR);
+                $e->getMessage() . $e->getPrevious()->getMessage(), Zend_Log::ERR);
         }
         return $return;
     }
+
     /** Sauve une Personne en base de donnée suivant son Id
      *
      * @param int $id
@@ -208,12 +231,11 @@ class Application_Model_Personne
      */
     public function savePersonneById($id)
     {
-        try{
-        $this->_mapper->save($this,'noPersonne');
-        } catch (Spesx_Mapper_Exception $e){
+        try {
+            $this->_mapper->save($this, 'noPersonne');
+        } catch (Spesx_Mapper_Exception $e) {
             Spesx_Log::Log(
-                $e->getMessage(). ' ' . $e->getPrevious()->getMessage(),
-                Zend_Log::ERR);
+                $e->getMessage() . ' ' . $e->getPrevious()->getMessage(), Zend_Log::ERR);
         }
     }
 
@@ -354,43 +376,50 @@ class Application_Model_Personne
         $this->_labelPays = $_labelPays;
         return $this;
     }
-    public function get_email() {
+
+    public function get_email()
+    {
         return $this->_email;
     }
 
-    public function set_email($_email) {
+    public function set_email($_email)
+    {
         $this->_email = $_email;
         return $this;
     }
 
-    public function get_role() {
+    public function get_role()
+    {
         return $this->_role;
     }
 
-    public function set_role($_role) {
+    public function set_role($_role)
+    {
         $this->_role = $_role;
         return $this;
     }
 
-    public function get_password() {
+    public function get_password()
+    {
         return $this->_password;
     }
 
-    public function set_password($_password) {
+    public function set_password($_password)
+    {
         $this->_password = $_password;
         return $this;
     }
 
-    public function get_password_salt() {
+    public function get_password_salt()
+    {
         return $this->_password_salt;
     }
 
-    public function set_password_salt($_password_salt) {
+    public function set_password_salt($_password_salt)
+    {
         $this->_password_salt = $_password_salt;
         return $this;
     }
 
-
 }
-
 ?>
