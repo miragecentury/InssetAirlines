@@ -19,13 +19,11 @@ class UtilisateurController extends Zend_Controller_Action
         $this->view->render('user/_login.phtml');
         $this->_acl = Zend_Registry::get('Acl');
 
-        //Rediredtion auto si pas authentifié
-        /* TODO : A activer lorsque le probleme des acl (heritage) sera reglé
-          $authSession = new Zend_Session_Namespace('Zend_Auth');
-          if (!$this->_acl->isAllowed($authSession->role, 'Auth')) {
-          $this->_redirect('/');
-          }
-         */
+
+        $authSession = new Zend_Session_Namespace('Zend_Auth');
+        if ($authSession->role == null) {
+            $this->_redirect('/');
+        }
     }
 
     public function indexAction()
@@ -294,8 +292,6 @@ class UtilisateurController extends Zend_Controller_Action
 
             $this->view->errorMessage = "Annulation de la requete,
                 ce numero ne vous appartient pas ou n'existe pas!";
-
-
         } else {
             $assoc->delAssoc();
             unset($assoc);
