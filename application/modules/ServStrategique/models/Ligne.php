@@ -68,16 +68,24 @@ class ServStrategique_Model_Ligne
     // Methodes
     //--------------------------------------------------------------------------
     /**
-     * Sauvegarde une  ligne, selon l'existence ou non du noLigne, 
+     * Sauvegarde une  ligne, selon l'existence ou non du noLigne,
      * il est ajouté ou modifié
      *
-     * @author charles
+     * @author charles,pewho
      * @access public
      *
      */
     public function addLigne()
     {
+        try{
         $this->_mapper->save($this, 'noLigne');
+        } catch (Spesx_Mapper_Exception $e){
+            Spesx_Log::log('addligne Exception - ' .
+            $e->getMessage() . ' - ' .
+            $e->getPrevious()->getMessage(),
+            Zend_Log::ERR);
+
+        }
     }
 
     /**
@@ -94,7 +102,7 @@ class ServStrategique_Model_Ligne
         try {
             $this->_mapper->delete('noLigne',$noLigne);
         } catch (Zend_Exception $e) {
-            echo 'ServSrategique_Models_Ligne_delLigne() 
+            echo 'ServSrategique_Models_Ligne_delLigne()
                 Exception - ' .
             $e->getMessage() . ' - ' . $e->getPrevious();
         }
@@ -103,29 +111,30 @@ class ServStrategique_Model_Ligne
     /**
      * Retourne une Ligne a partir de l'id fourni en parametre.
      * Si l'id n'existe pas, retourne null.
-     * 
+     *
      * @access public
      * @author charles
      * @param int $id
      * @return null|ServPlaning_Model_Ligne
-     *  
+     *
      */
-    public function getLigne($noLigne)
+    public static function getLigne($noLigne)
     {
-        return $this->_mapper->find($noLigne);
+        $mapper = Spesx_Mapper_MapperFactory::getMapper("ServStrategique_Model_Ligne");
+        return $mapper->find($noLigne);
     }
 
     /**
      * Retourne toutes les Lignes, null si il n'y en as pas dans la BD
-     * 
+     *
      * @access public
      * @author charles
      * @return null|array(Application_Model_Ligne)
-     *  
+     *
      */
-    public function getListeLigne()
+    public static function getListeLigne()
     {
-        $this->_mapper = Spesx_Mapper_MapperFactory::getMapper("ServStrategique_Model_Ligne");
+        $mapper = Spesx_Mapper_MapperFactory::getMapper("ServStrategique_Model_Ligne");
         try {
             return $mapper->findAll();
         } catch (Spesx_Mapper_Exception $e) {
