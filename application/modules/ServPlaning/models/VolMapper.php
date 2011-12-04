@@ -6,8 +6,8 @@ class ServPlaning_Model_VolMapper extends Spesx_Mapper_Mapper {
         $item = new ServPlaning_Model_Vol();
         $item->set_noVol($row->noVol)
                 ->set_labelvol($row->labelvol)
-                ->set_labelAeroportAtte($row->labelAeroportAtte)
-                ->set_labelAeroportDeco($row->labelAeroportDeco)
+                ->set_noAeroportAtte($row->labelAeroportAtte)
+                ->set_noAeroportDeco($row->labelAeroportDeco)
                 ->set_noAvion($row->noAvion)
                 ->set_noLigne($row->noLigne)
                 ->set_heureDecollage($row->heureDecollage)
@@ -20,8 +20,8 @@ class ServPlaning_Model_VolMapper extends Spesx_Mapper_Mapper {
         return array(
             'noVol' => $item->get_noVol(),
             'labelvol' => $item->get_labelvol(),
-            'labelAeroportAtte' => $item->get_labelAeroportAtte(),
-            'labelAeroportDeco' => $item->get_labelAeroportDeco(),
+            'labelAeroportAtte' => $item->get_noAeroportAtte(),
+            'labelAeroportDeco' => $item->get_noAeroportDeco(),
             'noAvion' => $item->get_noAvion(),
             'noLigne' => $item->get_noLigne(),
             'heureDecollage' => $item->get_heureDecollage(),

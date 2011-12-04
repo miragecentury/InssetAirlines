@@ -1,16 +1,17 @@
 <?php
 
-class ServMaintenance_Model_AvionMapper extends Application_Model_Mapper {
+class ServMaintenance_Model_AvionMapper extends Spesx_Mapper_Mapper {
 
     protected function _createItemFromRow(Zend_Db_Table_Row $row) {
-        $item = new Avion();
+        $item = new ServMaintenance_Model_Avion();
+
         $item->set_noAvion($row->noAvion)
                 ->set_nbPlaceMax($row->nbPlaceMax)
                 ->set_nbHeureVol($row->nbHeureVol)
                 ->set_nbIncident($row->nbIncident)
                 ->set_label($row->label)
                 ->set_dateMiseService($row->dateMiseService)
-                ->set_dateHorsService($row->dateHorsService)
+                ->set_dateMiseHorsService($row->dateHorsService)
                 ->set_enService($row->enService)
                 ->set_noModele($row->noModele);
         return $item;
@@ -24,7 +25,7 @@ class ServMaintenance_Model_AvionMapper extends Application_Model_Mapper {
             'nbIncident' => $item->get_nbIncident(),
             'label' => $item->get_label(),
             'dateMiseService' => $item->get_dateMiseService(),
-            'dateHorsService' => $item->get_dateHorsService(),
+            'dateHorsService' => $item->get_dateMiseHorsService(),
             'enService' => $item->get_enService(),
             'noModele' => $item->get_noModele(),
         );

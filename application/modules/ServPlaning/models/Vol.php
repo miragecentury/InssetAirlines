@@ -21,13 +21,13 @@ class ServPlaning_Model_Vol {
      * label de l'aeroport d'arrivée
      * @var string
      */
-    protected $_labelAeroportAtte;
+    protected $_noAeroportAtte;
 
     /**
      * label de depart
      * @var string
      */
-    protected $_labelAeroportDeco;
+    protected $_noAeroportDeco;
 
     /**
      * numero de l'avion
@@ -120,11 +120,11 @@ class ServPlaning_Model_Vol {
                 </tr>
                 <tr bgcolor='#CCCCCC'>
                     <td class='grid_3'>Aeroport de départ</td>
-                    <td class='grid_3'>" . $this->get_labelAeroportDeco() . "</td>
+                    <td class='grid_3'>" . $this->get_noAeroportDeco() . "</td>
                 </tr>
                 <tr>
                     <td class='grid_3'>Aeroport d'arrivée</td>
-                    <td class='grid_3'>" . $this->get_labelAeroportAtte() . "</td>
+                    <td class='grid_3'>" . $this->get_noAeroportAtte() . "</td>
                 </tr>
                 <tr bgcolor='#CCCCCC'>
                     <td class='grid_3'>Avion</td>
@@ -241,8 +241,8 @@ class ServPlaning_Model_Vol {
                 $color = !$color;
                 $tableau .= "   <td class='grid_1'>" . $val->get_noVol() . "</td>
                                 <td class='grid_2'>" . $val->get_labelvol() . "</td>
-                                <td class='grid_3'>" . $val->get_labelAeroportDeco() . "</td>
-                                <td class='grid_3'>" . $val->get_labelAeroportAtte() . "</td>
+                                <td class='grid_3'>" . $val->get_noAeroportDeco() . "</td>
+                                <td class='grid_3'>" . $val->get_noAeroportAtte() . "</td>
                                 <td class='grid_1'>" . $val->get_noAvion() . "</td>
                                 <td class='grid_1'>" . $val->get_noLigne() . "</td>
                                 <td class='grid_1'>" . $val->get_heuredecollage() . "</td>
@@ -291,8 +291,8 @@ class ServPlaning_Model_Vol {
                 $color = !$color;
                 $tableau .= "   <td class='grid_1'>" . $val->get_noVol() . "</td>
                                 <td class='grid_3'>" . $val->get_labelvol() . "</td>
-                                <td class='grid_3'>" . $val->get_labelAeroportDeco() . "</td>
-                                <td class='grid_3'>" . $val->get_labelAeroportAtte() . "</td>
+                                <td class='grid_3'>" . $val->get_noAeroportDeco() . "</td>
+                                <td class='grid_3'>" . $val->get_noAeroportAtte() . "</td>
                                 <td class='grid_1'>" . $val->get_noAvion() . "</td>
                                 <td class='grid_1'>" . $val->get_noLigne() . "</td>
                                 <td class='grid_1'>" . $val->get_heuredecollage() . "</td>
@@ -327,21 +327,21 @@ class ServPlaning_Model_Vol {
         return $this;
     }
 
-    public function get_labelAeroportAtte() {
-        return $this->_labelAeroportAtte;
+    public function get_noAeroportAtte() {
+        return $this->_noAeroportAtte;
     }
 
-    public function set_labelAeroportAtte($_labelAeroportAtte) {
-        $this->_labelAeroportAtte = $_labelAeroportAtte;
+    public function set_noAeroportAtte($_labelAeroportAtte) {
+        $this->_noAeroportAtte = $_labelAeroportAtte;
         return $this;
     }
 
-    public function get_labelAeroportDeco() {
-        return $this->_labelAeroportDeco;
+    public function get_noAeroportDeco() {
+        return $this->_noAeroportDeco;
     }
 
-    public function set_labelAeroportDeco($_labelAeroportDeco) {
-        $this->_labelAeroportDeco = $_labelAeroportDeco;
+    public function set_noAeroportDeco($_labelAeroportDeco) {
+        $this->_noAeroportDeco = $_labelAeroportDeco;
         return $this;
     }
 
