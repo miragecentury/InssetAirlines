@@ -122,7 +122,7 @@ class Application_Model_Personne
     //Methodes
     //--------------------------------------------------------------------------
     //Recuperation de l'adresse
-    protected function _getAdresseForPersonne()
+    public function _getAdresseForPersonne()
     {
         $objAdresse = Application_Model_Adresse::getAdresse($this->_noAdresse);
         if (isEmpty($objAdresse) || !isset($objAdresse)) {
@@ -135,13 +135,13 @@ class Application_Model_Personne
     /**
      * Recuperation des id des numéros de téléphond'une personne
      * @param int $id
-     * @return array $return Tableau de tableau
+     * @return array $return Tableau de Application_Model_PersonneView
      * @access protected
      * @author pewho
      */
     protected function _getNoTelephoneForPersonne($id)
     {
-        $return = Application_Model_PersonneHasTelephoneMapper::getTelephonesByIdPersonne($id);
+        $return = Application_Model_PersonneView::getTelephonesByPersonne($id);
         return $return;
     }
 
@@ -183,6 +183,25 @@ class Application_Model_Personne
         }
         return $return;
     }
+    /**
+     * Récupère une personne suivant son numéro Insee
+     * @param int $noInsee
+     * @return Personne
+     * @author Camille
+     * @access public
+     * @static
+     */
+    public static function getPersonneByNoInsee($noInsee)
+    {
+        $mapper = Spesx_Mapper_MapperFactory::getMapper('Application_Model_Personne');
+        try {
+            $personne = $mapper->findByNoInsee($noInsee);
+        } catch (Spesx_Mapper_Exception $e) {
+            Spesx_Log::Log(
+                $e->getMessage() . $e->getPrevious()->getMessage(), Zend_Log::ERR);
+        }
+        return $personne;
+    }
 
     /**
      * Recupere une personne suivant son email
@@ -218,6 +237,31 @@ class Application_Model_Personne
             Spesx_Log::Log(
                 $e->getMessage() . ' ' . $e->getPrevious()->getMessage(), Zend_Log::ERR);
         }
+    }
+
+    /**
+     * Permet de recuperer l'objet personne associé à l'utilisateur logué
+     *
+     * @author pewho
+     * @access public
+     * @static
+     * @return Application_Model_Personne|false
+     */
+    public static function getPersonneRegistered()
+    {
+        //recupération de la session
+        $authSession = new Zend_Session_Namespace('Zend_Auth');
+
+        //recupération du login stocké en session, si erreur return false
+        if (!empty($authSession->storage) && isset($authSession->storage)) {
+           $mail = $authSession->storage;
+        } else {
+            return false;
+        }
+
+        //recupération de la personne entière
+        $return = Application_Model_Personne::getPersonneByMail($mail);
+        return $return;
     }
 
     //--------------------------------------------------------------------------

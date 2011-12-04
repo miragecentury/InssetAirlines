@@ -5,6 +5,8 @@
     Description:
         Feuille de css principale
 */
+
+
 /* Menu Haut*/
 body{
     background-color: #eee;
@@ -54,18 +56,19 @@ body{
 /* Login a droite */
 #login a{
     color: #eee;
-    line-height: 30px;
+    line-height: 28px;
     vertical-align: middle;
     padding: 5px 20px;
     text-decoration: none;
     font-size: 15px;
-    text-align: center;
+    text-align: right;
 }
 #login a:hover,
 #login a:active,
 #login a:focus{
     color:#ffb800;
 }
+
 /* Footer */
 #footer{
     width: 100%;
@@ -133,4 +136,18 @@ ul{
 }
 .bold{
     font-weight: bold;
+}
+.success{
+    font-weight: bold;
+    color : green;
+    background-color: lightgreen;
+    border: 1px solid green;
+    padding: 10px 15px;
+}
+.fail{
+    font-weight: bold;
+    color : red;
+    background-color : lightgreen;
+    border: 1px solid red;
+    padding: 10px 15px;
 }

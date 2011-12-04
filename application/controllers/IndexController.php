@@ -4,16 +4,16 @@ class IndexController extends Zend_Controller_Action {
 
     public function init() {
         $this->view->render('user/_frontSidebar.phtml');
-        $this->view->render('user/_login.phtml');
+        $this->view->render('user/_loginfront.phtml');
         $this->_helper->layout->setLayout('front');
     }
 
     public function indexAction() {
-        Zend_Registry::get('Log')->log('test', Zend_Log::ALERT);
+        //Spesx_Log::LogALERT('test');
     }
 
     public function patternAction() {
-        
+
     }
 
     public function contactAction() {
@@ -44,8 +44,8 @@ class IndexController extends Zend_Controller_Action {
                     }
                 }
             }
-            
-           
+
+
         }
     }
 

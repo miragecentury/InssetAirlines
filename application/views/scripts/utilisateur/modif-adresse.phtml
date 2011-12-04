@@ -1,0 +1,19 @@
+<div class="grid_6 sep">
+    <h2>
+        Changement d'adresse
+    </h2>
+    <h6>
+        <?php
+            echo $this->personne->get_prenom() . ' ' . $this->personne->get_nom();
+        ?>
+    </h6>
+</div>
+<div class="clear"></div>
+<div class="prefix_1">
+    <?php
+        if(!empty($_POST) && isset($this->errorMessage)){
+            echo "<p class='red'>" . $this->errorMessage . "</p>";
+        }
+        echo $this->changeAdresseForm->render();
+    ?>
+</div>

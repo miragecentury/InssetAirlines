@@ -27,7 +27,7 @@ class Application_Model_Telephone
     //Constructeur : instancie le mapper
     public function __construct()
     {
-        $this->_mapper = Spesx_Mapper_MapperFactory::getMapper('Application_Model_Telephone');
+        $this->_mapper = Spesx_Mapper_MapperFactory::getMapper( 'Application_Model_Telephone' );
     }
 
     //--------------------------------------------------------------------------
@@ -38,11 +38,36 @@ class Application_Model_Telephone
      * @param int $id
      * @return Application_Model_Telephone
      * @access public
+     * @static
      */
-    public static function getTelephone($id)
+    public static function getTelephone( $id )
     {
-        $mapper = Spesx_Mapper_MapperFactory::getMapper('Application_Model_Telephone');
-        return $mapper->find($id);
+        $mapper = Spesx_Mapper_MapperFactory::getMapper( 'Application_Model_Telephone' );
+        return $mapper->find( $id );
+    }
+
+    /**
+     * Récupère un objet Telephone à partir du numéro
+     * @param string $num
+     * @author pewho
+     * @access public
+     * @static
+     */
+    public static function getTelephoneByNum( $num )
+    {
+        try {
+            $mapper = Spesx_Mapper_MapperFactory::getMapper( 'Application_Model_Telephone' );
+            $return = $mapper->fetch($num);
+        } catch ( Spesx_Mapper_Exception $e ) {
+            Spesx_Log::log( "Erreur de selection du telephone(à partir du numéro) : " .
+                $e->getMessage() .
+                ':' .
+                $e->getPrevious()->getMessage(), Zend_Log::ERR );
+        }
+        if ($return == null){
+            $return = false;
+        }
+        return $return;
     }
 
     /**
@@ -52,8 +77,17 @@ class Application_Model_Telephone
      */
     public function addTelephone()
     {
-        $this->_mapper->save($this, 'noTelephone');
+        try {
+            $return = $this->_mapper->save( $this, 'noTelephone' );
+        } catch ( Spesx_Mapper_Exception $e ) {
+            Spesx_Log::log( "Erreur de modification du telephone : " .
+                $e->getMessage() .
+                ':' .
+                $e->getPrevious()->getMessage(), Zend_Log::ERR );
+        }
+        return $return;
     }
+
     //--------------------------------------------------------------------------
     //GETTER / SETTER
     //--------------------------------------------------------------------------
@@ -62,7 +96,7 @@ class Application_Model_Telephone
         return $this->_noTelephone;
     }
 
-    public function set_noTelephone($_noTelephone)
+    public function set_noTelephone( $_noTelephone )
     {
         $this->_noTelephone = $_noTelephone;
         return $this;
@@ -73,7 +107,7 @@ class Application_Model_Telephone
         return $this->_numTelephone;
     }
 
-    public function set_numTelephone($_numTelephone)
+    public function set_numTelephone( $_numTelephone )
     {
         $this->_numTelephone = $_numTelephone;
         return $this;

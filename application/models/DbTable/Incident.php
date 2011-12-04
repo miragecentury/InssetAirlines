@@ -5,9 +5,9 @@ class Application_Model_DbTable_Incident extends Zend_Db_Table_Abstract {
     protected $_primaryKey = 'noIncident';
     protected $_foreignKey = array(
         'fkAeroport' => array (
-            'Columns' => 'labelAeroportArriNextIncident',
+            'Columns' => 'noAeroportArriNextIncident',
             'refTableClass' => 'Aeroport',
-            'refColumns' => 'labelAeroport',
+            'refColumns' => 'noAeroport',
         ),
         'fkVol' => array (
             'Columns' => 'noVol',
@@ -15,9 +15,9 @@ class Application_Model_DbTable_Incident extends Zend_Db_Table_Abstract {
             'refColumns' => 'noVol',
         ),
         'fkTypeIncident' => array (
-            'Columns' => 'labelTypeIncident',
+            'Columns' => 'idTypeIncident',
             'refTableClass' => 'TypeIncident',
-            'refColumns' => 'labelTypeIncident'
+            'refColumns' => 'idTypeIncident'
         )
     );
  }

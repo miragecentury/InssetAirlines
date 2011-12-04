@@ -40,13 +40,13 @@ class ServStrategique_Model_Ligne
      * label de l'aeroport de depart
      * @var string
      */
-    protected $_labelAeroportDeco;
+    protected $_noAeroportDeco;
 
     /**
      * label de l'aeroport d'arrivee
      * @var string
      */
-    protected $_labelAeroportAtte;
+    protected $_noAeroportAtte;
 
     /**
      * Mapper de l'objet
@@ -68,16 +68,25 @@ class ServStrategique_Model_Ligne
     // Methodes
     //--------------------------------------------------------------------------
     /**
-     * Sauvegarde une  ligne, selon l'existence ou non du noLigne, 
+     * Sauvegarde une  ligne, selon l'existence ou non du noLigne,
      * il est ajouté ou modifié
      *
-     * @author charles
+     * @author charles,pewho
      * @access public
      *
      */
     public function addLigne()
     {
+        try{
         $this->_mapper->save($this, 'noLigne');
+        return true;
+        } catch (Spesx_Mapper_Exception $e){
+            Spesx_Log::log('addligne Exception - ' .
+            $e->getMessage() . ' - ' .
+            $e->getPrevious()->getMessage(),
+            Zend_Log::ERR);
+            return false;
+        }
     }
 
     /**
@@ -93,39 +102,42 @@ class ServStrategique_Model_Ligne
     {
         try {
             $this->_mapper->delete('noLigne',$noLigne);
+            return true;
         } catch (Zend_Exception $e) {
-            echo 'ServSrategique_Models_Ligne_delLigne() 
+            echo 'ServSrategique_Models_Ligne_delLigne()
                 Exception - ' .
             $e->getMessage() . ' - ' . $e->getPrevious();
+            return false;
         }
     }
 
     /**
      * Retourne une Ligne a partir de l'id fourni en parametre.
      * Si l'id n'existe pas, retourne null.
-     * 
+     *
      * @access public
      * @author charles
      * @param int $id
      * @return null|ServPlaning_Model_Ligne
-     *  
+     *
      */
-    public function getLigne($noLigne)
+    public static function getLigne($noLigne)
     {
-        return $this->_mapper->find($noLigne);
+        $mapper = Spesx_Mapper_MapperFactory::getMapper("ServStrategique_Model_Ligne");
+        return $mapper->find($noLigne);
     }
 
     /**
      * Retourne toutes les Lignes, null si il n'y en as pas dans la BD
-     * 
+     *
      * @access public
      * @author charles
      * @return null|array(Application_Model_Ligne)
-     *  
+     *
      */
-    public function getListeLigne()
+    public static function getListeLigne()
     {
-        $this->_mapper = Spesx_Mapper_MapperFactory::getMapper("ServStrategique_Model_Ligne");
+        $mapper = Spesx_Mapper_MapperFactory::getMapper("ServStrategique_Model_Ligne");
         try {
             return $mapper->findAll();
         } catch (Spesx_Mapper_Exception $e) {
@@ -192,25 +204,25 @@ class ServStrategique_Model_Ligne
         return $this;
     }
 
-    public function get_labelAeroportDeco()
+    public function get_noAeroportDeco()
     {
-        return $this->_labelAeroportDeco;
+        return $this->_noAeroportDeco;
     }
 
-    public function set_labelAeroportDeco($_labelAeroportDeco)
+    public function set_noAeroportDeco($_labelAeroportDeco)
     {
-        $this->_labelAeroportDeco = $_labelAeroportDeco;
+        $this->_noAeroportDeco = $_labelAeroportDeco;
         return $this;
     }
 
-    public function get_labelAeroportAtte()
+    public function get_noAeroportAtte()
     {
-        return $this->_labelAeroportAtte;
+        return $this->_noAeroportAtte;
     }
 
-    public function set_labelAeroportAtte($_labelAeroportAtte)
+    public function set_noAeroportAtte($_labelAeroportAtte)
     {
-        $this->_labelAeroportAtte = $_labelAeroportAtte;
+        $this->_noAeroportAtte = $_labelAeroportAtte;
         return $this;
     }
 

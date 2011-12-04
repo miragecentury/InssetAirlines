@@ -1,11 +1,13 @@
 <?php
 
+class Application_Model_DbTable_PersonneHasTelephone extends Zend_Db_Table_Abstract
+{
 
-class Application_Model_DbTable_PersonneHasTelephone extends Zend_Db_Table_Abstract {
     protected $_name = 'Personne_has_Telephone';
-    protected $_primaryKey = array ('noPersonne','noTelephone');
+    protected $_primaryKey = array( 'noPersonne', 'noTelephone' );
+    protected $_sequence = false;
     protected $_foreignKey = array(
-        'fkPersonne' => array (
+        'fkPersonne' => array(
             'Columns' => 'noPersonne',
             'refTableClass' => 'Personne',
             'refColumns' => 'noPersonne',
@@ -16,5 +18,7 @@ class Application_Model_DbTable_PersonneHasTelephone extends Zend_Db_Table_Abstr
             'refCulumns' => 'noTelephone',
         )
     );
+
 }
+
 ?>

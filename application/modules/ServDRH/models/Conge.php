@@ -3,18 +3,28 @@
 class ServDRH_Model_Conge
 {
     protected $_noConge;
-    protected $_dateDebut = "02-03-2011"; 
-    protected $_dateFin = "16-03-2011";
+    protected $_dateDebut; 
+    protected $_dateFin;
     protected $_valider;
-    protected $_enAttentedeTraitement = 1; //pour phpunit
+    protected $_enAttentedeTraitement;
     protected $_motif;
     protected $_labelTypeConge;
     protected $_noPersonne;
-    protected $_dateDebut_Annee = "01-01-2011";
+    protected $_dateDebut_Annee;
     
-     public function getConges(){
+    public function getCongesByNoPersonne($noPersonne){
         $mapper = new ServDRH_Model_CongeMapper();
-        return $mapper->findAll();
+        return $mapper->_getConges($noPersonne);
+    }
+    
+    public function getCongeByNoConge($noConge) {
+        $mapper = new ServDRH_Model_CongeMapper();
+        return $mapper->find($noConge);
+    }
+    
+    public function saveConge() {
+        $mapper = new ServDRH_Model_CongeMapper();
+        $mapper->saveByLabel($this, 'noConge');
     }
     
     public function get_noConge() 

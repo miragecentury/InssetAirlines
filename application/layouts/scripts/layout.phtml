@@ -1,10 +1,10 @@
-<?php echo $this->doctype('HTML5') . PHP_EOL; ?>
+<?php echo $this->doctype( 'HTML5' ) . PHP_EOL; ?>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <?php
         //Affichage style
-        $this->headLink()->appendStylesheet('/ressource/css/main.css');
+        $this->headLink()->appendStylesheet( '/ressource/css/main.css' );
         echo $this->headLink() . PHP_EOL;
         //Affichage du titre
         echo $this->headTitle() . PHP_EOL;
@@ -13,16 +13,18 @@
         ?>
     </head>
     <body>
-        <div id='head' class="sep">
-            <div id="menu">
-            <?php echo $this->placeholder('sidebar'); ?>
+        <div id="wrap">
+            <div id='head' class="sep">
+                <div id="menu">
+                    <?php echo $this->placeholder( 'sidebar' ); ?>
+                </div>
+                <div id="login">
+                    <?php echo $this->placeholder( 'login' ); ?>
+                </div>
             </div>
-            <div id="login">
-                <?php echo $this->placeholder('login'); ?>
+            <div class="container_16 sep tweakfoot" id="main" style="min-height: 400px; margin-top: 10px;">
+                <?php echo $this->layout()->content; ?>
             </div>
-        </div>
-        <div class="container_16 sep" style="min-height: 400px; margin-top: 10px;">
-            <?php echo $this->layout()->content; ?>
         </div>
         <div id='footer'>
             <div id='footer-content'>
@@ -31,7 +33,7 @@
                     Design by Gr3Insset</p>
             </div>
             <div id='footer-log'>
-                <?php Spesx_Log::GetLogHtml();?>
+                <?php echo Spesx_Log::GetLogHtml(); ?>
             </div>
         </div>
     </body>

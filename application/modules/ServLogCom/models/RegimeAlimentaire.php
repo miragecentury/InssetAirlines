@@ -7,6 +7,12 @@ class ServLogCom_Model_RegimeAlimentaire
     //Attributs
     //--------------------------------------------------------------------------
     /**
+     * id du regimeAlimentaire
+     * @var int
+     */
+    protected $_noRegimeAlimentaire;
+
+    /**
      * label du regimeAlimentaire
      * @var string
      */
@@ -41,7 +47,7 @@ class ServLogCom_Model_RegimeAlimentaire
      */
     public function addRegimeAlimentaire()
     {
-        $this->_mapper->save($this, 'labelRegimeAlimentaire');
+        $this->_mapper->save($this, 'noRegimeAlimentaire');
     }
 
     /**
@@ -53,10 +59,10 @@ class ServLogCom_Model_RegimeAlimentaire
      * @param string $val, string col
      *
      */
-    public function delRegimeAlimentaire($labelRegimeAlimentaire)
+    public function delRegimeAlimentaire($noRegimeAlimentaire)
     {
         try {
-            $this->_mapper->delete('labelRegimeAlimentaire', $labelRegimeAlimentaire);
+            $this->_mapper->delete('noRegimeAlimentaire', $noRegimeAlimentaire);
         } catch (Zend_Exception $e) {
             echo 'ServLogCom_Models_RegimeAlimentaire_delRegimeAlimentaire() 
                 Exception - ' .
@@ -74,9 +80,32 @@ class ServLogCom_Model_RegimeAlimentaire
      * @return null|ServLogCom_Model_RegimeAlimentaire
      *  
      */
-    public function getRegimeAlimentaire($labelRegimeAlimentaire)
+    public function getRegimeAlimentaire($noRegimeAlimentaire)
     {
-        return $this->_mapper->find($labelRegimeAlimentaire);
+        return $this->_mapper->find($noRegimeAlimentaire);
+    }
+
+    /**
+     * Retourne un Regime Alimentaire sous forme de tableau HTML
+     * 
+     * @access public
+     * @author charles
+     * @return string
+     *  
+     */
+    public function getRegimeAlimentaireHTML()
+    {
+        $html = "<table class='grid_16'>
+                <tr bgcolor='#CCCCCC'>
+                    <td class='grid_3'>Id</td>
+                    <td class='grid_3'>" . $this->get_noRegimeAlimentaire() . "</td>
+                </tr>
+                <tr>
+                    <td class='grid_3'>Label</td>
+                    <td class='grid_3'>" . $this->get_labelRegimeAlimentaire() . "</td>
+                </tr>
+            </table>";
+        return $html;
     }
 
     /**
@@ -87,9 +116,9 @@ class ServLogCom_Model_RegimeAlimentaire
      * @return null|array(ServLogCom_Model_RegimeAlimentaire)
      *  
      */
-    public function getListeRegimeAlimentaire()
+    public static function getListeRegimeAlimentaire()
     {
-        $this->_mapper = Spesx_Mapper_MapperFactory::getMapper("ServLogCom_Model_RegimeAlimentaire");
+        $mapper = Spesx_Mapper_MapperFactory::getMapper("ServLogCom_Model_RegimeAlimentaire");
         try {
             return $mapper->findAll();
         } catch (Spesx_Mapper_Exception $e) {
@@ -98,9 +127,61 @@ class ServLogCom_Model_RegimeAlimentaire
         return $return;
     }
 
+    /**
+     * Retourne tous les regimeAlimentaire sous forme de tableau html, 
+     * retourne une phrase disant qu'il n'y en a pas dans la bd si c'est le cas
+     * 
+     * @access public
+     * @author charles
+     * @return string
+     *  
+     */
+    public static function getListeRegimeAlimentaireHTML()
+    {
+        $color = true;
+        $allRA = ServLogCom_Model_RegimeAlimentaire::getListeRegimeAlimentaire();
+
+        if (!empty($allRA)) {
+            $tableau = "<table class='grid_16'>
+                        <tr>
+                            <td class='grid_1'>Id</td>
+                            <td class='grid_2'>Label</td>
+                            <td class='grid_2'></td>
+                            <td class='grid_2'></td>
+                        </tr>";
+
+            foreach ($allRA as $val) {
+                if ($color) {
+                    $tableau .= "<tr bgcolor='#CCCCCC'>";
+                }
+                $color = !$color;
+                $tableau .= "   <td class='grid_1'>" . $val->get_noRegimeAlimentaire() . "</td>
+                                <td class='grid_2'>" . $val->get_labelRegimeAlimentaire() . "</td>
+                                <td class='grid_2'><a href='/ServLogCom/Regimealimentaire/upd?id=" . $val->get_noRegimeAlimentaire() . "'>Modifier</a></td>
+                                <td class='grid_2'><a href='/ServLogCom/Regimealimentaire/del?id=" . $val->get_noRegimeAlimentaire() . "'>Supprimer</a></td>
+                            </tr>";
+            }
+            $tableau .= "</table>";
+        } else {
+            $tableau = "<div>Il n'y a pas de Regime Alimentaire dans la base de donnée</div>";
+        }
+        return $tableau;
+    }
+
     //--------------------------------------------------------------------------
     // Getter / setter
     //--------------------------------------------------------------------------
+    public function get_noRegimeAlimentaire()
+    {
+        return $this->_noRegimeAlimentaire;
+    }
+
+    public function set_noRegimeAlimentaire($_noRegimeAlimentaire)
+    {
+        $this->_noRegimeAlimentaire = $_noRegimeAlimentaire;
+        return $this;
+    }
+
     public function get_labelRegimeAlimentaire()
     {
         return $this->_labelRegimeAlimentaire;

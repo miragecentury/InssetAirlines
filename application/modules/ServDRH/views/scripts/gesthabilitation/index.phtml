@@ -1,0 +1,37 @@
+<center><h1>Service DRH - Gestion des habilitations </h1>
+
+<?php
+if (!empty($this->Allhabilitations)){
+    echo "<table>
+    <p align=right><a class='enSavoirPlus' href='gesthabilitation/newhabilitation' >Ajouter une nouvelle habilitation</a></p>
+    <tr>
+        <div class='sep'>
+        <th>Num&eacute;ro de l'habilitation</th>
+        <th>Intitulé</th>
+        <th>Modèle de l'avion</th>
+        <th>Métier</th>
+        <th>  </th>
+        <th>  </th>
+        </div>
+    </tr>";
+    
+    $i = 0;
+    $j = 0;
+    foreach ($this->Allhabilitations as $res){    
+        echo "<tr>
+                 
+            <td>" . $res->get_noHabilitation(). "</td>
+            <td>" . $res->get_labelHabilitation(). "</td>
+            <td> ". $res->get_Modele_label(). " </td>
+            <td>" . $res->get_labelMetier(). "</td>
+            <td><a class='enSavoirPlus' href='gesthabilitation/updhabilitation?id=" . $res->get_noHabilitation() . "'>Modifier</a></td>
+            <td><a class='enSavoirPlus' href='gesthabilitation/delhabilitation?id=" . $res->get_noHabilitation() . "'>Supprimer</a></td>
+        </tr>";
+        $i++;
+        $j++;
+    }
+    echo "</table>";
+    echo "<p><a href='/ServDRH'>Retour</a></p>";
+}
+?>
+</center>

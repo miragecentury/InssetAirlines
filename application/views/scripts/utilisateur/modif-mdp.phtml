@@ -11,7 +11,7 @@
 <div class="clear"></div>
 <div class="prefix_1 ">
     <?php
-        if(isset($this->errorMessage)){
+        if(!empty($_POST) && isset($this->errorMessage)){
             echo "<p class='red'>" . $this->errorMessage . "</p>";
         }
     echo $this->changeMdpForm->render();
