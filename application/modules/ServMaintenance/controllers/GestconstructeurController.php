@@ -22,7 +22,7 @@ class ServMaintenance_GestconstructeurController extends Zend_Controller_Action 
             //var_dump($value);echo '<br/>';
             $this->view->html_liste.='
                 <tr style="border-style: solid; border-width: 1px;">
-                    <td>' . $value->get_noConstructeur() . '</td><td>' . $value->get_label() . '</td><td>' . $value->get_noAdresse() . '</td><td><a href="' . $this->view->baseUrl() . '/ServMaintenance/Gestconstructeur/delconstructeur?id=' . $value->get_noConstructeur() . '">X</a> </td>
+                    <td>' . $value->get_noConstructeur() . '</td><td>' . $value->get_label() . '</td><td>' . $value->get_noAdresse() . '</td><td><a href="' . $this->view->baseUrl() . '/ServMaintenance/Gestconstructeur/delconstructeur/id/' . $value->get_noConstructeur() . '">X</a> </td>
                 </tr>';
         }
 
@@ -46,7 +46,9 @@ class ServMaintenance_GestconstructeurController extends Zend_Controller_Action 
     }
 
     public function delconstructeurAction() {
-        if (isset($_GET['id']) && !empty($_GET['id'])) {
+        $id = (int) $this->getRequest()->getParam('id'); 
+        
+        if (isset($id) && !empty($id)) {
             if (preg_match('#^[0-9]{1,10}$#', $_GET['id']) && $_GET['id'] > 0) {
                 $this->view->message = 'Constructeur trouvé';
                 try {

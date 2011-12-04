@@ -1,9 +1,13 @@
 <div>
-    <p>Service Maintenance:AfficherLesModeles:</p>
+    <p>Service Maintenance:Afficher les modeles:</p>
     <ul>
-        <li><a href='<?php $this->baseUrl(); ?>/ServMaintenance/'>Retour</a></li>
+        <li><a href='<?php $this->baseUrl(); ?>/ServMaintenance/'>Retour au Menu Maintenance</a></li>
+        <lI><a href='<?php $this->baseUrl(); ?>/ServMaintenance/Gestmodele/newmodele'>Ajout d'un modele</a></li>
     </ul>
 </div>
 <div>
     <?php echo $this->list_html;?>
+</div>
+<div>
+    <?php if(isset($this->message)){echo $this->message;}?>
 </div>

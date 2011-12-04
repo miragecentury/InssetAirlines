@@ -1,1 +1,18 @@
-Service Maintenance gest modele new
+<div>
+    <p>Service Maintenance: Ajouter un modèle:</p>
+    <ul>
+        <li><a href='<?php $this->baseUrl(); ?>/ServMaintenance/Gestmodele'>Retour à la liste des Modèles</a></li>
+        <li><a href='<?php $this->baseUrl(); ?>/ServMaintenance/'>Retour au Menu Maintenance</a></li>
+    </ul>
+</div>
+<div>
+    <?php 
+    if(isset($this->message)) {
+        echo $this->message;
+    }
+    if(isset($this->form)){
+        echo $this->form;
+    }
+    ?>
+    
+</div>

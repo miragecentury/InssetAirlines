@@ -24,8 +24,8 @@ class ServPlaning_VolController extends Zend_Controller_Action
         } else {
             $item = new ServPlaning_Model_Vol();
             $item->set_labelvol($request->getParam('labelvol'))
-                    ->set_labelAeroportDeco($request->getParam('labelAeroportDeco'))
-                    ->set_labelAeroportAtte($request->getParam('labelAeroportAtte'))
+                    ->set_noAeroportDeco($request->getParam('labelAeroportDeco'))
+                    ->set_noAeroportAtte($request->getParam('labelAeroportAtte'))
                     ->set_noAvion($request->getParam('noAvion'))
                     ->set_noLigne($request->getParam('noLigne'))
                     ->set_heuredecollage($request->getParam('heuredecollage'))
@@ -44,8 +44,8 @@ class ServPlaning_VolController extends Zend_Controller_Action
             $item = $item->getVol($request->getParam('id'));
             $form = new ServPlaning_Form_Vol();
             $form->getElement('labelvol')->setValue($item->get_labelvol());
-            $form->getElement('labelAeroportDeco')->setValue($item->get_labelAeroportDeco());
-            $form->getElement('labelAeroportAtte')->setValue($item->get_labelAeroportAtte());
+            $form->getElement('labelAeroportDeco')->setValue($item->get_noAeroportDeco());
+            $form->getElement('labelAeroportAtte')->setValue($item->get_noAeroportAtte());
             $form->getElement('noAvion')->setValue($item->get_noAvion());
             $form->getElement('noLigne')->setValue($item->get_noLigne());
             $form->getElement('heuredecollage')->setValue($item->get_heuredecollage());
@@ -55,8 +55,8 @@ class ServPlaning_VolController extends Zend_Controller_Action
             $item = new ServPlaning_Model_Vol();
             $item->set_noVol($request->getParam('id'))
                     ->set_labelvol($request->getParam('labelvol'))
-                    ->set_labelAeroportDeco($request->getParam('labelAeroportDeco'))
-                    ->set_labelAeroportAtte($request->getParam('labelAeroportAtte'))
+                    ->set_noAeroportDeco($request->getParam('labelAeroportDeco'))
+                    ->set_noAeroportAtte($request->getParam('labelAeroportAtte'))
                     ->set_noAvion($request->getParam('noAvion'))
                     ->set_noLigne($request->getParam('noLigne'))
                     ->set_heuredecollage($request->getParam('heuredecollage'))

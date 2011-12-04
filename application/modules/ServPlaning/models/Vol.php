@@ -1,7 +1,6 @@
 <?php
 
-class ServPlaning_Model_Vol
-{
+class ServPlaning_Model_Vol {
 
     //--------------------------------------------------------------------------
     //Attributs
@@ -22,13 +21,13 @@ class ServPlaning_Model_Vol
      * label de l'aeroport d'arrivée
      * @var string
      */
-    protected $_labelAeroportAtte;
+    protected $_noAeroportAtte;
 
     /**
      * label de depart
      * @var string
      */
-    protected $_labelAeroportDeco;
+    protected $_noAeroportDeco;
 
     /**
      * numero de l'avion
@@ -65,8 +64,7 @@ class ServPlaning_Model_Vol
      * return void
      * @author charles
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
     }
 
@@ -80,8 +78,7 @@ class ServPlaning_Model_Vol
      * @access public
      *
      */
-    public function addVol()
-    {
+    public function addVol() {
         $this->_mapper->save($this, 'noVol');
     }
 
@@ -93,8 +90,7 @@ class ServPlaning_Model_Vol
      * @param string $noVol
      *
      */
-    public function delVol($noVol)
-    {
+    public function delVol($noVol) {
         try {
             $this->_mapper->delete('noVol', $noVol);
         } catch (Zend_Exception $e) {
@@ -112,8 +108,7 @@ class ServPlaning_Model_Vol
      * @return string
      *  
      */
-    public function getVolHTML()
-    {
+    public function getVolHTML() {
         $Aero = "<table class='grid_16'>
                 <tr bgcolor='#CCCCCC'>
                     <td class='grid_3'>Id</td>
@@ -125,11 +120,11 @@ class ServPlaning_Model_Vol
                 </tr>
                 <tr bgcolor='#CCCCCC'>
                     <td class='grid_3'>Aeroport de départ</td>
-                    <td class='grid_3'>" . $this->get_labelAeroportDeco() . "</td>
+                    <td class='grid_3'>" . $this->get_noAeroportDeco() . "</td>
                 </tr>
                 <tr>
                     <td class='grid_3'>Aeroport d'arrivée</td>
-                    <td class='grid_3'>" . $this->get_labelAeroportAtte() . "</td>
+                    <td class='grid_3'>" . $this->get_noAeroportAtte() . "</td>
                 </tr>
                 <tr bgcolor='#CCCCCC'>
                     <td class='grid_3'>Avion</td>
@@ -161,8 +156,7 @@ class ServPlaning_Model_Vol
      * @return null|ServPlaning_Model_Vol
      *  
      */
-    public function getVol($noVol)
-    {
+    public function getVol($noVol) {
         return $this->_mapper->find($noVol);
     }
 
@@ -174,8 +168,7 @@ class ServPlaning_Model_Vol
      * @return null|array(Application_Model_Vol)
      *  
      */
-    public static function getListeVol()
-    {
+    public static function getListeVol() {
         $mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
         try {
             return $mapper->findAll();
@@ -194,8 +187,7 @@ class ServPlaning_Model_Vol
      * @return Zend_Form_Element_Select
      *  
      */
-    public static function getSelectVol($name, $label)
-    {
+    public static function getSelectVol($name, $label) {
         try {
             $Vols = ServPlaning_Model_Vol::getListeVol();
             $noVol = new Zend_Form_Element_Select($name);
@@ -210,6 +202,10 @@ class ServPlaning_Model_Vol
         }
     }
 
+    public static function getVolByAvion($noAvion) {
+        
+    }
+
     /**
      * Retourne tous les vols sous forme de tableau html, 
      * retourne une phrase disant qu'il n'y en a pas dans la bd si c'est le cas
@@ -219,8 +215,7 @@ class ServPlaning_Model_Vol
      * @return string
      *  
      */
-    public static function getListeVolHTML()
-    {
+    public static function getListeVolHTML() {
         $all = ServPlaning_Model_Vol::getListeVol();
         $color = true;
 
@@ -246,8 +241,8 @@ class ServPlaning_Model_Vol
                 $color = !$color;
                 $tableau .= "   <td class='grid_1'>" . $val->get_noVol() . "</td>
                                 <td class='grid_2'>" . $val->get_labelvol() . "</td>
-                                <td class='grid_3'>" . $val->get_labelAeroportDeco() . "</td>
-                                <td class='grid_3'>" . $val->get_labelAeroportAtte() . "</td>
+                                <td class='grid_3'>" . $val->get_noAeroportDeco() . "</td>
+                                <td class='grid_3'>" . $val->get_noAeroportAtte() . "</td>
                                 <td class='grid_1'>" . $val->get_noAvion() . "</td>
                                 <td class='grid_1'>" . $val->get_noLigne() . "</td>
                                 <td class='grid_1'>" . $val->get_heuredecollage() . "</td>
@@ -272,8 +267,7 @@ class ServPlaning_Model_Vol
      * @return string
      *  
      */
-    public static function getListeVolUser()
-    {
+    public static function getListeVolUser() {
         $all = ServPlaning_Model_Vol::getListeVol();
         $color = true;
 
@@ -297,8 +291,8 @@ class ServPlaning_Model_Vol
                 $color = !$color;
                 $tableau .= "   <td class='grid_1'>" . $val->get_noVol() . "</td>
                                 <td class='grid_3'>" . $val->get_labelvol() . "</td>
-                                <td class='grid_3'>" . $val->get_labelAeroportDeco() . "</td>
-                                <td class='grid_3'>" . $val->get_labelAeroportAtte() . "</td>
+                                <td class='grid_3'>" . $val->get_noAeroportDeco() . "</td>
+                                <td class='grid_3'>" . $val->get_noAeroportAtte() . "</td>
                                 <td class='grid_1'>" . $val->get_noAvion() . "</td>
                                 <td class='grid_1'>" . $val->get_noLigne() . "</td>
                                 <td class='grid_1'>" . $val->get_heuredecollage() . "</td>
@@ -315,90 +309,74 @@ class ServPlaning_Model_Vol
     //--------------------------------------------------------------------------
     // Getter / setter
     //--------------------------------------------------------------------------
-    public function get_noVol()
-    {
+    public function get_noVol() {
         return $this->_noVol;
     }
 
-    public function set_noVol($_noVol)
-    {
+    public function set_noVol($_noVol) {
         $this->_noVol = $_noVol;
         return $this;
     }
 
-    public function get_labelvol()
-    {
+    public function get_labelvol() {
         return $this->_labelvol;
     }
 
-    public function set_labelvol($_labelvol)
-    {
+    public function set_labelvol($_labelvol) {
         $this->_labelvol = $_labelvol;
         return $this;
     }
 
-    public function get_labelAeroportAtte()
-    {
-        return $this->_labelAeroportAtte;
+    public function get_noAeroportAtte() {
+        return $this->_noAeroportAtte;
     }
 
-    public function set_labelAeroportAtte($_labelAeroportAtte)
-    {
-        $this->_labelAeroportAtte = $_labelAeroportAtte;
+    public function set_noAeroportAtte($_labelAeroportAtte) {
+        $this->_noAeroportAtte = $_labelAeroportAtte;
         return $this;
     }
 
-    public function get_labelAeroportDeco()
-    {
-        return $this->_labelAeroportDeco;
+    public function get_noAeroportDeco() {
+        return $this->_noAeroportDeco;
     }
 
-    public function set_labelAeroportDeco($_labelAeroportDeco)
-    {
-        $this->_labelAeroportDeco = $_labelAeroportDeco;
+    public function set_noAeroportDeco($_labelAeroportDeco) {
+        $this->_noAeroportDeco = $_labelAeroportDeco;
         return $this;
     }
 
-    public function get_noAvion()
-    {
+    public function get_noAvion() {
         return $this->_noAvion;
     }
 
-    public function set_noAvion($_noAvion)
-    {
+    public function set_noAvion($_noAvion) {
         $this->_noAvion = $_noAvion;
         return $this;
     }
 
-    public function get_noLigne()
-    {
+    public function get_noLigne() {
         return $this->_noLigne;
     }
 
-    public function set_noLigne($_noLigne)
-    {
+    public function set_noLigne($_noLigne) {
         $this->_noLigne = $_noLigne;
         return $this;
     }
 
-    public function get_heuredecollage()
-    {
+    public function get_heuredecollage() {
         return $this->_heuredecollage;
     }
 
-    public function set_heuredecollage($_heuredecollage)
-    {
+    public function set_heuredecollage($_heuredecollage) {
         $this->_heuredecollage = $_heuredecollage;
         return $this;
     }
 
-    public function get_heureAtterissage()
-    {
+    public function get_heureAtterissage() {
         return $this->_heureAtterissage;
     }
 
-    public function set_heureAtterissage($_heureAtterissage)
-    {
+    public function set_heureAtterissage($_heureAtterissage) {
         $this->_heureAtterissage = $_heureAtterissage;
         return $this;
     }

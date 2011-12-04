@@ -12,6 +12,31 @@ class ServMaintenance_Model_Modele {
     private static $_mapper = null;
     private static $message = 'ServMaitenance_Model_Modele Exception:';
 
+    public static function GetItemFromRaw($raw) {
+        self::initialisation();
+        var_dump($raw);
+        if (
+                isset($raw['dateLancement']) && isset($raw['distMinAtt']) && isset($raw['distMinDec']) &&
+                isset($raw['label']) && isset($raw['noConstructeur']) &&
+                isset($raw['rayonAction'])
+        ) {
+            $item = new ServMaintenance_Model_Modele();
+            $item->set_dateLancement($raw['dateLancement'])
+                    ->set_distMinAtt($raw['distMinAtt'])
+                    ->set_distMinDec($raw['distMinDec'])
+                    ->set_label($raw['label'])
+                    ->set_noConstructeur($raw['noConstructeur'])
+                    ->set_rayonAction($raw['rayonAction']);
+
+            if (isset($raw['noModele'])) {
+                $item->set_noModele($raw['noModele']);
+            }
+            return $item;
+        } else {
+            return null;
+        }
+    }
+
     public static function initialisation() {
         if (self::$_mapper === null) {
             self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServMaintenance_Model_Modele");
@@ -25,7 +50,7 @@ class ServMaintenance_Model_Modele {
 
     public static function findOne($noModele) {
         self::initialisation();
-        self::$_mapper->find($noModele);
+        return self::$_mapper->find($noModele);
     }
 
     public static function delModele($noModele) {
@@ -80,11 +105,11 @@ class ServMaintenance_Model_Modele {
     }
 
     public function get_distMinAtt() {
-        return $this->_distMinAtte;
+        return $this->_distMinAtt;
     }
 
-    public function set_distMinAtt($_distMinAtte) {
-        $this->_distMinAtte = $_distMinAtte;
+    public function set_distMinAtt($_distMinAtt) {
+        $this->_distMinAtt = $_distMinAtt;
         return $this;
     }
 
@@ -107,11 +132,11 @@ class ServMaintenance_Model_Modele {
     }
 
     public function get_noConstructeur() {
-        return $this->_labelConstructeur;
+        return $this->_noConstructeur;
     }
 
-    public function set_noConstructeur($_labelConstructeur) {
-        $this->_labelConstructeur = $_labelConstructeur;
+    public function set_noConstructeur($_noConstructeur) {
+        $this->_noConstructeur = $_noConstructeur;
         return $this;
     }
 

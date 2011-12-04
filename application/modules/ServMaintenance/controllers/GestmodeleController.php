@@ -9,6 +9,7 @@ class ServMaintenance_GestmodeleController extends Zend_Controller_Action {
     }
 
     public function indexAction() {
+
         $liste = ServMaintenance_Model_Modele::getAll();
 
         $this->view->list_html = '<table style="border-style: solid; border-width: 1px;">
@@ -21,8 +22,10 @@ class ServMaintenance_GestmodeleController extends Zend_Controller_Action {
                 <td style="width: 120px;">Date Lancement</td>
                 <td> Constructeur </td>
                 <td></td>
+                <td></td>
             <tr>
         ';
+
         foreach ($liste as $value) {
             $constructeur = ServMaintenance_Model_Constructeur::FindOne($value->get_noConstructeur());
             $this->view->list_html.='<tr style="border-style: solid; border-width: 1px;">
@@ -37,32 +40,82 @@ class ServMaintenance_GestmodeleController extends Zend_Controller_Action {
                 <td><a href="' . $this->view->baseUrl() . '/ServMaintenance/Gestmodele/delmodele?id=' . $value->get_noModele() . '">X</a></td>    
             </tr>';
         }
+
         $this->view->list_html.='</table>';
     }
 
     public function newmodeleAction() {
-        
+        $form = new ServMaintenance_Form_Modele();
+        if (isset($_POST) && !empty($_POST) && $form->isValid($_POST)) {
+            if (ServMaintenance_Model_Constructeur::findOne($_POST['noConstructeur']) instanceof ServMaintenance_Model_Constructeur) {
+
+                $modele = ServMaintenance_Model_Modele::GetItemFromRaw($_POST);
+                if ($modele instanceof ServMaintenance_Model_Modele) {
+                    $modele->save();
+
+                    $this->view->message = 'Modèle Ajouté';
+                    $this->getResponse()->setHeader('refresh', '2,url=/ServMaintenance/Gestmodele');
+                } else {
+                    $this->view->message = 'Données Invalides X';
+                    $this->view->form = $form;
+                }
+            } else {
+                $this->view->message = 'Constructeur Invalide';
+                $this->view->form = $form;
+            }
+        } else {
+            $this->view->message = 'Données Invalides';
+            $this->view->form = $form;
+        }
     }
 
     public function updmodeleAction() {
         if (isset($_GET['id']) && !empty($_GET['id'])) {
             if (preg_match('#^[0-9]{1,10}$#', $_GET['id']) && $_GET['id'] > 0) {
-                $this->view->message = 'Modele trouvé';
                 try {
                     $modele = ServMaintenance_Model_Modele::FindOne($_GET['id']);
-                    if (is_a($constructeur, 'ServMaintenance_Model_Modele') && $modele != NULL) {
+                    if (is_a($modele, 'ServMaintenance_Model_Modele') && $modele != NULL) {
                         $form = new ServMaintenance_Form_Modele();
+
                         if (isset($_POST) && !empty($_POST) && $form->isValid($_POST)) {
-                            
+
+                            $cons = ServMaintenance_Model_Constructeur::FindOne($_POST['noConstructeur']);
+                            if ($cons instanceof ServMaintenance_Model_Constructeur) {
+                                $modele = ServMaintenance_Model_Modele::findOne($_GET['id']);
+                                $modele->set_label($_POST['label']);
+                                $modele->set_rayonAction($_POST['rayonAction']);
+                                $modele->set_distMinAtt($_POST['distMinAtt']);
+                                $modele->set_distMinDec($_POST['distMinDec']);
+                                $modele->set_dateLancement($_POST['dateLancement']);
+
+                                $modele->set_noConstructeur($_POST['noConstructeur']);
+
+                                try {
+                                    $modele->save();
+                                } catch (Exception $e) {
+                                    $this->view->message = 'Erreur de Modification';
+                                    $modele = ServMaintenance_Model_Modele::findOne($_GET['id']);
+                                    $form->updateForm($modele);
+                                    $this->view->form = $form;
+                                }
+
+                                $this->view->message = 'Modification effectué';
+                                $this->getResponse()->setHeader('refresh', '2,url=/ServMaintenance/Gestmodele');
+                            } else {
+                                $this->view->message = 'Constructeur Incohérent';
+                                $form->updateForm($modele);
+                                $this->view->form = $form;
+                            }
                         } else {
-                            
+                            $form->updateForm($modele);
+                            $this->view->form = $form;
                         }
                     } else {
-                        $this->view->message = 'Aucun Controleur avec cette id';
+                        $this->view->message = 'Aucun Controleur avec cette id ' . $_GET['id'];
                         //Redirect
                     }
                 } catch (Exception $e) {
-                    $this->view->message = 'Id Incohérente - Aucun Constructeur';
+                    $this->view->message = 'Id Incohérente - Aucun Constructeur' . $e->getMessage();
                     //Redirect
                 }
             } else {
@@ -81,24 +134,25 @@ class ServMaintenance_GestmodeleController extends Zend_Controller_Action {
                 $this->view->message = 'Modele trouvé';
                 try {
                     $modele = ServMaintenance_Model_Modele::FindOne($_GET['id']);
-                    if (is_a($constructeur, 'ServMaintenance_Model_Modele') && $modele != NULL) {
+                    if (is_a($modele, 'ServMaintenance_Model_Modele') && $modele != NULL) {
                         $modele->Del();
-//Redirect
+                        $this->view->message = 'Modèle Supprimer';
+                        $this->getResponse()->setHeader('refresh', '2,url=/ServMaintenance/Gestmodele');
                     } else {
                         $this->view->message = 'Aucun Controleur avec cette id';
-//Redirect
+                        $this->getResponse()->setHeader('refresh', '2,url=/ServMaintenance/Gestmodele');
                     }
                 } catch (Exception $e) {
                     $this->view->message = 'Id Incohérente - Aucun Constructeur';
-//Redirect
+                    $this->getResponse()->setHeader('refresh', '2,url=/ServMaintenance/Gestmodele');
                 }
             } else {
                 $this->view->message = 'Erreur de Paramètre - Redirection';
-//Redirect
+                $this->getResponse()->setHeader('refresh', '2,url=/ServMaintenance/Gestmodele');
             }
         } else {
             $this->view->message = 'Erreur de Parcours - Redirection';
-//Redirect
+            $this->getResponse()->setHeader('refresh', '2,url=/ServMaintenance/Gestmodele');
         }
     }
 

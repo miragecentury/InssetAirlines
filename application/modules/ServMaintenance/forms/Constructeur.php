@@ -5,7 +5,7 @@ class ServMaintenance_Form_Constructeur extends Zend_Form {
     public function init() {  
         $label = new Zend_Form_Element_Text('label');
         $label->setLabel('Nom du Constructeur');
-        $label->setRequired();
+        $label->setRequired(TRUE);
         $label->addValidator(new Zend_Validate_Alnum(TRUE));
         $label->addValidator(new Zend_Validate_StringLength(array('min'=>4,'max'=>25)));
         
@@ -16,6 +16,7 @@ class ServMaintenance_Form_Constructeur extends Zend_Form {
         $adresse->setLabel('Adresse:');
         $adresse->addValidator(new Zend_Validate_Int());
         $adresse->addValidator(new Zend_Validate_GreaterThan(0));
+        $adresse->setRequired(TRUE);
         
         $this->addElement($adresse);
         
