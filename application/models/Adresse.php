@@ -75,6 +75,12 @@ class Application_Model_Adresse
      * @var string
      */
     protected $_labelPays;
+    
+    /**
+     * cle vers la personne
+     * @var int
+     */
+    protected $_noPersonne;
 
     /**
      * Mapper de l'objet
@@ -132,6 +138,26 @@ class Application_Model_Adresse
         }
         return $mapper->find($id);
     }
+    
+    /**
+     * Retourne un objet adresse correspondant au noPersonne
+     * Si l'id n'existe pas, retourne 'null'
+     *
+     * @access public
+     * @author Camille
+     * @param int $noPersonne
+     * @return null|Application_Model_adresse
+     */
+    /*public static function getAdresseByNoPersonne($noPersonne)
+    {
+        try {
+            $mapper = Spesx_Mapper_MapperFactory::getMapper('Application_Model_Adresse');
+        } catch (Spesx_Mapper_Exception $e) {
+            Spesx_Log::Log(
+                $e->getMessage() . $e->getPrevious()->getMessage(), Zend_Log::ERR);
+        }
+        return $mapper->findByNoPersonne($noPersonne);
+    }*/
 
     //--------------------------------------------------------------------------
     //Getter / setter
@@ -254,6 +280,17 @@ class Application_Model_Adresse
     public function set_labelPays($_labelPays)
     {
         $this->_labelPays = $_labelPays;
+        return $this;
+    }
+    
+    public function get_noPersonne()
+    {
+        return $this->_noPersonne;
+    }
+
+    public function set_noPersonne($_noPersonne)
+    {
+        $this->_noPersonne = $_noPersonne;
         return $this;
     }
 

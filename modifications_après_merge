@@ -1,0 +1,18 @@
+Modification de la table Personne pour pouvoir ajouter une personne selon les contraintes du formulaire
+	=> noINSEE : char(11
+	=> autoriser null pour noAdresse, role, metier et password, password_salt
+
+Modification de la table Adresse afin de pouvoir associer une adresse à une personne
+	=> pb: impossible de récupérer l'id de l'adresse qu'on souhaite ajouter en cas d'ajout multiple (en parallèle par exemple)
+	=> correction : ajout d'un champ noPersonne dans la table Adresse
+		=> classe application/models/Adresse : ajout d'une propriété $_noPersonne;
+		=> classe application/models/Adresse : ajout d'une méthode getAdresseByNoPersonne();
+		=> classe application/models/AdresseMapper : ajout d'une méthode findByNoPersonne;
+		=> classe application/models/AdresseMapper : modifier la méthode _createItemFromRow en ajoutant ->set_noPersonne($row->noPersonne);
+		=> classe application/models/AdresseMapper : modifier la méthode _getDataArrayFromItem($item) en ajoutant 'noPersonne' => $item->get_noPersonne();
+		=> classe application/models/DbTable/Adresse : ajout de la clé étrangère fkPersonne; 
+
+Dans la classe /forms/gesthabilitation, modifier la méthode getModeles() par getAll();
+				
+
+

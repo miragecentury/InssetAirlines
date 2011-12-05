@@ -17,6 +17,7 @@ class Application_Model_AdresseMapper extends Spesx_Mapper_Mapper
                 ->set_etatProvince($row->etatProvince)
                 ->set_labelVille($row->labelVille)
                 ->set_labelPays($row->labelPays)
+                ->set_noPersonne($row->noPersonne)
         ;
         return $item;
     }
@@ -35,7 +36,28 @@ class Application_Model_AdresseMapper extends Spesx_Mapper_Mapper
             'etatProvince' => $item->get_etatProvince(),
             'labelVille' => $item->get_labelVille(),
             'labelPays' => $item->get_labelPays(),
+            'noPersonne' => $item->get_noPersonne(),
         );
+    }
+    
+    public function findByNoPersonne($noPersonne) {
+        try {
+            $select = $this->getDbTable()->select()
+                ->where('noPersonne = ?', $noPersonne);
+            $result = $this->getDbTable()->fetchRow($select);           
+        } catch (Zend_Db_Exception $e) {
+            echo $e->__toString();
+            /*throw new Spesx_Mapper_Exception(
+                'Adresse : Echec Methode findByNoPersonne',
+                $e->getCode(),
+                $e);*/
+        }        
+        if ($result != null) {
+            $return = $this->_createItemFromRow($result);       
+        } else {
+            $return = new Application_Model_Personne;
+        }
+        return $return;
     }
 }
 

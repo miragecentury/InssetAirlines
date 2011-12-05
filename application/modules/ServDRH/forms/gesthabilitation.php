@@ -17,7 +17,7 @@ class ServDRH_Form_gesthabilitation extends Zend_Form
         $listeMetiers = $metier->getMetiers();
         
         $modeleAvion = new ServMaintenance_Model_Modele;
-        $listeAvion = $modeleAvion->getModeles();
+        $listeAvion = $modeleAvion->getAll();
                                    
         $intitule = new Zend_Form_Element_Text('labelHabilitation');
         $intitule->setLabel('Intitulé* ');
