@@ -10,6 +10,7 @@ class ServPlaning_Model_Vol {
      * @var int
      */
     protected $_noVol;
+    
 
     /**
      * label du vol
