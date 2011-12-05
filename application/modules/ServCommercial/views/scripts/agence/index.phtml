@@ -1,4 +1,39 @@
 <h1>Gestion des Agences</h1>
-<?php echo $this->all;?>
-<span class="prefix_9"><a class="enSavoirPlus "href='/ServCommercial/Agence/admin'>Admin</a></span>
-<span><a class="enSavoirPlus "href='/ServCommercial/Place'>Retour</a></span>
+<?php
+if ($this->all) {
+    echo "<table>
+            <tr>
+                <th>Id</th>
+                <th>Label</th>
+                <th>Lancement</th>
+                <th>Date de Cloture</th>
+                <th>Extranet</th>
+                <th>Adresse</th>
+            </tr>
+            <tr>";
+    foreach ($this->all as $val) {
+        echo "<tr>
+                <td>" . $val->get_noAgence() . "</td>
+                <td>" . $val->get_labelAgence() . "</td>
+                <td>" . $val->get_dateLancement() . "</td>";
+
+        if ($val->get_dateCloture() != null)
+            echo "<td>" . $val->get_dateCloture() . "</td>";
+        else
+            echo "<td>Actif</td>";
+
+        if ($val->get_accesExtranet() == 1)
+            echo "<td>Actif</td>";
+        else
+            echo "<td>Inactif</td>";
+
+        echo "<td>" . $val->get_noAdresse() . "</td>";
+
+        echo "</tr>";
+    }
+    echo "</table>";
+} else {
+    echo "<div>Il n'y a pas d'agence dans la base de donnée</div>";
+}
+echo "<a class='enSavoirPlus' href='/ServCommercial/Agence/admin'>Admin</a>
+      <a class='enSavoirPlus' href='/ServCommercial/Place'>Retour</a>";

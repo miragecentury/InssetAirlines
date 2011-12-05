@@ -92,45 +92,6 @@ class ServCommercial_Model_Agence
     }
 
     /**
-     * Retourne une Agence sous forme de tableau HTML
-     * 
-     * @access public
-     * @author charles
-     * @return string
-     *  
-     */
-    public function getAgenceHTML()
-    {
-        $Agence = "<table>
-                <tr>
-                    <td>Id</td>
-                    <td>" . $this->get_noAgence() . "</td>
-                </tr>
-                <tr>
-                    <td>Label</td>
-                    <td>" . $this->get_labelAgence() . "</td>
-                </tr>
-                <tr>
-                    <td>Date de Lancement</td>
-                    <td>" . $this->get_dateLancement() . "</td>
-                </tr>
-                <tr>
-                    <td>Date de Cloture</td>
-                    <td>" . $this->get_dateCloture() . "</td>
-                </tr>
-                <tr>
-                    <td>Acces Extranet</td>
-                    <td>" . $this->get_accesExtranet() . "</td>
-                </tr>
-                <tr>
-                    <td>No Adresse</td>
-                    <td>" . $this->get_noAdresse() . "</td>
-                </tr>
-            </table>";
-        return $Agence;
-    }
-
-    /**
      * Retourne une Agence a partir de son noAgence
      * Si elle n'existe pas, retourne null.
      * 
@@ -143,68 +104,6 @@ class ServCommercial_Model_Agence
     public function getAgence($noAgence)
     {
         return $this->_mapper->find($noAgence);
-    }
-
-    /**
-     * Retourne tous les agence sous forme de tableau html, 
-     * retourne une phrase disant qu'il n'y en a pas dans la bd si c'est le cas
-     * 
-     * @access public
-     * @author charles
-     * @return string
-     *  
-     */
-    public static function getListeAgenceHTML($admin = true)
-    {
-        $html = ServCommercial_Model_Agence::getListeAgence();
-        $color = true;
-
-        if (!empty($html)) {
-            $tableau = "<table>
-                        <tr>
-                            <th>Id</th>
-                            <th>Label</th>
-                            <th>Lancement</th>
-                            <th>Date de Cloture</th>
-                            <th>Extranet</th>
-                            <th>Adresse</th>";
-            if ($admin)
-                $tableau .= "<th></th>
-                            <th></th>
-                            <th></th>";
-            $tableau .= "</tr>";
-
-            foreach ($html as $val) {
-                if ($color) {
-                    $tableau .= "<tr>";
-                }
-                $color = !$color;
-                $tableau .= "<td>" . $val->get_noAgence() . "</td>
-                                <td>" . $val->get_labelAgence() . "</td>
-                                <td>" . $val->get_dateLancement() . "</td>";
-                if ($val->get_dateCloture() != null) {
-                    $tableau .= "<td>" . $val->get_dateCloture() . "</td>";
-                } else {
-                    $tableau .= "<td>Actif</td>";
-                }
-                $tableau .= "<td>";
-                if ($val->get_accesExtranet() == 1)
-                    $tableau .= "Actif";
-                else
-                    $tableau .= "Inactif";
-                $tableau .= "</td>
-                                <td>" . $val->get_noAdresse() . "</td>";
-                if ($admin)
-                    $tableau .="<td><a href='/ServCommercial/Agence/detail?id=" . $val->get_noAgence() . "'>Detail</a></td>
-                                <td><a href='/ServCommercial/Agence/upd?id=" . $val->get_noAgence() . "'>Modifier</a></td>
-                                <td><a href='/ServCommercial/Agence/del?id=" . $val->get_noAgence() . "'>Supprimer</a></td>";
-                $tableau .="</tr>";
-            }
-            $tableau .= "</table>";
-        } else {
-            $tableau = "<div>Il n'y a pas d'agence dans la base de donnée</div>";
-        }
-        return $tableau;
     }
 
     /**

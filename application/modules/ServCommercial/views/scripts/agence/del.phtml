@@ -1,4 +1,38 @@
 <h1>Voulez vous vraiment suprimer cet agence?</h1>
-<?php echo $this->item; ?>
-<div><a class="enSavoirPlus" href='/ServCommercial/Agence/admin'>Non </a>
-<a class="enSavoirPlus" href='/ServCommercial/Agence/del?ok=ok&id=<?php echo $this->id; ?>'>Oui</a></div>
+
+<?php
+if($this->item) {
+    echo "<table>
+                <tr>
+                    <td>Id</td>
+                    <td>" . $this->item->get_noAgence() . "</td>
+                </tr>
+                <tr>
+                    <td>Label</td>
+                    <td>" . $this->item->get_labelAgence() . "</td>
+                </tr>
+                <tr>
+                    <td>Date de Lancement</td>
+                    <td>" . $this->item->get_dateLancement() . "</td>
+                </tr>
+                <tr>
+                    <td>Date de Cloture</td>
+                    <td>" . $this->item->get_dateCloture() . "</td>
+                </tr>
+                <tr>
+                    <td>Acces Extranet</td>
+                    <td>" . $this->item->get_accesExtranet() . "</td>
+                </tr>
+                <tr>
+                    <td>No Adresse</td>
+                    <td>" . $this->item->get_noAdresse() . "</td>
+                </tr>
+            </table>";
+    
+    echo "<div><a class='enSavoirPlus' href='/ServCommercial/Agence/admin'>Non </a>
+          <a class='enSavoirPlus' href='/ServCommercial/Agence/del?ok=ok&id=".$this->id."'>Oui</a></div>";
+}
+else {
+    echo "Cette Agence n'existe pas dans la base de donnée!<br/><br/>
+        <div><a class='enSavoirPlus' href='/ServCommercial/Agence/admin'>Retour </a>";
+}
