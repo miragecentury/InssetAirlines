@@ -1,4 +1,36 @@
 <h1>Gestion des Reservation</h1>
-<?php echo $this->all;?>
-<div class="prefix_9"><a class="enSavoirPlus" href='/ServCommercial/Reservation/new'>Ajouter</a>
-<a class="enSavoirPlus" href='/ServCommercial/Reservation/'>Retour</a></div>
+
+<?php
+if ($this->all) {
+    echo "<table>
+                <tr>
+                    <th>Vol</th>
+                    <th>Agence</th>
+                    <th>Nombre de place</th>
+                    <th>Traitement</th>
+                    <th>Validation</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>";
+    foreach ($this->all as $val) {
+        echo "  <tr>
+                    <td>" . $val->get_Vol_noVol() . "</td>
+                    <td>" . $val->get_Agence_noAgence() . "</td>
+                    <td>" . $val->get_nbReservation() . "</td>
+                    <td>" . $val->get_enAttentedeTraitement() . "</td>
+                    <td>" . $val->get_valider() . "</td>
+                    <td><a href='/ServCommercial/Reservation/detail?id[]=" . $val->get_Vol_noVol() . "&id[]=" . $val->get_Agence_noAgence() . "'>Detail</a></td>
+                    <td><a href='/ServCommercial/Reservation/upd?id[]=" . $val->get_Vol_noVol() . "&id[]=" . $val->get_Agence_noAgence() . "'>Modifier</a></td>
+                    <td><a href='/ServCommercial/Reservation/del?id[]=" . $val->get_Vol_noVol() . "&id[]=" . $val->get_Agence_noAgence() . "'>Supprimer</a></td>
+                </tr>";
+    }
+    echo "</table>";
+} else {
+    echo "<div>Il n'y a pas de reservation dans la base de donnée</div>";
+}
+?>
+<center>
+<a class="enSavoirPlus" href='/ServCommercial/Reservation/new'>Ajouter</a>
+<a class="enSavoirPlus" href='/ServCommercial/Reservation/'>Retour</a><br/><br/>
+</center>

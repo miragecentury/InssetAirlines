@@ -1,5 +1,35 @@
-<h1>Place N°<?php echo $this->id; ?></h1>
-<?php echo $this->item; ?>
-<a class="enSavoirPlus" href='/ServCommercial/Reservation/upd?id[]=<?php echo $this->id0; ?>&id[]=<?php echo $this->id1; ?>'>Modifier</a><br/><br/>
-<a class="enSavoirPlus" href='/ServCommercial/Reservation/del?id[]=<?php echo $this->id0; ?>&id[]=<?php echo $this->id1; ?>'>Supprimer</a><br/><br/>
-<a class="enSavoirPlus" href='/ServCommercial/Reservation/admin'>Retour</a><br/>
+<h1>Reservation N°<?php echo $this->id0 . " - " .  $this->id1; ?></h1>
+
+<?php
+if ($this->item) {
+    echo "<table>
+                <tr>
+                    <td width='50%'>Vol</td>
+                    <td>" . $this->item->get_Vol_noVol() . "</td>
+                </tr>
+                <tr>
+                    <td>Agence</td>
+                    <td>" . $this->item->get_Agence_noAgence() . "</td>
+                </tr>
+                <tr>
+                    <td>Nombre Reservation</td>
+                    <td>" . $this->item->get_nbReservation() . "</td>
+                </tr>
+                <tr>
+                    <td>Etat Traitement</td>
+                    <td>" . $this->item->get_enAttentedeTraitement() . "</td>
+                </tr>
+                <tr>
+                    <td>Etat Validation</td>
+                    <td>" . $this->item->get_valider() . "</td>
+                </tr>                
+            </table>";
+    
+    echo "<center><a class='enSavoirPlus' href='/ServCommercial/Reservation/upd?id=". $this->id ."'>Modifier</a>
+          <a class='enSavoirPlus' href='/ServCommercial/Reservation/del?id[]=" . $this->id0 . "&id[]=" . $this->id1 . "'>Supprimer</a>";
+} else {
+    echo "Cette Agence n'existe pas dans la base de donnée!<center>";
+}
+
+?>
+<a class='enSavoirPlus' href='/ServCommercial/Reservation/admin'>Retour</a></center>

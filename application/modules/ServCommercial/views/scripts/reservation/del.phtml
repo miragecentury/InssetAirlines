@@ -1,4 +1,34 @@
 <h1>Voulez vous vraiment suprimer cette reservation?</h1>
-<?php echo $this->item; ?>
-<div class="prefix_5"><span><a class="enSavoirPlus" href='/ServCommercial/Reservation/admin'>Non </a></span> 
-    <span> <a class="enSavoirPlus" href='/ServCommercial/Reservation/del?ok=ok&id[]=<?php echo $this->id0; ?>&id[]=<?php echo $this->id1; ?>'>Oui</a></div></span>
+
+<?php
+if($this->item) {
+    echo "<table>
+                <tr>
+                    <td width='50%'>Vol</td>
+                    <td>" . $this->item->get_Vol_noVol() . "</td>
+                </tr>
+                <tr>
+                    <td>Agence</td>
+                    <td>" . $this->item->get_Agence_noAgence() . "</td>
+                </tr>
+                <tr>
+                    <td>Nombre Reservation</td>
+                    <td>" . $this->item->get_nbReservation() . "</td>
+                </tr>
+                <tr>
+                    <td>Etat Traitement</td>
+                    <td>" . $this->item->get_enAttentedeTraitement() . "</td>
+                </tr>
+                <tr>
+                    <td>Etat Validation</td>
+                    <td>" . $this->item->get_valider() . "</td>
+                </tr>  
+            </table>";
+    
+    echo "<div><a class='enSavoirPlus' href='/ServCommercial/Reservation/admin'>Non </a>
+          <a class='enSavoirPlus' href='/ServCommercial/Reservation/del?ok=ok&id=".$this->id."'>Oui</a></div>";
+}
+else {
+    echo "Cette Agence n'existe pas dans la base de donnée!<br/><br/>
+        <div><a class='enSavoirPlus' href='/ServCommercial/Reservation/admin'>Retour </a>";
+}
