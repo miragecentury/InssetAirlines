@@ -1,13 +1,29 @@
 <h1>Gestion des Aeroports</h1>
-<table>
-    <tr>
-        <td><br/><a class="enSavoirPlus " href='/Aeroport/admin'>Paneau d'administration</a></td>
-    </tr>
-    <tr>
-        <td><br/><img src="http://inssetairlines.spesx.com/media/image/disponibilite.jpg"/></td>
-        <td><br/><?php echo $this->all;?></td>
-    </tr>
-</table>
+<?php
+if ($this->all) {
+    echo "<table>
+            <tr>
+                <th>Id</th>
+                <th>Label</th>
+                <th>Ville</th>
+                <th>Pays</th>
+            </tr>";
+    foreach ($this->all as $val) {
+        echo "<tr>
+                <td>" . $val->get_noAeroport() . "</td>
+                <td>" . $val->get_labelAeroport() . "</td>
+                <td>" . $val->get_labelVille() . "</td>
+                <td>" . $val->get_labelPays() . "</td>
+            </tr>";
+    }
+    echo "</table>";
+            
+} else {
+    echo "<div>Il n'y a pas d'aeroport dans la base de donnée</div>";
+}
+?>
 
-
-
+<center>
+    <a class='enSavoirPlus' href='/Aeroport/admin'>Paneau d'administration</a><br/><br/>
+    <img src="http://inssetairlines.spesx.com/media/image/disponibilite.jpg"/>
+</center>

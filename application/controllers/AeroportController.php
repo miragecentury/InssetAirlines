@@ -11,76 +11,40 @@ class AeroportController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        try {
-            $all = Application_Model_Aeroport::getListeAeroportHTML(false);
-        } catch (Zend_Exception $e) {
-            Zend_Registry::get('Log')->log('AeroportController : index : Acces a la base de donnée impossible', Zend_Log::ALERT);
-            return FALSE;
-        }
-        if ($all != null)
-            $this->view->all = $all;
-        else
-            $this->view->all = "Erreur dans la base de donnée, 
-                veuillez contacter l'administrateur du site via le formulaire de contact.<br/>";
+        $this->view->all = Application_Model_Aeroport::getListeAeroport();
     }
 
     public function adminAction()
     {
-        try {
-            $all = Application_Model_Aeroport::getListeAeroportHTML();
-        } catch (Zend_Exception $e) {
-            Zend_Registry::get('Log')->log('AeroportController : admin : Acces a la base de donnée impossible', Zend_Log::ALERT);
-            return FALSE;
-        }
-        if ($all != null)
-            $this->view->all = $all;
-        else
-            $this->view->all = "Erreur dans la base de donnée, 
-                veuillez contacter l'administrateur du site via le formulaire de contact.<br/>";
+        $this->view->all = Application_Model_Aeroport::getListeAeroport();
     }
 
     public function detailAction()
     {
         $Mod = new Application_Model_Aeroport;
-        try {
-            $item = $Mod->getAeroport($this->getRequest()->getParam('id'));
-        } catch (Zend_Exception $e) {
-            Zend_Registry::get('Log')->log('AeroportController : detail : Acces a la base de donnée impossible', Zend_Log::ALERT);
-            return FALSE;
-        }
-        if ($item != null) {
-            $this->view->item = $item->getAeroportHTML();
-        } else {
-            $this->view->item = "Cet Aéroport n'existe pas dans la base de donnée!<br/>";
-        }
+        $this->view->item = $Mod->getAeroport($this->getRequest()->getParam('id'));
         $this->view->id = $this->getRequest()->getParam('id');
     }
 
     public function delAction()
     {
+        $Mod = new Application_Model_Aeroport;
         $request = $this->getRequest();
+        $session = new Zend_Session_Namespace('Redirect');
+        $session->redirection = "/Aeroport/admin";
+        $item = $Mod->getAeroport($request->getParam('id'));
         if ($request->getParam('ok') === "ok") {
-            $Mod = new Application_Model_Aeroport;
-            try {
-                $Mod->delAeroport($request->getParam('id'));
-            } catch (Zend_Exception $e) {
-                Zend_Registry::get('Log')->log('AeroportController : del : Acces a la base de donnée impossible', Zend_Log::ALERT);
-                return FALSE;
-            }
-            $this->_redirect('/Aeroport/admin');
-        } else {
-            $Mod = new Application_Model_Aeroport;
-            try {
-                $item = $Mod->getAeroport($request->getParam('id'));
-            } catch (Zend_Exception $e) {
-                Zend_Registry::get('Log')->log('AeroportController : del : Acces a la base de donnée impossible', Zend_Log::ALERT);
-                return FALSE;
-            }
             if ($item != null) {
-                $this->view->item = $item->getAeroportHTML();
+                $Mod->delAeroport($request->getParam('id'));
+                $session->message = "Supression réussi.";
+                $this->_redirect('/redirection/success');
             } else {
-                $this->view->item = "Cet Aéroport n'existe pas dans la base de donnée!<br/>";
+                Zend_Registry::get('Log')->log('AeroportController : del : Acces a la base de donnée impossible', Zend_Log::ALERT);
+                $session->message = "Echec de supression.";
+                $this->_redirect('/redirection/fail');
             }
+        } else {
+            $this->view->item = $item;
             $this->view->id = $request->getParam('id');
         }
     }
@@ -95,13 +59,11 @@ class AeroportController extends Zend_Controller_Action
             $item->set_labelAeroport($form->getValue('label'))
                     ->set_labelPays($form->getValue('pays'))
                     ->set_labelVille($form->getValue('ville'));
-            try {
-                $item->addAeroport();
-            } catch (Zend_Exception $e) {
-                Zend_Registry::get('Log')->log('AeroportController : new : Acces a la base de donnée impossible', Zend_Log::ALERT);
-                return FALSE;
-            }
-            $this->_redirect('/Aeroport/admin');
+            $item->addAeroport();
+            $session = new Zend_Session_Namespace('Redirect');
+            $session->message = "Ajout de l'aeroport réussi.";
+            $session->redirection = "/Aeroport/admin";
+            $this->_redirect('/redirection/success');
         }
     }
 
@@ -110,12 +72,7 @@ class AeroportController extends Zend_Controller_Action
         $form = new Application_Form_Aeroport_Aeroport();
         $item = new Application_Model_Aeroport;
         if (empty($_POST) || !$form->isValid($_POST)) {
-            try {
-                $item = $item->getAeroport($this->getRequest()->getParam('id'));
-            } catch (Zend_Exception $e) {
-                Zend_Registry::get('Log')->log('AeroportController : upd : Acces a la base de donnée impossible', Zend_Log::ALERT);
-                return FALSE;
-            }
+            $item = $item->getAeroport($this->getRequest()->getParam('id'));
             if ($item != null) {
                 $form->getElement('label')->setValue($item->get_labelAeroport());
                 $form->getElement('pays')->setValue($item->get_labelPays());
@@ -127,13 +84,11 @@ class AeroportController extends Zend_Controller_Action
                     ->set_labelAeroport($form->getValue('label'))
                     ->set_labelPays($form->getValue('pays'))
                     ->set_labelVille($form->getValue('ville'));
-            try {
-                $item->addAeroport();
-            } catch (Zend_Exception $e) {
-                Zend_Registry::get('Log')->log('AeroportController : new : Acces a la base de donnée impossible', Zend_Log::ALERT);
-                return FALSE;
-            }
-            $this->_redirect('/Aeroport/admin');
+            $item->addAeroport();
+            $session = new Zend_Session_Namespace('Redirect');
+            $session->message = "Modification réussi.";
+            $session->redirection = "/Aeroport/admin";
+            $this->_redirect('/redirection/success');
         }
     }
 

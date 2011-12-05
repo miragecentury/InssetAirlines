@@ -1,4 +1,28 @@
 <h1>Voulez vous vraiment suprimer cet aeroport?</h1>
-<?php echo $this->item; ?>
-<div class="prefix_2"><span><a class="enSavoirPlus" href='/Aeroport/admin'>Non </a></span>
-<span class="prefix_1"><a class="enSavoirPlus" href='/Aeroport/del?ok=ok&id=<?php echo $this->id; ?>'>Oui</a></span></div>
+<?php
+if ($this->item) {
+    echo "<table>
+                <tr>
+                    <td>Id</td>
+                    <td>" . $this->item->get_noAeroport() . "</td>
+                </tr>
+                <tr>
+                    <td>Label</td>
+                    <td>" . $this->item->get_labelAeroport() . "</td>
+                </tr>
+                <tr>
+                    <td>Ville</td>
+                    <td>" . $this->item->get_labelVille() . "</td>
+                </tr>
+                <tr>
+                    <td>Pays</td>
+                    <td>" . $this->item->get_labelPays() . "</td>
+                </tr>
+            </table>";
+    echo "<div><a class='enSavoirPlus' href='/Aeroport/admin'>Non </a>
+    <a class='enSavoirPlus' href='/Aeroport/del?ok=ok&id=".$this->id."'>Oui</a></div>";
+} else {
+    echo "Ce Type d'incident n'existe pas dans la base de donnée!<br/><br/>
+        <a class='enSavoirPlus'  href='/ServExploitation/Typeincident/'>Retour</a><br/>";
+}
+?>
