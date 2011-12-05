@@ -1,5 +1,29 @@
 <h1>Gestion des Places</h1>
-<?php echo $this->all; ?><br/>
+
+<?php
+if ($this->all) {
+    echo "<table>
+            <tr>
+                <th>Id</th>
+                <th>Agence</th>
+                <th>Personne</th>
+                <th>Vol</th>
+            </tr>
+            <tr>";
+    foreach ($this->all as $val) {
+        echo "<tr>
+                <td>" . $val->get_noPlace() . "</td>
+                <td>" . $val->get_labelAgence() . "</td>
+                <td>" . $val->get_Personne_noPersonne() . "</td>
+                <td>" . $val->get_noVol() . "</td>
+            </tr>";
+    }
+    echo "</table";
+        } else {
+    echo "<div>Il n'y a pas de place dans la base de donnée</div>";
+}
+?>
+
 <center>
 <div><a class="enSavoirPlus" href='/ServCommercial/Place/admin'>Admin</a>
 <a class="enSavoirPlus" href='/ServCommercial/Agence'>Gestion des Agences</a>

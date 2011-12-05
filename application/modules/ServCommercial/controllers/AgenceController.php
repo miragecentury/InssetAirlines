@@ -65,7 +65,6 @@ class ServCommercial_AgenceController extends Zend_Controller_Action
             }
             $this->view->form = $form;
         } else {
-            $item = new ServCommercial_Model_Agence();
             $item->set_noAgence($this->getRequest()->getParam('id'))
                     ->set_labelAgence($form->getValue('labelAgence'))
                     ->set_dateLancement($form->getValue('dateLancement'))

@@ -80,37 +80,6 @@ class ServCommercial_Model_Place
     }
 
     /**
-     * Retourne une Place sous forme de tableau HTML
-     * 
-     * @access public
-     * @author charles
-     * @return string
-     *  
-     */
-    public function getPlaceHTML()
-    {
-        $Place = "<table>
-                <tr>
-                    <td>Place</td>
-                    <td>" . $this->get_noPlace() . "</td>
-                </tr>
-                <tr>
-                    <td>Agence</td>
-                    <td>" . $this->get_noAgence() . "</td>
-                </tr>
-                <tr>
-                    <td>Personne</td>
-                    <td>" . $this->get_Personne_noPersonne() . "</td>
-                </tr>
-                <tr>
-                    <td>Vol</td>
-                    <td>" . $this->get_noVol() . "</td>
-                </tr>
-            </table>";
-        return $Place;
-    }
-
-    /**
      * Retourne une Place a partir de son noPlace
      * Si elle n'existe pas, retourne null.
      * 
@@ -123,55 +92,6 @@ class ServCommercial_Model_Place
     public function getPlace($noPlace)
     {
         return $this->_mapper->find($noPlace);
-    }
-
-    /**
-     * Retourne tous les places sous forme de tableau html, 
-     * retourne une phrase disant qu'il n'y en a pas dans la bd si c'est le cas
-     * 
-     * @access public
-     * @author charles
-     * @return string
-     *  
-     */
-    public static function getListePlaceHTML($admin=true)
-    {
-        $html = ServCommercial_Model_Place::getListePlace();
-        $color = true;
-
-        if (!empty($html)) {
-            $tableau = "<table>
-                        <tr>
-                            <th>Place</th>
-                            <th>Agence</th>
-                            <th>Personne</th>
-                            <th>Vol</th>";
-            if ($admin)
-            $tableau .= "<th></th>
-                         <th></th>
-                         <th></th>";
-            $tableau .= "</tr>";
-
-            foreach ($html as $val) {
-                if ($color) {
-                    $tableau .= "<tr>";
-                }
-                $color = !$color;
-                $tableau .= "   <td>" . $val->get_noPlace() . "</td>
-                                <td>" . $val->get_labelAgence() . "</td>
-                                <td>" . $val->get_Personne_noPersonne() . "</td>
-                                <td>" . $val->get_noVol() . "</td>";
-                if ($admin)
-                    $tableau .="<td><a href='/ServCommercial/Place/detail?id=" . $val->get_noPlace() . "'>Detail</a></td>
-                                <td><a href='/ServCommercial/Place/upd?id=" . $val->get_noPlace() . "'>Modifier</a></td>
-                                <td><a href='/ServCommercial/Place/del?id=" . $val->get_noPlace() . "'>Supprimer</a></td>";
-                $tableau .="</tr>";
-            }
-            $tableau .= "</table>";
-        } else {
-            $tableau = "<div>Il n'y a pas de place répertoriées dans la base de donnée</div>";
-        }
-        return $tableau;
     }
 
     /**

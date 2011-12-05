@@ -21,34 +21,12 @@ class ServCommercial_PlaceController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        try {
-            $all = ServCommercial_Model_Place::getListePlaceHTML(false);
-        } catch (Zend_Exception $e) {
-            Zend_Registry::get('Log')->log('PlaceController : index : Acces a la base de donnée impossible', Zend_Log::ALERT);
-            return FALSE;
-        }
-        if ($all != null)
-            $this->view->all = $all;
-        else
-            $this->view->all = "Erreur dans la base de donnée, 
-                veuillez contacter l'administrateur du site via le 
-                formulaire de contact.<br/>";
+        $this->view->all = ServCommercial_Model_Place::getListePlace();
     }
 
     public function adminAction()
     {
-        try {
-            $all = ServCommercial_Model_Place::getListePlaceHTML();
-        } catch (Zend_Exception $e) {
-            Zend_Registry::get('Log')->log('PlaceController : index : Acces a la base de donnée impossible', Zend_Log::ALERT);
-            return FALSE;
-        }
-        if ($all != null)
-            $this->view->all = $all;
-        else
-            $this->view->all = "Erreur dans la base de donnée, 
-                veuillez contacter l'administrateur du site via le 
-                formulaire de contact.<br/>";
+        $this->view->all = ServCommercial_Model_Place::getListePlace();
     }
 
     public function newAction()
@@ -61,13 +39,11 @@ class ServCommercial_PlaceController extends Zend_Controller_Action
             $item->set_noVol($form->getValue('noVol'))
                     ->set_noAgence($form->getValue('noAgence'))
                     ->set_Personne_noPersonne($form->getValue('noPersonne'));
-            try {
-                $item->addPlace();
-            } catch (Zend_Exception $e) {
-                Zend_Registry::get('Log')->log('PlaceController : new : Acces a la base de donnée impossible', Zend_Log::ALERT);
-                return FALSE;
-            }
-            $this->_redirect('ServCommercial/Place/admin');
+            $item->addPlace();
+            $session = new Zend_Session_Namespace('Redirect');
+            $session->message = "Ajout de la place réussi.";
+            $session->redirection = "/ServCommercial/Place/admin";
+            $this->_redirect('/redirection/success');
         }
     }
 
@@ -76,12 +52,7 @@ class ServCommercial_PlaceController extends Zend_Controller_Action
         $form = new ServCommercial_Form_Place();
         $item = new ServCommercial_Model_Place();
         if (empty($_POST) || !$form->isValid($_POST)) {
-            try {
-                $item = $item->getPlace($this->getRequest()->getParam('id'));
-            } catch (Zend_Exception $e) {
-                Zend_Registry::get('Log')->log('PlaceController : upd : Acces a la base de donnée impossible', Zend_Log::ALERT);
-                return FALSE;
-            }
+            $item = $item->getPlace($this->getRequest()->getParam('id'));
             if ($item != null) {
                 $form->getElement('noVol')->setValue($item->get_noVol());
                 $form->getElement('noAgence')->setValue($item->get_noAgence());
@@ -89,46 +60,36 @@ class ServCommercial_PlaceController extends Zend_Controller_Action
             }
             $this->view->form = $form;
         } else {
-            
             $item->set_noPlace($this->getRequest()->getParam('id'))
                     ->set_noVol($form->getValue('noVol'))
                     ->set_noAgence($form->getValue('noAgence'))
                     ->set_Personne_noPersonne($form->getValue('noPersonne'));
-            try {
-                $item->addPlace();
-            } catch (Zend_Exception $e) {
-                Zend_Registry::get('Log')->log('PlaceController : upd : Acces a la base de donnée impossible', Zend_Log::ALERT);
-                return FALSE;
-            }
-            $this->_redirect('ServCommercial/Place/admin');
+            $item->addPlace();
+            $session = new Zend_Session_Namespace('Redirect');
+            $session->message = "Modification réussi.";
+            $session->redirection = "/ServCommercial/Place/admin";
+            $this->_redirect('/redirection/success');
         }
     }
 
     public function delAction()
     {
-        $request = $this->getRequest();
-        if ($request->getParam('ok') === "ok") {
-            $Mod = new ServCommercial_Model_Place();
-            try {
-                $Mod->delPlace($request->getParam('id'));
-            } catch (Zend_Exception $e) {
-                Zend_Registry::get('Log')->log('PlaceController : del : Acces a la base de donnée impossible', Zend_Log::ALERT);
-                return FALSE;
-            }
-            $this->_redirect('ServCommercial/Place/admin');
-        } else {
-            $Mod = new ServCommercial_Model_Place();
-            try {
-                $item = $Mod->getPlace($request->getParam('id'));
-            } catch (Zend_Exception $e) {
-                Zend_Registry::get('Log')->log('PlaceController : del : Acces a la base de donnée impossible', Zend_Log::ALERT);
-                return FALSE;
-            }
+        $Mod = new ServCommercial_Model_Place();
+        $item = $Mod->getPlace($this->getRequest()->getParam('id'));
+        $session = new Zend_Session_Namespace('Redirect');
+        $session->redirection = "/ServCommercial/Place/admin";
+        if ($this->getRequest()->getParam('ok') === "ok") {
             if ($item != null) {
-                $this->view->item = $item->getPlaceHTML();
+                $Mod->delPlace($this->getRequest()->getParam('id'));
+                $session->message = "Supression réussi.";
+                $this->_redirect('/redirection/success');
             } else {
-                $this->view->item = "Cette Place n'existe pas dans la base de donnée!<br/>";
+                Zend_Registry::get('Log')->log('PlaceController : del : Acces a la base de donnée impossible', Zend_Log::ALERT);
+                $session->message = "Echec de supression.";
+                $this->_redirect('/redirection/fail');
             }
+        } else {
+            $this->view->item = $item;
             $this->view->id = $request->getParam('id');
         }
     }
@@ -136,17 +97,7 @@ class ServCommercial_PlaceController extends Zend_Controller_Action
     public function detailAction()
     {
         $Mod = new ServCommercial_Model_Place();
-        try {
-            $item = $Mod->getPlace($this->getRequest()->getParam('id'));
-        } catch (Zend_Exception $e) {
-            Zend_Registry::get('Log')->log('PlaceController : detail : Acces a la base de donnée impossible', Zend_Log::ALERT);
-            return FALSE;
-        }
-        if ($item != null) {
-            $this->view->item = $item->getPlaceHTML();
-        } else {
-            $this->view->item = "Cette Place n'existe pas dans la base de donnée!<br/>";
-        }
+        $this->view->item = $Mod->getPlace($this->getRequest()->getParam('id'));
         $this->view->id = $this->getRequest()->getParam('id');
     }
 

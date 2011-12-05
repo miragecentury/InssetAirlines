@@ -1,6 +1,33 @@
 <h1>Gestion des Places</h1>
-<?php echo $this->all;?>
-<br/><br/><br/><br/><br/>
-<div class="prefix_10"><a class="enSavoirPlus" href='/ServCommercial/Place/new'>Ajouter</a>
-<a class="enSavoirPlus" href='/ServCommercial/Agence'>Gestion des Agences</a>
-<a class="enSavoirPlus" href='/ServCommercial/Place/'>Retour</a></div>
+<?php
+if ($this->all) {
+    echo "<table>
+            <tr>
+                <th>Id</th>
+                <th>Agence</th>
+                <th>Personne</th>
+                <th>Vol</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>";
+    foreach ($this->all as $val) {
+        echo "<tr>
+                <td>" . $val->get_noPlace() . "</td>
+                <td>" . $val->get_labelAgence() . "</td>
+                <td>" . $val->get_Personne_noPersonne() . "</td>
+                <td>" . $val->get_noVol() . "</td>
+                <td><a href='/ServCommercial/Place/detail?id=" . $val->get_noPlace() . "'>Detail</a></td>
+                <td><a href='/ServCommercial/Place/upd?id=" . $val->get_noPlace() . "'>Modifier</a></td>
+                <td><a href='/ServCommercial/Place/del?id=" . $val->get_noPlace() . "'>Supprimer</a></td>
+            </tr>";
+    }
+    echo "</table>";
+        
+} else {
+    echo "<div>Il n'y a pas de place dans la base de donnée</div>";
+}
+echo "<br/><a class='enSavoirPlus' href='/ServCommercial/Place/new'>Ajouter</a>
+    <a class='enSavoirPlus' href='/ServCommercial/Agence/'>Gestion des Agences</a>
+    <a class='enSavoirPlus' href='/ServCommercial/Place/'>Retour</a>";
