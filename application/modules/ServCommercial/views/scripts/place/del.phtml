@@ -1,4 +1,29 @@
 <h1>Voulez vous vraiment suprimer cette place?</h1>
-<?php echo $this->item; ?>
-<div class="prefix_5"><a class="enSavoirPlus" href='/ServCommercial/Place/admin'>Non </a>
-<a class="enSavoirPlus" href='/ServCommercial/Place/del?ok=ok&id=<?php echo $this->id; ?>'>Oui</a></div>
+
+<?php
+if ($this->item) {
+    echo "<table>
+                <tr>
+                    <td>Id</td>
+                    <td>" . $this->item->get_noPlace() . "</td>
+                </tr>
+                <tr>
+                    <td>Agence</td>
+                    <td>" . $this->item->get_labelAgence() . "</td>
+                </tr>
+                <tr>
+                    <td>Personne</td>
+                    <td>" . $this->item->get_Personne_noPersonne() . "</td>
+                </tr>
+                <tr>
+                    <td>Vol</td>
+                    <td>" . $this->item->get_noVol() . "</td>
+                </tr>
+            </table>";
+    echo "<div><a class='enSavoirPlus' href='/ServCommercial/Place/admin'>Non </a>
+    <a class='enSavoirPlus' href='/ServCommercial/Place/del?ok=ok&id=".$this->id."'>Oui</a></div>";
+} else {
+    echo "Ce Type d'incident n'existe pas dans la base de donnée!<br/><br/>
+        <a class='enSavoirPlus'  href='/ServExploitation/Incident/admin'>Retour</a><br/>";
+}
+?>

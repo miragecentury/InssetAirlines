@@ -1,6 +1,30 @@
 <h1>Place N°<?php echo $this->id; ?></h1>
-<?php echo $this->item; ?>
-<br/><br/><br/><br/><br/><br/><br/>
-<a class="enSavoirPlus" href='/ServCommercial/Place/upd?id=<?php echo $this->id; ?>'>Modifier</a><br/><br/>
-<a class="enSavoirPlus" href='/ServCommercial/Place/del?id=<?php echo $this->id; ?>'>Supprimer</a><br/><br/>
-<a class="enSavoirPlus" href='/ServCommercial/Place/admin'>Retour</a><br/>
+
+<?php
+if ($this->item) {
+    echo "<table>
+                <tr>
+                    <td>Id</td>
+                    <td>" . $this->item->get_noPlace() . "</td>
+                </tr>
+                <tr>
+                    <td>Agence</td>
+                    <td>" . $this->item->get_labelAgence() . "</td>
+                </tr>
+                <tr>
+                    <td>Personne</td>
+                    <td>" . $this->item->get_Personne_noPersonne() . "</td>
+                </tr>
+                <tr>
+                    <td>Vol</td>
+                    <td>" . $this->item->get_noVol() . "</td>
+                </tr>
+            </table>";
+    echo "
+        <a class='enSavoirPlus'  href='/ServCommercial/Place/upd?id=" . $this->id . "'>Modifier</a><br/><br/>
+        <a class='enSavoirPlus'  href='/ServCommercial/Place/del?id=" . $this->id . "'>Supprimer</a><br/><br/>";
+} else {
+    echo "Cet Aéroport n'existe pas dans la base de donnée!<br/><br/>
+        <a class='enSavoirPlus'  href='/ServCommercial/Place/admin'>Retour</a><br/>";
+}
+?>

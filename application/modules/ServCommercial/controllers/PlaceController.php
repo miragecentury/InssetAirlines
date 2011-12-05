@@ -90,7 +90,7 @@ class ServCommercial_PlaceController extends Zend_Controller_Action
             }
         } else {
             $this->view->item = $item;
-            $this->view->id = $request->getParam('id');
+            $this->view->id = $this->getRequest()->getParam('id');
         }
     }
 
