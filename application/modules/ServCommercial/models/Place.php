@@ -89,22 +89,22 @@ class ServCommercial_Model_Place
      */
     public function getPlaceHTML()
     {
-        $Place = "<table class='grid_16'>
-                <tr bgcolor='#CCCCCC'>
-                    <td class='grid_3'>Place</td>
-                    <td class='grid_3'>" . $this->get_noPlace() . "</td>
+        $Place = "<table>
+                <tr>
+                    <td>Place</td>
+                    <td>" . $this->get_noPlace() . "</td>
                 </tr>
                 <tr>
-                    <td class='grid_3'>Agence</td>
-                    <td class='grid_3'>" . $this->get_noAgence() . "</td>
-                </tr>
-                <tr bgcolor='#CCCCCC'>
-                    <td class='grid_3'>Personne</td>
-                    <td class='grid_3'>" . $this->get_Personne_noPersonne() . "</td>
+                    <td>Agence</td>
+                    <td>" . $this->get_noAgence() . "</td>
                 </tr>
                 <tr>
-                    <td class='grid_3'>Vol</td>
-                    <td class='grid_3'>" . $this->get_noVol() . "</td>
+                    <td>Personne</td>
+                    <td>" . $this->get_Personne_noPersonne() . "</td>
+                </tr>
+                <tr>
+                    <td>Vol</td>
+                    <td>" . $this->get_noVol() . "</td>
                 </tr>
             </table>";
         return $Place;
@@ -140,31 +140,31 @@ class ServCommercial_Model_Place
         $color = true;
 
         if (!empty($html)) {
-            $tableau = "<table class='grid_16'>
+            $tableau = "<table>
                         <tr>
-                            <td class='grid_2'>Place</td>
-                            <td class='grid_2'>Agence</td>
-                            <td class='grid_2'>Personne</td>
-                            <td class='grid_2'>Vol</td>";
+                            <th>Place</th>
+                            <th>Agence</th>
+                            <th>Personne</th>
+                            <th>Vol</th>";
             if ($admin)
-            $tableau .= "<td class='grid_2'></td>
-                            <td class='grid_2'></td>
-                            <td class='grid_2'></td>";
+            $tableau .= "<th></th>
+                         <th></th>
+                         <th></th>";
             $tableau .= "</tr>";
 
             foreach ($html as $val) {
                 if ($color) {
-                    $tableau .= "<tr bgcolor='#CCCCCC'>";
+                    $tableau .= "<tr>";
                 }
                 $color = !$color;
-                $tableau .= "   <td class='grid_2'>" . $val->get_noPlace() . "</td>
-                                <td class='grid_2'>" . $val->get_labelAgence() . "</td>
-                                <td class='grid_2'>" . $val->get_Personne_noPersonne() . "</td>
-                                <td class='grid_2'>" . $val->get_noVol() . "</td>";
+                $tableau .= "   <td>" . $val->get_noPlace() . "</td>
+                                <td>" . $val->get_labelAgence() . "</td>
+                                <td>" . $val->get_Personne_noPersonne() . "</td>
+                                <td>" . $val->get_noVol() . "</td>";
                 if ($admin)
-                    $tableau .="<td class='grid_2'><a href='/ServCommercial/Place/detail?id=" . $val->get_noPlace() . "'>Detail</a></td>
-                                <td class='grid_2'><a href='/ServCommercial/Place/upd?id=" . $val->get_noPlace() . "'>Modifier</a></td>
-                                <td class='grid_2'><a href='/ServCommercial/Place/del?id=" . $val->get_noPlace() . "'>Supprimer</a></td>";
+                    $tableau .="<td><a href='/ServCommercial/Place/detail?id=" . $val->get_noPlace() . "'>Detail</a></td>
+                                <td><a href='/ServCommercial/Place/upd?id=" . $val->get_noPlace() . "'>Modifier</a></td>
+                                <td><a href='/ServCommercial/Place/del?id=" . $val->get_noPlace() . "'>Supprimer</a></td>";
                 $tableau .="</tr>";
             }
             $tableau .= "</table>";

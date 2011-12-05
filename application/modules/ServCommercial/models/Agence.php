@@ -101,30 +101,30 @@ class ServCommercial_Model_Agence
      */
     public function getAgenceHTML()
     {
-        $Agence = "<table class='grid_16'>
-                <tr bgcolor='#CCCCCC'>
-                    <td class='grid_3'>Id</td>
-                    <td class='grid_3'>" . $this->get_noAgence() . "</td>
+        $Agence = "<table>
+                <tr>
+                    <td>Id</td>
+                    <td>" . $this->get_noAgence() . "</td>
                 </tr>
                 <tr>
-                    <td class='grid_3'>Label</td>
-                    <td class='grid_3'>" . $this->get_labelAgence() . "</td>
-                </tr>
-                <tr bgcolor='#CCCCCC'>
-                    <td class='grid_3'>Date de Lancement</td>
-                    <td class='grid_3'>" . $this->get_dateLancement() . "</td>
+                    <td>Label</td>
+                    <td>" . $this->get_labelAgence() . "</td>
                 </tr>
                 <tr>
-                    <td class='grid_3'>Date de Cloture</td>
-                    <td class='grid_3'>" . $this->get_dateCloture() . "</td>
-                </tr>
-                <tr bgcolor='#CCCCCC'>
-                    <td class='grid_3'>Acces Extranet</td>
-                    <td class='grid_3'>" . $this->get_accesExtranet() . "</td>
+                    <td>Date de Lancement</td>
+                    <td>" . $this->get_dateLancement() . "</td>
                 </tr>
                 <tr>
-                    <td class='grid_3'>No Adresse</td>
-                    <td class='grid_3'>" . $this->get_noAdresse() . "</td>
+                    <td>Date de Cloture</td>
+                    <td>" . $this->get_dateCloture() . "</td>
+                </tr>
+                <tr>
+                    <td>Acces Extranet</td>
+                    <td>" . $this->get_accesExtranet() . "</td>
+                </tr>
+                <tr>
+                    <td>No Adresse</td>
+                    <td>" . $this->get_noAdresse() . "</td>
                 </tr>
             </table>";
         return $Agence;
@@ -160,44 +160,44 @@ class ServCommercial_Model_Agence
         $color = true;
 
         if (!empty($html)) {
-            $tableau = "<table class='grid_16'>
+            $tableau = "<table>
                         <tr>
-                            <td class='grid_1'>Id</td>
-                            <td class='grid_3'>Label</td>
-                            <td class='grid_2'>Lancement</td>
-                            <td class='grid_2'>Date de Cloture</td>
-                            <td class='grid_1'>Extranet</td>
-                            <td class='grid_1'>Adresse</td>";
+                            <th>Id</th>
+                            <th>Label</th>
+                            <th>Lancement</th>
+                            <th>Date de Cloture</th>
+                            <th>Extranet</th>
+                            <th>Adresse</th>";
             if ($admin)
-                $tableau .= "   <td class='grid_1'></td>
-                            <td class='grid_1'></td>
-                            <td class='grid_2'></td>";
+                $tableau .= "<th></th>
+                            <th></th>
+                            <th></th>";
             $tableau .= "</tr>";
 
             foreach ($html as $val) {
                 if ($color) {
-                    $tableau .= "<tr bgcolor='#CCCCCC'>";
+                    $tableau .= "<tr>";
                 }
                 $color = !$color;
-                $tableau .= "<td class='grid_1'>" . $val->get_noAgence() . "</td>
-                                <td class='grid_3'>" . $val->get_labelAgence() . "</td>
-                                <td class='grid_2'>" . $val->get_dateLancement() . "</td>";
+                $tableau .= "<td>" . $val->get_noAgence() . "</td>
+                                <td>" . $val->get_labelAgence() . "</td>
+                                <td>" . $val->get_dateLancement() . "</td>";
                 if ($val->get_dateCloture() != null) {
-                    $tableau .= "<td class='grid_2'>" . $val->get_dateCloture() . "</td>";
+                    $tableau .= "<td>" . $val->get_dateCloture() . "</td>";
                 } else {
-                    $tableau .= "<td class='grid_2'>Actif</td>";
+                    $tableau .= "<td>Actif</td>";
                 }
-                $tableau .= "<td class='grid_1'>";
+                $tableau .= "<td>";
                 if ($val->get_accesExtranet() == 1)
                     $tableau .= "Actif";
                 else
                     $tableau .= "Inactif";
                 $tableau .= "</td>
-                                <td class='grid_1'>" . $val->get_noAdresse() . "</td>";
+                                <td>" . $val->get_noAdresse() . "</td>";
                 if ($admin)
-                    $tableau .="<td class='grid_1'><a href='/ServCommercial/Agence/detail?id=" . $val->get_noAgence() . "'>Detail</a></td>
-                                <td class='grid_1'><a href='/ServCommercial/Agence/upd?id=" . $val->get_noAgence() . "'>Modifier</a></td>
-                                <td class='grid_2'><a href='/ServCommercial/Agence/del?id=" . $val->get_noAgence() . "'>Supprimer</a></td>";
+                    $tableau .="<td><a href='/ServCommercial/Agence/detail?id=" . $val->get_noAgence() . "'>Detail</a></td>
+                                <td><a href='/ServCommercial/Agence/upd?id=" . $val->get_noAgence() . "'>Modifier</a></td>
+                                <td><a href='/ServCommercial/Agence/del?id=" . $val->get_noAgence() . "'>Supprimer</a></td>";
                 $tableau .="</tr>";
             }
             $tableau .= "</table>";
