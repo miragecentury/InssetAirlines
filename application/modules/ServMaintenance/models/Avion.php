@@ -29,6 +29,15 @@ class ServMaintenance_Model_Avion {
         self::initialisation();
         return self::$_mapper->findAll();
     }
+    
+    public static function findAllEnService(){
+        self::initialisation();
+        
+    }
+    
+    public static function findAllHorsService(){
+        
+    }
 
     public static function findAllByModele($noModele) {
         self::initialisation();
