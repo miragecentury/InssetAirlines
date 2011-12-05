@@ -1,9 +1,13 @@
 <?php
 
-class ServPlaning_IndexController extends Zend_Controller_Action
+/**
+ * Description of SController
+ *
+ * @author pewho
+ */
+class ServPlaning_S2Controller extends Zend_Controller_Action
 {
-
-    public function init()
+     public function init()
     {
         $this->view->setLfiProtection(false);
         $this->view->render('../../../../views/scripts/user/_sidebar.phtml');
@@ -11,11 +15,9 @@ class ServPlaning_IndexController extends Zend_Controller_Action
         $this->view->render('../../../../views/scripts/user/_ServPlaningSidebar.phtml');
     }
 
-    public function indexAction()
-    {
+    public function indexAction(){
 
     }
-
-
 }
 
+?>
