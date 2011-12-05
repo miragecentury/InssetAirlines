@@ -26,8 +26,8 @@ class ServDRH_GesthabilitationController extends Zend_Controller_Action {
                 $habilitation->set_labelMetier($this->getRequest()->getParam('labelMetier'));
                 $habilitation->set_Modele_label($this->getRequest()->getParam('labelModele'));
                 $habilitation->saveHabilitation();
-                echo "Habilitation ajoutée !<br />";
-                echo "<a href='/ServDRH'>Retour</a>";
+                echo "<center>Habilitation ajoutée !<br />";
+                echo "<a href='/ServDRH'>Retour</a></center>";
             }
          } else if ($this->getRequest()->getParam('annuler') == 'Annuler') {
                     $this->_redirect('/ServDRH/gesthabilitation');

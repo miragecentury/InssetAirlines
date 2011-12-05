@@ -55,10 +55,11 @@ class ServDRH_Model_QualificationMapper extends Spesx_Mapper_Mapper
                        ->where('Employe_Personne_noPersonne = ?', $id1)
                        ->where('Habilitation_noHabilitation = ?', $id2);                       
              $result = $this->getDbTable()->fetchRow($select);           
-        } catch (Zend_Db_Exception $e) {              
-            throw new Spesx_Mapper_Exception(
+        } catch (Zend_Db_Exception $e) {     
+            echo $e->__toString();
+            /*throw new Spesx_Mapper_Exception(
                 'Qualification: Echec methode save',
-                 $e->getCode(), $e);
+                 $e->getCode(), $e);*/
         }        
         if ($result != null) {
             $data = $this->_getDataArrayFromItem($item);
