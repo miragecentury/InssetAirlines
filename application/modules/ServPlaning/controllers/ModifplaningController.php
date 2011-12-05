@@ -1,6 +1,11 @@
 <?php
 
-class ServPlaning_IndexController extends Zend_Controller_Action
+/**
+ * Controller de modification de la plannification entre S et S+3
+ *
+ * @author pewho
+ */
+class ServPlaning_ModifplaningController extends Zend_Controller_Action
 {
 
     public function init()
@@ -11,11 +16,9 @@ class ServPlaning_IndexController extends Zend_Controller_Action
         $this->view->render('../../../../views/scripts/user/_ServPlaningSidebar.phtml');
     }
 
-    public function indexAction()
-    {
+    public function indexAction(){
 
     }
-
-
 }
 
+?>
