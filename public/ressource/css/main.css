@@ -241,9 +241,6 @@ tr:nth-child(even){
     border: 1px solid red;
     padding: 10px 15px;
 }
-
-
-
 .enSavoirPlusUrg{
     padding: 3px 8px;
     margin:3px 2px;
@@ -258,4 +255,21 @@ tr:nth-child(even){
 
 .enSavoirPlusUrg:hover, .enSavoirPlusUrg:active{
     color:#333;
+}
+/* Paginator
+*/
+.disabled{
+    padding: 3px 8px;
+    margin:2px 3px;
+    color:#eee;
+    background-color : #fec380;
+    text-decoration: none;
+}
+.current{
+    padding: 6px 11px;
+    margin:2px 3px;
+    color:red;
+    font-weight: bold;
+    background-color : #ff8b00;
+    text-decoration: none;
 }
