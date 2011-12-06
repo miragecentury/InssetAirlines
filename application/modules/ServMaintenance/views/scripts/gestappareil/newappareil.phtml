@@ -4,6 +4,11 @@
     <h5 style='display: inline'>Ajout d'un Appareil</h5>
     </br></br></br>
     <div>
+        <?php if (isset($this->message)) {
+            echo '<h3>'.$this->message.'</h3>';
+        } ?>
+    </div>
+    <div>
         <?php
         if (isset($this->form)) {
             echo $this->form;
