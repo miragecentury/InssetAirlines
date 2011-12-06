@@ -16,7 +16,11 @@ class ServMaintenance_Model_Avion {
 
     public static function initialisation() {
         if (self::$_mapper === null) {
-            self::$_mapper = Spesx_Mapper_MapperFactory::getMapper('ServMaintenance_Model_Avion');
+            if (($mapper = Spesx_Mapper_MapperFactory::getMapper('ServMaintenance_Model_Avion')) instanceof ServMaintenance_Model_AvionMapper) {
+                self::$_mapper = $mapper;
+            } else {
+                echo 'Boum!!';
+            }
         }
     }
 
@@ -29,14 +33,32 @@ class ServMaintenance_Model_Avion {
         self::initialisation();
         return self::$_mapper->findAll();
     }
-    
-    public static function findAllEnService(){
+
+    public static function findAllDispoAtInterDate($Start, $End) {
         self::initialisation();
-        
+        if (count(($array = self::$_mapper->findAllDispoAtInterDate($Start,$End))) == 0) {
+            return null;
+        } else {
+            return $array;
+        }
     }
-    
-    public static function findAllHorsService(){
-        
+
+    public static function findAllEnService() {
+        self::initialisation();
+        if (count(($array = self::$_mapper->findAllService(TRUE))) == 0) {
+            return null;
+        } else {
+            return $array;
+        }
+    }
+
+    public static function findAllHorsService() {
+        self::initialisation();
+        if (count(($array = self::$_mapper->findAllService(FALSE))) == 0) {
+            return null;
+        } else {
+            return $array;
+        }
     }
 
     public static function findAllByModele($noModele) {

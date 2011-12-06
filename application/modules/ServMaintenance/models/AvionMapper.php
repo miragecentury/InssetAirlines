@@ -46,6 +46,30 @@ class ServMaintenance_Model_AvionMapper extends Spesx_Mapper_Mapper {
         return $return;
     }
 
+    public function findAllService($HorsOrIn) {
+        if ($HorsOrIn === TRUE) {
+            $HorsOrIn = '1';
+        } else {
+            $HorsOrIn = '0';
+        }
+        try {
+            $select = $this->getDbTable()->select()
+                    ->where('enService = ?', $HorsOrIn);
+            $result = $this->getDbTable()->fetchAll($select);
+        } catch (Zend_Db_Exception $e) {
+            throw new Spesx_Mapper_Exception(
+                    'ServMaintenance : Echec Methode findAllByModele ',
+                    $e->getCode(),
+                    $e);
+        }
+        $return = $this->_createItemsFromRowset($result);
+        return $return;
+    }
+
+    public function findAllDispoAtInterDate($start, $end) {
+        
+    }
+
 }
 
 ?>
