@@ -6,6 +6,11 @@ class ServStrategique_Model_Ligne
     //--------------------------------------------------------------------------
     //Attributs
     //--------------------------------------------------------------------------
+    const ETAT_ETUDE = 1;
+    const ETAT_EN_VALIDATION = 2;
+    const ETAT_ACTIVE = 3;
+    const ETAT_INACTIVE = 4;
+
     /**
      * numero de Ligne
      * @var int
@@ -49,6 +54,17 @@ class ServStrategique_Model_Ligne
     protected $_noAeroportAtte;
 
     /**
+     * Etat de la ligne
+     * Correspond à 4 constante :
+     * -> 1 : En etude
+     * -> 2 : En attente de Validation
+     * -> 3 : active
+     * -> 4 : desactive
+     * @var int
+     */
+    protected $_etat;
+
+    /**
      * Mapper de l'objet
      * @var ServStrategique_Model_LigneMapper
      */
@@ -77,14 +93,13 @@ class ServStrategique_Model_Ligne
      */
     public function addLigne()
     {
-        try{
-        $this->_mapper->save($this, 'noLigne');
-        return true;
-        } catch (Spesx_Mapper_Exception $e){
+        try {
+            $this->_mapper->save($this, 'noLigne');
+            return true;
+        } catch (Spesx_Mapper_Exception $e) {
             Spesx_Log::log('addligne Exception - ' .
-            $e->getMessage() . ' - ' .
-            $e->getPrevious()->getMessage(),
-            Zend_Log::ERR);
+                $e->getMessage() . ' - ' .
+                $e->getPrevious()->getMessage(), Zend_Log::ERR);
             return false;
         }
     }
@@ -101,7 +116,7 @@ class ServStrategique_Model_Ligne
     public function delLigne($noLigne)
     {
         try {
-            $this->_mapper->delete('noLigne',$noLigne);
+            $this->_mapper->delete('noLigne', $noLigne);
             return true;
         } catch (Zend_Exception $e) {
             echo 'ServSrategique_Models_Ligne_delLigne()
@@ -143,6 +158,28 @@ class ServStrategique_Model_Ligne
         } catch (Spesx_Mapper_Exception $e) {
             echo $e->getMessage() . " - " . $e->getPrevious()->getMessage();
         }
+    }
+    /**
+     * Retourne l'état de la ligne en bon françois
+     *
+     * @access pewho
+     * @author charles
+     * @return string
+     */
+    public function getStatusLigne(){
+    switch ($this->get_etat()) {
+        case 1:
+            return 'En étude';
+            break;
+        case 2:
+            return 'En attente de validation';
+        case 3:
+            return 'Active';
+        case 4:
+            return 'Inactive';
+        default:
+            return 'Erreur';
+    }
     }
 
     //--------------------------------------------------------------------------
@@ -225,7 +262,16 @@ class ServStrategique_Model_Ligne
         $this->_noAeroportAtte = $_labelAeroportAtte;
         return $this;
     }
+    public function get_etat()
+    {
+        return $this->_etat;
+    }
 
+    public function set_etat($_etat)
+    {
+        $this->_etat = $_etat;
+        return $this;
+    }
 }
 
 ?>

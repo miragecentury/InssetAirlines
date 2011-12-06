@@ -111,7 +111,7 @@ class ServMaintenance_Model_Avion {
 
     public function save() {
         self::initialisation();
-        return self::$_mapper->save($this, 'noModele');
+        return self::$_mapper->save($this, 'noAvion');
     }
 
     public function isEnVol() {

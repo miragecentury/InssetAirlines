@@ -67,23 +67,23 @@ class ServMaintenance_Model_AvionMapper extends Spesx_Mapper_Mapper {
     }
 
     public function findAllDispoAtInterDate($start, $end) {
-        var_dum($start);var_dump($end);
-        if (preg_match('', $start) && preg_match('', $end)) {
-            try {
-                $select = $this->getDbTable()->select()
-                        ->where('enService = ?', $HorsOrIn);
-                $result = $this->getDbTable()->fetchAll($select);
-            } catch (Zend_Db_Exception $e) {
-                throw new Spesx_Mapper_Exception(
-                        'ServMaintenance : Echec Methode findAllByModele ',
-                        $e->getCode(),
-                        $e);
-            }
-            $return = $this->_createItemsFromRowset($result);
-            return $return;
-        } else {
-            
+        try {
+            $select = $this->getDbTable()->select()
+                    ->where('enService = ?', TRUE)
+                    ->where("
+                                (heureDecollage >= $start AND heureDecollage <= $start) OR
+                                (heureDecollage <= $start AND heureAtterissage >= $end) OR
+                                (heureAtterissage >= $start AND heureAterrisage <= $end)
+                            ");
+            $result = $this->getDbTable()->fetchAll($select);
+        } catch (Zend_Db_Exception $e) {
+            throw new Spesx_Mapper_Exception(
+                    'ServMaintenance : Echec Methode findAllByModele ',
+                    $e->getCode(),
+                    $e);
         }
+        $return = $this->_createItemsFromRowset($result);
+        return $return;
     }
 
 }

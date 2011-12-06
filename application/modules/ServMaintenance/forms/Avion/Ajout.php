@@ -9,7 +9,7 @@ class ServMaintenance_Form_Avion_Ajout extends Zend_Form {
         $label = new Zend_Form_Element('label');
         $label->setRequired(TRUE);
         $label->setLabel('Appellation :');
-        $label->addValidator(new Zend_Validate_Alpha(TRUE));
+        $label->addValidator(new Zend_Validate_Alnum(TRUE));
         $label->addValidator(new Zend_Validate_StringLength(array('min' => 4, 'max' => 25)));
         
         $this->addElement($label);
@@ -99,9 +99,6 @@ class ServMaintenance_Form_Avion_Ajout extends Zend_Form {
 
     }
 
-    public static function POSTtoRaw($post) {
-        
-    }
 
 }
 
