@@ -27,7 +27,7 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
         $aeroport = new Application_Model_Aeroport();
 
         //parcours de ligne pour remplacer l'id par le nom de la ville
-        foreach ($lignes as $ligne){
+        foreach ($lignes as $ligne) {
             $aeroport = new Application_Model_Aeroport();
             $aeroDeco = $aeroport->getAeroport($ligne->get_noAeroportDeco());
             $aeroAtt = $aeroport->getAeroport($ligne->get_noAeroportAtte());
@@ -37,8 +37,6 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
 
         //envoi de la ligne
         $this->view->lignes = $lignes;
-
-
     }
 
     public function newvolAction()
@@ -63,7 +61,8 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
                 ->set_jours($addVolForm->getValue('jour'))
                 ->set_semaines($addVolForm->getValue('semaine'))
                 ->set_mois($addVolForm->getValue('mois'))
-                ->set_annees($addVolForm->getValue('annee'));
+                ->set_annees($addVolForm->getValue('annee'))
+                ->set_etat($addVolForm->getValue('etat'));
 
             //enregistrement
             $reussite = $ligne->addLigne();
@@ -96,7 +95,7 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
         $ligne = ServStrategique_Model_Ligne::getLigne($id);
 
         //si la ligne n'existe pas
-        if (is_null($ligne)){
+        if (is_null($ligne)) {
             $session->message = "Erreur : la ligne n'existe pas !";
             $session->redirection = '/ServStrategique/gestvol';
             $this->_redirect('/redirection/fail');
@@ -109,7 +108,8 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
             'jour' => $ligne->get_jours(),
             'semaine' => $ligne->get_semaines(),
             'mois' => $ligne->get_mois(),
-            'annee' => $ligne->get_annees()
+            'annee' => $ligne->get_annees(),
+            'etat' => $ligne->getStatusLigne()
         ));
 
         //si le formulaire est valide et en cas d'aeroport de depart = aeroport d'arrivé
@@ -125,7 +125,8 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
                 ->set_jours($addVolForm->getValue('jour'))
                 ->set_semaines($addVolForm->getValue('semaine'))
                 ->set_mois($addVolForm->getValue('mois'))
-                ->set_annees($addVolForm->getValue('annee'));
+                ->set_annees($addVolForm->getValue('annee'))
+                ->set_etat($addVolForm->getValue('etat'));
 
             //enregistrement
             $reussite = $ligne->addLigne();
@@ -155,7 +156,7 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
         $ligne = ServStrategique_Model_Ligne::getLigne($id);
 
         //si la ligne n'existe pas
-        if (is_null($ligne)){
+        if (is_null($ligne)) {
             $session->message = "Erreur : la ligne n'existe pas !";
             $session->redirection = '/ServStrategique/gestvol';
             $this->_redirect('/redirection/fail');
@@ -173,7 +174,6 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
             $session->redirection = '/ServStrategique/gestvol';
             $this->_redirect('/redirection/fail');
         }
-
     }
 
 }

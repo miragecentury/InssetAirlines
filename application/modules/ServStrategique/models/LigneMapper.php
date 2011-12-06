@@ -11,6 +11,7 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
             ->set_semaines($row->semaines)
             ->set_mois($row->mois)
             ->set_annees($row->annees)
+            ->set_etat($row->etat)
             ->set_noAeroportDeco($row->noAeroportDeco)
             ->set_noAeroportAtte($row->noAeroportAtte);
 
@@ -31,7 +32,8 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
               ->get_annees(),
              */
             'noAeroportDeco' => $item->get_noAeroportDeco(),
-            'noAeroportAtte' => $item->get_noAeroportAtte()
+            'noAeroportAtte' => $item->get_noAeroportAtte(),
+            'etat' => $item->get_etat()
         );
     }
 
