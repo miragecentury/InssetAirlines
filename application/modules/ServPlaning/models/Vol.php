@@ -1,6 +1,7 @@
 <?php
 
-class ServPlaning_Model_Vol {
+class ServPlaning_Model_Vol
+{
 
     //--------------------------------------------------------------------------
     //Attributs
@@ -64,7 +65,8 @@ class ServPlaning_Model_Vol {
      * return void
      * @author charles
      */
-    public function __construct() {
+    public function __construct()
+    {
         self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
     }
 
@@ -78,7 +80,8 @@ class ServPlaning_Model_Vol {
      * @access public
      *
      */
-    public function addVol() {
+    public function addVol()
+    {
         self::$_mapper->save($this, 'noVol');
     }
 
@@ -90,11 +93,12 @@ class ServPlaning_Model_Vol {
      * @param string $noVol
      *
      */
-    public function delVol($noVol) {
+    public function delVol($noVol)
+    {
         try {
             self::$_mapper->delete('noVol', $noVol);
         } catch (Zend_Exception $e) {
-            echo 'ServPlaning_Models_Vol_delVol() 
+            echo 'ServPlaning_Models_Vol_delVol()
                 Exception - ' .
             $e->getMessage() . ' - ' . $e->getPrevious();
         }
@@ -102,13 +106,14 @@ class ServPlaning_Model_Vol {
 
     /**
      * Retourne un Vol sous forme de tableau HTML
-     * 
+     *
      * @access public
      * @author charles
      * @return string
-     *  
+     *
      */
-    public function getVolHTML() {
+    public function getVolHTML()
+    {
         $Aero = "<table class='grid_16'>
                 <tr bgcolor='#CCCCCC'>
                     <td class='grid_3'>Id</td>
@@ -149,27 +154,29 @@ class ServPlaning_Model_Vol {
     /**
      * Retourne un vol a partir de son noVol.
      * S'il n'existe pas, retourne null.
-     * 
+     *
      * @access public
      * @author charles
      * @param int $noVol
      * @return null|ServPlaning_Model_Vol
-     *  
+     *
      */
-    public function getVol($noVol) {
+    public function getVol($noVol)
+    {
         self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
         return self::$_mapper->find($noVol);
     }
 
     /**
      * Retourne tous les vols, null si il n'y en as pas dans la BD
-     * 
+     *
      * @access public
      * @author charles
      * @return null|array(Application_Model_Vol)
-     *  
+     *
      */
-    public static function getListeVol() {
+    public static function getListeVol()
+    {
         self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
         try {
             return self::$_mapper->findAll();
@@ -181,14 +188,15 @@ class ServPlaning_Model_Vol {
     /**
      * Retourne tous les vol sous forme de select, retourne un select vide si
      * il n'y en a pas
-     * 
+     *
      * @access public
      * @author charles
      * @param string $name, string $label
      * @return Zend_Form_Element_Select
-     *  
+     *
      */
-    public static function getSelectVol($name, $label) {
+    public static function getSelectVol($name, $label)
+    {
         try {
             $Vols = ServPlaning_Model_Vol::getListeVol();
             $noVol = new Zend_Form_Element_Select($name);
@@ -203,12 +211,14 @@ class ServPlaning_Model_Vol {
         }
     }
 
-    public static function getVolsByAvion($noAvion) {
+    public static function getVolsByAvion($noAvion)
+    {
         self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
         return self::$_mapper->getVolsByAvion($noAvion);
     }
 
-    public static function IsEnVolByAvionOnCurrentTime($noAvion) {
+    public static function IsEnVolByAvionOnCurrentTime($noAvion)
+    {
         self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
         $vols = self::$_mapper->getVolsByAvionOnCurrentTime($noAvion);
         //echo 'Nombre de Vol en cours ' . count($vols) . '<br/>';
@@ -219,26 +229,28 @@ class ServPlaning_Model_Vol {
         }
     }
 
-    public static function getVolByAvionOnCurrentTime($noAvion) {
+    public static function getVolByAvionOnCurrentTime($noAvion)
+    {
         self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
         $vols = self::$_mapper->getVolsByAvionOnCurrentTime($noAvion);
-        if(count($vols) == 1){
+        if (count($vols) == 1) {
             return $vols[0];
-        }else{
+        } else {
             return FALSE;
         }
     }
 
     /**
-     * Retourne tous les vols sous forme de tableau html, 
+     * Retourne tous les vols sous forme de tableau html,
      * retourne une phrase disant qu'il n'y en a pas dans la bd si c'est le cas
-     * 
+     *
      * @access public
      * @author charles
      * @return string
-     *  
+     *
      */
-    public static function getListeVolHTML() {
+    public static function getListeVolHTML()
+    {
         $all = ServPlaning_Model_Vol::getListeVol();
         $color = true;
 
@@ -282,15 +294,16 @@ class ServPlaning_Model_Vol {
     }
 
     /**
-     * Retourne tous les vols sous forme de tableau html, 
+     * Retourne tous les vols sous forme de tableau html,
      * retourne une phrase disant qu'il n'y en a pas dans la bd si c'est le cas
-     * 
+     *
      * @access public
      * @author charles
      * @return string
-     *  
+     *
      */
-    public static function getListeVolUser() {
+    public static function getListeVolUser()
+    {
         $all = ServPlaning_Model_Vol::getListeVol();
         $color = true;
 
@@ -329,77 +342,170 @@ class ServPlaning_Model_Vol {
         return $tableau;
     }
 
+    public static function getSemaineAheadFromCurrent($nbrSemaine)
+    {
+        $date = new DateTime(date(DATE_ATOM));
+        $date->modify('Monday this week');
+        if (is_int($nbrSemaine) && $nbrSemaine <= 4 && $nbrSemaine > 0) {
+            $semaine = '+' . $nbrSemaine . ' week';
+            $date->modify($semaine);
+        } else if ($nbrSemaine == 0) {
+
+        } else {
+            return null;
+        }
+        $date->setTime(0, 0, 0);
+        return $date->format(DATE_ATOM);
+    }
+
+    public static function getJourFromWeek($weekDate, $jour)
+    {
+        if ($weekDate instanceof DateTime) {
+            $date = $weekDate;
+        }
+        else if(is_string($weekDate)){
+            $date =  new DateTime($weekDate);
+        } else {
+            return null;
+        }
+
+        switch ($jour) {
+            case 1:
+                return $date->format(DATE_ATOM);
+            case 2:
+                $date->modify('tuesday');
+                return $date->format(DATE_ATOM);
+            case 3:
+                $date->modify('wednesday');
+                return $date->format(DATE_ATOM);
+            case 4:
+                $date->modify('thursday');
+                return $date->format(DATE_ATOM);
+            case 5:
+                $date->modify('friday');
+                return $date->format(DATE_ATOM);
+            case 6:
+                $date->modify('saturday');
+                return $date->format(DATE_ATOM);
+            case 7:
+                $date->modify('sunday');
+                return $date->format(DATE_ATOM);
+            default:
+                return null;
+        }
+    }
+    public static function getMoisFromWeek($weekDate){
+        if ($weekDate instanceof DateTime) {
+            $date = $weekDate;
+        }
+        else if(is_string($weekDate)){
+            $date =  new DateTime($weekDate);
+        } else {
+            return null;
+        }
+        $date->modify('first day of this month');
+        return $date->format(DATE_ATOM);
+    }
+    public static function getAnneeFromWeek($weekDate){
+        if ($weekDate instanceof DateTime) {
+            $date = $weekDate;
+        }
+        else if(is_string($weekDate)){
+            $date =  new DateTime($weekDate);
+        } else {
+            return null;
+        }
+        $date->setDate($date->format('Y'), 1, 1);
+        return $date->format(DATE_ATOM);
+    }
+
     //--------------------------------------------------------------------------
     // Getter / setter
     //--------------------------------------------------------------------------
-    public function get_noVol() {
+    public function get_noVol()
+    {
         return $this->_noVol;
     }
 
-    public function set_noVol($_noVol) {
+    public function set_noVol($_noVol)
+    {
         $this->_noVol = $_noVol;
         return $this;
     }
 
-    public function get_labelvol() {
+    public function get_labelvol()
+    {
         return $this->_labelvol;
     }
 
-    public function set_labelvol($_labelvol) {
+    public function set_labelvol($_labelvol)
+    {
         $this->_labelvol = $_labelvol;
         return $this;
     }
 
-    public function get_noAeroportAtte() {
+    public function get_noAeroportAtte()
+    {
         return $this->_noAeroportAtte;
     }
 
-    public function set_noAeroportAtte($_labelAeroportAtte) {
+    public function set_noAeroportAtte($_labelAeroportAtte)
+    {
         $this->_noAeroportAtte = $_labelAeroportAtte;
         return $this;
     }
 
-    public function get_noAeroportDeco() {
+    public function get_noAeroportDeco()
+    {
         return $this->_noAeroportDeco;
     }
 
-    public function set_noAeroportDeco($_labelAeroportDeco) {
+    public function set_noAeroportDeco($_labelAeroportDeco)
+    {
         $this->_noAeroportDeco = $_labelAeroportDeco;
         return $this;
     }
 
-    public function get_noAvion() {
+    public function get_noAvion()
+    {
         return $this->_noAvion;
     }
 
-    public function set_noAvion($_noAvion) {
+    public function set_noAvion($_noAvion)
+    {
         $this->_noAvion = $_noAvion;
         return $this;
     }
 
-    public function get_noLigne() {
+    public function get_noLigne()
+    {
         return $this->_noLigne;
     }
 
-    public function set_noLigne($_noLigne) {
+    public function set_noLigne($_noLigne)
+    {
         $this->_noLigne = $_noLigne;
         return $this;
     }
 
-    public function get_heuredecollage() {
+    public function get_heuredecollage()
+    {
         return $this->_heuredecollage;
     }
 
-    public function set_heuredecollage($_heuredecollage) {
+    public function set_heuredecollage($_heuredecollage)
+    {
         $this->_heuredecollage = $_heuredecollage;
         return $this;
     }
 
-    public function get_heureAtterissage() {
+    public function get_heureAtterissage()
+    {
         return $this->_heureAtterissage;
     }
 
-    public function set_heureAtterissage($_heureAtterissage) {
+    public function set_heureAtterissage($_heureAtterissage)
+    {
         $this->_heureAtterissage = $_heureAtterissage;
         return $this;
     }
