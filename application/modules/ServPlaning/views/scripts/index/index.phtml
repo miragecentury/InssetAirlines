@@ -14,4 +14,16 @@
             <a href="/ServPlaning/Modifplaning" class="enSavoirPlus">Modification du planing</a>
         </li>
     </ul>
+    <table>
+            <?php
+            foreach ($this->listeMembres as $membre){
+                echo "<tr><td>";
+                    echo $membre->get_noPersonne();
+                echo "</td></tr>";
+            }
+            ?>
+    </table>
+    <?php
+    echo $this->listeMembres;
+    ?>
 </div>

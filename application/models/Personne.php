@@ -156,7 +156,7 @@ class Application_Model_Personne
     {
         $mapper = Spesx_Mapper_MapperFactory::getMapper('Application_Model_Personne');
         try {
-            $return = $mapper->fetchAll();
+            $return = $mapper->findAll();
         } catch (Spesx_Mapper_Exception $e) {
             Spesx_Log::Log(
                 $e->getMessage() . $e->getPrevious()->getMessage(), Zend_Log::ERR);
