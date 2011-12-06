@@ -14,7 +14,6 @@ class ServMaintenance_Model_Modele {
 
     public static function GetItemFromRaw($raw) {
         self::initialisation();
-        var_dump($raw);
         if (
                 isset($raw['dateLancement']) && isset($raw['distMinAtt']) && isset($raw['distMinDec']) &&
                 isset($raw['label']) && isset($raw['noConstructeur']) &&

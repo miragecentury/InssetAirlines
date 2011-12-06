@@ -35,7 +35,30 @@ class ServMaintenance_GestappareilController extends Zend_Controller_Action {
     }
 
     public function newappareilAction() {
-        
+
+        $formAdd = new ServMaintenance_Form_Avion_Ajout();
+
+        if (isset($_POST) && !empty($_POST) && $formAdd->isValid($_POST)) {
+            $modele = ServMaintenance_Model_Modele::findOne($_POST['noModele']);
+            if ($modele instanceof ServMaintenance_MOdele_Modele) {
+                if($_POST['nbMaxPlace'] > $modele->get_nbPlaceMax()){
+                    //ok ready to save
+                    $avion = ServMaintenance_Model_Avion::getItemFromRaw($_POST);
+                    if($avion instanceof ServMaintenance_Model_Avion){
+                        //$avion->save();
+                    }else{
+                        //echec
+                    }
+                    
+                }else{
+                    //echec
+                }
+            } else {
+                //echec
+            }
+        } else {
+            $this->view->form = $formAdd;
+        }
     }
 
     public function updappareilAction() {
