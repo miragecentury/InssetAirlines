@@ -1,4 +1,28 @@
 <h1>Gestion des Commande </h1>
-<?php echo $this->all;?>
-<a href='/ServLogCom/Commandenourriture/new'>Ajouter</a><br/>
-<a href='/ServLogCom/Commandenourriture'>Retour</a>
+<?php
+if ($this->all) {
+    echo "<table>
+            <tr>
+                <th>Id</th>
+                <th>Date de livraison</th>
+                <th>Date de commande</th>
+                <th>Aeroport de livraison</th>
+            </tr>";
+    foreach ($this->all as $val) {
+        echo "<tr>
+                <td>" . $val->get_noCommandeNourriture() . "</td>
+                <td>" . $val->get_dateLivraison() . "</td>
+                <td>" . $val->get_dateCommande() . "</td>
+                <td>" . $val->get_labelAeroportLivraison() . "</td>
+                <td><a class='enSavoirPlus' href='/ServLogCom/Commandenourriture/detail?id=" . $val->get_noCommandeNourriture() . "'>Detail</a></td>
+                <td><a class='enSavoirPlus' href='/ServLogCom/Commandenourriture/upd?id=" . $val->get_noCommandeNourriture() . "'>Modifier</a></td>
+                <td><a class='enSavoirPlus' href='/ServLogCom/Commandenourriture/del?id=" . $val->get_noCommandeNourriture() . "'>Supprimer</a></td>
+              </tr>";
+    }
+    echo "</table>";
+} else {
+    echo "<div>Il n'y a pas de commande dans la base de donnée</div>";
+}
+echo "<a class='enSavoirPlus' href='/ServLogCom/Commandenourriture'>Retour</a>
+    <a class='enSavoirPlus' href='/ServLogCom/Commandenourriture/new'>Ajouter</a><br/>";
+?>

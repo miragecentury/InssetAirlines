@@ -127,47 +127,6 @@ class ServLogCom_Model_RegimeAlimentaire
         return $return;
     }
 
-    /**
-     * Retourne tous les regimeAlimentaire sous forme de tableau html, 
-     * retourne une phrase disant qu'il n'y en a pas dans la bd si c'est le cas
-     * 
-     * @access public
-     * @author charles
-     * @return string
-     *  
-     */
-    public static function getListeRegimeAlimentaireHTML()
-    {
-        $color = true;
-        $allRA = ServLogCom_Model_RegimeAlimentaire::getListeRegimeAlimentaire();
-
-        if (!empty($allRA)) {
-            $tableau = "<table class='grid_16'>
-                        <tr>
-                            <td class='grid_1'>Id</td>
-                            <td class='grid_2'>Label</td>
-                            <td class='grid_2'></td>
-                            <td class='grid_2'></td>
-                        </tr>";
-
-            foreach ($allRA as $val) {
-                if ($color) {
-                    $tableau .= "<tr bgcolor='#CCCCCC'>";
-                }
-                $color = !$color;
-                $tableau .= "   <td class='grid_1'>" . $val->get_noRegimeAlimentaire() . "</td>
-                                <td class='grid_2'>" . $val->get_labelRegimeAlimentaire() . "</td>
-                                <td class='grid_2'><a href='/ServLogCom/Regimealimentaire/upd?id=" . $val->get_noRegimeAlimentaire() . "'>Modifier</a></td>
-                                <td class='grid_2'><a href='/ServLogCom/Regimealimentaire/del?id=" . $val->get_noRegimeAlimentaire() . "'>Supprimer</a></td>
-                            </tr>";
-            }
-            $tableau .= "</table>";
-        } else {
-            $tableau = "<div>Il n'y a pas de Regime Alimentaire dans la base de donnée</div>";
-        }
-        return $tableau;
-    }
-
     //--------------------------------------------------------------------------
     // Getter / setter
     //--------------------------------------------------------------------------

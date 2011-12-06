@@ -86,29 +86,6 @@ class ServLogCom_Model_Menu
     }
 
     /**
-     * Retourne un Menu sous forme de tableau HTML
-     * 
-     * @access public
-     * @author charles
-     * @return string
-     *  
-     */
-    public function getMenuHTML()
-    {
-        $html = "<table class='grid_16'>
-                <tr bgcolor='#CCCCCC'>
-                    <td class='grid_3'>Id</td>
-                    <td class='grid_3'>" . $this->get_idMenu() . "</td>
-                </tr>
-                <tr>
-                    <td class='grid_3'>Label</td>
-                    <td class='grid_3'>" . $this->get_labelMenu() . "</td>
-                </tr>
-            </table>";
-        return $html;
-    }
-
-    /**
      * Retourne tout les menus, null si il n'y en as pas dans la BD
      * 
      * @access public
@@ -124,47 +101,6 @@ class ServLogCom_Model_Menu
         } catch (Spesx_Mapper_Exception $e) {
             echo $e->getMessage() . " - " . $e->getPrevious()->getMessage();
         }
-    }
-
-    /**
-     * Retourne tous les menus sous forme de tableau html, 
-     * retourne une phrase disant qu'il n'y en a pas dans la bd si c'est le cas
-     * 
-     * @access public
-     * @author charles
-     * @return string
-     *  
-     */
-    public static function getListeMenuHTML()
-    {
-        $color = true;
-        $allMenu = ServLogCom_Model_Menu::getListeMenu();
-
-        if (!empty($allMenu)) {
-            $tableau = "<table class='grid_16'>
-                        <tr>
-                            <td class='grid_1'>Id</td>
-                            <td class='grid_2'>Label</td>
-                            <td class='grid_2'></td>
-                            <td class='grid_2'></td>
-                        </tr>";
-
-            foreach ($allMenu as $val) {
-                if ($color) {
-                    $tableau .= "<tr bgcolor='#CCCCCC'>";
-                }
-                $color = !$color;
-                $tableau .= "   <td class='grid_1'>" . $val->get_idMenu() . "</td>
-                                <td class='grid_2'>" . $val->get_labelMenu() . "</td>
-                                <td class='grid_2'><a href='/ServLogCom/Menu/upd?id=" . $val->get_idMenu() . "'>Modifier</a></td>
-                                <td class='grid_2'><a href='/ServLogCom/Menu/del?id=" . $val->get_idMenu() . "'>Supprimer</a></td>
-                            </tr>";
-            }
-            $tableau .= "</table>";
-        } else {
-            $tableau = "<div>Il n'y a pas de menu dans la base de donnée</div>";
-        }
-        return $tableau;
     }
 
     //--------------------------------------------------------------------------

@@ -7,9 +7,6 @@ if ($this->all) {
                 <th>Label</th>
                 <th>Ville</th>
                 <th>Pays</th>
-                <th></th>
-                <th></th>
-                <th></th>
             </tr>";
     foreach ($this->all as $val) {
         echo "<tr>
@@ -17,9 +14,8 @@ if ($this->all) {
                 <td>" . $val->get_labelAeroport() . "</td>
                 <td>" . $val->get_labelVille() . "</td>
                 <td>" . $val->get_labelPays() . "</td>
-                <td><a href='/Aeroport/detail?id=" . $val->get_noAeroport() . "'>Détail</a></td>
-                <td><a href='/Aeroport/upd?id=" . $val->get_noAeroport() . "'>Modifier</a></td>
-                <td><a href='/Aeroport/del?id=" . $val->get_noAeroport() . "'>Supprimer</a></td>
+                <td><a class='enSavoirPlus' href='/Aeroport/detail?id=" . $val->get_noAeroport() . "'>Détail</a></td>
+                <td><a class='enSavoirPlus' href='/Aeroport/upd?id=" . $val->get_noAeroport() . "'>Modifier</a></td>
             </tr>";
     }
     echo "</table>";

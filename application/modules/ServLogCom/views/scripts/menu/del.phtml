@@ -1,5 +1,21 @@
 <h1>Voulez vous vraiment suprimer ce Menu?</h1>
-<?php echo $this->item; ?>
 
-<div><a href='/ServLogCom/Menu/'>Non </a>
-    <a href='/ServLogCom/Menu/del?ok=ok&id=<?php echo $this->id; ?>'>Oui</a></div>
+<?php
+if ($this->item) {
+    echo "<table>
+                <tr>
+                    <td>Id</td>
+                    <td>" . $this->item->get_idMenu() . "</td>
+                </tr>
+                <tr>
+                    <td>Label</td>
+                    <td>" . $this->item->get_labelMenu() . "</td>
+                </tr>
+            </table>";
+
+    echo "<div><a class='enSavoirPlus' href='/ServLogCom/Menu/admin'>Non </a>
+          <a class='enSavoirPlus' href='/ServLogCom/Menu/del?ok=ok&id=" . $this->id . "'>Oui</a></div>";
+} else {
+    echo "Cette Agence n'existe pas dans la base de donnée!<br/><br/>
+        <div><a class='enSavoirPlus' href='/ServLogCom/Menu/admin'>Retour </a>";
+}

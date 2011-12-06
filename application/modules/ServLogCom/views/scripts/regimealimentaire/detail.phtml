@@ -1,0 +1,23 @@
+<h1>Regime Alimentaire N°<?php echo $this->id; ?></h1>
+<?php
+if ($this->item) {
+    echo "<table>
+                <tr>
+                    <td>Id</td>
+                    <td>" . $this->item->get_noRegimeAlimentaire() . "</td>
+                </tr>
+                <tr>
+                    <td>Label</td>
+                    <td>" . $this->item->get_labelRegimeAlimentaire() . "</td>
+                </tr>
+            </table>";
+    
+    echo "<a class='enSavoirPlus' href='/ServLogCom/Regimealimentaire/upd?id=". $this->id ."'>Modifier</a>
+          <a class='enSavoirPlus' href='/ServLogCom/Regimealimentaire/del?id=". $this->id ."'>Supprimer</a>
+          <a class='enSavoirPlus' href='/ServLogCom/Regimealimentaire/admin'>Retour</a>";
+} else {
+    echo "Ce Regime Alimentaire n'existe pas dans la base de donnée! <br/><br/>
+        <a class='enSavoirPlus' href='/ServLogCom/Regimealimentaire/admin'>Retour</a>";
+}
+
+?>

@@ -1,0 +1,23 @@
+<h1>Menu N°<?php echo $this->id; ?></h1>
+<?php
+if ($this->item) {
+    echo "<table>
+                <tr>
+                    <td>Id</td>
+                    <td>" . $this->item->get_idMenu() . "</td>
+                </tr>
+                <tr>
+                    <td>Label</td>
+                    <td>" . $this->item->get_labelMenu() . "</td>
+                </tr>
+            </table>";
+    
+    echo "<a class='enSavoirPlus' href='/ServLogCom/Menu/upd?id=". $this->id ."'>Modifier</a>
+          <a class='enSavoirPlus' href='/ServLogCom/Menu/del?id=". $this->id ."'>Supprimer</a>
+          <a class='enSavoirPlus' href='/ServLogCom/Menu/admin'>Retour</a>";
+} else {
+    echo "Ce Menu n'existe pas dans la base de donnée! <br/><br/>
+        <a class='enSavoirPlus' href='/ServLogCom/Menu/admin'>Retour</a>";
+}
+
+?>
