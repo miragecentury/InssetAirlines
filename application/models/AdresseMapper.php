@@ -17,7 +17,7 @@ class Application_Model_AdresseMapper extends Spesx_Mapper_Mapper
                 ->set_etatProvince($row->etatProvince)
                 ->set_labelVille($row->labelVille)
                 ->set_labelPays($row->labelPays)
-                ->set_noPersonne($row->noPersonne)
+                //->set_noPersonne($row->noPersonne)
         ;
         return $item;
     }
@@ -36,7 +36,7 @@ class Application_Model_AdresseMapper extends Spesx_Mapper_Mapper
             'etatProvince' => $item->get_etatProvince(),
             'labelVille' => $item->get_labelVille(),
             'labelPays' => $item->get_labelPays(),
-            'noPersonne' => $item->get_noPersonne(),
+            //'noPersonne' => $item->get_noPersonne(),
         );
     }
     

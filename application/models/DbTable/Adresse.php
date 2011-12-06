@@ -14,12 +14,12 @@ class Application_Model_DbTable_Adresse extends Zend_Db_Table_Abstract {
             'Columns' => 'labelVille',
             'refTableClass' => 'Ville',
             'refColumns' => 'labelVille',
-        ),
+        )/*,
         'fkPersonne' => array(
             'Columns' => 'noPersonne',
             'refTableClass' => 'Personne',
             'refColumns' => 'noPersonne',
-        )
+        )*/
     );
 }
 ?>

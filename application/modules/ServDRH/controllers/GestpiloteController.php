@@ -54,24 +54,6 @@ class ServDRH_GestpiloteController extends Zend_Controller_Action {
                     $personne = $personne->getPersonneByNoInsee($this->getRequest()->getParam('noINSEE'));                     
 
                     if ($personne->get_noPersonne() == null) {
-                        //enregiste la personne 
-                        $personne->set_nom($this->getRequest()->getParam('nom'));
-                        $personne->set_prenom($this->getRequest()->getParam('prenom'));
-                        $personne->set_prenom2($this->getRequest()->getParam('prenom2'));
-                        $personne->set_prenom3($this->getRequest()->getParam('prenom3'));
-                        $personne->set_dateNaissance($this->getRequest()->getParam('dateNaissance'));
-                        $personne->set_noINSEE($this->getRequest()->getParam('noINSEE'));
-                        $personne->set_labelPays($this->getRequest()->getParam('pays'));
-                        $personne->set_role($this->getRequest()->getParam('role'));
-                        $personne->set_password($this->getRequest()->getParam('password'));
-                        $personne->set_password_salt($this->getRequest()->getParam('passwordConfirm'));
-                        $personne->set_email($this->getRequest()->getParam('email'));                                       
-                        $personne->savePersonneById('');
-                        
-                        //Récupère la personne que l'on vient d'enregistrer
-                        $personne = $personne->getPersonneByNoInsee(
-                            $this->getRequest()->getParam('noINSEE'));
-                        
                         //Enregistre l'adresse saisie lors de l'ajout d'une
                         //nouvelle personne
                         $adresse->set_numero($this->getRequest()->getParam('numero'));
@@ -83,14 +65,35 @@ class ServDRH_GestpiloteController extends Zend_Controller_Action {
                         $adresse->set_etatProvince($this->getRequest()->getParam('etatProvince'));
                         $adresse->set_labelVille($this->getRequest()->getParam('ville'));
                         $adresse->set_labelPays($this->getRequest()->getParam('pays'));
-                        $adresse->set_noPersonne($personne->get_noPersonne());
-                        $adresse->addAdresse();
+                        //$adresse->set_noPersonne($personne->get_noPersonne());
+                        $noAdresse = $adresse->addAdresse();
                         
-                        $adresse = $adresse->getAdresseByNoPersonne($personne->get_noPersonne());
+                        
+                        //$adresse = $adresse->getAdresseByNoPersonne($personne->get_noPersonne());
+                        
+                        //enregiste la personne 
+                        $personne->set_nom($this->getRequest()->getParam('nom'));
+                        $personne->set_prenom($this->getRequest()->getParam('prenom'));
+                        $personne->set_prenom2($this->getRequest()->getParam('prenom2'));
+                        $personne->set_prenom3($this->getRequest()->getParam('prenom3'));
+                        $personne->set_dateNaissance($this->getRequest()->getParam('dateNaissance'));
+                        $personne->set_noINSEE($this->getRequest()->getParam('noINSEE'));
+                        $personne->set_noAdresse($noAdresse);
+                        $personne->set_labelPays($this->getRequest()->getParam('pays'));
+                        $personne->set_role($this->getRequest()->getParam('role'));
+                        $personne->set_password($this->getRequest()->getParam('password'));
+                        $personne->set_password_salt($this->getRequest()->getParam('passwordConfirm'));
+                        $personne->set_email($this->getRequest()->getParam('email'));                                       
+                        $personne->savePersonneById('');
+                        
+                        //Récupère la personne que l'on vient d'enregistrer
+                        $personne = $personne->getPersonneByNoInsee(
+                            $this->getRequest()->getParam('noINSEE'));
+                                                           
                         
                         //Modifie la personne que l'on souhaite ajouter
                         //pour lui affecter l'adresse saisie
-                        $personne->set_noAdresse($adresse->get_noAdresse());     
+                        $personne->set_noAdresse($noAdresse);     
                         $personne->savePersonneById('');
 
                         //Si la personne est un employé (Pilote, etc.)

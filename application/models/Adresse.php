@@ -80,7 +80,7 @@ class Application_Model_Adresse
      * cle vers la personne
      * @var int
      */
-    protected $_noPersonne;
+   // protected $_noPersonne;
 
     /**
      * Mapper de l'objet
@@ -112,11 +112,12 @@ class Application_Model_Adresse
     public function addAdresse()
     {
         try {
-            $this->_mapper->save($this, 'noAdresse');
+            $return = $this->_mapper->save($this, 'noAdresse');
         } catch (Spesx_Mapper_Exception $e) {
             Spesx_Log::Log(
                 $e->getMessage() . $e->getPrevious()->getMessage(), Zend_Log::ERR);
         }
+        return $return;
     }
 
     /**
@@ -148,7 +149,7 @@ class Application_Model_Adresse
      * @param int $noPersonne
      * @return null|Application_Model_adresse
      */
-    /*public static function getAdresseByNoPersonne($noPersonne)
+   /* public static function getAdresseByNoPersonne($noPersonne)
     {
         try {
             $mapper = Spesx_Mapper_MapperFactory::getMapper('Application_Model_Adresse');
@@ -283,10 +284,10 @@ class Application_Model_Adresse
         return $this;
     }
     
-    public function get_noPersonne()
+    /*public function get_noPersonne()
     {
         return $this->_noPersonne;
-    }
+    }*/
 
     public function set_noPersonne($_noPersonne)
     {
