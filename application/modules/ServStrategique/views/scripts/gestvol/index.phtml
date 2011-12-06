@@ -6,11 +6,12 @@
 <div class="prefix_1 grid_15">
     <table class="sep">
         <tr>
-            <th style='min-width:200px;'>Ligne</th>
+            <th style='min-width:150px;'>Ligne</th>
             <th>Vol par jour</th>
             <th>Vol par semaine</th>
             <th>Vol par mois</th>
             <th>Vol par année</th>
+            <th>Etat de la ligne</th>
         </tr>
     <?php
         foreach ($this->lignes as $ligne){
@@ -35,12 +36,14 @@
                 echo "<td>" . $ligne->get_semaines() . "</td>";
                 echo "<td>" . $ligne->get_mois() . "</td>";
                 echo "<td>" . $ligne->get_annees() . "</td>";
+                echo "<td>" . $ligne->getStatusLigne() . "</td>";
                 echo "<td><a href='/ServStrategique/gestvol/updvol/id/" .
                     $ligne->get_noLigne() .
                     "' class='enSavoirPlus'>Modifier</a></td>";
                 echo "<td><a href='/ServStrategique/gestvol/delvol/id/" .
                     $ligne->get_noLigne() .
                     "' class='enSavoirPlus'>Supprimer</a></td>";
+
             echo "</tr>";
         }
     ?>

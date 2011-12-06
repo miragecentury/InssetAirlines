@@ -1,0 +1,5 @@
+ALTER TABLE `Ligne` ADD `etat` INT( 2 ) UNSIGNED NOT NULL ,
+ADD INDEX ( `etat` )
+
+ALTER TABLE `Vol` ADD `etat` INT( 2 ) UNSIGNED NOT NULL ,
+ADD INDEX ( `etat` ) 

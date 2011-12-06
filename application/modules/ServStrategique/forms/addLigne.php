@@ -27,6 +27,18 @@ class ServStrategique_Form_addLigne extends Zend_Form
         ->addMultiOptions($listeAero);
     $this->addElement($aeroAtt);
 
+    //2.34 Element..
+    $arrayEtat = array(ServStrategique_Model_Ligne::ETAT_ETUDE => 'En étude',
+        ServStrategique_Model_Ligne::ETAT_EN_VALIDATION => 'En attente de validation',
+        ServStrategique_Model_Ligne::ETAT_ACTIVE => 'Active',
+        ServStrategique_Model_Ligne::ETAT_INACTIVE => 'Inactive');
+
+    $etat = new Zend_Form_Element_Select('etat');
+    $etat->setLabel('Etat de la ligne')
+        ->setRequired(true)
+        ->addMultiOptions($arrayEtat);
+    $this->addElement($etat);
+
     //3e ..
     $jour = new Zend_Form_Element_Text('jour');
     $jour->setLabel('Nbr de Vol par jour : ')
