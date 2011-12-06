@@ -1,7 +1,18 @@
-<?php
-if(isset($this->newForm)){echo $this->newForm;}
+<div>
+    <h1 style='display: inline;'>Service Maintenance - </h1>
+    <h3 style='display: inline;'>Gestion des Constructeurs - </h3>
+    <h5 style='display: inline;'>Ajout d'un Constructeur</h5>
+    </br></br></br>
 
-echo $this->message;
-?>
-<br/>
-<a href='<?php $this->baseUrl(); ?>/ServMaintenance/'>Retour</a>
+    <h6>
+    <?php echo $this->message; ?>
+    </h6>
+        
+    <?php
+    if (isset($this->newForm)) {
+        echo $this->newForm;
+    }
+    ?>
+    <br/>
+
+</div>

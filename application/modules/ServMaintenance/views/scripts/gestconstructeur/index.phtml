@@ -1,10 +1,34 @@
 <div>
-    <p>Service Maintenance:AfficherLesConstructeurs:</p>
-    <ul>
-        <li><a href='<?php $this->baseUrl(); ?>/ServMaintenance/'>Retour</a></li>
-        <li><a href='<?php $this->baseUrl(); ?>/ServMaintenance/Gestconstructeur/newconstructeur'>Ajouter un Constructeur</a></li>
-    </ul>
-</div>
-<div>
-    <?php echo $this->html_liste; ?>
+    <h1 style='display: inline;'>Service Maintenance - </h1><h3 style='display: inline;'>Gestion des Constructeurs</h3>
+    </br></br></br>
+    <table>
+        <tr>
+            <th >Id</td>
+            <th >Nom Constructeur</td>
+            <th>Adresse</td>
+            <td></td>
+        </tr>
+
+        <?php
+        if (isset($this->lstConstructeur) && is_array($this->lstConstructeur)) {
+            foreach ($this->lstConstructeur as $value) {
+                echo '
+                <tr>
+                    <td>' . $value->get_noConstructeur() . '</td>
+                    <td>' . $value->get_label() . '</td>';
+                $adresse = Application_Model_Adresse::getAdresse($value->get_noAdresse());
+                echo'
+                    <td>' . $adresse->get_numero() .' '. $adresse->get_adresse()." ".$adresse->get_codepostal() .' '. $adresse->get_labelVille().' '. $adresse->get_etatProvince().' '. $adresse->get_labelPays() . '</td>
+                    <td><a class="enSavoirPlus" href="' . $this->baseUrl() . '/ServMaintenance/Gestconstructeur/delconstructeur/id/' . $value->get_noConstructeur() . '">Supprimer</a> </td>
+                </tr>';
+            }
+        }
+        ?>
+        </table>
+    <br/>
+    <table>
+        <tr>
+            <td><a class='enSavoirPlus' href='<?php $this->baseUrl(); ?>/ServMaintenance/Gestconstructeur/newconstructeur'>Ajouter un Constructeur</a></td>
+        </tr>
+    </table>
 </div>

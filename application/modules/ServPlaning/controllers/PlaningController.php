@@ -1,6 +1,6 @@
 <?php
 
-class ServPlaning_UserController extends Zend_Controller_Action
+class ServPlaning_PlaningController extends Zend_Controller_Action
 {
 
     public function init()
@@ -8,13 +8,13 @@ class ServPlaning_UserController extends Zend_Controller_Action
         $this->view->setLfiProtection(false);
         $this->view->render('../../../../views/scripts/user/_sidebar.phtml');
         $this->view->render('../../../../views/scripts/user/_login.phtml');
+        $this->view->render('../../../../views/scripts/user/_ServPlaningSidebar.phtml');
+
     }
 
     public function indexAction()
     {
-        $this->view->all = ServPlaning_Model_Vol::getListeVolUser();
-    }
 
-    
+    }
 }
 

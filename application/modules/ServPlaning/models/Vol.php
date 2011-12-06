@@ -57,7 +57,7 @@ class ServPlaning_Model_Vol {
      * Mapper de l'objet
      * @var ServPlaning_Model_VolMapper
      */
-    private $_mapper;
+    private static $_mapper;
 
     /**
      * Constructeur
@@ -65,7 +65,7 @@ class ServPlaning_Model_Vol {
      * @author charles
      */
     public function __construct() {
-        $this->_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
+        self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
     }
 
     //--------------------------------------------------------------------------
@@ -79,7 +79,7 @@ class ServPlaning_Model_Vol {
      *
      */
     public function addVol() {
-        $this->_mapper->save($this, 'noVol');
+        self::$_mapper->save($this, 'noVol');
     }
 
     /**
@@ -92,7 +92,7 @@ class ServPlaning_Model_Vol {
      */
     public function delVol($noVol) {
         try {
-            $this->_mapper->delete('noVol', $noVol);
+            self::$_mapper->delete('noVol', $noVol);
         } catch (Zend_Exception $e) {
             echo 'ServPlaning_Models_Vol_delVol() 
                 Exception - ' .
@@ -157,7 +157,8 @@ class ServPlaning_Model_Vol {
      *  
      */
     public function getVol($noVol) {
-        return $this->_mapper->find($noVol);
+        self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
+        return self::$_mapper->find($noVol);
     }
 
     /**
@@ -169,9 +170,9 @@ class ServPlaning_Model_Vol {
      *  
      */
     public static function getListeVol() {
-        $mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
+        self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
         try {
-            return $mapper->findAll();
+            return self::$_mapper->findAll();
         } catch (Spesx_Mapper_Exception $e) {
             echo $e->getMessage() . " - " . $e->getPrevious()->getMessage();
         }
@@ -202,8 +203,30 @@ class ServPlaning_Model_Vol {
         }
     }
 
-    public static function getVolByAvion($noAvion) {
-        
+    public static function getVolsByAvion($noAvion) {
+        self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
+        return self::$_mapper->getVolsByAvion($noAvion);
+    }
+
+    public static function IsEnVolByAvionOnCurrentTime($noAvion) {
+        self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
+        $vols = self::$_mapper->getVolsByAvionOnCurrentTime($noAvion);
+        //echo 'Nombre de Vol en cours ' . count($vols) . '<br/>';
+        if (count($vols) > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    public static function getVolByAvionOnCurrentTime($noAvion) {
+        self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
+        $vols = self::$_mapper->getVolsByAvionOnCurrentTime($noAvion);
+        if(count($vols) == 1){
+            return $vols[0];
+        }else{
+            return FALSE;
+        }
     }
 
     /**

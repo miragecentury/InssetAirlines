@@ -1,6 +1,10 @@
 <?php
 
 class ServMaintenance_Model_Avion {
+    /**
+     * Intervale entre de Vol ou Maintenance Obligatoire pour un avion
+     */
+    const IntervalTraitement = 10;
 
     protected $_noAvion;
     protected $_nbPlaceMax;
@@ -16,7 +20,11 @@ class ServMaintenance_Model_Avion {
 
     public static function initialisation() {
         if (self::$_mapper === null) {
-            self::$_mapper = Spesx_Mapper_MapperFactory::getMapper('ServMaintenance_Model_Avion');
+            if (($mapper = Spesx_Mapper_MapperFactory::getMapper('ServMaintenance_Model_Avion')) instanceof ServMaintenance_Model_AvionMapper) {
+                self::$_mapper = $mapper;
+            } else {
+                echo 'Boum!!';
+            }
         }
     }
 
@@ -28,6 +36,44 @@ class ServMaintenance_Model_Avion {
     public static function findAll() {
         self::initialisation();
         return self::$_mapper->findAll();
+    }
+
+    public static function findAllDispoAtInterDate($Start, $End) {
+
+        // Incorporation de l'intervale entre les Etat de l'avion
+        $Start = new DateTime($Start, NULL);
+        $End = new DateTime($End, NULL);
+
+        $Start->modify(' -' . self::IntervalTraitement . ' hour');
+        $End->modify('+' . self::IntervalTraitement . ' hour');
+        $Start = $Start->format(DATE_ATOM);
+        $End = $End->format(DATE_ATOM);
+
+
+        self::initialisation();
+        if (count(($array = self::$_mapper->findAllDispoAtInterDate($Start, $End))) == 0) {
+            return null;
+        } else {
+            return $array;
+        }
+    }
+
+    public static function findAllEnService() {
+        self::initialisation();
+        if (count(($array = self::$_mapper->findAllService(TRUE))) == 0) {
+            return null;
+        } else {
+            return $array;
+        }
+    }
+
+    public static function findAllHorsService() {
+        self::initialisation();
+        if (count(($array = self::$_mapper->findAllService(FALSE))) == 0) {
+            return null;
+        } else {
+            return $array;
+        }
     }
 
     public static function findAllByModele($noModele) {
@@ -42,6 +88,17 @@ class ServMaintenance_Model_Avion {
         } catch (Exception $e) {
             echo self::$message . $e->getMessage() . '<br/>';
             return FALSE;
+        }
+    }
+
+    public static function getItemFromRaw($Raw) {
+        if (is_array($Raw) &&
+                FALSe
+        ) {
+            $avion = new ServMaintenance_Model_Avion();
+            
+        } else {
+            return null;
         }
     }
 

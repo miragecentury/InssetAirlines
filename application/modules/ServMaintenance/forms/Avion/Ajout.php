@@ -28,9 +28,13 @@ class ServMaintenance_Form_Avion_Ajout extends Zend_Form {
 
         $nbHeureVol = new Zend_Form_Element_Text('nbHeureVol');
         $nbHeureVol->setRequired(TRUE);
-        $nbHeureVol->setLabel('Nomnre d\'heure de Vol :');
+        $nbHeureVol->setLabel('Nombre d\'heure de Vol :');
+        
+        //valeur comprise entre 0 et +
         $nbHeureVol->addValidator(new Zend_Validate_Int());
-        $nbHeureVol->addValidator(new Zend_Validate_GreaterThan(0));
+        $nbHeureVol->addValidator(new Zend_Validate_GreaterThan(-1));
+        
+        $nbHeureVol->setValue(0);
         
         $this->addElement($nbHeureVol);
 
@@ -40,6 +44,7 @@ class ServMaintenance_Form_Avion_Ajout extends Zend_Form {
         $dateMiseService->setRequired(TRUE);
         $dateMiseService->setLabel('Date de mise en Service :');
         $dateMiseService->addValidator(new Zend_Validate_Date(array('format' => 'yyyy-mm-dd')));
+        $dateMiseService->setValue(date(DATE_ATOM));
         
         $this->addElement($dateMiseService);
 
@@ -49,7 +54,8 @@ class ServMaintenance_Form_Avion_Ajout extends Zend_Form {
 
         $lst_modeles = array();
         foreach ($modeles as $value) {
-            $lst_modeles[$value->get_noModele()] = $value->get_label();
+            $constructeur = ServMaintenance_Model_Constructeur::FindOne($value->get_noConstructeur());
+            $lst_modeles[$value->get_noModele()] = $value->get_label().' - '.$constructeur->get_label();
         }
         
         $nomodele = new Zend_Form_Element_Select('noModele');
@@ -58,9 +64,14 @@ class ServMaintenance_Form_Avion_Ajout extends Zend_Form {
         $nomodele->addMultiOptions($lst_modeles);
         $nomodele->addValidator(new Zend_Validate_Int());
         
-        $this->addElement($modeles);
+        $this->addElement($nomodele);
 
         //**********************************************************************
+        $submit = new Zend_Form_Element_Submit('Submit');
+        $submit->setName('Ajouter');
+        
+        $this->addElement($submit);
+        
     }
 
     public function updateForm(ServMaintenance_Model_Avion $avion) {
@@ -82,6 +93,9 @@ class ServMaintenance_Form_Avion_Ajout extends Zend_Form {
         $nbPlaceMax->setValue($avion->get_nbPlaceMax());
         
         //**********************************************************************
+        
+        $submit = parent::getElement('submit');
+        $submit->setName('Modifier');
 
     }
 
