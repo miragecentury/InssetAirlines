@@ -21,34 +21,12 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        try {
-            $all = ServCommercial_Model_VolHasAgence::getListeReservationHTML(false);
-        } catch (Zend_Exception $e) {
-            Zend_Registry::get('Log')->log('ReservationController : index : Acces a la base de donnée impossible', Zend_Log::ALERT);
-            return FALSE;
-        }
-        if ($all != null)
-            $this->view->all = $all;
-        else
-            $this->view->all = "Erreur dans la base de donnée, 
-                veuillez contacter l'administrateur du site via le 
-                formulaire de contact.<br/>";
+        $this->view->all = ServCommercial_Model_VolHasAgence::getListeReservation();
     }
 
     public function adminAction()
     {
-        try {
-            $all = ServCommercial_Model_VolHasAgence::getListeReservationHTML();
-        } catch (Zend_Exception $e) {
-            Zend_Registry::get('Log')->log('ReservationController : index : Acces a la base de donnée impossible', Zend_Log::ALERT);
-            return FALSE;
-        }
-        if ($all != null)
-            $this->view->all = $all;
-        else
-            $this->view->all = "Erreur dans la base de donnée, 
-                veuillez contacter l'administrateur du site via le 
-                formulaire de contact.<br/>";
+        $this->view->all = ServCommercial_Model_VolHasAgence::getListeReservation();
     }
 
     public function newAction()
@@ -63,13 +41,11 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
                     ->set_nbReservation($form->getValue('nbReservation'))
                     ->set_enAttentedeTraitement($form->getValue('enAttentedeTraitement'))
                     ->set_valider($form->getValue('valider'));
-            try {
-                $item->addReservation();
-            } catch (Zend_Exception $e) {
-                Zend_Registry::get('Log')->log('ReservationController : new : Acces a la base de donnée impossible', Zend_Log::ALERT);
-                return FALSE;
-            }
-            $this->_redirect('ServCommercial/Reservation/admin');
+            $item->addReservation();
+            $session = new Zend_Session_Namespace('Redirect');
+            $session->message = "Ajout de l'agence réussi.";
+            $session->redirection = "/ServCommercial/Reservation/admin";
+            $this->_redirect('/redirection/success');
         }
     }
 
@@ -79,12 +55,7 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
         $item = new ServCommercial_Model_VolHasAgence();
         if (empty($_POST) || !$form->isValid($_POST)) {
             $id = $this->getRequest()->getParam('id');
-            try {
-                $item = $item->getReservation($id[0], $id[1]);
-            } catch (Zend_Exception $e) {
-                Zend_Registry::get('Log')->log('ReservationController : upd : Acces a la base de donnée impossible', Zend_Log::ALERT);
-                return FALSE;
-            }
+            $item = $item->getReservation($id[0], $id[1]);
 
             if ($item != null) {
                 $form->getElement('noVol')->setValue($item->get_Vol_noVol())->setAttrib('readonly', 'readonly');
@@ -100,43 +71,33 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
                     ->set_nbReservation($form->getValue('nbReservation'))
                     ->set_enAttentedeTraitement($form->getValue('enAttentedeTraitement'))
                     ->set_valider($form->getValue('valider'));
-            try {
-                $item->updReservation();
-            } catch (Zend_Exception $e) {
-                Zend_Registry::get('Log')->log('ReservationController : upd : Acces a la base de donnée impossible', Zend_Log::ALERT);
-                return FALSE;
-            }
-            $this->_redirect('ServCommercial/Reservation/admin');
+            $item->updReservation();
+            $session = new Zend_Session_Namespace('Redirect');
+            $session->message = "Modification réussi.";
+            $session->redirection = "/ServCommercial/Reservation/admin";
+            $this->_redirect('/redirection/success');
         }
     }
 
     public function delAction()
     {
-        $request = $this->getRequest();
-        if ($request->getParam('ok') === "ok") {
-            $Mod = new ServCommercial_Model_VolHasAgence();
-            $id = $request->getParam('id');
-            try {
-                $Mod->delReservation($id[0], $id[1]);
-            } catch (Zend_Exception $e) {
-                Zend_Registry::get('Log')->log('ReservationController : del : Acces a la base de donnée impossible', Zend_Log::ALERT);
-                return FALSE;
-            }
-            $this->_redirect('ServCommercial/Reservation/admin');
-        } else {
-            $Mod = new ServCommercial_Model_VolHasAgence();
-            $id = $request->getParam('id');
-            try {
-                $item = $Mod->getReservation($id[0], $id[1]);
-            } catch (Zend_Exception $e) {
-                Zend_Registry::get('Log')->log('ReservationController : del : Acces a la base de donnée impossible', Zend_Log::ALERT);
-                return FALSE;
-            }
+        $Mod = new ServCommercial_Model_VolHasAgence();
+        $id = $this->getRequest()->getParam('id');
+        $item = $Mod->getReservation($id[0], $id[1]);
+        $session = new Zend_Session_Namespace('Redirect');
+        $session->redirection = "/ServCommercial/Reservation/admin";
+        if ($this->getRequest()->getParam('ok') === "ok") {
             if ($item != null) {
-                $this->view->item = $item->getReservationHTML();
+                $Mod->delReservation($id[0], $id[1]);
+                $session->message = "Supression réussi.";
+                $this->_redirect('/redirection/success');
             } else {
-                $this->view->item = "Cette reservation n'existe pas dans la base de donnée!<br/>";
+                Zend_Registry::get('Log')->log('ReservationController : del : Acces a la base de donnée impossible', Zend_Log::ALERT);
+                $session->message = "Echec de supression.";
+                $this->_redirect('/redirection/fail');
             }
+        } else {
+            $this->view->item = $item;
             $this->view->id0 = $id[0];
             $this->view->id1 = $id[1];
         }
@@ -144,20 +105,10 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
 
     public function detailAction()
     {
+        $Mod = new ServCommercial_Model_VolHasAgence;
         $request = $this->getRequest();
         $id = $request->getParam('id');
-        $Mod = new ServCommercial_Model_VolHasAgence;
-        try {
-            $item = $Mod->getReservation($id[0], $id[1]);
-        } catch (Zend_Exception $e) {
-            Zend_Registry::get('Log')->log('ReservationController : detail : Acces a la base de donnée impossible', Zend_Log::ALERT);
-            return FALSE;
-        }
-        if ($item != null) {
-            $this->view->item = $item->getReservationHTML();
-        } else {
-            $this->view->item = "Cette reservation n'existe pas dans la base de donnée!<br/>";
-        }
+        $this->view->item = $Mod->getReservation($id[0], $id[1]);
         $this->view->id0 = $id[0];
         $this->view->id1 = $id[1];
     }

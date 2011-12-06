@@ -1,6 +1,39 @@
 <h1>Agence N°<?php echo $this->id; ?></h1>
-<?php echo $this->item; ?>
-<br/><br/><br/><br/><br/><br/><br/>
-<a class="enSavoirPlus" href='/ServCommercial/Agence/upd?id=<?php echo $this->id; ?>'>Modifier</a><br/><br/>
-<a class="enSavoirPlus" href='/ServCommercial/Agence/del?id=<?php echo $this->id; ?>'>Supprimer</a><br/><br/>
-<a class="enSavoirPlus" href='/ServCommercial/Agence/admin'>Retour</a><br/>
+<?php
+if ($this->item) {
+    echo "<table>
+                <tr>
+                    <td>Id</td>
+                    <td>" . $this->item->get_noAgence() . "</td>
+                </tr>
+                <tr>
+                    <td>Label</td>
+                    <td>" . $this->item->get_labelAgence() . "</td>
+                </tr>
+                <tr>
+                    <td>Date de Lancement</td>
+                    <td>" . $this->item->get_dateLancement() . "</td>
+                </tr>
+                <tr>
+                    <td>Date de Cloture</td>
+                    <td>" . $this->item->get_dateCloture() . "</td>
+                </tr>
+                <tr>
+                    <td>Acces Extranet</td>
+                    <td>" . $this->item->get_accesExtranet() . "</td>
+                </tr>
+                <tr>
+                    <td>No Adresse</td>
+                    <td>" . $this->item->get_noAdresse() . "</td>
+                </tr>
+            </table>";
+    
+    echo "<a class='enSavoirPlus' href='/ServCommercial/Agence/upd?id=". $this->id ."'>Modifier</a><br/><br/>
+          <a class='enSavoirPlus' href='/ServCommercial/Agence/del?id=". $this->id ."'>Supprimer</a><br/><br/>
+          <a class='enSavoirPlus' href='/ServCommercial/Agence/admin'>Retour</a>";
+} else {
+    echo "Cette Agence n'existe pas dans la base de donnée! <br/><br/>
+        <a class='enSavoirPlus' href='/ServCommercial/Agence/admin'>Retour</a>";
+}
+
+?>

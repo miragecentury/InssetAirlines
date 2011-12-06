@@ -1,4 +1,34 @@
 <h1>Gestion des Aeroports</h1>
-<?php echo $this->all;?>
-<div class="prefix_9"><a class="enSavoirPlus " href='/Aeroport/new'>Ajouter</a>
-    <a class="enSavoirPlus " href="/Aeroport/">Retour</a></div>
+<?php
+if ($this->all) {
+    echo "<table>
+            <tr>
+                <th>Id</th>
+                <th>Label</th>
+                <th>Ville</th>
+                <th>Pays</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>";
+    foreach ($this->all as $val) {
+        echo "<tr>
+                <td>" . $val->get_noAeroport() . "</td>
+                <td>" . $val->get_labelAeroport() . "</td>
+                <td>" . $val->get_labelVille() . "</td>
+                <td>" . $val->get_labelPays() . "</td>
+                <td><a href='/Aeroport/detail?id=" . $val->get_noAeroport() . "'>Détail</a></td>
+                <td><a href='/Aeroport/upd?id=" . $val->get_noAeroport() . "'>Modifier</a></td>
+                <td><a href='/Aeroport/del?id=" . $val->get_noAeroport() . "'>Supprimer</a></td>
+            </tr>";
+    }
+    echo "</table>";
+} else {
+    echo "<div>Il n'y a pas d'aeroport dans la base de donnée</div>";
+}
+?>
+
+<center>
+    <a class="enSavoirPlus " href='/Aeroport/new'>Ajouter</a>
+    <a class="enSavoirPlus " href="/Aeroport/">Retour</a>
+</center>

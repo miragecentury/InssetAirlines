@@ -1,12 +1,31 @@
 <h1>Gestion des Demande de reservation</h1>
-<table>
-    <tr>
-        <td colspan="2"><a class="enSavoirPlus" href='/ServCommercial/Reservation/admin'>Admin</a> 
-            <a class="enSavoirPlus" href='/ServCommercial/'>Retour</a>
-        </td>
-    </tr>
-    <tr>
-        <td><br/><img width="200" heigth="100" src="http://www.photo-libre.fr/business/3.jpg"/></td>
-        <td><br/><?php echo $this->all; ?></td>
-    </tr>
-</table>
+
+<?php
+if ($this->all) {
+    echo "<table>
+                <tr>
+                    <th>Vol</th>
+                    <th>Agence</th>
+                    <th>Nombre de place</th>
+                    <th>Traitement</th>
+                    <th>Validation</th>
+                </tr>";
+    foreach ($this->all as $val) {
+        echo "  <tr>
+                    <td>" . $val->get_Vol_noVol() . "</td>
+                    <td>" . $val->get_Agence_noAgence() . "</td>
+                    <td>" . $val->get_nbReservation() . "</td>
+                    <td>" . $val->get_enAttentedeTraitement() . "</td>
+                    <td>" . $val->get_valider() . "</td>
+                </tr>";
+    }
+    echo "</table>";
+} else {
+    echo "<div>Il n'y a pas de reservation dans la base de donnée</div>";
+}
+?>
+<center>
+<a class='enSavoirPlus' href='/ServCommercial/Reservation/admin'>Admin</a>
+<a class='enSavoirPlus' href='/ServCommercial/'>Retour</a><br/><br/>
+<img width="200" heigth="100" src="http://www.photo-libre.fr/business/3.jpg"/>
+</center>
