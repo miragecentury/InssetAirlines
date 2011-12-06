@@ -1,4 +1,22 @@
 <h1>Gestion des Menus </h1>
-<?php echo $this->all;?>
-<a href='/ServLogCom/Menu/new'>Ajouter un Menu</a><br/>
-<a href='/ServLogCom/'>Retour</a>
+
+<?php
+if ($this->all) {
+    echo "<table>
+            <tr>
+                <th>Id</th>
+                <th>Label</th>
+            </tr>";
+    foreach ($this->all as $val) {
+        echo "<tr>
+                <td>" . $val->get_idMenu() . "</td>
+                <td>" . $val->get_labelMenu() . "</td>
+              </tr>";
+    }
+    echo "</table>";
+} else {
+    echo "<div>Il n'y a pas de menu dans la base de donnée</div>";
+}
+echo "<a class='enSavoirPlus' href='/ServLogCom/'>Retour</a>
+    <a class='enSavoirPlus' href='/ServLogCom/Menu/admin'>Panneau d'administration</a><br/>";
+?>

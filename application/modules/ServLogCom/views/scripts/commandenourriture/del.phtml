@@ -1,5 +1,29 @@
 <h1>Voulez vous vraiment suprimer cette commande de nourriture?</h1>
-<?php echo $this->item; ?>
 
-<div><a href='/ServLogCom/Commandenourriture/admin'>Non </a>
-    <a href='/ServLogCom/Commandenourriture/del?ok=ok&id=<?php echo $this->id; ?>'>Oui</a></div>
+<?php
+if ($this->item) {
+    echo "<table>
+                <tr>
+                    <td>Id</td>
+                    <td>" . $this->item->get_noCommandeNourriture() . "</td>
+                </tr>
+                <tr>
+                    <td>Date de livraison</td>
+                    <td>" . $this->item->get_dateLivraison() . "</td>
+                </tr>
+                <tr>
+                    <td>Date de Commande</td>
+                    <td>" . $this->item->get_dateCommande() . "</td>
+                </tr>
+                <tr>
+                    <td>Aeroport de livraison</td>
+                    <td>" . $this->item->get_labelAeroportLivraison() . "</td>
+                </tr>
+            </table>";
+
+    echo "<div><a class='enSavoirPlus' href='/ServLogCom/Commandenourriture/admin'>Non </a>
+          <a class='enSavoirPlus' href='/ServLogCom/Commandenourriture/del?ok=ok&id=" . $this->id . "'>Oui</a></div>";
+} else {
+    echo "Cette commande n'existe pas dans la base de donnée!<br/><br/>
+        <div><a class='enSavoirPlus' href='/ServLogCom/Commandenourriture/admin'>Retour </a>";
+}

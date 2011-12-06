@@ -1,4 +1,22 @@
-<h1>Gestion des Regimes Alimentaire </h1>
-<?php echo $this->all;?>
-<a href='/ServLogCom/Regimealimentaire/new'>Ajouter</a><br/>
-<a href='/ServLogCom/'>Retour</a>
+<h1>Gestion des Regimes Alimentaires </h1>
+
+<?php
+if ($this->all) {
+    echo "<table>
+            <tr>
+                <th>Id</th>
+                <th>Label</th>
+            </tr>";
+    foreach ($this->all as $val) {
+        echo "<tr>
+                <td>" . $val->get_noRegimeAlimentaire() . "</td>
+                <td>" . $val->get_labelRegimeAlimentaire() . "</td>
+              </tr>";
+    }
+    echo "</table>";
+} else {
+    echo "<div>Il n'y a pas de Regime Alimentaire dans la base de donnée</div>";
+}
+echo "<a class='enSavoirPlus' href='/ServLogCom/'>Retour</a>
+    <a class='enSavoirPlus' href='/ServLogCom/Regimealimentaire/admin'>Panneau d'administration</a><br/>";
+?>
