@@ -58,12 +58,12 @@ class ServPlaning_Model_EnVol
     /**
      * Retourne un employe en vol a partir des id fourni en parametre.
      * Si la combinaison des id n'existe pas, retourne null.
-     * 
+     *
      * @access public
      * @author charles
      * @param int $_noVol, int $_noEmploye
      * @return null|ServPlaning_Model_EnVol
-     *  
+     *
      */
     public function getEnVol($_noVol, $_noEmploye)
     {
@@ -72,11 +72,11 @@ class ServPlaning_Model_EnVol
 
     /**
      * Retourne tous les employe en vol, null si il n'y en as pas dans la BD
-     * 
+     *
      * @access public
      * @author charles
      * @return null|array(Application_Model_EnVol)
-     *  
+     *
      */
     public function getListeEnVol()
     {
@@ -85,6 +85,26 @@ class ServPlaning_Model_EnVol
             return $mapper->findAll();
         } catch (Spesx_Mapper_Exception $e) {
             echo $e->getMessage() . " - " . $e->getPrevious()->getMessage();
+        }
+    }
+
+    public static function getEmployesLibresDuJour(){
+        $mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_EnVol");
+
+        //création des dates butoirs
+        //butoir gauche aujourd'hui minuit
+        $dateStart = new DateTime(date(DATE_ATOM));
+        $dateStart->setTime(0, 0, 0);
+        //butoir droite demain minuit
+        $dateStop = $dateStart;
+        $dateStop->modify('tomorrow');
+
+        //Récupération des Employés
+        //recup de la liste
+        if (($return = self::$_mapper->getEmployeLibreInInterval($dateStart, $dateStop)) != false){
+            return $return;
+        } else {
+            return null;
         }
     }
 
