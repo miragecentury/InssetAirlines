@@ -34,6 +34,7 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
         $form = new ServCommercial_Form_Reservation();
         if (empty($_POST) || !$form->isValid($_POST)) {
             $this->view->form = $form;
+            $this->view->vol = ServPlaning_Model_Vol::getListeVol();
         } else {
             $item = new ServCommercial_Model_VolHasAgence();
             $item->set_Vol_noVol($form->getValue('noVol'))
@@ -54,24 +55,24 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
         $form = new ServCommercial_Form_Reservation();
         $item = new ServCommercial_Model_VolHasAgence();
         if (empty($_POST) || !$form->isValid($_POST)) {
-            $id = $this->getRequest()->getParam('id');
-            $item = $item->getReservation($id[0], $id[1]);
-
+            $item = $item->getReservation($this->getRequest()->getParam('id'));
             if ($item != null) {
-                $form->getElement('noVol')->setValue($item->get_Vol_noVol())->setAttrib('readonly', 'readonly');
-                $form->getElement('noAgence')->setValue($item->get_Agence_noAgence())->setAttrib('readonly', 'readonly');
+                $form->getElement('noVol')->setValue($item->get_Vol_noVol());
+                $form->getElement('noAgence')->setValue($item->get_Agence_noAgence());
                 $form->getElement('nbReservation')->setValue($item->get_nbReservation());
                 $form->getElement('enAttentedeTraitement')->setValue($item->get_enAttentedeTraitement());
                 $form->getElement('valider')->setValue($item->get_valider());
             }
             $this->view->form = $form;
+            $this->view->vol = ServPlaning_Model_Vol::getListeVol();
         } else {
-            $item->set_Vol_noVol($form->getValue('noVol'))
+            $item->set_idVolHasAgence($this->getRequest()->getParam('id'))
+                    ->set_Vol_noVol($form->getValue('noVol'))
                     ->set_Agence_noAgence($form->getValue('noAgence'))
                     ->set_nbReservation($form->getValue('nbReservation'))
                     ->set_enAttentedeTraitement($form->getValue('enAttentedeTraitement'))
                     ->set_valider($form->getValue('valider'));
-            $item->updReservation();
+            $item->addReservation();
             $session = new Zend_Session_Namespace('Redirect');
             $session->message = "Modification réussi.";
             $session->redirection = "/ServCommercial/Reservation/admin";
@@ -82,13 +83,12 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
     public function delAction()
     {
         $Mod = new ServCommercial_Model_VolHasAgence();
-        $id = $this->getRequest()->getParam('id');
-        $item = $Mod->getReservation($id[0], $id[1]);
+        $item = $Mod->getReservation($this->getRequest()->getParam('id'));
         $session = new Zend_Session_Namespace('Redirect');
         $session->redirection = "/ServCommercial/Reservation/admin";
         if ($this->getRequest()->getParam('ok') === "ok") {
             if ($item != null) {
-                $Mod->delReservation($id[0], $id[1]);
+                $item->delReservation($this->getRequest()->getParam('id'));
                 $session->message = "Supression réussi.";
                 $this->_redirect('/redirection/success');
             } else {
@@ -98,19 +98,15 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
             }
         } else {
             $this->view->item = $item;
-            $this->view->id0 = $id[0];
-            $this->view->id1 = $id[1];
+            $this->view->id = $this->getRequest()->getParam('id');
         }
     }
 
     public function detailAction()
     {
         $Mod = new ServCommercial_Model_VolHasAgence;
-        $request = $this->getRequest();
-        $id = $request->getParam('id');
-        $this->view->item = $Mod->getReservation($id[0], $id[1]);
-        $this->view->id0 = $id[0];
-        $this->view->id1 = $id[1];
+        $this->view->item = $Mod->getReservation($this->getRequest()->getParam('id'));
+        $this->view->id = $this->getRequest()->getParam('id');
     }
 
 }
