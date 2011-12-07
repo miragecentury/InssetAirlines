@@ -34,7 +34,7 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
         $form = new ServCommercial_Form_Reservation();
         if (empty($_POST) || !$form->isValid($_POST)) {
             $this->view->form = $form;
-            $this->view->vol = ServPlaning_Model_Vol::getListeVol();
+            $this->view->vol = ServPlaning_Model_Vol::getVolsDuJour();
         } else {
             $item = new ServCommercial_Model_VolHasAgence();
             $item->set_Vol_noVol($form->getValue('noVol'))

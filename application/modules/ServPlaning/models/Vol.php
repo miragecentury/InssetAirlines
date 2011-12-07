@@ -357,7 +357,7 @@ class ServPlaning_Model_Vol
             self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
         }
         //recup de la liste
-        if (($return = self::$_mapper->findAllVolsInInterval($dateStart, $dateStop) != false)){
+        if (($return = self::$_mapper->findAllVolsInInterval($dateStart, $dateStop)) != false){
             return $return;
         } else {
             return null;

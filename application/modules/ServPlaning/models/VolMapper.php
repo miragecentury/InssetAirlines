@@ -114,13 +114,13 @@ class ServPlaning_Model_VolMapper extends Spesx_Mapper_Mapper {
         try{
         $select = $this->getDbTable()->select()
             ->where("
-                (heureDecollage >= $dateStart AND heureDecollage <= $dateStop) OR
-                (heureAtterissage >= $dateStart AND heureAtterissage <= $dateStop) OR
-                (heureDecollage <= $dateStart AND heureAtterissage >= $dateStop)");
-        $returnRowset = self::$_mapper->getDbTable()->fetchAll($select);
+                (heureDecollage >= '$start' AND heureDecollage <= '$stop') OR
+                (heureAtterissage >= '$start' AND heureAtterissage <= '$stop') OR
+                (heureDecollage <= '$start' AND heureAtterissage >= '$stop')");
+        $returnRowset = $this->getDbTable()->fetchAll($select);
         } catch (Zend_Db_Exception $e){
             Spesx_Log::Log('findAllVolsInInterval : Echec de récupération de la liste<br /> '
-                . $e->getMessage());
+                . $e->getMessage(),Zend_Log::ERR);
             return false;
         }
         $return = $this->_createItemsFromRowset($returnRowset);
