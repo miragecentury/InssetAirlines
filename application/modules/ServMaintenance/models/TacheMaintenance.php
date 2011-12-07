@@ -8,42 +8,81 @@ class ServMaintenance_Model_TacheMaintenance {
     protected $_retard;
     protected $_noTypeMaintenance;
     protected $_noAvion;
+    private static $mapper = null;
+
+    private static function init() {
+        if (self::$mapper === null) {
+            self::$mapper = Spesx_Mapper_MapperFactory::getMapper('ServMaintenance_Model_TacheMaintenance');
+        }
+    }
 
     //**************************************************************************
     //public static
     public static function findAll() {
-        
+        self::init();
+        return self::$mapper->findAll();
     }
 
     public static function findAllbyTypeMaintenance($TypeMaintenance) {
-        
+        self::init();
     }
 
     public static function findOne($noTacheMaintenance) {
-        
+        self::init();
+        return self::$mapper->find($noTacheMaintenance);
     }
 
-    public static function findAllatCurrentDay() {
-        
+    public static function findAllAtCurrentDay() {
+        self::init();
     }
 
-    public static function findAllatDateTimeInterval($start, $end) {
-        
+    public static function findAllAtCurrentTime() {
+        self::init();
     }
 
-    //**************************************************************************
-    //public
+    public static function findAllAtDateTimeInterval($start, $end) {
+        self::init();
+    }
+
+    public static function findAllByAvionAtDateTimeInterval($start, $end, $noAvion) {
+        self::init();
+    }
+
+    public static function findOneByAvionAtCurrentTime($noAvion) {
+        self::init();
+    }
+
+    public static function IsOnMaintenanceAtCurrent($noAvion) {
+        self::init();
+    }
+
+    public static function repercutionMiseHorsServiceAvion($noAvion, $DateTime) {
+        self::init();
+    }
+
+//**************************************************************************
+//public
     public function save() {
+        self::init();
+        self::$mapper->save($this, 'noMaintenance');
+    }
+
+    public function isPrioritaire() {
         
     }
 
-    //**************************************************************************
-    //private static
-    //**************************************************************************
-    //private
-    //**************************************************************************
-    //  Setter / Getter
-    //**************************************************************************
+    public function IsOnMaintenanceAtCurrent() {
+        self::init();
+        return self::IsOnMaintenanceAtCurrent($this->_noMaintenance);
+    }
+
+//**************************************************************************
+//private static
+//**************************************************************************
+//private
+//**************************************************************************
+//  Setter / Getter
+//**************************************************************************
 
     public function get_noMaintenance() {
         return $this->_noMaintenance;

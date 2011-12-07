@@ -8,7 +8,7 @@ class ServMaintenance_Form_Avion_Ajout extends Zend_Form {
 
         $label = new Zend_Form_Element('label');
         $label->setRequired(TRUE);
-        $label->setLabel('Appellation :');
+        $label->setLabel('Appellation : (F BXXX pour les appareils commerciaux français)');
         $label->addValidator(new Zend_Validate_Alnum(TRUE));
         $label->addValidator(new Zend_Validate_StringLength(array('min' => 4, 'max' => 25)));
         

@@ -23,7 +23,7 @@ class ServMaintenance_GestappareilController extends Zend_Controller_Action {
     }
 
     public function affavionenserviceAction() {
-        $this->view->Avions = ServMaintenance_Model_Avion::findAllEnService();
+        $this->view->Avions = ServMaintenance_Model_Avion::findAllEnServiceAtCurrentTime();
     }
 
     public function misehorsserviceAction() {
@@ -104,7 +104,7 @@ class ServMaintenance_GestappareilController extends Zend_Controller_Action {
                             $avion->set_nbHeureVol($_POST['nbHeureVol']);
                             $avion->set_dateMiseService($_POST['dateMiseService']);
                             $avion->set_noModele($_POST['noModele']);
-                            $avion->set_enService('1');
+                            $avion->set_enService(ServMaintenance_Model_Avion::ETAT_ENSERVICE);
                             $avion->set_nbIncident(0);
                             $avion->set_dateMiseHorsService(null);
                             try {

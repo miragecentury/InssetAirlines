@@ -19,7 +19,7 @@ class Application_Model_ApplicationVar {
 
     public static function get($id) {
         self::init();
-        return self::$mapper->find($this, 'id');
+        return self::$mapper->find($id);
     }
 
     public static function set($id, $var) {

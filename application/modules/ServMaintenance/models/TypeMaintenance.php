@@ -27,11 +27,15 @@ class ServMaintenance_Model_TypeMaintenance {
         return self::$mapper->find($noTypeMaintenance);
     }
 
-    //**************************************************************************
+//**************************************************************************
 
     public function save() {
         self::init();
         return self::$mapper->save($this, 'noTypeMaintenance');
+    }
+
+    public function estAFaire($noAvion) {
+        
     }
 
     /*

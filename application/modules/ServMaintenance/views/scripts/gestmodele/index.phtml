@@ -4,13 +4,13 @@
     <table>
         <tr>
             <th>Id</th>
+            <th> Constructeur </th>
             <th>Modele</th>
             <th>Rayon d'action</th>
             <th>Distance Min. :</th>
             <th>Attérissage</th>
             <th>Décollage</th>
             <th>Date Lancement</th>
-            <th> Constructeur </th>
             <td></td>
             <td></td>
         <tr>
@@ -20,13 +20,13 @@
                 echo '
             <tr>
                 <td>' . $value->get_noModele() . '</td>
+                <td>' . $constructeur->get_label() . '</td>
                 <td>' . $value->get_label() . '</td>
                 <td>' . $value->get_rayonAction() . '</td>
                 <td></td>
                 <td>' . $value->get_distMinAtt() . '</td>
                 <td>' . $value->get_distMinDec() . '</td>
                 <td>' . $value->get_dateLancement() . '</td>
-                <td>' . $constructeur->get_label() . '</td>
                 <td><a class="enSavoirPlus" href="' . $this->baseUrl() . '/ServMaintenance/Gestmodele/updmodele?id=' . $value->get_noModele() . '">Editer</a></td>
                 <td><a class="enSavoirPlus" href="' . $this->baseUrl() . '/ServMaintenance/Gestmodele/delmodele?id=' . $value->get_noModele() . '">Supprimer</a></td>    
             </tr>';

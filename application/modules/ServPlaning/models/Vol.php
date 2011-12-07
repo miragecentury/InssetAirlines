@@ -70,9 +70,7 @@ class ServPlaning_Model_Vol {
      * @var int
      */
     protected $_heureAtterissage;
-
     protected $_etat;
-
 
     /**
      * Mapper de l'objet
@@ -120,7 +118,7 @@ class ServPlaning_Model_Vol {
     public static function getSemaineAheadFromCurrent($nbrSemaine) {
         $date = new DateTime(date(DATE_ATOM));
         $date->modify('Monday this week');
-        if (is_int($nbrSemaine) && $nbrSemaine <= 4 && $nbrSemaine > 0) {
+        if (is_int($nbrSemaine) && $nbrSemaine > 0) {
             $semaine = '+' . $nbrSemaine . ' week';
             $date->modify($semaine);
         } else if ($nbrSemaine == 0) {
@@ -130,6 +128,17 @@ class ServPlaning_Model_Vol {
         }
         $date->setTime(0, 0, 0);
         return $date->format(DATE_ATOM);
+    }
+
+    public static function repercutionMiseHorsServiceAvion($noAvion, $DateTime) {
+        $End = self::getSemaineAheadFromCurrent(5);
+        if ($DateTime instanceof DateTime) {
+            $Start = $DateTime;
+        } elseif (is_string($DateTime)) {
+            
+        } else {
+            return FALSE;
+        }
     }
 
     public static function getJourFromWeek($weekDate, $jour) {
@@ -362,13 +371,13 @@ class ServPlaning_Model_Vol {
         $this->_heureAtterissage = $_heureAtterissage;
         return $this;
     }
-    
-    public function set_etat($_etat){
+
+    public function set_etat($_etat) {
         $this->_etat = $_etat;
         return $this;
     }
-    
-    public function get_etat(){
+
+    public function get_etat() {
         return $this->get_etat();
     }
 

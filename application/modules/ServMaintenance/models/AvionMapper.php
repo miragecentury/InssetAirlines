@@ -47,44 +47,60 @@ class ServMaintenance_Model_AvionMapper extends Spesx_Mapper_Mapper {
         return $return;
     }
 
-    public function findAllService($HorsOrIn) {
-        if ($HorsOrIn === TRUE) {
-            $HorsOrIn = '1';
+    public function findAllServiceAtCurrentTime($etats) {
+        $query = self::whereEtats($etats);
+        if ($query !== null) {
+            try {
+                $select = $this->getDbTable()->select()
+                        ->where($query);
+                $result = $this->getDbTable()->fetchAll($select);
+            } catch (Zend_Db_Exception $e) {
+                throw new Spesx_Mapper_Exception(
+                        'ServMaintenance : Echec Methode findAllByModele ',
+                        $e->getCode(),
+                        $e);
+            }
+            $return = $this->_createItemsFromRowset($result);
+            return $return;
         } else {
-            $HorsOrIn = '0';
+            return null;
         }
-        try {
-            $select = $this->getDbTable()->select()
-                    ->where('enService = ?', $HorsOrIn);
-            $result = $this->getDbTable()->fetchAll($select);
-        } catch (Zend_Db_Exception $e) {
-            throw new Spesx_Mapper_Exception(
-                    'ServMaintenance : Echec Methode findAllByModele ',
-                    $e->getCode(),
-                    $e);
-        }
-        $return = $this->_createItemsFromRowset($result);
-        return $return;
     }
 
-    public function findAllDispoAtInterDate($start, $end) {
-        try {
-            $select = $this->getDbTable()->select()
-                    ->where('enService = ?', TRUE)
-                    ->where("
-                                (heureDecollage >= $start AND heureDecollage <= $start) OR
-                                (heureDecollage <= $start AND heureAtterissage >= $end) OR
-                                (heureAtterissage >= $start AND heureAterrisage <= $end)
-                            ");
-            $result = $this->getDbTable()->fetchAll($select);
-        } catch (Zend_Db_Exception $e) {
-            throw new Spesx_Mapper_Exception(
-                    'ServMaintenance : Echec Methode findAllByModele ',
-                    $e->getCode(),
-                    $e);
+    public function findAllEnServiceAtDateTimeInterval($start, $end) {
+        if (is_string($start)) {
+            $DateTimeStart = new DateTime($start);
+        } elseif ($start instanceof DateTime) {
+            
+        } else {
+            return FALSE;
         }
-        $return = $this->_createItemsFromRowset($result);
-        return $return;
+        if (is_string($end)) {
+            $DateTimeEnd = new DateTime($end);
+        } elseif ($end instanceof DateTime) {
+            $DateTimeEnd = $end;
+        } else {
+            return FALSE;
+        }
+        
+        
+        
+    }
+
+    private static function whereEtats($etats) {
+        if (is_array($etats)) {
+            $query = '';
+            $count = count($etats) - 1;
+            foreach ($etats as $key => $etat) {
+                $query.= " ( enService = $etat )";
+                if ($key != $count) {
+                    $query.=' OR';
+                }
+            }
+            return $query;
+        } else {
+            return null;
+        }
     }
 
 }
