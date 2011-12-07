@@ -25,4 +25,7 @@ if ($this->vol) {
 } else {
     echo "<div>Il n'y a pas de vol dans la base de donnée</div>";
 }
+
+if($this->formS != FALSE)
+    echo ($this->formS->render());
 ?>
