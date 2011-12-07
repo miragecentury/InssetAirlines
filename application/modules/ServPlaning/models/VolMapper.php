@@ -11,8 +11,8 @@ class ServPlaning_Model_VolMapper extends Spesx_Mapper_Mapper {
                 ->set_noAvion($row->noAvion)
                 ->set_noLigne($row->noLigne)
                 ->set_heureDecollage($row->heureDecollage)
-                ->set_heureAtterissage($row->heureAtterissage);
-
+                ->set_heureAtterissage($row->heureAtterissage)
+                ->set_etat($row->etat);
         return $item;
     }
 
@@ -26,6 +26,7 @@ class ServPlaning_Model_VolMapper extends Spesx_Mapper_Mapper {
             'noLigne' => $item->get_noLigne(),
             'heureDecollage' => $item->get_heureDecollage(),
             'heureAtterissage' => $item->get_heureAtterissage(),
+            'etat' => $item->get_etat()
         );
     }
 

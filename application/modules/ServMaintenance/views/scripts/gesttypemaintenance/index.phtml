@@ -3,6 +3,15 @@
     <h3 style='display: inline;'>Gestion des Types de Maintenance - </h3>
     <h5 style='display: inline;'>Affichage par Modèle </h5>
     </br></br></br>
+    <div style="margin-bottom: 30px;">
+        <?php
+        if (count(ServMaintenance_Model_Modele::getAll()) > 0) {
+            echo "<a class='enSavoirPlus' href='/ServMaintenance/Gesttypemaintenance/Newtypemaintenance'>Ajouter un type de Maintenance</a>";
+        } else {
+            echo '<a href="/ServMaintenance/Gestmodele" class="enSavoirPlusUrg">Pour Ajouter un type de Maintenance, ajouter d\'abord un modèle !</a>';
+        }
+        ?>
+    </div>
     <div>
         <?php
         if (
@@ -10,7 +19,6 @@
                 isset($this->ListeTypesMaintenance) && is_array($this->ListeTypesMaintenance) &&
                 isset($this->ListeConstructeur) && is_array($this->ListeConstructeur)
         ) {
-
             foreach ($this->ListeModeles as $noModele => $modele) {
                 echo'<table>';
                 if ($modele instanceof ServMaintenance_Model_Modele) {
@@ -40,7 +48,7 @@
                                         <td>' . $TypeMaintenance->get_label() . '</td>
                                         <td>' . $TypeMaintenance->get_dureeMaintenance() . '</td>
                                         <td>' . $TypeMaintenance->get_periode() . '</td>
-                                        <td><a class="enSavoirPlus" href="/ServMaintenance/Gesttypemaintenance/Updtypemaintenance/id/' . $TypeMaintenance->get_noTypeMaintenance() . '">Modifier</a></td>
+                                        <td><a class="enSavoirPlus" href="/ServMaintenance/Gesttypemaintenance/Updtypemaintenance/noTypeMaintenance/' . $TypeMaintenance->get_noTypeMaintenance() . '">Modifier</a></td>
                                     </tr>';
                                 }
                             }
@@ -48,18 +56,10 @@
                             echo '<tr><td colspan="">Aucun Type de Maintenance enregistré pour ce modèle</td></tr>';
                         }
                     }
+                    echo '<tr style="background-color: #eee;"><td colspan="5"><a class="enSavoirPlus" href="/ServMaintenance/Gesttypemaintenance/Newtypemaintenance/noModele/' . $noModele . '">Ajouter un Type de Maintenance pour ce modèle</a></br></td></tr>';
                 }
                 echo '</table></br>';
             }
-        }
-        ?>
-    </div>
-    <div>
-        <?php
-        if (count(ServMaintenance_Model_Modele::getAll()) > 0) {
-            echo "<a class='enSavoirPlus' href='/ServMaintenance/GesttypeMaintenance/Newtypemaintenance'>Ajouter un type de Maintenance</a>";
-        }else{
-            echo '<a href="/ServMaintenance/Gestmodele" class="enSavoirPlusUrg">Pour Ajouter un type de Maintenance, ajouter d\'abord un modèle !</a>';
         }
         ?>
     </div>

@@ -1,6 +1,6 @@
 <?php
 
-class Application_Model_TacheMaintenanceMapper extends Application_Model_Mapper 
+class ServMaintenance_Model_TacheMaintenanceMapper extends Spesx_Mapper_Mapper 
 {
     protected function _createItemFromRow(Zend_Db_Table_Row $row)
     {
@@ -9,7 +9,7 @@ class Application_Model_TacheMaintenanceMapper extends Application_Model_Mapper
              ->set_dateDebut($row->dateDebut)
              ->set_dateFin($row->dateFin)
              ->set_retard($row->retard)
-             ->set_labelTypeMaintenance($row->labelTypeMaintenance)
+             ->set_noTypeMaintenance($row->noTypeMaintenance)
              ->set_noAvion($row->noAvion);
                      
         return $item;
@@ -22,7 +22,7 @@ class Application_Model_TacheMaintenanceMapper extends Application_Model_Mapper
             'dateDebut'  => $item->get_dateDebut(),
             'dateFin' => $item->get_dateFin(),            
             'retard' => $item->get_retard(),
-            'labelTypeMaintenance' => $item->get_labelTypeMaintenance(),
+            'noTypeMaintenance' => $item->get_noTypeMaintenance(),
             'noAvion' => $item->get_noAvion(),
             );
     }

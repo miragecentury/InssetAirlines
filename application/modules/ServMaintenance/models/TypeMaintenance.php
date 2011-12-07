@@ -22,7 +22,17 @@ class ServMaintenance_Model_TypeMaintenance {
         return self::$mapper->findAllByModele($noModele);
     }
 
+    public static function findOne($noTypeMaintenance) {
+        self::init();
+        return self::$mapper->find($noTypeMaintenance);
+    }
+
     //**************************************************************************
+
+    public function save() {
+        self::init();
+        return self::$mapper->save($this, 'noTypeMaintenance');
+    }
 
     /*
      *  Setter / Getter

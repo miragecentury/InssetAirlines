@@ -64,6 +64,9 @@ class ServMaintenance_Model_Avion {
         if (count(($array = self::$_mapper->findAllService(TRUE))) == 0) {
             return null;
         } else {
+            foreach ($array as $Avion) {
+                
+            }
             return $array;
         }
     }

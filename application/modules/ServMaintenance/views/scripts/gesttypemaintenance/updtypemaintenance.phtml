@@ -1,1 +1,21 @@
-Service Maintenance gesttpmain upd
+<div>
+    <h1 style='display: inline;'>Service Maintenance - </h1>
+    <h3 style='display: inline;'>Gestion des Types de Maintenance - </h3>
+    <h5 style='display: inline;'>Modifier un Type de Maintenance </h5>
+    </br></br></br>
+    <div>
+        <?php
+        if (isset($this->message)) {
+            echo '<h5>'.$this->message.'<h5>';
+        }
+        ?>
+    </div>
+    <div>
+        <?php
+        if (isset($this->form)) {
+            echo $this->form;
+        }
+        ?>
+    </div>
+
+</div>
