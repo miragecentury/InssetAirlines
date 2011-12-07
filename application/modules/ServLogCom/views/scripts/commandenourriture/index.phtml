@@ -1,3 +1,26 @@
 <h1>Liste des Commandes de Nourriture </h1>
-<?php echo $this->all;?>
-<a href="/ServLogCom/Commandenourriture/admin">Admin<a/>
+   
+<?php
+if ($this->all) {
+    echo "<table>
+            <tr>
+                <th>Id</th>
+                <th>Date de livraison</th>
+                <th>Date de commande</th>
+                <th>Aeroport de livraison</th>
+            </tr>";
+    foreach ($this->all as $val) {
+        echo "<tr>
+                <td>" . $val->get_noCommandeNourriture() . "</td>
+                <td>" . $val->get_dateLivraison() . "</td>
+                <td>" . $val->get_dateCommande() . "</td>
+                <td>" . $val->get_labelAeroportLivraison() . "</td>
+              </tr>";
+    }
+    echo "</table>";
+} else {
+    echo "<div>Il n'y a pas de commande dans la base de donnée</div>";
+}
+echo "<a class='enSavoirPlus' href='/ServLogCom/'>Retour</a>
+    <a class='enSavoirPlus' href='/ServLogCom/Commandenourriture/admin'>Panneau d'administration</a><br/>";
+?>

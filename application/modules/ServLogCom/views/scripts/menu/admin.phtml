@@ -1,0 +1,28 @@
+<h1>Gestion des Menus </h1>
+
+
+
+
+<?php
+if ($this->all) {
+    echo "<table>
+            <tr>
+                <th>Id</th>
+                <th>Label</th>
+            </tr>";
+    foreach ($this->all as $val) {
+        echo "<tr>
+                <td>" . $val->get_idMenu() . "</td>
+                <td>" . $val->get_labelMenu() . "</td>
+                <td><a class='enSavoirPlus' href='/ServLogCom/Menu/detail?id=" . $val->get_idMenu() . "'>Detail</a></td>
+                <td><a class='enSavoirPlus' href='/ServLogCom/Menu/upd?id=" . $val->get_idMenu() . "'>Modifier</a></td>
+                <td><a class='enSavoirPlus' href='/ServLogCom/Menu/del?id=" . $val->get_idMenu() . "'>Supprimer</a></td>
+              </tr>";
+    }
+    echo "</table>";
+} else {
+    echo "<div>Il n'y a pas de menu dans la base de donnée</div>";
+}
+echo "<a class='enSavoirPlus' href='/ServLogCom/Menu'>Retour</a>
+    <a class='enSavoirPlus' href='/ServLogCom/Menu/new'>Ajouter un menu</a><br/>";
+?>
