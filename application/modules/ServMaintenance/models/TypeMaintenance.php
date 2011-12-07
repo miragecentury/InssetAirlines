@@ -1,6 +1,6 @@
 <?php
 
-class Application_Model_TypeMaintenance {
+class ServMaintenance_Model_TypeMaintenance {
 
     protected $_noTypeMaintenance;
     protected $_label;
@@ -16,9 +16,12 @@ class Application_Model_TypeMaintenance {
     }
 
     //**************************************************************************
-    
-    
-    
+
+    public static function findAllByModele($noModele) {
+        self::init();
+        return self::$mapper->findAllByModele($noModele);
+    }
+
     //**************************************************************************
 
     /*
@@ -39,7 +42,7 @@ class Application_Model_TypeMaintenance {
     }
 
     public function set_dureeMaintenance($dureeMaintenance) {
-        $this->_dureeMaintenance = $_dureeMaintenance;
+        $this->_dureeMaintenance = $dureeMaintenance;
         return $this;
     }
 
@@ -66,7 +69,7 @@ class Application_Model_TypeMaintenance {
     }
 
     public function set_noTypeMaintenance($noTypeMaintenance) {
-        $this->_noTypeMaintenance;
+        $this->_noTypeMaintenance = $noTypeMaintenance;
         return $this;
     }
 

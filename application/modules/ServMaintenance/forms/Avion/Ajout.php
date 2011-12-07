@@ -19,6 +19,7 @@ class ServMaintenance_Form_Avion_Ajout extends Zend_Form {
         $nbPlaceMax = new Zend_Form_Element_Text('nbPlaceMax');
         $nbPlaceMax->setLabel('Nombre de Place Maximum :');
         $nbPlaceMax->setRequired(TRUE);
+        $nbPlaceMax->addValidator(new Zend_Validate_StringLength(array('min'=>1, 'max'=>10)));
         $nbPlaceMax->addValidator(new Zend_Validate_Int());
         $nbPlaceMax->addValidator(new Zend_Validate_GreaterThan(0));
 
@@ -29,6 +30,7 @@ class ServMaintenance_Form_Avion_Ajout extends Zend_Form {
         $nbHeureVol = new Zend_Form_Element_Text('nbHeureVol');
         $nbHeureVol->setRequired(TRUE);
         $nbHeureVol->setLabel('Nombre d\'heure de Vol :');
+        $nbHeureVol->addValidator(new Zend_Validate_StringLength(array('min'=>1, 'max'=>10)));
         
         //valeur comprise entre 0 et +
         $nbHeureVol->addValidator(new Zend_Validate_Int());

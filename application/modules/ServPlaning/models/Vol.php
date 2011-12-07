@@ -2,9 +2,9 @@
 
 class ServPlaning_Model_Vol {
 
-    //--------------------------------------------------------------------------
-    //Attributs
-    //--------------------------------------------------------------------------
+//--------------------------------------------------------------------------
+//Attributs
+//--------------------------------------------------------------------------
     /**
      * numero du vol
      * @var int
@@ -68,9 +68,9 @@ class ServPlaning_Model_Vol {
         self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
     }
 
-    //--------------------------------------------------------------------------
-    // Methodes
-    //--------------------------------------------------------------------------
+//--------------------------------------------------------------------------
+// Methodes
+//--------------------------------------------------------------------------
     /**
      * Ajoute ou modifie un vol dans la BD.
      *
@@ -80,6 +80,19 @@ class ServPlaning_Model_Vol {
      */
     public function addVol() {
         self::$_mapper->save($this, 'noVol');
+    }
+
+    public function addRetard($nbHeure, $nbMinute) {
+        $date = new DateTime($this->get_heureAtterissage());
+        $date->modify();
+    }
+
+    public   function deroute($noAeroportAtterissage) {
+        
+    }
+
+    public function annule() {
+        
     }
 
     /**
@@ -211,7 +224,7 @@ class ServPlaning_Model_Vol {
     public static function IsEnVolByAvionOnCurrentTime($noAvion) {
         self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
         $vols = self::$_mapper->getVolsByAvionOnCurrentTime($noAvion);
-        //echo 'Nombre de Vol en cours ' . count($vols) . '<br/>';
+//echo 'Nombre de Vol en cours ' . count($vols) . '<br/>';
         if (count($vols) > 0) {
             return TRUE;
         } else {
@@ -222,9 +235,9 @@ class ServPlaning_Model_Vol {
     public static function getVolByAvionOnCurrentTime($noAvion) {
         self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
         $vols = self::$_mapper->getVolsByAvionOnCurrentTime($noAvion);
-        if(count($vols) == 1){
+        if (count($vols) == 1) {
             return $vols[0];
-        }else{
+        } else {
             return FALSE;
         }
     }
@@ -329,9 +342,9 @@ class ServPlaning_Model_Vol {
         return $tableau;
     }
 
-    //--------------------------------------------------------------------------
-    // Getter / setter
-    //--------------------------------------------------------------------------
+//--------------------------------------------------------------------------
+// Getter / setter
+//--------------------------------------------------------------------------
     public function get_noVol() {
         return $this->_noVol;
     }
