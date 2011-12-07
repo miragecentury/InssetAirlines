@@ -15,6 +15,7 @@ class ServMaintenance_Model_Avion {
     protected $_dateMiseHorsService;
     protected $_enService;
     protected $_noModele;
+    protected $_calcDate;
     protected static $_mapper = null;
     protected static $message = 'ServMaintenance_Model_Avion : ';
 
@@ -96,7 +97,6 @@ class ServMaintenance_Model_Avion {
                 FALSe
         ) {
             $avion = new ServMaintenance_Model_Avion();
-            
         } else {
             return null;
         }
@@ -202,6 +202,15 @@ class ServMaintenance_Model_Avion {
 
     public function set_noModele($_noModele) {
         $this->_noModele = $_noModele;
+        return $this;
+    }
+
+    public function get_calcDate() {
+        return $this->_calcDate;
+    }
+
+    public function set_calcDate($calcDate) {
+        $this->_calcDate = $calcDate;
         return $this;
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-class Application_Model_TacheMaintenance
+class ServMaintenance_Model_TacheMaintenance
 {
     protected $_noMaintenance;
     protected $_dateDebut;

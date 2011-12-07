@@ -1,0 +1,1 @@
+ALTER TABLE `Avion` ADD `calcDate` DATETIME NOT NULL AFTER `nbHeureVol` 

@@ -85,12 +85,12 @@ class ServPlaning_Model_Vol
         self::$_mapper->save($this, 'noVol');
     }
 
-    public function addRetard($nbHeure, $nbMinute) {
+    public function addRetard($nbHeure, $nbMinute = 0) {
         $date = new DateTime($this->get_heureAtterissage());
-        $date->modify();
+        $date->modify("+".$nbHeure." hour +".$nbMinute." min");
     }
 
-    public   function deroute($noAeroportAtterissage) {
+    public function deroute($noAeroportAtterissage) {
         
     }
 
