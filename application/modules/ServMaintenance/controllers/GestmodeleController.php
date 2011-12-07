@@ -15,31 +15,40 @@ class ServMaintenance_GestmodeleController extends Zend_Controller_Action {
         $liste = ServMaintenance_Model_Modele::getAll();
 
         $this->view->listeModele = $liste;
-        
     }
 
     public function newmodeleAction() {
-        $form = new ServMaintenance_Form_Modele();
-        if (isset($_POST) && !empty($_POST) && $form->isValid($_POST)) {
-            if (ServMaintenance_Model_Constructeur::findOne($_POST['noConstructeur']) instanceof ServMaintenance_Model_Constructeur) {
+        $constructeurs = ServMaintenance_Model_Constructeur::GetAll();
+        if (count($constructeurs) > 0) {
+            $form = new ServMaintenance_Form_Modele();
+            if (isset($_POST) && !empty($_POST)) {
+                if ($form->isValid($_POST)) {
+                    if (ServMaintenance_Model_Constructeur::findOne($_POST['noConstructeur']) instanceof ServMaintenance_Model_Constructeur) {
 
-                $modele = ServMaintenance_Model_Modele::GetItemFromRaw($_POST);
-                if ($modele instanceof ServMaintenance_Model_Modele) {
-                    $modele->save();
+                        $modele = ServMaintenance_Model_Modele::GetItemFromRaw($_POST);
+                        if ($modele instanceof ServMaintenance_Model_Modele) {
+                            $modele->save();
 
-                    $this->view->message = 'Modèle Ajouté';
-                    $this->getResponse()->setHeader('refresh', '2,url=/ServMaintenance/Gestmodele');
+                            $this->view->message = 'Modèle Ajouté';
+                            $this->getResponse()->setHeader('refresh', '2,url=/ServMaintenance/Gestmodele');
+                        } else {
+                            $this->view->message = 'Données Invalides X';
+                            $this->view->form = $form;
+                        }
+                    } else {
+                        $this->view->message = 'Constructeur Invalide';
+                        $this->view->form = $form;
+                    }
                 } else {
-                    $this->view->message = 'Données Invalides X';
+                    $this->view->message = 'Données Invalides';
                     $this->view->form = $form;
                 }
             } else {
-                $this->view->message = 'Constructeur Invalide';
                 $this->view->form = $form;
             }
         } else {
-            $this->view->message = 'Données Invalides';
-            $this->view->form = $form;
+            $this->view->message = 'Ajouter un Constructeur avant un modèle Merci !';
+            $this->getResponse()->setHeader('refresh', '2,url=/ServMaintenance/Gestmodele');
         }
     }
 

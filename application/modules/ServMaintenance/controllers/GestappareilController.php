@@ -29,14 +29,51 @@ class ServMaintenance_GestappareilController extends Zend_Controller_Action {
     public function misehorsserviceAction() {
         $status = $this->getRequest()->getParam('status');
         if ($status == 1) {
-            
-        } else if ($status == 2) {
-            
-        } else if ($status == 3) {
-            
+            $id = $this->getRequest()->getParam('id');
+            $id = intval($id);
+            if ($id >= 0) {
+                $avion = ServMaintenance_Model_Avion::findOne($id);
+                if ($avion instanceof ServMaintenance_Model_Avion) {
+                    $this->view->message = 'Confirmer la Mise Hors Service de cet Appareil !!';
+                    $this->view->avion = $avion;
+                    $this->view->form = new ServMaintenance_Form_Avion_HorsService($id);
+                } else {
+                    $this->getResponse()->setHeader('refresh', '2,url=/ServMaintenance/Gestappareil/Misehorsservice');
+                }
+            } else {
+                $this->getResponse()->setHeader('refresh', '0,url=/ServMaintenance/Gestappareil/Misehorsservice');
+            }
+        } else if ($status == 2 && isset($_POST) && !empty($_POST)) {
+            $id = $this->getRequest()->getParam('id');
+            $id = intval($id);
+            $form = new ServMaintenance_Form_Avion_HorsService($id);
+            if ($id >= 0) {
+                $avion = ServMaintenance_Model_Avion::findOne($id);
+                if ($form->isValid($_POST)) {
+                    $id = $this->getRequest()->getParam('id');
+                    $id = intval($id);
+                    /** TODO:
+                     *      Controle de la date
+                     */
+                    try {
+                        $avion->set_dateMiseHorsService(date(DATE_ATOM));
+                        $avion->set_enService(0);
+                        $avion->save();
+                    } catch (Exception $e) {
+                        $this->getResponse()->setHeader('refresh', '0,url=/ServMaintenance/Gestappareil/Misehorsservice');
+                    }
+                    $this->message = 'Appareil' . $avion->get_label() . ' mis Hors Service';
+                } else {
+                    $this->view->message = 'Confirmer la Mise Hors Service de cet Appareil !!';
+                    $this->view->avion = $avion;
+                    $this->view->form = new ServMaintenance_Form_Avion_HorsService($id);
+                }
+            } else {
+                $this->getResponse()->setHeader('refresh', '0,url=/ServMaintenance/Gestappareil/Misehorsservice');
+            }
         } else {
             $this->view->message = 'Attention la mise Hors Service d\'un Appareil empechera son utilisation définitivement!';
-            $this->view->form = new ServMaintenance_Form_Avion_HorsService();
+            //$this->view->form = new ServMaintenance_Form_Avion_HorsService();
             $this->view->avions = ServMaintenance_Model_Avion::findAllEnService();
         }
     }
@@ -52,43 +89,51 @@ class ServMaintenance_GestappareilController extends Zend_Controller_Action {
     public function newappareilAction() {
 
         $formAdd = new ServMaintenance_Form_Avion_Ajout();
+        $modeles = ServMaintenance_Model_Modele::getAll();
+        if (count($modeles) > 0) {
+            if (isset($_POST) && !empty($_POST)) {
+                if ($formAdd->isValid($_POST)) {
+                    $modele = ServMaintenance_Model_Modele::findOne($_POST['noModele']);
+                    if ($modele instanceof ServMaintenance_Model_Modele) {
 
-        if (isset($_POST) && !empty($_POST) && $formAdd->isValid($_POST)) {
-            var_dump($_POST['noModele']);
-            $modele = ServMaintenance_Model_Modele::findOne($_POST['noModele']);
-            if ($modele instanceof ServMaintenance_Model_Modele) {
-
-                //ok ready to save
-                $avion = new ServMaintenance_Model_Avion();
-                if ($avion instanceof ServMaintenance_Model_Avion) {
-                    $avion->set_label($_POST['label']);
-                    $avion->set_nbPlaceMax($_POST['nbPlaceMax']);
-                    $avion->set_nbHeureVol($_POST['nbHeureVol']);
-                    $avion->set_dateMiseService($_POST['dateMiseService']);
-                    $avion->set_noModele($_POST['noModele']);
-                    $avion->set_enService('1');
-                    $avion->set_nbIncident(0);
-                    $avion->set_dateMiseHorsService(null);
-                    try {
-                        $avion->save();
-                    } catch (Exception $e) {
-                        echo $e->getMessage() . $e->getPrevious()->getMessage();
+//ok ready to save
+                        $avion = new ServMaintenance_Model_Avion();
+                        if ($avion instanceof ServMaintenance_Model_Avion) {
+                            $avion->set_label($_POST['label']);
+                            $avion->set_nbPlaceMax($_POST['nbPlaceMax']);
+                            $avion->set_nbHeureVol($_POST['nbHeureVol']);
+                            $avion->set_dateMiseService($_POST['dateMiseService']);
+                            $avion->set_noModele($_POST['noModele']);
+                            $avion->set_enService('1');
+                            $avion->set_nbIncident(0);
+                            $avion->set_dateMiseHorsService(null);
+                            try {
+                                $avion->save();
+                            } catch (Exception $e) {
+                                echo $e->getMessage() . $e->getPrevious()->getMessage();
+                            }
+                            $this->view->message = 'Appareil Ajouté';
+                            $this->getResponse()->setHeader('refresh', '2,url=/ServMaintenance/Gestappareil');
+                        } else {
+//echec                  
+                            $this->view->form = $formAdd;
+                            $this->view->message = 'Echec de la Création de l\'Avion - Raison Inconnu';
+                        }
+                    } else {
+//echec
+                        $this->view->form = $formAdd;
+                        $this->view->message = 'Modèle incohérent';
                     }
-                    $this->view->message = 'Appareil Ajouté';
-                    $this->getResponse()->setHeader('refresh', '2,url=/ServMaintenance/Gestappareil');
                 } else {
-                    //echec                  
                     $this->view->form = $formAdd;
-                    $this->view->message = 'Echec de la Création de l\'Avion - Raison Inconnu';
+                    $this->view->message = 'Données Incohérentes ! Merci de bien compléter les champs !';
                 }
             } else {
-                //echec
                 $this->view->form = $formAdd;
-                $this->view->message = 'Modèle incohérent';
+                $this->view->message = '';
             }
         } else {
-            $this->view->form = $formAdd;
-            $this->view->message = '';
+            
         }
     }
 

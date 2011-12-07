@@ -4,8 +4,143 @@
     <h5 style='display: inline;'>Mise Hors Service d'un Appareil </h5>
     </br></br></br>
     <div>
-        <?php if(isset($this->message)){echo '<h4>'.$this->message.'<h4>';}?>
+        <?php
+        if (isset($this->message)) {
+            echo '<h4>' . $this->message . '<h4>';
+        }
+        ?>
     </div>
-    
-    
+    <div>
+        <?php
+        if (isset($this->avions) && is_array($this->avions)) {
+            echo "
+        <table>
+        <tr>
+            <th>No.</th>
+            <th>Appelation</th>
+            <th>Modele</th>
+            <th>Constructeur</th>
+            <th>En Service le:</th>
+            <th>Nomb. de Place Max</th>
+            <th>Nomb. d'Incident</th>
+            <th>Etat Actuelle :</th>
+            <td></td>
+            </tr>
+            ";
+            foreach ($this->avions as $avion) {
+                if ($avion instanceof ServMaintenance_Model_Avion) {
+                    echo'
+            <tr>
+            <td>' . $avion->get_noAvion() . '</td>
+            <td>' . $avion->get_label() . '</td>
+            <td>';
+                    $modele = ServMaintenance_Model_Modele::findOne($avion->get_noModele());
+                    if ($modele instanceof ServMaintenance_Model_Modele) {
+                        echo $modele->get_label() . '</td>';
+                        $constructeur = ServMaintenance_Model_Constructeur::FindOne($modele->get_noConstructeur());
+                        if ($constructeur instanceof ServMaintenance_Model_Constructeur) {
+                            echo '<td>' . $constructeur->get_label() . '</td>';
+                        } else {
+                            echo '<td> Err!</td>';
+                        }
+                    } else {
+                        echo '<td colspan="2"> Err!<td>';
+                    }
+                    echo'
+            <td>' . $avion->get_dateMiseService() . '</td>
+            ';
+                    echo '
+            <td>' . $avion->get_nbPlaceMax() . '</td>
+            <td>' . $avion->get_nbIncident() . '</td>
+            ';
+                    if (ServPlaning_Model_Vol::IsEnVolByAvionOnCurrentTime($avion->get_noAvion()) === FALSE) {
+                        echo '<td style="color: green;"> Au Sol </td>';
+                    } elseif (ServPlaning_Model_Vol::IsEnVolByAvionOnCurrentTime($avion->get_noAvion()) === TRUE) {
+                        $vol = ServPlaning_Model_Vol::getVolByAvionOnCurrentTime($avion->get_noAvion());
+                        if ($vol instanceof ServPlaning_Model_Vol) {
+                            echo '<td style="color: orange:"> En Vol : ' . $vol->get_labelvol() . '</td>';
+                        } else {
+                            echo '<td style="color: orange;"> En Vol </td>';
+                        }
+                    } else {
+                        echo '<td> Err!</td>';
+                    }
+
+                    echo '<td><a href="/ServMaintenance/Gestappareil/Misehorsservice/status/1/id/' . $avion->get_noAvion() . '" class="enSavoirPlus">Hors Service</a></td>';
+
+                    echo '
+            </tr>';
+                }
+            }
+            echo '</table>';
+        }
+        ?>
+    </div>
+    <div>
+        <?php
+        if (isset($this->form) && isset($this->avion)) {
+            $avion = $this->avion;
+            if ($avion instanceof ServMaintenance_Model_Avion) {
+                echo "
+                <table>
+                    <tr>
+                        <th>No.</th>
+                        <th>Appelation</th>
+                        <th>Modele</th>
+                        <th>Constructeur</th>
+                        <th>En Service le:</th>
+                        <th>Nomb. de Place Max</th>
+                        <th>Nomb. d'Incident</th>
+                        <th>Etat Actuelle :</th>
+                        <td></td>
+                    </tr>
+                ";
+                echo'
+            <tr>
+            <td>' . $avion->get_noAvion() . '</td>
+            <td>' . $avion->get_label() . '</td>
+            <td>';
+                $modele = ServMaintenance_Model_Modele::findOne($avion->get_noModele());
+                if ($modele instanceof ServMaintenance_Model_Modele) {
+                    echo $modele->get_label() . '</td>';
+                    $constructeur = ServMaintenance_Model_Constructeur::FindOne($modele->get_noConstructeur());
+                    if ($constructeur instanceof ServMaintenance_Model_Constructeur) {
+                        echo '<td>' . $constructeur->get_label() . '</td>';
+                    } else {
+                        echo '<td> Err!</td>';
+                    }
+                } else {
+                    echo '<td colspan="2"> Err!<td>';
+                }
+                echo'
+            <td>' . $avion->get_dateMiseService() . '</td>
+            ';
+                echo '
+            <td>' . $avion->get_nbPlaceMax() . '</td>
+            <td>' . $avion->get_nbIncident() . '</td>
+            ';
+                if (ServPlaning_Model_Vol::IsEnVolByAvionOnCurrentTime($avion->get_noAvion()) === FALSE) {
+                    echo '<td style="color: green;"> Au Sol </td>';
+                } elseif (ServPlaning_Model_Vol::IsEnVolByAvionOnCurrentTime($avion->get_noAvion()) === TRUE) {
+                    $vol = ServPlaning_Model_Vol::getVolByAvionOnCurrentTime($avion->get_noAvion());
+                    if ($vol instanceof ServPlaning_Model_Vol) {
+                        echo '<td style="color: orange:"> En Vol : ' . $vol->get_labelvol() . '</td>';
+                    } else {
+                        echo '<td style="color: orange;"> En Vol </td>';
+                    }
+                } else {
+                    echo '<td> Err!</td>';
+                }
+
+                echo '
+            </tr></table><br/>';
+            }
+
+            echo $this->form;
+            
+            echo '<br/> <a href="/ServMaintenance/Gestappareil/Misehorsservice/" class="enSavoirPlus" />Annuler</a>';
+        }
+        ?>
+    </div>
+
 </div>
