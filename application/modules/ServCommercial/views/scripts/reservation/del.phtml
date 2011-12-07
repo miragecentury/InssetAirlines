@@ -1,7 +1,7 @@
 <h1>Voulez vous vraiment suprimer cette reservation?</h1>
 
 <?php
-if($this->item) {
+if ($this->item) {
     echo "<table>
                 <tr>
                     <td width='50%'>Vol</td>
@@ -17,18 +17,25 @@ if($this->item) {
                 </tr>
                 <tr>
                     <td>Etat Traitement</td>
-                    <td>" . $this->item->get_enAttentedeTraitement() . "</td>
-                </tr>
-                <tr>
-                    <td>Etat Validation</td>
-                    <td>" . $this->item->get_valider() . "</td>
+                    <td>";
+    if ($this->item->get_enAttentedeTraitement()) {
+        echo "Traité";
+    } else {
+        echo "Non traité";
+    }
+    echo "</td></tr><tr><td>Etat Validation</td><td>";
+    if ($this->item->get_valider()) {
+        echo "Validé";
+    } else {
+        echo "Non validé";
+    }
+    echo"</td>
                 </tr>  
             </table>";
-    
+
     echo "<div><a class='enSavoirPlus' href='/ServCommercial/Reservation/admin'>Non </a>
-          <a class='enSavoirPlus' href='/ServCommercial/Reservation/del?ok=ok&id=".$this->id."'>Oui</a></div>";
-}
-else {
+          <a class='enSavoirPlus' href='/ServCommercial/Reservation/del?ok=ok&id=" . $this->id . "'>Oui</a></div>";
+} else {
     echo "Cette Agence n'existe pas dans la base de donnée!<br/><br/>
         <div><a class='enSavoirPlus' href='/ServCommercial/Reservation/admin'>Retour </a>";
 }

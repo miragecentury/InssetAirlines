@@ -7,6 +7,12 @@ class ServCommercial_Model_VolHasAgence
     //Attributs
     //--------------------------------------------------------------------------
     /**
+     * id
+     * @var int
+     */
+    protected $_idVolHasAgence;
+
+    /**
      * numero du vol
      * @var int
      */
@@ -56,7 +62,7 @@ class ServCommercial_Model_VolHasAgence
     // Methodes
     //--------------------------------------------------------------------------
     /**
-     * Ajoute une reservation dans la BD.
+     * Ajoute ou modif une reservation dans la BD.
      *
      * @author charles
      * @access public
@@ -64,7 +70,7 @@ class ServCommercial_Model_VolHasAgence
      */
     public function addReservation()
     {
-        $this->_mapper->save($this);
+        $this->_mapper->save($this, 'idVolHasAgence');
     }
 
     /**
@@ -75,53 +81,15 @@ class ServCommercial_Model_VolHasAgence
      * @param int $noAgence
      *
      */
-    public function delReservation($noVol, $noAgence)
+    public function delReservation($id)
     {
+        echo $id;
         try {
-            $this->_mapper->delete($noVol, $noAgence);
+            $this->_mapper->delete('idVolHasAgence', $id);
         } catch (Zend_Exception $e) {
-            echo 'Serv_Commercial_Models_VolHasAgence_delReservation() Exception - ' .
+            echo 'Serv_Commercial_Models_VolHasAgence_delPlace() Exception - ' .
             $e->getMessage() . ' - ' . $e->getPrevious();
         }
-    }
-
-    /**
-     * Modifie une reservation dans la BD.
-     *
-     * @author charles
-     * @access public
-     *
-     */
-    public function updReservation()
-    {
-        $this->_mapper->update($this);
-    }
-
-    public function getReservationHTML()
-    {
-        $Place = "<table>
-                <tr>
-                    <td>Vol</td>
-                    <td>" . $this->get_Vol_noVol() . "</td>
-                </tr>
-                <tr>
-                    <td>Agence</td>
-                    <td>" . $this->get_Agence_noAgence() . "</td>
-                </tr>
-                <tr>
-                    <td>Nombre Reservation</td>
-                    <td>" . $this->get_nbReservation() . "</td>
-                </tr>
-                <tr>
-                    <td>Etat Traitement</td>
-                    <td>" . $this->get_enAttentedeTraitement() . "</td>
-                </tr>
-                <tr>
-                    <td>Etat Validation</td>
-                    <td>" . $this->get_valider() . "</td>
-                </tr>                
-            </table>";
-        return $Place;
     }
 
     //--------------------------------------------------------------------------
@@ -137,60 +105,9 @@ class ServCommercial_Model_VolHasAgence
      * @return null|ServCommercial_Model_Agence_has_AgenceMapper
      *  
      */
-    public function getReservation($_Vol_noVol, $_Agence_noAgence)
+    public function getReservation($id)
     {
-        return $this->_mapper->find(array($_Vol_noVol, $_Agence_noAgence));
-    }
-
-    /**
-     * Retourne tous les places sous forme de tableau html, 
-     * retourne une phrase disant qu'il n'y en a pas dans la bd si c'est le cas
-     * 
-     * @access public
-     * @author charles
-     * @return string
-     *  
-     */
-    public static function getListeReservationHTML($admin=true)
-    {
-        $html = ServCommercial_Model_VolHasAgence::getListeReservation();
-        $color = true;
-
-        if (!empty($html)) {
-            $tableau = "<table>
-                        <tr>
-                            <th>Vol</th>
-                            <th>Agence</th>
-                            <th>Nombre de place</th>
-                            <th>Traitement</th>
-                            <th>Validation</h>";
-            if ($admin)
-                $tableau .="<th></th>
-                            <th></th>
-                            <th></th>";
-            $tableau .= " </tr>";
-
-            foreach ($html as $val) {
-                if ($color) {
-                    $tableau .= "<tr>";
-                }
-                $color = !$color;
-                $tableau .= "   <td>" . $val->get_Vol_noVol() . "</td>
-                                <td>" . $val->get_Agence_noAgence() . "</td>
-                                <td>" . $val->get_nbReservation() . "</td>
-                                <td>" . $val->get_enAttentedeTraitement() . "</td>
-                                <td>" . $val->get_valider() . "</td>";
-                if ($admin)
-                    $tableau .= "   <td><a href='/ServCommercial/Reservation/detail?id[]=" . $val->get_Vol_noVol() . "&id[]=" . $val->get_Agence_noAgence() . "'>Detail</a></td>
-                                    <td><a href='/ServCommercial/Reservation/upd?id[]=" . $val->get_Vol_noVol() . "&id[]=" . $val->get_Agence_noAgence() . "'>Modifier</a></td>
-                                    <td><a href='/ServCommercial/Reservation/del?id[]=" . $val->get_Vol_noVol() . "&id[]=" . $val->get_Agence_noAgence() . "'>Supprimer</a></td>";
-                $tableau .= " </tr>";
-            }
-            $tableau .= "</table>";
-        } else {
-            $tableau = "<div>Il n'y a pas de place répertoriées dans la base de donnée</div>";
-        }
-        return $tableau;
+        return $this->_mapper->find($id);
     }
 
     /**
@@ -215,6 +132,17 @@ class ServCommercial_Model_VolHasAgence
     //--------------------------------------------------------------------------
     // Getter / setter
     //--------------------------------------------------------------------------
+    public function get_idVolHasAgence()
+    {
+        return $this->_idVolHasAgence;
+    }
+
+    public function set_idVolHasAgence($_id)
+    {
+        $this->_idVolHasAgence = $_id;
+        return $this;
+    }
+
     public function get_Vol_noVol()
     {
         return $this->_Vol_noVol;
