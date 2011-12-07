@@ -32,9 +32,20 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
     public function newAction()
     {
         $form = new ServCommercial_Form_Reservation();
+        $formS = new ServPlaning_Form_SearchVol();
         if (empty($_POST) || !$form->isValid($_POST)) {
             $this->view->form = $form;
-            $this->view->vol = ServPlaning_Model_Vol::getListeVol();
+            $this->view->formS = $formS;
+            $noAeroD = $this->getRequest()->getParam('noAeroD');
+            $noAeroA = $this->getRequest()->getParam('noAeroA');
+            if(isset($noAeroD)&&
+               isset($noAeroA)) {
+                // A modifier en fonction des Aeroport;
+                echo "$noAeroD=>$noAeroA";
+                $this->view->vol = ServPlaning_Model_Vol::getVolsDuJour();
+            } else {
+                $this->view->vol = ServPlaning_Model_Vol::getVolsDuJour();
+            }
         } else {
             $item = new ServCommercial_Model_VolHasAgence();
             $item->set_Vol_noVol($form->getValue('noVol'))
@@ -53,6 +64,7 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
     public function updAction()
     {
         $form = new ServCommercial_Form_Reservation();
+        $formS = new ServPlaning_Form_SearchVol();
         $item = new ServCommercial_Model_VolHasAgence();
         if (empty($_POST) || !$form->isValid($_POST)) {
             $item = $item->getReservation($this->getRequest()->getParam('id'));
@@ -64,7 +76,17 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
                 $form->getElement('valider')->setValue($item->get_valider());
             }
             $this->view->form = $form;
-            $this->view->vol = ServPlaning_Model_Vol::getListeVol();
+            $this->view->formS = $formS;
+            $noAeroD = $this->getRequest()->getParam('noAeroD');
+            $noAeroA = $this->getRequest()->getParam('noAeroA');
+            if(isset($noAeroD)&&
+               isset($noAeroA)) {
+                // A modifier en fonction des Aeroport;
+                echo "$noAeroD=>$noAeroA";
+                $this->view->vol = ServPlaning_Model_Vol::getVolsDuJour();
+            } else {
+                $this->view->vol = ServPlaning_Model_Vol::getVolsDuJour();
+            }
         } else {
             $item->set_idVolHasAgence($this->getRequest()->getParam('id'))
                     ->set_Vol_noVol($form->getValue('noVol'))

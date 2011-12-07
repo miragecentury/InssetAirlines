@@ -34,6 +34,7 @@ class ServCommercial_PlaceController extends Zend_Controller_Action
         $form = new ServCommercial_Form_Place();
         if (empty($_POST) || !$form->isValid($_POST)) {
             $this->view->form = $form;
+            $this->view->vol = ServPlaning_Model_Vol::getVolsDuJour();
         } else {
             $item = new ServCommercial_Model_Place();
             $item->set_noVol($form->getValue('noVol'))
@@ -59,6 +60,7 @@ class ServCommercial_PlaceController extends Zend_Controller_Action
                 $form->getElement('noPersonne')->setValue($item->get_Personne_noPersonne());
             }
             $this->view->form = $form;
+            $this->view->vol = ServPlaning_Model_Vol::getVolsDuJour();
         } else {
             $item->set_noPlace($this->getRequest()->getParam('id'))
                     ->set_noVol($form->getValue('noVol'))

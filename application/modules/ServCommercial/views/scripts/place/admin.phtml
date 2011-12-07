@@ -7,9 +7,6 @@ if ($this->all) {
                 <th>Agence</th>
                 <th>Personne</th>
                 <th>Vol</th>
-                <th></th>
-                <th></th>
-                <th></th>
             </tr>
             <tr>";
     foreach ($this->all as $val) {
@@ -18,9 +15,9 @@ if ($this->all) {
                 <td>" . $val->get_labelAgence() . "</td>
                 <td>" . $val->get_Personne_noPersonne() . "</td>
                 <td>" . $val->get_noVol() . "</td>
-                <td><a href='/ServCommercial/Place/detail?id=" . $val->get_noPlace() . "'>Detail</a></td>
-                <td><a href='/ServCommercial/Place/upd?id=" . $val->get_noPlace() . "'>Modifier</a></td>
-                <td><a href='/ServCommercial/Place/del?id=" . $val->get_noPlace() . "'>Supprimer</a></td>
+                <td><a class='enSavoirPlus' href='/ServCommercial/Place/detail?id=" . $val->get_noPlace() . "'>Detail</a></td>
+                <td><a class='enSavoirPlus' href='/ServCommercial/Place/upd?id=" . $val->get_noPlace() . "'>Modifier</a></td>
+                <td><a class='enSavoirPlus' href='/ServCommercial/Place/del?id=" . $val->get_noPlace() . "'>Supprimer</a></td>
             </tr>";
     }
     echo "</table>";
