@@ -85,17 +85,22 @@ class ServPlaning_Model_Vol
         self::$_mapper->save($this, 'noVol');
     }
 
-    public function addRetard($nbHeure, $nbMinute = 0) {
+
+    public function addRetard($nbHeure, $nbMinute)
+    {
         $date = new DateTime($this->get_heureAtterissage());
         $date->modify("+".$nbHeure." hour +".$nbMinute." min");
     }
 
-    public function deroute($noAeroportAtterissage) {
-        
+    public function deroute($noAeroportAtterissage)
+    {
+
+
     }
 
-    public function annule() {
-        
+    public function annule()
+    {
+
     }
 
     /**
@@ -253,108 +258,6 @@ class ServPlaning_Model_Vol
         }
     }
 
-    /**
-     * Retourne tous les vols sous forme de tableau html,
-     * retourne une phrase disant qu'il n'y en a pas dans la bd si c'est le cas
-     *
-     * @access public
-     * @author charles
-     * @return string
-     *
-     */
-    public static function getListeVolHTML()
-    {
-        $all = ServPlaning_Model_Vol::getListeVol();
-        $color = true;
-
-        if (!empty($all)) {
-            $tableau = "<table class='grid_16'>
-                        <tr>
-                            <td class='grid_1'>Id</td>
-                            <td class='grid_2'>Label</td>
-                            <td class='grid_3'>Aeroport de départ</td>
-                            <td class='grid_3'>Aeroport d'arrivée</td>
-                            <td class='grid_1'>Avion</td>
-                            <td class='grid_1'>Ligne</td>
-                            <td class='grid_1'>Depart</td>
-                            <td class='grid_1'>Arrivée</td>
-                            <td class='grid_2'></td>
-                            <td class='grid_2'></td>
-                        </tr>";
-
-            foreach ($all as $val) {
-                if ($color) {
-                    $tableau .= "<tr bgcolor='#CCCCCC'>";
-                }
-                $color = !$color;
-                $tableau .= "   <td class='grid_1'>" . $val->get_noVol() . "</td>
-                                <td class='grid_2'>" . $val->get_labelvol() . "</td>
-                                <td class='grid_3'>" . $val->get_noAeroportDeco() . "</td>
-                                <td class='grid_3'>" . $val->get_noAeroportAtte() . "</td>
-                                <td class='grid_1'>" . $val->get_noAvion() . "</td>
-                                <td class='grid_1'>" . $val->get_noLigne() . "</td>
-                                <td class='grid_1'>" . $val->get_heuredecollage() . "</td>
-                                <td class='grid_1'>" . $val->get_heureAtterissage() . "</td>
-                                <td class='grid_2'><a href='/ServPlaning/Vol/upd?id=" . $val->get_noVol() . "'>Modifier</a></td>
-                                <td class='grid_2'><a href='/ServPlaning/Vol/del?id=" . $val->get_noVol() . "'>Supprimer</a></td>
-                            </tr>";
-            }
-            $tableau .= "</table>";
-        } else {
-            $tableau = "<div>Il n'y a pas d'incident dans la base de donnée</div>";
-        }
-        return $tableau;
-    }
-
-    /**
-     * Retourne tous les vols sous forme de tableau html,
-     * retourne une phrase disant qu'il n'y en a pas dans la bd si c'est le cas
-     *
-     * @access public
-     * @author charles
-     * @return string
-     *
-     */
-    public static function getListeVolUser()
-    {
-        $all = ServPlaning_Model_Vol::getListeVol();
-        $color = true;
-
-        if (!empty($all)) {
-            $tableau = "<table class='grid_16'>
-                        <tr>
-                            <td class='grid_1'>Id</td>
-                            <td class='grid_3'>Label</td>
-                            <td class='grid_3'>Aeroport de départ</td>
-                            <td class='grid_3'>Aeroport d'arrivée</td>
-                            <td class='grid_1'>Avion</td>
-                            <td class='grid_1'>Ligne</td>
-                            <td class='grid_1'>Depart</td>
-                            <td class='grid_1'>Arrivée</td>
-                        </tr>";
-
-            foreach ($all as $val) {
-                if ($color) {
-                    $tableau .= "<tr bgcolor='#CCCCCC'>";
-                }
-                $color = !$color;
-                $tableau .= "   <td class='grid_1'>" . $val->get_noVol() . "</td>
-                                <td class='grid_3'>" . $val->get_labelvol() . "</td>
-                                <td class='grid_3'>" . $val->get_noAeroportDeco() . "</td>
-                                <td class='grid_3'>" . $val->get_noAeroportAtte() . "</td>
-                                <td class='grid_1'>" . $val->get_noAvion() . "</td>
-                                <td class='grid_1'>" . $val->get_noLigne() . "</td>
-                                <td class='grid_1'>" . $val->get_heuredecollage() . "</td>
-                                <td class='grid_1'>" . $val->get_heureAtterissage() . "</td>
-                                </tr>";
-            }
-            $tableau .= "</table>";
-        } else {
-            $tableau = "<div>Il n'y a pas d'incident dans la base de donnée</div>";
-        }
-        return $tableau;
-    }
-
     public static function getSemaineAheadFromCurrent($nbrSemaine)
     {
         $date = new DateTime(date(DATE_ATOM));
@@ -375,9 +278,8 @@ class ServPlaning_Model_Vol
     {
         if ($weekDate instanceof DateTime) {
             $date = $weekDate;
-        }
-        else if(is_string($weekDate)){
-            $date =  new DateTime($weekDate);
+        } else if (is_string($weekDate)) {
+            $date = new DateTime($weekDate);
         } else {
             return null;
         }
@@ -407,29 +309,62 @@ class ServPlaning_Model_Vol
                 return null;
         }
     }
-    public static function getMoisFromWeek($weekDate){
+
+    public static function getMoisFromWeek($weekDate)
+    {
         if ($weekDate instanceof DateTime) {
             $date = $weekDate;
-        }
-        else if(is_string($weekDate)){
-            $date =  new DateTime($weekDate);
+        } else if (is_string($weekDate)) {
+            $date = new DateTime($weekDate);
         } else {
             return null;
         }
         $date->modify('first day of this month');
         return $date->format(DATE_ATOM);
     }
-    public static function getAnneeFromWeek($weekDate){
+
+    public static function getAnneeFromWeek($weekDate)
+    {
         if ($weekDate instanceof DateTime) {
             $date = $weekDate;
-        }
-        else if(is_string($weekDate)){
-            $date =  new DateTime($weekDate);
+        } else if (is_string($weekDate)) {
+            $date = new DateTime($weekDate);
         } else {
             return null;
         }
         $date->setDate($date->format('Y'), 1, 1);
         return $date->format(DATE_ATOM);
+    }
+
+    /**
+     * recupération des vols du jour courant
+     *
+     * @access public
+     * @static
+     * @return array(ServPlaning_Model_Vol)
+     */
+    public static function getVolsDuJour()
+    {
+        //création des dates butoirs
+        //butoir gauche aujourd'hui minuit
+        $dateStart = new DateTime(date(DATE_ATOM));
+        $dateStart->setTime(0, 0, 0);
+        //butoir droite demain minuit
+        $dateStop = $dateStart;
+        $dateStop->modify('tomorrow');
+
+        //recupération des vols
+        //mapper
+        if (self::$_mapper == null) {
+            self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
+        }
+        //recup de la liste
+        if (($return = self::$_mapper->findAllVolsInInterval($dateStart, $dateStop)) != false){
+            return $return;
+        } else {
+            return null;
+        }
+
     }
 
     //--------------------------------------------------------------------------

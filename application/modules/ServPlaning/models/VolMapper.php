@@ -95,6 +95,38 @@ class ServPlaning_Model_VolMapper extends Spesx_Mapper_Mapper {
         return $return;
     }
 
+    /**
+     * Permet de récupérer une liste de vols programmé dans l'intervale entre les
+     * date $start -> $stop
+     *
+     * @access public
+     * @author pewho
+     * @param DateTime $start
+     * @param DateTime $stop
+     * @return Array(ServPlaning_Model_Vol) $return
+     */
+    public function findAllVolsInInterval(DateTime $start, DateTime $stop){
+        //formatage de la date pour compatiblité
+        $start = $start->format(DATE_ATOM);
+        $stop = $stop->format(DATE_ATOM);
+
+        //Selection
+        try{
+        $select = $this->getDbTable()->select()
+            ->where("
+                (heureDecollage >= '$start' AND heureDecollage <= '$stop') OR
+                (heureAtterissage >= '$start' AND heureAtterissage <= '$stop') OR
+                (heureDecollage <= '$start' AND heureAtterissage >= '$stop')");
+        $returnRowset = $this->getDbTable()->fetchAll($select);
+        } catch (Zend_Db_Exception $e){
+            Spesx_Log::Log('findAllVolsInInterval : Echec de récupération de la liste<br /> '
+                . $e->getMessage(),Zend_Log::ERR);
+            return false;
+        }
+        $return = $this->_createItemsFromRowset($returnRowset);
+        return $return;
+    }
+
 }
 
 ?>

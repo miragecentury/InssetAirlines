@@ -3,4 +3,29 @@
 <?php
 if($this->form != FALSE)
     echo ($this->form->render());
+
+if ($this->vol) {
+    echo "<h3>Liste des vols</h3>
+        <table>
+            <tr>
+                <th>Vol</th>
+                <th>Label</th>
+                <th>Decolage</th>
+                <th>Atterissage</th>
+            </tr>";
+    foreach ($this->vol as $val) {
+        echo "<tr>
+                <td>" . $val->get_noVol() . "</td>
+                <td>" . $val->get_labelvol() . "</td>
+                <td>" . $val->get_heuredecollage() . "</td>
+                <td>" . $val->get_heureAtterissage() . "</td>
+            </tr>";
+    }
+    echo "</table>";
+} else {
+    echo "<div>Il n'y a pas de vol dans la base de donnée</div>";
+}
+
+if($this->formS != FALSE)
+    echo ($this->formS->render());
 ?>

@@ -9,20 +9,28 @@ if ($this->all) {
                     <th>Nombre de place</th>
                     <th>Traitement</th>
                     <th>Validation</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
                 </tr>";
     foreach ($this->all as $val) {
         echo "  <tr>
                     <td>" . $val->get_Vol_noVol() . "</td>
                     <td>" . $val->get_Agence_noAgence() . "</td>
                     <td>" . $val->get_nbReservation() . "</td>
-                    <td>" . $val->get_enAttentedeTraitement() . "</td>
-                    <td>" . $val->get_valider() . "</td>
-                    <td><a href='/ServCommercial/Reservation/detail?id[]=" . $val->get_Vol_noVol() . "&id[]=" . $val->get_Agence_noAgence() . "'>Detail</a></td>
-                    <td><a href='/ServCommercial/Reservation/upd?id[]=" . $val->get_Vol_noVol() . "&id[]=" . $val->get_Agence_noAgence() . "'>Modifier</a></td>
-                    <td><a href='/ServCommercial/Reservation/del?id[]=" . $val->get_Vol_noVol() . "&id[]=" . $val->get_Agence_noAgence() . "'>Supprimer</a></td>
+                    <td>";
+        if ($val->get_enAttentedeTraitement()) {
+            echo "Traité";
+        } else {
+            echo "Non traité";
+        }
+        echo "</td><td>";
+        if ($val->get_valider()) {
+            echo "Validé";
+        } else {
+            echo "Non validé";
+        }
+        echo "</td>
+                    <td><a class='enSavoirPlus' href='/ServCommercial/Reservation/detail?id=" . $val->get_idVolHasAgence() . "'>Detail</a></td>
+                    <td><a class='enSavoirPlus' href='/ServCommercial/Reservation/upd?id=" . $val->get_idVolHasAgence() . "'>Modifier</a></td>
+                    <td><a class='enSavoirPlus' href='/ServCommercial/Reservation/del?id=" . $val->get_idVolHasAgence() . "'>Supprimer</a></td>
                 </tr>";
     }
     echo "</table>";
@@ -31,6 +39,6 @@ if ($this->all) {
 }
 ?>
 <center>
-<a class="enSavoirPlus" href='/ServCommercial/Reservation/new'>Ajouter</a>
-<a class="enSavoirPlus" href='/ServCommercial/Reservation/'>Retour</a><br/><br/>
+    <a class="enSavoirPlus" href='/ServCommercial/Reservation/new'>Ajouter</a>
+    <a class="enSavoirPlus" href='/ServCommercial/Reservation/'>Retour</a><br/><br/>
 </center>

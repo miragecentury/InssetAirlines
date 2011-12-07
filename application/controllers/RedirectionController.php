@@ -41,11 +41,11 @@ class RedirectionController extends Zend_Controller_Action
     {
         //redirection automatique au bout de 3 secondes
         if ($this->_session) {
-            $this->view->fail = $this->_message . ' contemple la longueur du fail !';
-            $this->getResponse()->setHeader('refresh', '10,url=' . $this->_redirection);
+            $this->view->fail = $this->_message;
+            $this->getResponse()->setHeader('refresh', '1,url=' . $this->_redirection);
         } else {
-            $this->view->fail = 'Succes !';
-            $this->getResponse()->setHeader('refresh', '10,url=/');
+            $this->view->fail = 'Echec !';
+            $this->getResponse()->setHeader('refresh', '1,url=/');
         }
     }
 
