@@ -16,7 +16,7 @@ class ServPlaning_LignejournaliereController extends Zend_Controller_Action
     }
 
     public function indexAction(){
-
+        $listeLun = Application_Model_ApplicationVar::get('LstVolAPlan_J_Lun');
     }
 }
 

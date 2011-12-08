@@ -58,8 +58,15 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
             $liste[$item->get_noLigne()] = $item->get_jours();
         }
         //insertion dans la bdd (var Glob)
-        $return = Application_Model_ApplicationVar::set('LstVolAPlan_J', $liste);
-        if ($return) {
+        $return=0;
+        $return += (int) Application_Model_ApplicationVar::set('LstVolAPlan_J_Lun', $liste);
+        $return += (int) Application_Model_ApplicationVar::set('LstVolAPlan_J_Mar', $liste);
+        $return += (int) Application_Model_ApplicationVar::set('LstVolAPlan_J_Mer', $liste);
+        $return += (int) Application_Model_ApplicationVar::set('LstVolAPlan_J_Jeu', $liste);
+        $return += (int) Application_Model_ApplicationVar::set('LstVolAPlan_J_Ven', $liste);
+        $return += (int) Application_Model_ApplicationVar::set('LstVolAPlan_J_Sam', $liste);
+        $return += (int) Application_Model_ApplicationVar::set('LstVolAPlan_J_Dim', $liste);
+        if ($return == 7) {
             return true;
         } else {
             return false;

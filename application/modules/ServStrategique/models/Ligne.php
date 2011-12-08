@@ -227,13 +227,49 @@ class ServStrategique_Model_Ligne
     {
         $mapper = Spesx_Mapper_MapperFactory::getMapper("ServStrategique_Model_Ligne");
         //recupération de l'array des planifications restante
-        $listeJ = Application_Model_ApplicationVar::get('LstVolAPlan_J');
+        $listeJLun = Application_Model_ApplicationVar::get('LstVolAPlan_J_Lun');
+        $listeJMar = Application_Model_ApplicationVar::get('LstVolAPlan_J_Mar');
+        $listeJMer = Application_Model_ApplicationVar::get('LstVolAPlan_J_Mer');
+        $listeJJeu = Application_Model_ApplicationVar::get('LstVolAPlan_J_Jeu');
+        $listeJVen = Application_Model_ApplicationVar::get('LstVolAPlan_J_Ven');
+        $listeJSam = Application_Model_ApplicationVar::get('LstVolAPlan_J_Sam');
+        $listeJDim = Application_Model_ApplicationVar::get('LstVolAPlan_J_Dim');
         //Comptage
         $nbPlanification = 0;
-        if ($listeJ != null) {
-        foreach ($listeJ as $value) {
-            $nbPlanification += $value;
+        if ($listeJLun != null) {
+            foreach ($listeJLun as $value) {
+                $nbPlanification += $value;
+            }
         }
+        if ($listeJMar != null) {
+            foreach ($listeJMar as $value) {
+                $nbPlanification += $value;
+            }
+        }
+        if ($listeJMer != null) {
+            foreach ($listeJMer as $value) {
+                $nbPlanification += $value;
+            }
+        }
+        if ($listeJJeu!= null) {
+            foreach ($listeJJeu as $value) {
+                $nbPlanification += $value;
+            }
+        }
+        if ($listeJVen != null) {
+            foreach ($listeJVen as $value) {
+                $nbPlanification += $value;
+            }
+        }
+        if ($listeJSam != null) {
+            foreach ($listeJSam as $value) {
+                $nbPlanification += $value;
+            }
+        }
+        if ($listeJDim != null) {
+            foreach ($listeJDim as $value) {
+                $nbPlanification += $value;
+            }
         }
         return $nbPlanification;
     }
@@ -261,9 +297,9 @@ class ServStrategique_Model_Ligne
         //Comptage
         $nbPlanification = 0;
         if ($listeJ != null) {
-        foreach ($listeJ as $value) {
-            $nbPlanification += $value;
-        }
+            foreach ($listeJ as $value) {
+                $nbPlanification += $value;
+            }
         }
         return $nbPlanification;
     }
@@ -276,9 +312,9 @@ class ServStrategique_Model_Ligne
         //Comptage
         $nbPlanification = 0;
         if ($listeJ != null) {
-        foreach ($listeJ as $value) {
-            $nbPlanification += $value;
-        }
+            foreach ($listeJ as $value) {
+                $nbPlanification += $value;
+            }
         }
         return $nbPlanification;
     }
