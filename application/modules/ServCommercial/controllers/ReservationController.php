@@ -8,6 +8,8 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
         $this->view->setLfiProtection(false);
         $this->view->render('../../../../views/scripts/user/_sidebar.phtml');
         $this->view->render('../../../../views/scripts/user/_login.phtml');
+        $this->view->render('sidebar/_homeServComSidebar.phtml');
+        $this->view->render('sidebar/_homeServComReservationSidebar.phtml');
         $this->_acl = Zend_Registry::get('Acl');
         //ACL
         $authSession = new Zend_Session_Namespace('Zend_Auth');
@@ -26,11 +28,13 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
 
     public function adminAction()
     {
+        $this->view->render('sidebar/_homeServComReservationAdminSidebar.phtml');
         $this->view->all = ServCommercial_Model_VolHasAgence::getListeReservation();
     }
 
     public function newAction()
     {
+        $this->view->render('sidebar/_homeServComReservationAdminSidebar.phtml');
         $form = new ServCommercial_Form_Reservation();
         $formS = new ServPlaning_Form_SearchVol();
         if (empty($_POST) || !$form->isValid($_POST)) {
@@ -63,6 +67,7 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
 
     public function updAction()
     {
+        $this->view->render('sidebar/_homeServComReservationAdminSidebar.phtml');
         $form = new ServCommercial_Form_Reservation();
         $formS = new ServPlaning_Form_SearchVol();
         $item = new ServCommercial_Model_VolHasAgence();
@@ -104,6 +109,7 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
 
     public function delAction()
     {
+        $this->view->render('sidebar/_homeServComReservationAdminSidebar.phtml');
         $Mod = new ServCommercial_Model_VolHasAgence();
         $item = $Mod->getReservation($this->getRequest()->getParam('id'));
         $session = new Zend_Session_Namespace('Redirect');
@@ -126,6 +132,7 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
 
     public function detailAction()
     {
+        $this->view->render('sidebar/_homeServComReservationAdminSidebar.phtml');
         $Mod = new ServCommercial_Model_VolHasAgence;
         $this->view->item = $Mod->getReservation($this->getRequest()->getParam('id'));
         $this->view->id = $this->getRequest()->getParam('id');

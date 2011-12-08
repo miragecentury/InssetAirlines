@@ -8,6 +8,8 @@ class ServLogCom_MenuController extends Zend_Controller_Action
         $this->view->setLfiProtection(false);
         $this->view->render('../../../../views/scripts/user/_sidebar.phtml');
         $this->view->render('../../../../views/scripts/user/_login.phtml');
+        $this->view->render('sidebar/_homeServLogSidebar.phtml');
+        $this->view->render('sidebar/_homeServLogMenuSidebar.phtml');
         $this->_acl = Zend_Registry::get('Acl');
         //ACL
         $authSession = new Zend_Session_Namespace('Zend_Auth');
@@ -26,11 +28,13 @@ class ServLogCom_MenuController extends Zend_Controller_Action
 
     public function adminAction()
     {
+        $this->view->render('sidebar/_homeServLogMenuAdminSidebar.phtml');
         $this->view->all = ServLogCom_Model_Menu::getListeMenu();
     }
 
     public function newAction()
     {
+        $this->view->render('sidebar/_homeServLogMenuAdminSidebar.phtml');
         $form = new ServLogCom_Form_Menu;
         if (empty($_POST) || !$form->isValid($_POST)) {
            $this->view->form = $form;
@@ -47,6 +51,7 @@ class ServLogCom_MenuController extends Zend_Controller_Action
 
     public function updAction()
     {
+        $this->view->render('sidebar/_homeServLogMenuAdminSidebar.phtml');
         $form = new ServLogCom_Form_Menu();
         $item = new ServLogCom_Model_Menu();
         if (empty($_POST) || !$form->isValid($_POST)) {
@@ -68,6 +73,7 @@ class ServLogCom_MenuController extends Zend_Controller_Action
 
     public function delAction()
     {
+        $this->view->render('sidebar/_homeServLogMenuAdminSidebar.phtml');
         $mod = new ServLogCom_Model_Menu;
         $item = $mod->getMenu($this->getRequest()->getParam('id'));
         $session = new Zend_Session_Namespace('Redirect');
@@ -90,6 +96,7 @@ class ServLogCom_MenuController extends Zend_Controller_Action
 
     public function detailAction()
     {
+        $this->view->render('sidebar/_homeServLogMenuAdminSidebar.phtml');
         $mod = new ServLogCom_Model_Menu;
         $this->view->item = $mod->getMenu($this->getRequest()->getParam('id'));
         $this->view->id = $this->getRequest()->getParam('id');

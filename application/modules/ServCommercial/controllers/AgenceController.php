@@ -8,6 +8,9 @@ class ServCommercial_AgenceController extends Zend_Controller_Action
         $this->view->setLfiProtection(false);
         $this->view->render('../../../../views/scripts/user/_sidebar.phtml');
         $this->view->render('../../../../views/scripts/user/_login.phtml');
+        $this->view->render('sidebar/_homeServComSidebar.phtml');
+        $this->view->render('sidebar/_homeServComPlaceSidebar.phtml');
+        $this->view->render('sidebar/_homeServComPlaceAgenceSidebar.phtml');
         $this->_acl = Zend_Registry::get('Acl');
         //ACL
         $authSession = new Zend_Session_Namespace('Zend_Auth');
@@ -26,11 +29,13 @@ class ServCommercial_AgenceController extends Zend_Controller_Action
 
     public function adminAction()
     {
+        $this->view->render('sidebar/_homeServComPlaceAgenceAdminSidebar.phtml');
         $this->view->all = ServCommercial_Model_Agence::getListeAgence();
     }
 
     public function newAction()
     {
+        $this->view->render('sidebar/_homeServComPlaceAgenceAdminSidebar.phtml');
         $form = new ServCommercial_Form_Agence();
         if (empty($_POST) || !$form->isValid($_POST)) {
             $this->view->form = $form;
@@ -52,6 +57,7 @@ class ServCommercial_AgenceController extends Zend_Controller_Action
 
     public function updAction()
     {
+        $this->view->render('sidebar/_homeServComPlaceAgenceAdminSidebar.phtml');
         $form = new ServCommercial_Form_Agence();
         $item = new ServCommercial_Model_Agence();
         if (empty($_POST) || !$form->isValid($_POST)) {
@@ -82,6 +88,7 @@ class ServCommercial_AgenceController extends Zend_Controller_Action
 
     public function delAction()
     {
+        $this->view->render('sidebar/_homeServComPlaceAgenceAdminSidebar.phtml');
         $Mod = new ServCommercial_Model_Agence();
         $item = $Mod->getAgence($this->getRequest()->getParam('id'));
         $session = new Zend_Session_Namespace('Redirect');
@@ -104,6 +111,7 @@ class ServCommercial_AgenceController extends Zend_Controller_Action
 
     public function detailAction()
     {
+        $this->view->render('sidebar/_homeServComPlaceAgenceAdminSidebar.phtml');
         $Mod = new ServCommercial_Model_Agence;
         $this->view->item = $Mod->getAgence($this->getRequest()->getParam('id'));
         $this->view->id = $this->getRequest()->getParam('id');
