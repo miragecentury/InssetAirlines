@@ -12,7 +12,6 @@ class ServMaintenance_GestappareilController extends Zend_Controller_Action {
 
     public function indexAction() {
 
-        
     }
 
     public function affavionallAction() {
@@ -75,7 +74,7 @@ class ServMaintenance_GestappareilController extends Zend_Controller_Action {
         } else {
             $this->view->message = 'Attention la mise Hors Service d\'un Appareil empechera son utilisation définitivement!';
             //$this->view->form = new ServMaintenance_Form_Avion_HorsService();
-            $this->view->avions = ServMaintenance_Model_Avion::findAllEnService();
+            $this->view->avions = ServMaintenance_Model_Avion::finAllEnServiceForMiseHorsServiceAtCurrentTime();
         }
     }
 

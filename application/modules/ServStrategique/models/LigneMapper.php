@@ -37,16 +37,16 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
         );
     }
 
-    public function getLignesJournalieres(){
+    public function getLignesJournalieres()
+    {
         //select de la liste
-        try{
-        $select = $this->getDbTable()->select()
-            ->where('jours <> 0');
-        $rowset = $this->getDbTable()->fetchAll($select);
-        $return = $this->_createItemsFromRowset($rowset);
-        } catch (Zend_Db_Exception $e){
-            Spesx_Log::Log('Recuperation des lignes journalières : ' . $e->getMessage(),
-            Zend_Log::ERR);
+        try {
+            $select = $this->getDbTable()->select()
+                ->where('jours <> 0');
+            $rowset = $this->getDbTable()->fetchAll($select);
+            $return = $this->_createItemsFromRowset($rowset);
+        } catch (Zend_Db_Exception $e) {
+            Spesx_Log::Log('Recuperation des lignes journalières : ' . $e->getMessage(), Zend_Log::ERR);
             return false;
         }
 
@@ -59,19 +59,19 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
         //insertion dans la bdd (var Glob)
         Application_Model_ApplicationVar::set(LstVolAPlan_J, $liste);
 
-       return true;
+        return true;
     }
 
-    public function getLignesHebdomadaires(){
+    public function getLignesHebdomadaires()
+    {
         //select de la liste
-        try{
-        $select = $this->getDbTable()->select()
-            ->where('semaines <> 0');
-        $rowset = $this->getDbTable()->fetchAll($select);
-        $return = $this->_createItemsFromRowset($rowset);
-        } catch (Zend_Db_Exception $e){
-            Spesx_Log::Log('Recuperation des lignes hebdomadaires : ' . $e->getMessage(),
-            Zend_Log::ERR);
+        try {
+            $select = $this->getDbTable()->select()
+                ->where('semaines <> 0');
+            $rowset = $this->getDbTable()->fetchAll($select);
+            $return = $this->_createItemsFromRowset($rowset);
+        } catch (Zend_Db_Exception $e) {
+            Spesx_Log::Log('Recuperation des lignes hebdomadaires : ' . $e->getMessage(), Zend_Log::ERR);
             return false;
         }
 
@@ -84,18 +84,19 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
         //insertion dans la bdd (var Glob)
         Application_Model_ApplicationVar::set(LstVolAPlan_S, $liste);
 
-       return true;
+        return true;
     }
-    public function getLignesMensuelles(){
+
+    public function getLignesMensuelles()
+    {
         //select de la liste
-        try{
-        $select = $this->getDbTable()->select()
-            ->where('mois <> 0');
-        $rowset = $this->getDbTable()->fetchAll($select);
-        $return = $this->_createItemsFromRowset($rowset);
-        } catch (Zend_Db_Exception $e){
-            Spesx_Log::Log('Recuperation des lignes mensuelles : ' . $e->getMessage(),
-            Zend_Log::ERR);
+        try {
+            $select = $this->getDbTable()->select()
+                ->where('mois <> 0');
+            $rowset = $this->getDbTable()->fetchAll($select);
+            $return = $this->_createItemsFromRowset($rowset);
+        } catch (Zend_Db_Exception $e) {
+            Spesx_Log::Log('Recuperation des lignes mensuelles : ' . $e->getMessage(), Zend_Log::ERR);
             return false;
         }
 
@@ -108,18 +109,19 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
         //insertion dans la bdd (var Glob)
         Application_Model_ApplicationVar::set(LstVolAPlan_M, $liste);
 
-       return true;
+        return true;
     }
-    public function getLignesAnnuelles(){
+
+    public function getLignesAnnuelles()
+    {
         //select de la liste
-        try{
-        $select = $this->getDbTable()->select()
-            ->where('annees <> 0');
-        $rowset = $this->getDbTable()->fetchAll($select);
-        $return = $this->_createItemsFromRowset($rowset);
-        } catch (Zend_Db_Exception $e){
-            Spesx_Log::Log('Recuperation des lignes journalières : ' . $e->getMessage(),
-            Zend_Log::ERR);
+        try {
+            $select = $this->getDbTable()->select()
+                ->where('annees <> 0');
+            $rowset = $this->getDbTable()->fetchAll($select);
+            $return = $this->_createItemsFromRowset($rowset);
+        } catch (Zend_Db_Exception $e) {
+            Spesx_Log::Log('Recuperation des lignes journalières : ' . $e->getMessage(), Zend_Log::ERR);
             return false;
         }
 
@@ -130,9 +132,13 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
         }
 
         //insertion dans la bdd (var Glob)
-        Application_Model_ApplicationVar::set(LstVolAPlan_A, $liste);
 
-       return true;
+        $return = Application_Model_ApplicationVar::set(LstVolAPlan_A, $liste);
+        if ($return) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

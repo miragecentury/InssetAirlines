@@ -61,17 +61,6 @@ class ServMaintenance_Model_Avion {
         return self::$_mapper->find($noAvion);
     }
 
-    /**
-     * Fonction retournant un avion correspondant à l'id si celui-là peut
-     * être mis HorsService (en gros s'il ne l'ai pas déjà)
-     * @param int $noAvion
-     * @return null|ServMaintenance_Model_Avion
-     * @author VANROYE Victorien 
-     */
-    public static function findOneforSetHorsService($noAvion) {
-        self::initialisation();
-    }
-
     public static function findAll() {
         self::initialisation();
         return self::$_mapper->findAll();
@@ -86,6 +75,15 @@ class ServMaintenance_Model_Avion {
     public static function findAllEnServiceAtCurrentTime() {
         self::initialisation();
         if (count(($array = self::$_mapper->findAllServiceAtCurrentTime(array(self::ETAT_ENSERVICE, self::ETAT_ATT_HORSERVICE)))) == 0) {
+            return null;
+        } else {
+            return $array;
+        }
+    }
+
+    public static function finAllEnServiceForMiseHorsServiceAtCurrentTime() {
+        self::initialisation();
+        if (count(($array = self::$_mapper->findAllServiceAtCurrentTime(array(self::ETAT_ENSERVICE)))) == 0) {
             return null;
         } else {
             return $array;
@@ -110,31 +108,12 @@ class ServMaintenance_Model_Avion {
         } else {
             return FALSE;
         }
+        $DateHorsService->setTime(0, 0, 0);
         $DateHorsService = $DateHorsService->format(DATE_ATOM);
+    }
 
-        if (($avion = ServMaintenance_Model_Avion::findOne($noAvion)) instanceof ServMaintenance_Model_Avion && !$avion->isEnVol()) {
-            $CurrentDate = date(DATE_ATOM);
-            if ($DateHorsService <= $CurrentDate) {
-                $DateHorsService = $CurrentDate;
-                $avion->set_enService(self::ETAT_HORSSERVICE);
-            } else {
-                $avion->set_enService(self::ETAT_ATT_HORSERVICE);
-            }
-            if ($DateHorsService < ServPlaning_Model_Vol::getSemaineAheadFromCurrent(5)) {
-                self::repercutionMiseHorsServiceToVol($noAvion, $DateHorsService);
-            }
-            $CurrentDate = date(DATE_ATOM);
-
-            $avion->set_dateMiseHorsService($DateHorsService);
-            try {
-                $avion->save();
-            } catch (Exception $e) {
-                return FALSE;
-            }
-            return TRUE;
-        } else {
-            return FALSE;
-        }
+    public static function findDispoAvionsAtDateTimeInterval($Start, $End) {
+        
     }
 
     public static function findAllHorsService() {
@@ -167,22 +146,6 @@ class ServMaintenance_Model_Avion {
         self::initialisation();
     }
 
-    private static function repercutionMiseHorsServiceToVol($noAvion, $DateTime) {
-        
-    }
-
-    private static function checkMaintenance() {
-        
-    }
-
-    private static function checkUpdateHorsService() {
-        
-    }
-
-    private static function checkIntergrityVolforHorsServiceUrg($Date, $noAvion) {
-        self::initialisation();
-    }
-
     /**
      *
      * @param int $noAvion
@@ -209,6 +172,16 @@ class ServMaintenance_Model_Avion {
         return self::$_mapper->save($this, 'noAvion');
     }
 
+    public function isDipos() {
+        if ($this->isEnVol()) {
+            return 1;
+        } else if ($this->isEnMaintenance()) {
+            return 2;
+        } else {
+            return FALSE;
+        }
+    }
+
     public function isEnVol() {
         return ServPlaning_Model_Vol::IsEnVolByAvionOnCurrentTime($this->_noAvion);
     }
@@ -231,6 +204,10 @@ class ServMaintenance_Model_Avion {
         } else {
             return FALSE;
         }
+    }
+
+    public function get_labelStatus() {
+        
     }
 
     //**************************************************************************
