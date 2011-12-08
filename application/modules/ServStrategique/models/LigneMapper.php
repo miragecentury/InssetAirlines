@@ -44,7 +44,7 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
         //select de la liste
         try {
             $select = $this->getDbTable()->select()
-                ->where('jours <> 0');
+                ->where('jours IS NOT NULL AND etat = 3');
             $rowset = $this->getDbTable()->fetchAll($select);
             $return = $this->_createItemsFromRowset($rowset);
         } catch (Zend_Db_Exception $e) {
@@ -57,7 +57,6 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
         foreach ($return as $item) {
             $liste[$item->get_noLigne()] = $item->get_jours();
         }
-
         //insertion dans la bdd (var Glob)
         $return = Application_Model_ApplicationVar::set('LstVolAPlan_J', $liste);
         if ($return) {
@@ -72,7 +71,7 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
         //select de la liste
         try {
             $select = $this->getDbTable()->select()
-                ->where('semaines <> 0');
+                ->where('semaines IS NOT NULL AND etat = 3');
             $rowset = $this->getDbTable()->fetchAll($select);
             $return = $this->_createItemsFromRowset($rowset);
         } catch (Zend_Db_Exception $e) {
@@ -100,7 +99,7 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
         //select de la liste
         try {
             $select = $this->getDbTable()->select()
-                ->where('mois <> 0');
+                ->where('mois IS NOT NULL AND etat = 3');
             $rowset = $this->getDbTable()->fetchAll($select);
             $return = $this->_createItemsFromRowset($rowset);
         } catch (Zend_Db_Exception $e) {
@@ -113,7 +112,6 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
         foreach ($return as $item) {
             $liste[$item->get_noLigne()] = $item->get_mois();
         }
-
         //insertion dans la bdd (var Glob)
         $return = Application_Model_ApplicationVar::set('LstVolAPlan_M', $liste);
         if ($return) {
@@ -128,7 +126,7 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
         //select de la liste
         try {
             $select = $this->getDbTable()->select()
-                ->where('annees <> 0');
+                ->where('annees IS NOT NULL AND etat = 3');
             $rowset = $this->getDbTable()->fetchAll($select);
             $return = $this->_createItemsFromRowset($rowset);
         } catch (Zend_Db_Exception $e) {
@@ -141,7 +139,6 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
         foreach ($return as $item) {
             $liste[$item->get_noLigne()] = $item->get_annees();
         }
-
         //insertion dans la bdd (var Glob)
 
         $return = Application_Model_ApplicationVar::set('LstVolAPlan_A', $liste);
