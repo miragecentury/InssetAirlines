@@ -90,6 +90,18 @@ class ServPlaning_Model_Vol {
 //******************************************************************************
 //public static
 
+    public static function changementSemaine() {
+        
+    }
+    
+    public static function changementMois() {
+        
+    }
+
+    public static function changementJour() {
+        
+    }
+
     public static function getVolsByAvion($noAvion) {
         self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
         return self::$_mapper->getVolsByAvion($noAvion);
@@ -244,24 +256,35 @@ class ServPlaning_Model_Vol {
      *
      */
     public function addVol() {
+        self::init();
         self::$_mapper->save($this, 'noVol');
     }
 
     public function addRetardDecollage($nbHeure, $nbMinute) {
+        self::init();
+        $date = new DateTime($this->get_heuredecollage());
+        $date->modify("+" . $nbHeure . " hour +" . $nbMinute . " min");
+        $this->set_heuredecollage($date->format(DATE_ATOM));
         $date = new DateTime($this->get_heureAtterissage());
         $date->modify("+" . $nbHeure . " hour +" . $nbMinute . " min");
+        $this->set_heureAtterissage($date->format(DATE_ATOM));
+        try {
+            $this->save();
+        } catch (Exception $e) {
+            
+        }
     }
 
     public function addRetardAtterissage($nbHeure, $nbMinute) {
-        
+        self::init();
     }
 
     public function deroute($noAeroportAtterissage) {
-        
+        self::init();
     }
 
     public function annule() {
-        
+        self::init();
     }
 
     /**
@@ -273,6 +296,7 @@ class ServPlaning_Model_Vol {
      *
      */
     public function delVol($noVol) {
+        self::init();
         try {
             self::$_mapper->delete('noVol', $noVol);
         } catch (Zend_Exception $e) {
@@ -293,8 +317,13 @@ class ServPlaning_Model_Vol {
      *
      */
     public function getVol($noVol) {
-        self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
+        self::init();
         return self::$_mapper->find($noVol);
+    }
+
+    public function save() {
+        self::init();
+        return self::$_mapper->save($this, 'noVol');
     }
 
     //--------------------------------------------------------------------------

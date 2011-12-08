@@ -23,8 +23,8 @@
                 echo'<table>';
                 if ($modele instanceof ServMaintenance_Model_Modele) {
                     if (
-                            isset($this->ListeConstructeur[$noModele]) &&
-                            $this->ListeConstructeur[$noModele] instanceof ServMaintenance_Model_Constructeur
+                            isset($this->ListeConstructeur[$modele->get_noConstructeur()]) &&
+                            $this->ListeConstructeur[$modele->get_noConstructeur()] instanceof ServMaintenance_Model_Constructeur
                     ) {
 
                         echo '<tr><th colspan="5" style="border-bottom: #777 1px solid; background-color: #fec380;"><h6>' . $modele->get_noModele() .

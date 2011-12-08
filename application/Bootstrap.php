@@ -63,7 +63,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         try {
             $cache = Spesx_Cache::factory($cacheConfig, Spesx_Log::ReturnZendLog());
         } catch (Exception $e) {
-            echo 'Spesx_Cache_Exception XS it\'s bad <br/>'.$e->getMessage();
+            echo 'Spesx_Cache_Exception XS it\'s bad <br/>' . $e->getMessage();
         }
 
         //var_dump($cache->save('test', 'test'));
@@ -135,7 +135,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         }
         //echo '<br/>';
         //var_dump($acl);
-
         //Retro-compatibilité avec l'ancienne version
         Zend_Registry::set('Acl', Spesx_Acl::ReturnZendAcl());
 
@@ -218,7 +217,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     }
 
     //configuration initial du paginator
-    protected  function _initPaginator(){
+    protected function _initPaginator() {
         Zend_View_Helper_PaginationControl::setDefaultViewPartial('pagination.phtml');
     }
 
@@ -260,6 +259,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         return array($autoloaderExp, $autoloaderCom, $autoloaderDRH,
             $autoloaderAdm, $autoloaderAgv, $autoloaderLog, $autoloaderMai,
             $autoloaderPla, $autoloaderStr);
+    }
+
+    public function _initUpdate() {
+        Application_Model_ApplicationVar::checkEventUpdate();
+        return null;
     }
 
 }

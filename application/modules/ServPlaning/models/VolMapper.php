@@ -68,7 +68,7 @@ class ServPlaning_Model_VolMapper extends Spesx_Mapper_Mapper {
         try {
             $select = $this->getDbTable()->select()
                     ->where('noAvion = ?', $noAvion)
-                    ->where('enService = ?',1);
+                    ->where('enService = ?', 1);
             $result = $this->getDbTable()->fetchAll($select);
         } catch (Zend_Db_Exception $e) {
             throw new Spesx_Mapper_Exception(
@@ -84,7 +84,7 @@ class ServPlaning_Model_VolMapper extends Spesx_Mapper_Mapper {
         try {
             $select = $this->getDbTable()->select()
                     ->where('noAvion = ?', $noAvion)
-                    ->where('enService = ?',0);
+                    ->where('enService = ?', 0);
             $result = $this->getDbTable()->fetchAll($select);
         } catch (Zend_Db_Exception $e) {
             throw new Spesx_Mapper_Exception(
@@ -106,22 +106,22 @@ class ServPlaning_Model_VolMapper extends Spesx_Mapper_Mapper {
      * @param DateTime $stop
      * @return Array(ServPlaning_Model_Vol) $return
      */
-    public function findAllVolsInInterval(DateTime $start, DateTime $stop){
+    public function findAllVolsInInterval(DateTime $start, DateTime $stop) {
         //formatage de la date pour compatiblité
         $start = $start->format(DATE_ATOM);
         $stop = $stop->format(DATE_ATOM);
 
         //Selection
-        try{
-        $select = $this->getDbTable()->select()
-            ->where("
+        try {
+            $select = $this->getDbTable()->select()
+                    ->where("
                 (heureDecollage >= '$start' AND heureDecollage <= '$stop') OR
                 (heureAtterissage >= '$start' AND heureAtterissage <= '$stop') OR
                 (heureDecollage <= '$start' AND heureAtterissage >= '$stop')");
-        $returnRowset = $this->getDbTable()->fetchAll($select);
-        } catch (Zend_Db_Exception $e){
+            $returnRowset = $this->getDbTable()->fetchAll($select);
+        } catch (Zend_Db_Exception $e) {
             Spesx_Log::Log('findAllVolsInInterval : Echec de récupération de la liste<br /> '
-                . $e->getMessage(),Zend_Log::ERR);
+                    . $e->getMessage(), Zend_Log::ERR);
             return false;
         }
         $return = $this->_createItemsFromRowset($returnRowset);

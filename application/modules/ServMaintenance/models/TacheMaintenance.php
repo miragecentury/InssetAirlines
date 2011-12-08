@@ -18,6 +18,11 @@ class ServMaintenance_Model_TacheMaintenance {
 
     //**************************************************************************
     //public static
+
+    public static function changementSemaine() {
+        return FALSE;
+    }
+
     public static function findAll() {
         self::init();
         return self::$mapper->findAll();
@@ -52,7 +57,7 @@ class ServMaintenance_Model_TacheMaintenance {
         self::init();
     }
 
-    public static function IsOnMaintenanceAtCurrent($noAvion) {
+    public static function IsOnMaintenanceAtCurrentByAvion($noAvion) {
         self::init();
     }
 

@@ -1,6 +1,11 @@
 <?php
 
 class ServMaintenance_Model_TypeMaintenance {
+    
+    /*heure de vol avant planification
+    * à augmenter avec le nombre de vol
+    * géré*/
+    const TOLERANCE = 10;
 
     protected $_noTypeMaintenance;
     protected $_label;

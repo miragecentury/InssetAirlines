@@ -13,8 +13,7 @@ class ServMaintenance_Model_AvionMapper extends Spesx_Mapper_Mapper {
                 ->set_dateMiseService($row->dateMiseService)
                 ->set_dateMiseHorsService($row->dateHorsService)
                 ->set_enService($row->enService)
-                ->set_noModele($row->noModele)
-                ->set_calcDate($row->calcDate);
+                ->set_noModele($row->noModele);
         return $item;
     }
 

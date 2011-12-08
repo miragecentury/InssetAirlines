@@ -9,11 +9,11 @@ class IndexController extends Zend_Controller_Action {
     }
 
     public function indexAction() {
-        //Spesx_Log::LogALERT('test');
+        
     }
 
     public function patternAction() {
-
+        
     }
 
     public function contactAction() {
@@ -44,8 +44,6 @@ class IndexController extends Zend_Controller_Action {
                     }
                 }
             }
-
-
         }
     }
 

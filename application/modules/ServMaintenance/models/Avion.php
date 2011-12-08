@@ -20,7 +20,6 @@ class ServMaintenance_Model_Avion {
     protected $_dateMiseHorsService;
     protected $_enService;
     protected $_noModele;
-    protected $_calcDate;
     protected static $_mapper = null;
     protected static $checkMiseHorsService = FALSE;
     protected static $checkMaintenance = FALSE;
@@ -108,6 +107,7 @@ class ServMaintenance_Model_Avion {
             $DateHorsService = new DateTime($Date);
         } elseif ($Date instanceof DateTime) {
             $DateHorsService = $Date;
+        } else {
             return FALSE;
         }
         $DateHorsService = $DateHorsService->format(DATE_ATOM);
@@ -183,6 +183,12 @@ class ServMaintenance_Model_Avion {
         self::initialisation();
     }
 
+    /**
+     *
+     * @param int $noAvion
+     * @param DateTime|String $Date
+     * @return type 
+     */
     //**************************************************************************
 
     /**
@@ -226,7 +232,6 @@ class ServMaintenance_Model_Avion {
             return FALSE;
         }
     }
-   
 
     //**************************************************************************
     // *  Getter / Setter
@@ -310,15 +315,6 @@ class ServMaintenance_Model_Avion {
 
     public function set_noModele($_noModele) {
         $this->_noModele = $_noModele;
-        return $this;
-    }
-
-    public function get_calcDate() {
-        return $this->_calcDate;
-    }
-
-    public function set_calcDate($calcDate) {
-        $this->_calcDate = $calcDate;
         return $this;
     }
 
