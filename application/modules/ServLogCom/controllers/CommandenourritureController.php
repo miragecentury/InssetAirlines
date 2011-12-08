@@ -8,6 +8,8 @@ class ServLogCom_CommandenourritureController extends Zend_Controller_Action
         $this->view->setLfiProtection(false);
         $this->view->render('../../../../views/scripts/user/_sidebar.phtml');
         $this->view->render('../../../../views/scripts/user/_login.phtml');
+        $this->view->render('sidebar/_homeServLogSidebar.phtml');
+        $this->view->render('sidebar/_homeServLogCommandeSidebar.phtml');
         $this->_acl = Zend_Registry::get('Acl');
         //ACL
         $authSession = new Zend_Session_Namespace('Zend_Auth');
@@ -26,6 +28,7 @@ class ServLogCom_CommandenourritureController extends Zend_Controller_Action
 
     public function newAction()
     {
+        $this->view->render('sidebar/_homeServLogCommandeAdminSidebar.phtml');
         $form = new ServLogCom_Form_CommandeNourriture();
         if (empty($_POST) || !$form->isValid($_POST)) {
            $this->view->form = $form;
@@ -44,6 +47,7 @@ class ServLogCom_CommandenourritureController extends Zend_Controller_Action
 
     public function updAction()
     {
+        $this->view->render('sidebar/_homeServLogCommandeAdminSidebar.phtml');
         $form = new ServLogCom_Form_CommandeNourriture();
         $item = new ServLogCom_Model_CommandeNourriture();
         if (empty($_POST) || !$form->isValid($_POST)) {
@@ -69,6 +73,7 @@ class ServLogCom_CommandenourritureController extends Zend_Controller_Action
 
     public function delAction()
     {
+        $this->view->render('sidebar/_homeServLogCommandeAdminSidebar.phtml');
         $mod = new ServLogCom_Model_CommandeNourriture;
         $item = $mod->getCommandeNourriture($this->getRequest()->getParam('id'));
         $session = new Zend_Session_Namespace('Redirect');
@@ -91,6 +96,7 @@ class ServLogCom_CommandenourritureController extends Zend_Controller_Action
 
     public function detailAction()
     {
+        $this->view->render('sidebar/_homeServLogCommandeAdminSidebar.phtml');
         $mod = new ServLogCom_Model_CommandeNourriture;
         $this->view->item = $mod->getCommandeNourriture($this->getRequest()->getParam('id'));
         $this->view->id = $this->getRequest()->getParam('id');
@@ -99,6 +105,7 @@ class ServLogCom_CommandenourritureController extends Zend_Controller_Action
     public function adminAction()
     {
         $this->view->all = ServLogCom_Model_CommandeNourriture::getListeCommandeNourriture();
+        $this->view->render('sidebar/_homeServLogCommandeAdminSidebar.phtml');
     }
 }
 
