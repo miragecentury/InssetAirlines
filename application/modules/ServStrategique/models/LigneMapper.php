@@ -13,7 +13,8 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
             ->set_annees($row->annees)
             ->set_etat($row->etat)
             ->set_noAeroportDeco($row->noAeroportDeco)
-            ->set_noAeroportAtte($row->noAeroportAtte);
+            ->set_noAeroportAtte($row->noAeroportAtte)
+                ->set_duree($row->duree);
 
         return $item;
     }
@@ -33,7 +34,8 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
              */
             'noAeroportDeco' => $item->get_noAeroportDeco(),
             'noAeroportAtte' => $item->get_noAeroportAtte(),
-            'etat' => $item->get_etat()
+            'etat' => $item->get_etat(),
+            'duree' => $item->get_duree()
         );
     }
 
@@ -57,9 +59,12 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
         }
 
         //insertion dans la bdd (var Glob)
-        Application_Model_ApplicationVar::set(LstVolAPlan_J, $liste);
-
-        return true;
+        $return = Application_Model_ApplicationVar::set('LstVolAPlan_J', $liste);
+        if ($return) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function getLignesHebdomadaires()
@@ -82,9 +87,12 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
         }
 
         //insertion dans la bdd (var Glob)
-        Application_Model_ApplicationVar::set(LstVolAPlan_S, $liste);
-
-        return true;
+        $return = Application_Model_ApplicationVar::set('LstVolAPlan_S', $liste);
+        if ($return) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function getLignesMensuelles()
@@ -107,9 +115,12 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
         }
 
         //insertion dans la bdd (var Glob)
-        Application_Model_ApplicationVar::set(LstVolAPlan_M, $liste);
-
-        return true;
+        $return = Application_Model_ApplicationVar::set('LstVolAPlan_M', $liste);
+        if ($return) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function getLignesAnnuelles()
@@ -121,7 +132,7 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
             $rowset = $this->getDbTable()->fetchAll($select);
             $return = $this->_createItemsFromRowset($rowset);
         } catch (Zend_Db_Exception $e) {
-            Spesx_Log::Log('Recuperation des lignes journalières : ' . $e->getMessage(), Zend_Log::ERR);
+            Spesx_Log::Log('Récuperation des lignes journalières : ' . $e->getMessage(), Zend_Log::ERR);
             return false;
         }
 
@@ -133,7 +144,7 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
 
         //insertion dans la bdd (var Glob)
 
-        $return = Application_Model_ApplicationVar::set(LstVolAPlan_A, $liste);
+        $return = Application_Model_ApplicationVar::set('LstVolAPlan_A', $liste);
         if ($return) {
             return true;
         } else {

@@ -44,6 +44,7 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
         //Chargement de la form associé
         $addVolForm = new ServStrategique_Form_addLigne();
         $this->view->form = $addVolForm;
+        $session = new Zend_Session_Namespace('Redirect');
 
         //initialisation d'un objet ligne
         $ligne = new ServStrategique_Model_Ligne();
@@ -58,15 +59,30 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
             //setter
             $ligne->set_noAeroportAtte($addVolForm->getValue('aeroAtt'))
                 ->set_noAeroportDeco($addVolForm->getValue('aeroDep'))
-                ->set_jours($addVolForm->getValue('jour'))
-                ->set_semaines($addVolForm->getValue('semaine'))
-                ->set_mois($addVolForm->getValue('mois'))
-                ->set_annees($addVolForm->getValue('annee'))
-                ->set_etat($addVolForm->getValue('etat'));
+                ->set_etat($addVolForm->getValue('etat'))
+                ->set_duree($addVolForm->getValue('duree'));
+            switch ($addVolForm->getValue('type')) {
+                case 1:
+                    $ligne->set_jours($addVolForm->getValue('recurence'));
+                    break;
+                case 2:
+                    $ligne->set_semaines($addVolForm->getValue('recurence'));
+                    break;
+                case 3:
+                $ligne->set_mois($addVolForm->getValue('recurence'));
+                    break;
+                case 4:
+                $ligne->set_annees($addVolForm->getValue('recurence'));
+                    break;
+                default:
+                    $session->message = "insertion impossible, veuillez donner le type de récurence !";
+                    $session->redirection = '/ServStrategique/gestvol';
+                    $this->_redirect('/redirection/fail');
+            }
 
             //enregistrement
             $reussite = $ligne->addLigne();
-            $session = new Zend_Session_Namespace('Redirect');
+
             if ($reussite) {
                 $session->message = 'La ligne a bien été ajouté !';
                 $session->redirection = '/ServStrategique/gestvol';
@@ -105,10 +121,7 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
         $addVolForm->setDefaults(array(
             'aeroDep' => $ligne->get_noAeroportDeco(),
             'aeroAtt' => $ligne->get_noAeroportAtte(),
-            'jour' => $ligne->get_jours(),
-            'semaine' => $ligne->get_semaines(),
-            'mois' => $ligne->get_mois(),
-            'annee' => $ligne->get_annees(),
+            'duree' => $ligne->get_duree(),
             'etat' => $ligne->getStatusLigne()
         ));
 
@@ -119,14 +132,40 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
                 que celui d'arrivée";
             //sinon si le formulaire est valide
         } else if (!empty($_POST) && $addVolForm->isValid($_POST)) {
-            //setter
             $ligne->set_noAeroportAtte($addVolForm->getValue('aeroAtt'))
                 ->set_noAeroportDeco($addVolForm->getValue('aeroDep'))
-                ->set_jours($addVolForm->getValue('jour'))
-                ->set_semaines($addVolForm->getValue('semaine'))
-                ->set_mois($addVolForm->getValue('mois'))
-                ->set_annees($addVolForm->getValue('annee'))
-                ->set_etat($addVolForm->getValue('etat'));
+                ->set_etat($addVolForm->getValue('etat'))
+                ->set_duree($addVolForm->getValue('duree'));
+            switch ($addVolForm->getValue('type')) {
+                case 1:
+                    $ligne->set_jours($addVolForm->getValue('recurence'));
+                    $ligne->set_semaines(NULL);
+                    $ligne->set_mois(NULL);
+                    $ligne->set_annees(NULL);
+                    break;
+                case 2:
+                    $ligne->set_jours(Null);
+                    $ligne->set_semaines($addVolForm->getValue('recurence'));
+                    $ligne->set_mois(NULL);
+                    $ligne->set_annees(NULL);
+                    break;
+                case 3:
+                    $ligne->set_jours(Null);
+                    $ligne->set_semaines(NULL);
+                    $ligne->set_mois($addVolForm->getValue('recurence'));
+                    $ligne->set_annees(NULL);
+                    break;
+                case 4:
+                    $ligne->set_jours(Null);
+                    $ligne->set_semaines(NULL);
+                    $ligne->set_mois(NULL);
+                    $ligne->set_annees($addVolForm->getValue('recurence'));
+                    break;
+                default:
+                    $session->message = "insertion impossible, veuillez donner le type de récurence !";
+                    $session->redirection = '/ServStrategique/gestvol';
+                    $this->_redirect('/redirection/fail');
+            }
 
             //enregistrement
             $reussite = $ligne->addLigne();

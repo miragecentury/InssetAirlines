@@ -63,6 +63,11 @@ class ServStrategique_Model_Ligne {
     protected $_etat;
 
     /**
+     * Durée minimal du vol
+     * @var int
+     */
+    protected $_duree;
+    /**
      * Mapper de l'objet
      * @var ServStrategique_Model_LigneMapper
      */
@@ -208,8 +213,18 @@ class ServStrategique_Model_Ligne {
     //--------------------------------------------------------------------------
     // Getter / setter
     //--------------------------------------------------------------------------
+    public function get_duree()
+    {
+        return $this->_duree;
+    }
 
-    public function get_noLigne() {
+    public function set_duree($_duree)
+    {
+        $this->_duree = $_duree;
+        return $this;
+    }
+
+        public function get_noLigne() {
         return $this->_noLigne;
     }
 
