@@ -37,6 +37,104 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
         );
     }
 
+    public function getLignesJournalieres(){
+        //select de la liste
+        try{
+        $select = $this->getDbTable()->select()
+            ->where('jours <> 0');
+        $rowset = $this->getDbTable()->fetchAll($select);
+        $return = $this->_createItemsFromRowset($rowset);
+        } catch (Zend_Db_Exception $e){
+            Spesx_Log::Log('Recuperation des lignes journalières : ' . $e->getMessage(),
+            Zend_Log::ERR);
+            return false;
+        }
+
+        //création de la liste
+        $liste = array();
+        foreach ($return as $item) {
+            $liste[$item->get_noLigne()] = $item->get_jours();
+        }
+
+        //insertion dans la bdd (var Glob)
+        Application_Model_ApplicationVar::set(LstVolAPlan_J, $liste);
+
+       return true;
+    }
+
+    public function getLignesHebdomadaires(){
+        //select de la liste
+        try{
+        $select = $this->getDbTable()->select()
+            ->where('semaines <> 0');
+        $rowset = $this->getDbTable()->fetchAll($select);
+        $return = $this->_createItemsFromRowset($rowset);
+        } catch (Zend_Db_Exception $e){
+            Spesx_Log::Log('Recuperation des lignes hebdomadaires : ' . $e->getMessage(),
+            Zend_Log::ERR);
+            return false;
+        }
+
+        //création de la liste
+        $liste = array();
+        foreach ($return as $item) {
+            $liste[$item->get_noLigne()] = $item->get_semaines();
+        }
+
+        //insertion dans la bdd (var Glob)
+        Application_Model_ApplicationVar::set(LstVolAPlan_S, $liste);
+
+       return true;
+    }
+    public function getLignesMensuelles(){
+        //select de la liste
+        try{
+        $select = $this->getDbTable()->select()
+            ->where('mois <> 0');
+        $rowset = $this->getDbTable()->fetchAll($select);
+        $return = $this->_createItemsFromRowset($rowset);
+        } catch (Zend_Db_Exception $e){
+            Spesx_Log::Log('Recuperation des lignes mensuelles : ' . $e->getMessage(),
+            Zend_Log::ERR);
+            return false;
+        }
+
+        //création de la liste
+        $liste = array();
+        foreach ($return as $item) {
+            $liste[$item->get_noLigne()] = $item->get_mois();
+        }
+
+        //insertion dans la bdd (var Glob)
+        Application_Model_ApplicationVar::set(LstVolAPlan_M, $liste);
+
+       return true;
+    }
+    public function getLignesAnnuelles(){
+        //select de la liste
+        try{
+        $select = $this->getDbTable()->select()
+            ->where('annees <> 0');
+        $rowset = $this->getDbTable()->fetchAll($select);
+        $return = $this->_createItemsFromRowset($rowset);
+        } catch (Zend_Db_Exception $e){
+            Spesx_Log::Log('Recuperation des lignes journalières : ' . $e->getMessage(),
+            Zend_Log::ERR);
+            return false;
+        }
+
+        //création de la liste
+        $liste = array();
+        foreach ($return as $item) {
+            $liste[$item->get_noLigne()] = $item->get_annees();
+        }
+
+        //insertion dans la bdd (var Glob)
+        Application_Model_ApplicationVar::set(LstVolAPlan_A, $liste);
+
+       return true;
+    }
+
 }
 
 ?>

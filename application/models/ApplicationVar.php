@@ -104,8 +104,9 @@ class Application_Model_ApplicationVar {
         if ($UpdateCipherAnnee != $CurrentDate->format('Y')) {
             //echo 'Update Annee';
             $boolInt = 0;
-
-            if ($boolInt == 0) {
+            $boolInt += (INT) ServStrategique_Model_Ligne::changementAnnee();
+            
+            if ($boolInt == 1) {
                 Spesx_Log::LogINFO('Update Annee Ok');
                 Application_Model_ApplicationVar::set('UpdateCipherAnnee', $CurrentDate->format('Y'));
 
@@ -119,8 +120,8 @@ class Application_Model_ApplicationVar {
             //echo 'Update Mois';
             $boolInt = 0;
             $boolInt += (INT) ServStrategique_Model_Ligne::changementMois();
-            $boolInt += (INT) ServPlaning_Model_Vol::changementMois();
-            if ($boolInt == 2) {
+
+            if ($boolInt == 1) {
                 Spesx_Log::LogINFO('Update Mois Ok');
                 Application_Model_ApplicationVar::set('UpdateCipherMois', $CurrentDate->format('m'));
                 Spesx_Cache::save($CurrentDate->format('m'), 'UpdateCipherMois');
@@ -132,9 +133,8 @@ class Application_Model_ApplicationVar {
             //echo 'Update Annee';
             $boolInt = 0;
             $boolInt += (INT) ServStrategique_Model_Ligne::changementSemaine();
-            $boolInt += (INT) ServMaintenance_Model_TacheMaintenance::changementSemaine();
-            $boolInt += (INT) ServPlaning_Model_Vol::changementSemaine();
-            if ($boolInt == 3) {
+
+            if ($boolInt == 1) {
                 Spesx_Log::LogINFO('Update Semaine Ok');
                 Application_Model_ApplicationVar::set('UpdateCipherSemaine', $CurrentDate->format('W'));
                 Spesx_Cache::save($CurrentDate->format('W'), 'UpdateCipherSemaine');
@@ -146,8 +146,8 @@ class Application_Model_ApplicationVar {
             //echo 'Update Jour';
             $boolInt = 0;
             $boolInt += (INT) ServStrategique_Model_Ligne::changementJour();
-            $boolInt += (INT) ServPlaning_Model_Vol::changementJour();
-            if ($boolInt == 2) {
+
+            if ($boolInt == 1) {
                 Spesx_Log::LogINFO('Update Jour Ok');
                 Application_Model_ApplicationVar::set('UpdateCipherJour', $CurrentDate->format('d'));
                 Spesx_Cache::save($CurrentDate->format('d'), 'UpdateCipherJours');

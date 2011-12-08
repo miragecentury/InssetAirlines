@@ -82,15 +82,31 @@ class ServStrategique_Model_Ligne {
     //--------------------------------------------------------------------------
 
     public static function changementSemaine() {
-        
+        $mapper = Spesx_Mapper_MapperFactory::getMapper("ServStrategique_Model_Ligne");
+        // enregistrement de la liste en bdd
+        $return = $mapper->getLignesHebdomadaires();
+        return $return;
     }
 
     public static function changementMois() {
-        
+        $mapper = Spesx_Mapper_MapperFactory::getMapper("ServStrategique_Model_Ligne");
+        // enregistrement de la liste en bdd
+        $return = $mapper->getLignesMensuelles();
+        return $return;
     }
 
     public static function changementJour() {
-        
+        $mapper = Spesx_Mapper_MapperFactory::getMapper("ServStrategique_Model_Ligne");
+        // enregistrement de la liste en bdd
+        $return = $mapper->getLignesJournalieres();
+        return $return;
+    }
+
+    public static function changementAnnee(){
+        $mapper = Spesx_Mapper_MapperFactory::getMapper("ServStrategique_Model_Ligne");
+        // enregistrement de la liste en bdd
+        $return = $mapper->getLignesAnnuelles();
+        return $return;
     }
 
     /**
