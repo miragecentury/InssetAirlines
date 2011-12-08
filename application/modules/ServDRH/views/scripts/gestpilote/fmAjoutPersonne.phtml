@@ -35,10 +35,15 @@
         </tr>
         <tr>
             <td>
-                <?php echo $this->element->dateNaissance->renderLabel(); ?>
+                <?php echo "Date de naissance (aaaa-mm-jj)"; ?>
+                <?php //echo $this->element->dateNaissance->renderLabel(); ?>
             </td>
             <td>
-                <?php echo $this->element->dateNaissance->renderViewHelper(); ?>
+                <?php 
+                    echo $this->element->jourNaissance->renderViewHelper();
+                    echo $this->element->moisNaissance->renderViewHelper();
+                    echo $this->element->anneeNaissance->renderViewHelper();
+                //echo $this->element->dateNaissance->renderViewHelper(); ?>
             </td>
         </tr>
         <tr>
