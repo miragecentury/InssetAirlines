@@ -4,5 +4,38 @@
 </div>
 <div class="clear"></div>
 <div class="prefix_1 grid_15">
+    <h3>Lundi</h3>
+    <div class="cached">
+        <table>
+            <tr>
+                <th style='min-width:150px;'>Ligne</th>
+                <th>Nombre de vol à planifier</th>
+            </tr>
+            <td>
+                <?php
+                    foreach ($this->listeLun as $key => $value){
+                        $ligne = ServStrategique_Model_Ligne::getLigne($key);
+                        $aeroDep = Application_Model_Aeroport::getStaticAeroport(
+                            $ligne->get_noAeroportDeco());
+                        $aeroAtt = Application_Model_Aeroport::getStaticAeroport(
+                            $ligne->get_noAeroportAtte());
+                        echo '<td>';
+                        echo $aeroDep->get_labelAeroport() .'-' . $aeroAtt->get_labelAeroport();
+                        echo '</td>';
+                        echo '<td>';
+                        echo $value;
+                        echo '</td>';
+                        echo '<td>';
+                        echo '<a href="' . Zend_Controller_Front::getInstance()->getBaseUrl() .
+                            'ServPlaning/Lignejournaliere/addPlanification/id/' .
+                            $key . '/jour/1' .
+                            '" class="enSavoirPlus">
+                                Planifier</a>';
+                        echo '</td>';
+                    }
+                ?>
+            </td>
+        </table>
+    </div>
 
 </div>
