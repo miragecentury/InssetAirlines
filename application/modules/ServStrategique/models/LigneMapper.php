@@ -14,7 +14,7 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
             ->set_etat($row->etat)
             ->set_noAeroportDeco($row->noAeroportDeco)
             ->set_noAeroportAtte($row->noAeroportAtte)
-                ->set_duree($row->duree);
+            ->set_duree($row->duree);
 
         return $item;
     }
