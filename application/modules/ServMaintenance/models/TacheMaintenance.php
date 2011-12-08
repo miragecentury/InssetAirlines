@@ -19,6 +19,18 @@ class ServMaintenance_Model_TacheMaintenance {
     //**************************************************************************
     //public static
 
+    public static function getPlusLongueTypeMaintenance() {
+        
+    }
+
+    public static function nbMaintenanceEnCoursAujourdhui() {
+        
+    }
+
+    public static function nbMaintenanceAtDateTimeInterval($Strat, $End) {
+        
+    }
+
     public static function changementSemaine() {
         return FALSE;
     }
