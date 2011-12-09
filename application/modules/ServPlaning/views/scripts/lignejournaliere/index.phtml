@@ -5,7 +5,7 @@
 <div class="clear"></div>
 <div class="prefix_1 grid_15">
 
-    <div class="cached">
+    <div class="cached sep">
         <h3>Lundi</h3>
         <table>
             <tr>
@@ -15,21 +15,191 @@
             <tr>
                 <?php
                     foreach ($this->listeLun as $key => $value){
-                        $ligne = ServStrategique_Model_Ligne::getLigne($key);
-                        $aeroDep = Application_Model_Aeroport::getStaticAeroport(
-                            $ligne->get_noAeroportDeco());
-                        $aeroAtt = Application_Model_Aeroport::getStaticAeroport(
-                            $ligne->get_noAeroportAtte());
+
                         echo '<td>';
-                        echo $aeroDep->get_labelAeroport() .'-' . $aeroAtt->get_labelAeroport();
+                        echo $value['label'];
                         echo '</td>';
                         echo '<td>';
-                        echo $value;
+                        echo $value['recurence'];
                         echo '</td>';
                         echo '<td>';
                         echo '<a href="' . Zend_Controller_Front::getInstance()->getBaseUrl() .
                             'ServPlaning/Lignejournaliere/addPlanification/id/' .
                             $key . '/jour/1' .
+                            '" class="enSavoirPlus">
+                                Planifier</a>';
+                        echo '</td>';
+                    }
+                ?>
+            </tr>
+        </table>
+    </div>
+    <div class="cached sep">
+        <h3>Mardi</h3>
+        <table>
+            <tr>
+                <th style='min-width:300px;'>Ligne</th>
+                <th>Nombre de vol à planifier</th>
+            </tr>
+            <tr>
+                <?php
+                    foreach ($this->listeMar as $key => $value){
+
+                        echo '<td>';
+                        echo $value['label'];
+                        echo '</td>';
+                        echo '<td>';
+                        echo $value['recurence'];
+                        echo '</td>';
+                        echo '<td>';
+                        echo '<a href="' . Zend_Controller_Front::getInstance()->getBaseUrl() .
+                            'ServPlaning/Lignejournaliere/addPlanification/id/' .
+                            $key . '/jour/2' .
+                            '" class="enSavoirPlus">
+                                Planifier</a>';
+                        echo '</td>';
+                    }
+                ?>
+            </tr>
+        </table>
+    </div>
+    <div class="cached sep">
+        <h3>Mercredi</h3>
+        <table>
+            <tr>
+                <th style='min-width:300px;'>Ligne</th>
+                <th>Nombre de vol à planifier</th>
+            </tr>
+            <tr>
+                <?php
+                    foreach ($this->listeMer as $key => $value){
+
+                        echo '<td>';
+                        echo $value['label'];
+                        echo '</td>';
+                        echo '<td>';
+                        echo $value['recurence'];
+                        echo '</td>';
+                        echo '<td>';
+                        echo '<a href="' . Zend_Controller_Front::getInstance()->getBaseUrl() .
+                            'ServPlaning/Lignejournaliere/addPlanification/id/' .
+                            $key . '/jour/3' .
+                            '" class="enSavoirPlus">
+                                Planifier</a>';
+                        echo '</td>';
+                    }
+                ?>
+            </tr>
+        </table>
+    </div>
+    <div class="cached sep">
+        <h3>Jeudi</h3>
+        <table>
+            <tr>
+                <th style='min-width:300px;'>Ligne</th>
+                <th>Nombre de vol à planifier</th>
+            </tr>
+            <tr>
+                <?php
+                    foreach ($this->listeJeu as $key => $value){
+
+                        echo '<td>';
+                        echo $value['label'];
+                        echo '</td>';
+                        echo '<td>';
+                        echo $value['recurence'];
+                        echo '</td>';
+                        echo '<td>';
+                        echo '<a href="' . Zend_Controller_Front::getInstance()->getBaseUrl() .
+                            'ServPlaning/Lignejournaliere/addPlanification/id/' .
+                            $key . '/jour/4' .
+                            '" class="enSavoirPlus">
+                                Planifier</a>';
+                        echo '</td>';
+                    }
+                ?>
+            </tr>
+        </table>
+    </div>
+    <div class="cached sep">
+        <h3>Vendredi</h3>
+        <table>
+            <tr>
+                <th style='min-width:300px;'>Ligne</th>
+                <th>Nombre de vol à planifier</th>
+            </tr>
+            <tr>
+                <?php
+                    foreach ($this->listeVen as $key => $value){
+
+                        echo '<td>';
+                        echo $value['label'];
+                        echo '</td>';
+                        echo '<td>';
+                        echo $value['recurence'];
+                        echo '</td>';
+                        echo '<td>';
+                        echo '<a href="' . Zend_Controller_Front::getInstance()->getBaseUrl() .
+                            'ServPlaning/Lignejournaliere/addPlanification/id/' .
+                            $key . '/jour/5' .
+                            '" class="enSavoirPlus">
+                                Planifier</a>';
+                        echo '</td>';
+                    }
+                ?>
+            </tr>
+        </table>
+    </div>
+    <div class="cached sep">
+        <h3>Samedi</h3>
+        <table>
+            <tr>
+                <th style='min-width:300px;'>Ligne</th>
+                <th>Nombre de vol à planifier</th>
+            </tr>
+            <tr>
+                <?php
+                    foreach ($this->listeSam as $key => $value){
+
+                        echo '<td>';
+                        echo $value['label'];
+                        echo '</td>';
+                        echo '<td>';
+                        echo $value['recurence'];
+                        echo '</td>';
+                        echo '<td>';
+                        echo '<a href="' . Zend_Controller_Front::getInstance()->getBaseUrl() .
+                            'ServPlaning/Lignejournaliere/addPlanification/id/' .
+                            $key . '/jour/6' .
+                            '" class="enSavoirPlus">
+                                Planifier</a>';
+                        echo '</td>';
+                    }
+                ?>
+            </tr>
+        </table>
+    </div>
+    <div class="cached sep">
+        <h3>Dimanche</h3>
+        <table>
+            <tr>
+                <th style='min-width:300px;'>Ligne</th>
+                <th>Nombre de vol à planifier</th>
+            </tr>
+            <tr>
+                <?php
+                    foreach ($this->listeDim as $key => $value){
+
+                        echo '<td>';
+                        echo $value['label'];
+                        echo '</td>';
+                        echo '<td>';
+                        echo $value['recurence'];
+                        echo '</td>';
+                        echo '<td>';
+                        echo '<a href="' . Zend_Controller_Front::getInstance()->getBaseUrl() .
+                            'ServPlaning/Lignejournaliere/addPlanification/id/' .
+                            $key . '/jour/7' .
                             '" class="enSavoirPlus">
                                 Planifier</a>';
                         echo '</td>';
