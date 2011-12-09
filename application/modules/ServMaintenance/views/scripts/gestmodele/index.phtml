@@ -1,13 +1,44 @@
 <div>
-    <p>Service Maintenance:Afficher les modeles:</p>
-    <ul>
-        <li><a href='<?php $this->baseUrl(); ?>/ServMaintenance/'>Retour au Menu Maintenance</a></li>
-        <lI><a href='<?php $this->baseUrl(); ?>/ServMaintenance/Gestmodele/newmodele'>Ajout d'un modele</a></li>
-    </ul>
-</div>
-<div>
-    <?php echo $this->list_html;?>
-</div>
-<div>
-    <?php if(isset($this->message)){echo $this->message;}?>
+    <h1 style='display: inline;'>Service Maintenance - </h1><h3 style='display: inline;'>Gestion des Modèles - </h3>
+    </br></br></br>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Modele</th>
+            <th>Rayon d'action</th>
+            <th>Distance Min. :</th>
+            <th>Attérissage</th>
+            <th>Décollage</th>
+            <th>Date Lancement</th>
+            <th> Constructeur </th>
+            <td></td>
+            <td></td>
+        <tr>
+            <?php
+            foreach ($this->listeModele as $value) {
+                $constructeur = ServMaintenance_Model_Constructeur::FindOne($value->get_noConstructeur());
+                echo '
+            <tr>
+                <td>' . $value->get_noModele() . '</td>
+                <td>' . $value->get_label() . '</td>
+                <td>' . $value->get_rayonAction() . '</td>
+                <td></td>
+                <td>' . $value->get_distMinAtt() . '</td>
+                <td>' . $value->get_distMinDec() . '</td>
+                <td>' . $value->get_dateLancement() . '</td>
+                <td>' . $constructeur->get_label() . '</td>
+                <td><a class="enSavoirPlus" href="' . $this->baseUrl() . '/ServMaintenance/Gestmodele/updmodele?id=' . $value->get_noModele() . '">Editer</a></td>
+                <td><a class="enSavoirPlus" href="' . $this->baseUrl() . '/ServMaintenance/Gestmodele/delmodele?id=' . $value->get_noModele() . '">Supprimer</a></td>    
+            </tr>';
+            }
+            ?>
+
+    </table>
+    <table>
+        <tr>
+            <td> 
+                <a class='enSavoirPlus' href='<?php $this->baseUrl(); ?>/ServMaintenance/Gestmodele/newmodele'>Ajout d'un modele</a>
+            </td>
+        </tr>
+    </table>
 </div>

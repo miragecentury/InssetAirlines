@@ -1,18 +1,16 @@
 <div>
-    <p>Service Maintenance: Ajouter un modèle:</p>
-    <ul>
-        <li><a href='<?php $this->baseUrl(); ?>/ServMaintenance/Gestmodele'>Retour à la liste des Modèles</a></li>
-        <li><a href='<?php $this->baseUrl(); ?>/ServMaintenance/'>Retour au Menu Maintenance</a></li>
-    </ul>
-</div>
-<div>
-    <?php 
-    if(isset($this->message)) {
+    <h1 style='display: inline;'>Service Maintenance - </h1><h3 style='display: inline;'>Gestion des Modèles - </h3>
+
+    <?php
+    if (isset($this->message)) {
         echo $this->message;
     }
-    if(isset($this->form)){
+    ?>
+
+    <?php
+    if (isset($this->form)) {
         echo $this->form;
     }
     ?>
-    
+
 </div>

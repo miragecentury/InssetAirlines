@@ -6,6 +6,7 @@ class ServMaintenance_GesttypemaintenanceController extends Zend_Controller_Acti
         $this->view->setLfiProtection(false);
         $this->view->render('../../../../views/scripts/user/_sidebar.phtml');
         $this->view->render('../../../../views/scripts/user/_login.phtml');
+        $this->view->render('sidebar/_homeMaintenanceSideBar.phtml');
     }
 
     public function indexAction() {

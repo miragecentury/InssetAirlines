@@ -6,42 +6,16 @@ class ServMaintenance_GestmodeleController extends Zend_Controller_Action {
         $this->view->setLfiProtection(false);
         $this->view->render('../../../../views/scripts/user/_sidebar.phtml');
         $this->view->render('../../../../views/scripts/user/_login.phtml');
+        $this->view->render('sidebar/_homeMaintenanceSideBar.phtml');
+        $this->view->render('sidebar/_homeGestModeleSideBar.phtml');
     }
 
     public function indexAction() {
 
         $liste = ServMaintenance_Model_Modele::getAll();
 
-        $this->view->list_html = '<table style="border-style: solid; border-width: 1px;">
-            <tr style="border-style: solid; border-width: 1px;">
-                <td style="width: 30px;">Id</td>
-                <td style="width: 80px;">Modele</td>
-                <td style="width: 100px;">Rayon d\'action</td>
-                <td style="width: 160px;">Distance Min. Attérissage</td>
-                <td style="width: 170px;">Distance Min. de Décollage</td>
-                <td style="width: 120px;">Date Lancement</td>
-                <td> Constructeur </td>
-                <td></td>
-                <td></td>
-            <tr>
-        ';
-
-        foreach ($liste as $value) {
-            $constructeur = ServMaintenance_Model_Constructeur::FindOne($value->get_noConstructeur());
-            $this->view->list_html.='<tr style="border-style: solid; border-width: 1px;">
-                <td>' . $value->get_noModele() . '</td>
-                <td>' . $value->get_label() . '</td>
-                <td>' . $value->get_rayonAction() . '</td>
-                <td>' . $value->get_distMinAtt() . '</td>
-                <td>' . $value->get_distMinDec() . '</td>
-                <td>' . $value->get_dateLancement() . '</td>
-                <td>' . $constructeur->get_label() . '</td>
-                <td style="width: 10px;"><a href="' . $this->view->baseUrl() . '/ServMaintenance/Gestmodele/updmodele?id=' . $value->get_noModele() . '">!</a></td>
-                <td><a href="' . $this->view->baseUrl() . '/ServMaintenance/Gestmodele/delmodele?id=' . $value->get_noModele() . '">X</a></td>    
-            </tr>';
-        }
-
-        $this->view->list_html.='</table>';
+        $this->view->listeModele = $liste;
+        
     }
 
     public function newmodeleAction() {

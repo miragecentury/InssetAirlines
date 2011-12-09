@@ -1,13 +1,13 @@
 <?php
 
 /** Boostrap (Lanceur de Zend)
- * 
- *  
+ *
+ *
  *  @author Projet-Insset-Grp3
- * 
+ *
  */
 /* TODO: Boostrap : cre: Victorien VANROYE
- *  Ajouter les Exceptions XP voir en créer pour l'application 
+ *  Ajouter les Exceptions XP voir en créer pour l'application
  *  MyException extends Zend_Exception
  */
 
@@ -25,8 +25,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
     /**
      * @method _initLog()
-     * 
-     * @return Zend_Log 
+     *
+     * @return Zend_Log
      */
     protected function _initLog() {
 
@@ -46,7 +46,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
             $Log = new Zend_Log();
             $Log->addWriter(new Zend_Log_Writer_Null());
         };
-        
+
         //Retro-compatibilité avec l'ancienne version
         Zend_Registry::set('Log', $Log);
 
@@ -65,16 +65,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         } catch (Exception $e) {
             echo 'Spesx_Cache_Exception XS it\'s bad <br/>'.$e->getMessage();
         }
-        
+
         //var_dump($cache->save('test', 'test'));
         //var_dump($cache->load('test'));
-        
+
         if ($cache === null | $cache === FALSE) {
             $cache = Zend_Cache::factory(new Zend_Cache_Core(), new Zend_Cache_Backend_BlackHole());
             Spesx_Log::LogERR('Spesx_Cache::factory retourne une cache invalide');
         }
-        
-        
+
+
 
         return $cache;
     }
@@ -123,7 +123,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         $acl_config = $this->getOption('acl');
 
         $acl = null;
-        
+
         try {
             $acl = Spesx_Acl::factory($acl_config, Spesx_Log::ReturnZendLog(), Spesx_Cache::ReturnZendCache());
         } catch (Exception $e) {
@@ -138,7 +138,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
         //Retro-compatibilité avec l'ancienne version
         Zend_Registry::set('Acl', Spesx_Acl::ReturnZendAcl());
-        
+
         return $acl;
     }
 
@@ -189,7 +189,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         try {
             $view = $this->getResource('View');
         } catch (Zend_Exception $e) {
-            Zend_Registry::get('Log')->log('Bootstrap : _initView : Zend_exception 
+            Zend_Registry::get('Log')->log('Bootstrap : _initView : Zend_exception
                 : Echec de récuperation de la ressource view !');
         } catch (Exception $e) {
             Zend_Registry::get('Log')->log('Bootstrap : _initView : Exception inconnue !');
@@ -209,12 +209,17 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         try {
             $view = $this->getResource('View');
         } catch (Zend_Exception $e) {
-            Zend_Registry::get('Log')->log('Bootstrap : _initView : Zend_exception 
+            Zend_Registry::get('Log')->log('Bootstrap : _initView : Zend_exception
                 : Echec de récuperation de la ressource view !');
         } catch (Exception $e) {
             Zend_Registry::get('Log')->log('Bootstrap : _initView : Exception inconnue !');
         }
         $view->placeholder('login');
+    }
+
+    //configuration initial du paginator
+    protected  function _initPaginator(){
+        Zend_View_Helper_PaginationControl::setDefaultViewPartial('pagination.phtml');
     }
 
 // A refaire en beaucoup mieux, la gestion des autoloader marche, mais n'est pas opti
