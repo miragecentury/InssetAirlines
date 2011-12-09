@@ -4,5 +4,31 @@
 </div>
 <div class="clear"></div>
 <div class="prefix_1 grid_15">
+    <table>
+            <tr>
+                <th style='min-width:300px;'>Ligne</th>
+                <th>Nombre de vol à planifier</th>
+            </tr>
+            <tr>
+                <?php
+                    foreach ($this->listeHeb as $key => $value){
+
+                        echo '<td>';
+                        echo $value['label'];
+                        echo '</td>';
+                        echo '<td>';
+                        echo $value['recurence'];
+                        echo '</td>';
+                        echo '<td>';
+                        echo '<a href="' . Zend_Controller_Front::getInstance()->getBaseUrl() .
+                            '/ServPlaning/Lignehebdomadaire/addPlanification/id/' .
+                            $key . 
+                            '" class="enSavoirPlus">
+                                Planifier</a>';
+                        echo '</td>';
+                    }
+                ?>
+            </tr>
+        </table>
 
 </div>

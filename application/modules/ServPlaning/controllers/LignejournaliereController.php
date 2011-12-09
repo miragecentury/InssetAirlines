@@ -23,7 +23,10 @@ class ServPlaning_LignejournaliereController extends Zend_Controller_Action
         $this->view->listeVen = Application_Model_ApplicationVar::get('LstVolAPlan_J_Ven');
         $this->view->listeSam = Application_Model_ApplicationVar::get('LstVolAPlan_J_Sam');
         $this->view->listeDim = Application_Model_ApplicationVar::get('LstVolAPlan_J_Dim');
-        
+
+    }
+    public function addPlanificationAction(){
+
     }
 }
 
