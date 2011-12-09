@@ -238,37 +238,37 @@ class ServStrategique_Model_Ligne
         $nbPlanification = 0;
         if ($listeJLun != null) {
             foreach ($listeJLun as $value) {
-                $nbPlanification += $value;
+                $nbPlanification += $value['recurence'];
             }
         }
         if ($listeJMar != null) {
             foreach ($listeJMar as $value) {
-                $nbPlanification += $value;
+                $nbPlanification += $value['recurence'];
             }
         }
         if ($listeJMer != null) {
             foreach ($listeJMer as $value) {
-                $nbPlanification += $value;
+                $nbPlanification += $value['recurence'];
             }
         }
         if ($listeJJeu!= null) {
             foreach ($listeJJeu as $value) {
-                $nbPlanification += $value;
+                $nbPlanification += $value['recurence'];
             }
         }
         if ($listeJVen != null) {
             foreach ($listeJVen as $value) {
-                $nbPlanification += $value;
+                $nbPlanification += $value['recurence'];
             }
         }
         if ($listeJSam != null) {
             foreach ($listeJSam as $value) {
-                $nbPlanification += $value;
+                $nbPlanification += $value['recurence'];
             }
         }
         if ($listeJDim != null) {
             foreach ($listeJDim as $value) {
-                $nbPlanification += $value;
+                $nbPlanification += $value['recurence'];
             }
         }
         return $nbPlanification;
@@ -283,7 +283,7 @@ class ServStrategique_Model_Ligne
         $nbPlanification = 0;
         if ($listeJ != null) {
             foreach ($listeJ as $value) {
-                $nbPlanification += $value;
+                $nbPlanification += $value['recurence'];
             }
         }
         return $nbPlanification;
@@ -298,7 +298,7 @@ class ServStrategique_Model_Ligne
         $nbPlanification = 0;
         if ($listeJ != null) {
             foreach ($listeJ as $value) {
-                $nbPlanification += $value;
+                $nbPlanification += $value['recurence'];
             }
         }
         return $nbPlanification;
@@ -313,7 +313,7 @@ class ServStrategique_Model_Ligne
         $nbPlanification = 0;
         if ($listeJ != null) {
             foreach ($listeJ as $value) {
-                $nbPlanification += $value;
+                $nbPlanification += $value['recurence'];
             }
         }
         return $nbPlanification;

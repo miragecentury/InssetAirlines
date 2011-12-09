@@ -55,7 +55,13 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
         //création de la liste
         $liste = array();
         foreach ($return as $item) {
-            $liste[$item->get_noLigne()] = $item->get_jours();
+            $aeroDep = Application_Model_Aeroport::getStaticAeroport(
+                            $item->get_noAeroportDeco());
+            $aeroAtt = Application_Model_Aeroport::getStaticAeroport(
+                            $item->get_noAeroportAtte());
+            $label = $aeroDep->get_labelAeroport() . ' - ' . $aeroAtt->get_labelAeroport();
+            $liste[$item->get_noLigne()] = array('recurence' => $item->get_jours(),
+                'label' => $label);
         }
         //insertion dans la bdd (var Glob)
         $return=0;
@@ -89,7 +95,13 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
         //création de la liste
         $liste = array();
         foreach ($return as $item) {
-            $liste[$item->get_noLigne()] = $item->get_semaines();
+            $aeroDep = Application_Model_Aeroport::getStaticAeroport(
+                            $item->get_noAeroportDeco());
+            $aeroAtt = Application_Model_Aeroport::getStaticAeroport(
+                            $item->get_noAeroportAtte());
+            $label = $aeroDep->get_labelAeroport() . ' - ' . $aeroAtt->get_labelAeroport();
+            $liste[$item->get_noLigne()] = array('recurence' => $item->get_semaines(),
+                'label' => $label);
         }
 
         //insertion dans la bdd (var Glob)
@@ -117,7 +129,13 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
         //création de la liste
         $liste = array();
         foreach ($return as $item) {
-            $liste[$item->get_noLigne()] = $item->get_mois();
+            $aeroDep = Application_Model_Aeroport::getStaticAeroport(
+                            $item->get_noAeroportDeco());
+            $aeroAtt = Application_Model_Aeroport::getStaticAeroport(
+                            $item->get_noAeroportAtte());
+            $label = $aeroDep->get_labelAeroport() . ' - ' . $aeroAtt->get_labelAeroport();
+            $liste[$item->get_noLigne()] = array('recurence' => $item->get_mois(),
+                'label' => $label);
         }
         //insertion dans la bdd (var Glob)
         $return = Application_Model_ApplicationVar::set('LstVolAPlan_M', $liste);
@@ -144,7 +162,13 @@ class ServStrategique_Model_LigneMapper extends Spesx_Mapper_Mapper
         //création de la liste
         $liste = array();
         foreach ($return as $item) {
-            $liste[$item->get_noLigne()] = $item->get_annees();
+            $aeroDep = Application_Model_Aeroport::getStaticAeroport(
+                            $item->get_noAeroportDeco());
+            $aeroAtt = Application_Model_Aeroport::getStaticAeroport(
+                            $item->get_noAeroportAtte());
+            $label = $aeroDep->get_labelAeroport() . ' - ' . $aeroAtt->get_labelAeroport();
+            $liste[$item->get_noLigne()] = array('recurence' => $item->get_annees(),
+                'label' => $label);
         }
         //insertion dans la bdd (var Glob)
 
