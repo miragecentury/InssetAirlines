@@ -117,8 +117,9 @@ class Application_Model_ApplicationVar {
             //echo 'Update Annee';
             $boolInt = 0;
             $boolInt += (INT) ServStrategique_Model_Ligne::changementSemaine();
+            $boolInt += (INT) ServExploitation_Model_Incident::changementSemaine();
 
-            if ($boolInt == 1) {
+            if ($boolInt == 2) {
                 Spesx_Log::LogINFO('Update Semaine Ok');
                 Application_Model_ApplicationVar::set('UpdateCipherSemaine', $CurrentDate->format('W'));
             } else {
