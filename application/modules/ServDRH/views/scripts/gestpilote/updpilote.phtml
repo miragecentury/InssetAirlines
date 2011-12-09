@@ -1,8 +1,371 @@
 <center><h1>Modification d'un personne</h1></center>
 
 <?php  
-    if($this->updForm != false) {
-        echo ($this->updForm->render());
+    if (!is_null($this->updForm)) {
+        $messagesErreur = $this->updForm->getMessages();
+?>
+    <form name="nouvel_employe" action="" method="post">
+        <table>
+            <tr>
+                <td>
+                <fieldset>
+                    <legend>Civilité</legend>
+                    <table>
+                        <tr>
+                            <td>
+                                <?php 
+                                    echo $this->updForm->nom->renderLabel(); 
+                                ?>
+                            </td>
+                            <td>
+                                <?php 
+                                    echo $this->updForm->nom->renderViewHelper();
+                                    if (isset($messagesErreur['nom']['isEmpty'])) {
+                                        echo "<br />";
+                                        echo $messagesErreur['nom']['isEmpty'];
+                                    }                    
+                                ?>
+                            </td>
+                        </tr>   
+                        <tr>
+                            <td>
+                                <?php 
+                                    echo $this->updForm->prenom->renderLabel(); 
+                                ?>
+                            </td>
+                            <td>
+                                <?php 
+                                    echo $this->updForm->prenom->renderViewHelper();
+                                    if (isset($messagesErreur['prenom']['isEmpty'])) {
+                                        echo "<br />";
+                                        echo $messagesErreur['prenom']['isEmpty'];
+                                    }                    
+                                ?>
+                            </td>
+                        </tr> 
+                        <tr>
+                            <td>
+                                <?php 
+                                    echo $this->updForm->prenom2->renderLabel(); 
+                                ?>
+                            </td>
+                            <td>
+                                <?php 
+                                    echo $this->updForm->prenom2->renderViewHelper();
+                                    if (isset($messagesErreur['prenom2']['isEmpty'])) {
+                                        echo "<br />";
+                                        echo $messagesErreur['prenom2']['isEmpty'];
+                                    }                    
+                                ?>
+                            </td>
+                        </tr> 
+                        <tr>
+                            <td>
+                                <?php 
+                                    echo $this->updForm->prenom3->renderLabel(); 
+                                ?>
+                            </td>
+                            <td>
+                                <?php 
+                                    echo $this->updForm->prenom3->renderViewHelper();
+                                    if (isset($messagesErreur['prenom3']['isEmpty'])) {
+                                        echo "<br />";
+                                        echo $messagesErreur['prenom3']['isEmpty'];
+                                    }                    
+                                ?>
+                            </td>
+                        </tr> 
+                        <tr>
+                            <td>
+                                <?php 
+                                    echo $this->updForm->noINSEE->renderLabel(); 
+                                ?>
+                            </td>
+                            <td>
+                                <?php 
+                                    echo $this->updForm->noINSEE->renderViewHelper();
+                                    if (isset($messagesErreur['noINSEE']['isEmpty'])) {
+                                        echo "<br />";
+                                        echo $messagesErreur['noINSEE']['isEmpty'];
+                                    }                    
+                                ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <?php 
+                                    echo "Date de naissance :"; 
+                                ?>
+                            </td>
+                            <td>
+                                <?php 
+                                    echo $this->updForm->jourNaissance->renderViewHelper();                                                       
+                                    echo $this->updForm->moisNaissance->renderViewHelper();
+                                    echo $this->updForm->anneeNaissance->renderViewHelper();
+                                    if (isset($messagesErreur['jourNaissance']['isEmpty']) ||
+                                        isset($messagesErreur['moisNaissance']['isEmpty']) ||
+                                        isset($messagesErreur['anneeNaissance']['isEmpty'])) {
+                                        echo "<br />";
+                                        echo $messagesErreur['jourNaissance']['isEmpty'];
+                                    }                                    
+                                ?>
+                            </td>
+                        </tr>
+                    </table>            
+                </fieldset>
+                </td>
+                <td>
+                    <fieldset>
+                        <legend>Coordonnées postales</legend>
+                        <table>
+                        <tr>
+                            <td>
+                                <?php 
+                                    echo $this->updForm->numero->renderLabel(); 
+                                ?>
+                            </td>
+                            <td>
+                                <?php 
+                                   echo $this->updForm->numero->renderViewHelper();
+                                   if (isset($messagesErreur['numero']['isEmpty'])) {
+                                       echo "<br />";
+                                       echo $messagesErreur['numero']['isEmpty'];
+                                   }                    
+                                ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <?php 
+                                    echo $this->updForm->labelAdresse->renderLabel(); 
+                                ?>
+                            </td>
+                            <td>
+                                <?php 
+                                   echo $this->updForm->labelAdresse->renderViewHelper();
+                                   if (isset($messagesErreur['labelAdresse']['isEmpty'])) {
+                                       echo "<br />";
+                                       echo $messagesErreur['labelAdresse']['isEmpty'];
+                                   }                    
+                                ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <?php 
+                                    echo $this->updForm->immeuble->renderLabel(); 
+                                ?>
+                            </td>
+                            <td>
+                                <?php 
+                                   echo $this->updForm->immeuble->renderViewHelper();           
+                                ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <?php 
+                                    echo $this->updForm->etage->renderLabel(); 
+                                ?>
+                            </td>
+                            <td>
+                                <?php 
+                                   echo $this->updForm->etage->renderViewHelper();                  
+                                ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <?php 
+                                    echo $this->updForm->porte->renderLabel(); 
+                                ?>
+                            </td>
+                            <td>
+                                <?php 
+                                   echo $this->updForm->porte->renderViewHelper();                   
+                                ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <?php 
+                                    echo $this->updForm->cp->renderLabel(); 
+                                ?>
+                            </td>
+                            <td>
+                                <?php 
+                                   echo $this->updForm->cp->renderViewHelper();
+                                   if (isset($messagesErreur['cp']['isEmpty'])) {
+                                       echo "<br />";
+                                       echo $messagesErreur['cp']['isEmpty'];
+                                   }                    
+                                ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <?php 
+                                    echo $this->updForm->etatProvince->renderLabel(); 
+                                ?>
+                            </td>
+                            <td>
+                                <?php 
+                                   echo $this->updForm->etatProvince->renderViewHelper();
+                                   if (isset($messagesErreur['etatProvince']['isEmpty'])) {
+                                       echo "<br />";
+                                       echo $messagesErreur['etatProvince']['isEmpty'];
+                                   }                    
+                                ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <?php 
+                                    echo $this->updForm->ville->renderLabel(); 
+                                ?>
+                            </td>
+                            <td>
+                                <?php 
+                                   echo $this->updForm->ville->renderViewHelper();
+                                   if (isset($messagesErreur['ville']['isEmpty'])) {
+                                       echo "<br />";
+                                       echo $messagesErreur['ville']['isEmpty'];
+                                   }                    
+                                ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <?php 
+                                    echo $this->updForm->pays->renderLabel(); 
+                                ?>
+                            </td>
+                            <td>
+                                <?php 
+                                   echo $this->updForm->pays->renderViewHelper();
+                                   if (isset($messagesErreur['pays']['isEmpty'])) {
+                                       echo "<br />";
+                                       echo $messagesErreur['pays']['isEmpty'];
+                                   }                    
+                                ?>
+                            </td>
+                        </tr>                        
+                        </table>
+                    </fieldset>
+                </td>
+                <td>
+                    <fieldset>
+                        <legend>Informations professionnelles</legend>
+                        <table>
+                        <tr>
+                            <td>
+                                <?php 
+                                    echo $this->updForm->email->renderLabel(); 
+                                ?>
+                            </td>
+                            <td>
+                                <?php 
+                                   echo $this->updForm->email->renderViewHelper();
+                                   if (isset($messagesErreur['email']['isEmpty'])) {
+                                       echo "<br />";
+                                       echo $messagesErreur['email']['isEmpty'];
+                                   }                    
+                                ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <?php 
+                                    echo $this->updForm->role->renderLabel(); 
+                                ?>
+                            </td>
+                            <td>
+                                <?php 
+                                   echo $this->updForm->role->renderViewHelper();
+                                   if (isset($messagesErreur['role']['isEmpty'])) {
+                                       echo "<br />";
+                                       echo $messagesErreur['role']['isEmpty'];
+                                   }                    
+                                ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <?php 
+                                    echo $this->updForm->password->renderLabel(); 
+                                ?>
+                            </td>
+                            <td>
+                                <?php 
+                                   echo $this->updForm->password->renderViewHelper();
+                                   if (isset($messagesErreur['password']['isEmpty'])) {
+                                       echo "<br />";
+                                       echo $messagesErreur['password']['isEmpty'];
+                                   }                    
+                                ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <?php 
+                                    echo $this->updForm->passwordConfirm->renderLabel(); 
+                                ?>
+                            </td>
+                            <td>
+                                <?php 
+                                   echo $this->updForm->passwordConfirm->renderViewHelper();
+                                   if (isset($messagesErreur['passwordConfirm']['isEmpty'])) {
+                                       echo "<br />";
+                                       echo $messagesErreur['passwordConfirm']['isEmpty'];
+                                   }                    
+                                ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <?php 
+                                    echo $this->updForm->labelMetier->renderLabel(); 
+                                ?>
+                            </td>
+                            <td>
+                                <?php 
+                                   echo $this->updForm->labelMetier->renderViewHelper();
+                                   if (isset($messagesErreur['labelMetier']['isEmpty'])) {
+                                       echo "<br />";
+                                       echo $messagesErreur['labelMetier']['isEmpty'];
+                                   }                    
+                                ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <?php 
+                                    echo $this->updForm->habilitation->renderLabel(); 
+                                ?>
+                            </td>
+                            <td>
+                                <?php 
+                                   echo $this->updForm->habilitation->renderViewHelper();
+                                   if (isset($messagesErreur['habilitation']['isEmpty'])) {
+                                       echo "<br />";
+                                       echo $messagesErreur['habilitation']['isEmpty'];
+                                   }                    
+                                ?>
+                            </td>
+                        </tr>
+                        </table>
+                    </fieldset>
+                </td>
+            </tr>            
+        </table>
+        <center>
+            <?php 
+                echo $this->updForm->enregistrer->renderViewHelper();                            
+                echo $this->updForm->annuler->renderViewHelper();
+            ?>
+       </center>
+    </form>
+<?php
     }
 ?>
 
