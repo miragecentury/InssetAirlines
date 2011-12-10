@@ -84,26 +84,31 @@ class Application_Model_Aeroport
     /**
      * Retourne un Aeroport a partir de son labelAeroport.
      * S'il n'existe pas, retourne null.
-     * 
+     *
      * @access public
      * @author charles
      * @param string $labelAeroport
      * @return null|Application_Model_Aeroport
-     *  
+     *
      */
     public function getAeroport($noAeroport)
     {
         $return = $this->_mapper->find($noAeroport);
         return $return;
     }
+    public static function getStaticAeroport($noAeroport){
+        $mapper = Spesx_Mapper_MapperFactory::getMapper("Application_Model_Aeroport");
+        $return = $mapper->find($noAeroport);
+        return $return;
+    }
 
     /**
      * Retourne tout les aeroports, null si il n'y en as pas dans la BD
-     * 
+     *
      * @access public
      * @author charles
      * @return null|array(Application_Model_Aeroport)
-     *  
+     *
      */
     public static function getListeAeroport()
     {
@@ -121,14 +126,14 @@ class Application_Model_Aeroport
      */
 
     /**
-     * Retourne tous les aeroports sous forme de select, retourne un select 
+     * Retourne tous les aeroports sous forme de select, retourne un select
      * vide s'il n'y en a pas
-     * 
+     *
      * @access public
      * @author charles
      * @param string $name, string $label
      * @return Zend_Form_Element_Select
-     *  
+     *
      */
     public static function getSelectAeroport($name, $label)
     {

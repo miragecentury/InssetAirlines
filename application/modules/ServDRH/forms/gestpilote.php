@@ -17,143 +17,187 @@ class ServDRH_Form_gestpilote extends Zend_Form
         $listehabilitations = ServDRH_Model_Habilitation::getHabilitations();
         
         $this->setMethod('POST')
-            ->setName('nouvel_employe');
+             ->setName('nouvel_employe');               
         
-        $nom = new Zend_Form_Element_Text('nom');
-        $nom->setLabel('Nom*');
-        //Efface/Empeche les balises de code sur la variable
-        $nom->addFilter('StripTags');
-        //Efface les espaces en trop en début et/ou en fin de variable
-        $nom->addFilter('StringTrim');
-        //Limite le nombre de caractères max 
-        $nom->addValidator('StringLength', false, array(1, 45));
-        //Indique que le champ est obligatoire
-        $nom->setRequired(true);
-        $nom->getDecorator('label')->setOption('tag', null);
+        $nom = new Zend_Form_Element_Text("nom");
+        $nom->setLabel("Nom*")
+            //Indique que le champ est obligatoire
+            ->setRequired(true)
+            //Efface/Empeche les balises de code sur la variable
+            ->addFilter("StripTags")
+            //Efface les espaces en trop en début et/ou en fin de variable
+            ->addFilter("StringTrim")
+            //Vérifie que le champ n'est pas vide 
+            ->setAttrib('size', 12)
+            //Limite le nombre de caractères max 
+            ->addValidator("StringLength", false, array(1, 45));
+            //->removeDecorator("DtDdWrapper");
+        //$nom->getDecorator('label')->setOption('tag', null);
         
         $prenom = new Zend_Form_Element_Text('prenom');
-        $prenom->setLabel('Prénom*');
-        $prenom->addFilter('StripTags');
-        $prenom->addFilter('StringTrim');
-        $prenom->addValidator('StringLength', false, array(1, 45));
-        $prenom->setRequired(true);
-        $prenom->getDecorator('label')->setOption('tag', null);
+        $prenom->setLabel('Prénom*')
+               ->setAttrib('size', 12)
+               ->addFilter('StripTags')
+               ->addFilter('StringTrim')
+               ->addValidator('StringLength', false, array(1, 45))
+               ->addValidator('notEmpty')
+               ->setRequired(true);
         
         $prenom2 = new Zend_Form_Element_Text('prenom2');
-        $prenom2->setLabel('Deuxième prénom');
-        $prenom2->addFilter('StripTags');
-        $prenom2->addFilter('StringTrim');
-        $prenom2->addValidator('StringLength', false, array(0, 45));
-        $prenom2->setRequired(false);
-        $prenom2->getDecorator('label')->setOption('tag', null);
+        $prenom2->setLabel('Deuxième prénom')
+                ->setAttrib('size', 12)
+                ->addFilter('StripTags')
+                ->addFilter('StringTrim')
+                ->addValidator('StringLength', false, array(0, 45))
+                ->setRequired(false);
         
         $prenom3 = new Zend_Form_Element_Text('prenom3');
-        $prenom3->setLabel('Troisième prénom');
-        $prenom3->addFilter('StripTags');
-        $prenom3->addFilter('StringTrim');
-        $prenom3->addValidator('StringLength', false, array(0, 45));
-        $prenom3->setRequired(false);
-        $prenom3->getDecorator('label')->setOption('tag', null);
+        $prenom3->setLabel('Troisième prénom')
+                ->setAttrib('size', 12)
+                ->addFilter('StripTags')
+                ->addFilter('StringTrim')
+                ->addValidator('StringLength', false, array(0, 45))
+                ->setRequired(false);
         
-        $dateNaissance = new Zend_Form_Element_Text('dateNaissance');
+        /*$dateNaissance = new Zend_Form_Element_Text('dateNaissance');
         $dateNaissance->setLabel('Date de naissance (aaaa-mm-jj)*');
         $dateNaissance->addFilter('StripTags');
         $dateNaissance->addFilter('StringTrim');
         $dateNaissance->setRequired(true);
-        $dateNaissance->getDecorator('label')->setOption('tag', null);
+        $dateNaissance->getDecorator('label')->setOption('tag', null);*/
+        
+        $jourNaissance = new Zend_Form_Element_Select('jourNaissance');
+        $jourNaissance->setLabel('Jour de naissance');
+        $jourNaissance->addMultiOption('','');
+        for ($i=1; $i<=31; $i++) {
+            $jourNaissance->addMultiOption($i, $i);
+        }            
+        $jourNaissance->addValidator('notEmpty');
+        $jourNaissance->addFilter('StripTags');
+        $jourNaissance->addFilter('StringTrim');
+        $jourNaissance->setRequired(true);
+        
+        $moisNaissance = new Zend_Form_Element_Select('moisNaissance');
+        $moisNaissance->setLabel('Mois de naissance');
+        $moisNaissance->addMultiOption('','');
+        for ($i=1; $i<=12; $i++) {
+            $moisNaissance->addMultiOption($i, $i);
+        }
+        $moisNaissance->addValidator('notEmpty');
+        $moisNaissance->addFilter('StripTags');
+        $moisNaissance->addFilter('StringTrim');
+        $moisNaissance->setRequired(true);
+        
+        $anneeNaissance = new Zend_Form_Element_Select('anneeNaissance');
+        $anneeNaissance->setLabel('Année de naissance');
+        $anneeNaissance->addMultiOption('','');
+        for ($i=date('Y'); $i>=1900; $i--) {
+            $anneeNaissance->addMultiOption($i, $i);
+        }
+        $anneeNaissance->addValidator('notEmpty');
+        $anneeNaissance->addFilter('StripTags');
+        $anneeNaissance->addFilter('StringTrim');
+        $anneeNaissance->setRequired(true);
         
         $noAdresse = new Zend_Form_Element_Text('numero');
-        $noAdresse->setLabel('Numéro*'); 
-        $noAdresse->addFilter('StripTags');
-        $noAdresse->addFilter('StringTrim');
-        $noAdresse->addValidator('StringLength', false, array(1,3));
-        $noAdresse->setRequired(true);
-        $noAdresse->getDecorator('label')->setOption('tag', null);
+        $noAdresse->setLabel('Numéro*')
+                  ->setAttrib('size', 3)
+                  ->addValidator('notEmpty')
+                  ->addFilter('StripTags')
+                  ->addFilter('StringTrim')
+                  ->addValidator('StringLength', false, array(1,3))
+                  ->setRequired(true);        
         
         $labelAdresse = new Zend_Form_Element_Text('labelAdresse');
-        $labelAdresse->setLabel('Adresse*'); 
-        $labelAdresse->addFilter('StripTags');
-        $labelAdresse->addFilter('StringTrim');
-        $labelAdresse->addValidator('StringLength', false, array(1,200));
-        $labelAdresse->setRequired(true);
-        $labelAdresse->getDecorator('label')->setOption('tag', null);
+        $labelAdresse->setLabel('Adresse*')
+                     ->setAttrib('size', 20)
+                     ->addValidator('notEmpty')
+                     ->addFilter('StripTags')
+                     ->addFilter('StringTrim')
+                     ->addValidator('StringLength', false, array(1,200))
+                     ->setRequired(true);
         
         $immeuble = new Zend_Form_Element_Text('immeuble');
-        $immeuble->setLabel('Immeuble'); 
-        $immeuble->addFilter('StripTags');
-        $immeuble->addFilter('StringTrim');
-        $immeuble->addValidator('StringLength', false, array(0,45));
-        $immeuble->setRequired(false);
-        $immeuble->getDecorator('label')->setOption('tag', null);
+        $immeuble->setLabel('Immeuble')
+                 ->setAttrib('size', 12)
+                 ->addFilter('StripTags')
+                 ->addFilter('StringTrim')
+                 ->addValidator('StringLength', false, array(0,45))
+                 ->setRequired(false);
         
         $etage = new Zend_Form_Element_Text('etage');
-        $etage->setLabel('Etage'); 
-        $etage->addFilter('StripTags');
-        $etage->addFilter('StringTrim');
-        $etage->addValidator('StringLength', false, array(0,45));
-        $etage->setRequired(false);
-        $etage->getDecorator('label')->setOption('tag', null);
+        $etage->setLabel('Etage')
+              ->setAttrib('size', 3)
+              ->addFilter('StripTags')
+              ->addFilter('StringTrim')
+              ->addValidator('StringLength', false, array(0,45))
+              ->setRequired(false);
         
         $porte = new Zend_Form_Element_Text('porte');
-        $porte->setLabel('Porte '); 
-        $porte->addFilter('StripTags');
-        $porte->addFilter('StringTrim');
-        $porte->addValidator('StringLength', false, array(0,45));
-        $porte->setRequired(false);
-        $porte->getDecorator('label')->setOption('tag', null);
+        $porte->setLabel('Porte ') 
+              ->setAttrib('size', 12)
+              ->addFilter('StripTags')
+              ->addFilter('StringTrim')
+              ->addValidator('StringLength', false, array(0,45))
+              ->setRequired(false);
         
         $cp = new Zend_Form_Element_Text('cp');
-        $cp->setLabel('Code postal*'); 
-        $cp->addFilter('StripTags');
-        $cp->addFilter('StringTrim');
-        $cp->addValidator('StringLength', false, array(1, 45));
-        $cp->setRequired(true);
-        $cp->getDecorator('label')->setOption('tag', null);
+        $cp->setLabel('Code postal*') 
+           ->setAttrib('size', 5)
+           ->addValidator('notEmpty')
+           ->addFilter('StripTags')
+           ->addFilter('StringTrim')
+           ->addValidator('StringLength', false, array(1, 45))
+           ->setRequired(true);
         
         $etatProvince = new Zend_Form_Element_Text('etatProvince');
-        $etatProvince->setLabel('Etat/Province*'); 
-        $etatProvince->addFilter('StripTags');
-        $etatProvince->addFilter('StringTrim');
-        $etatProvince->addValidator('StringLength', false, array(1, 50));
-        $etatProvince->setRequired(true);
-        $etatProvince->getDecorator('label')->setOption('tag', null);
+        $etatProvince->setLabel('Etat/Province*')
+                     ->addValidator('notEmpty')
+                     ->addFilter('StripTags')
+                     ->addFilter('StringTrim')
+                     ->addValidator('StringLength', false, array(1, 50))
+                     ->setRequired(true);
         
         $ville = new Zend_Form_Element_Text('ville');
-        $ville->setLabel('Ville*'); 
-        $ville->addFilter('StripTags');
-        $ville->addFilter('StringTrim');
-        $ville->addValidator('StringLength', false, array(1, 50));
-        $ville->setRequired(true);
-        $ville->getDecorator('label')->setOption('tag', null);
+        $ville->setLabel('Ville*') 
+              ->setAttrib('size', 12)
+              ->addValidator('notEmpty')
+              ->addFilter('StripTags')
+              ->addFilter('StringTrim')
+              ->addValidator('StringLength', false, array(1, 50))
+              ->setRequired(true);
         
         $pays = new Zend_Form_Element_Text('pays');
-        $pays->setLabel('Pays*'); 
-        $pays->addFilter('StripTags');
-        $pays->addFilter('StringTrim');
-        $pays->addValidator('StringLength', false, array(1, 45));
-        $pays->setRequired(true);
-        $pays->getDecorator('label')->setOption('tag', null);
+        $pays->setLabel('Pays*')
+             ->setAttrib('size', 12)
+             ->addValidator('notEmpty')
+             ->addFilter('StripTags')
+             ->addFilter('StringTrim')
+             ->addValidator('StringLength', false, array(1, 45))
+             ->setRequired(true);
         
         $noINSEE = new Zend_Form_Element_Text('noINSEE');
-        $noINSEE->setLabel('No INSEE*');
-        $noINSEE->addFilter('StripTags');
-        $noINSEE->addFilter('StringTrim');
-        $noINSEE->addValidator('StringLength', false, array(11));
-        $noINSEE->setRequired(true);
-        $noINSEE->getDecorator('label')->setOption('tag', null);
+        $noINSEE->setLabel('No INSEE*')
+                ->setAttrib('size', 12)
+                ->addValidator('notEmpty')
+                ->addFilter('StripTags')
+                ->addFilter('StringTrim')
+                ->addValidator('StringLength', false, array(11))
+                ->setRequired(true);
         
         $email = new Zend_Form_Element_Text('email');
-        $email->setLabel('E-mail*');
-        $email->addFilter('StripTags');
-        $email->addFilter('StringTrim');
-        $email->addValidator('StringLength', false, array(1,200));
-        $email->setRequired(true);
-        $email->getDecorator('label')->setOption('tag', null);
+        $email->setLabel('E-mail*')
+              ->setAttrib('size', 12)
+              ->addValidator('notEmpty')
+              ->addFilter('StripTags')
+              ->addFilter('StringTrim')
+              ->addValidator('StringLength', false, array(1,200))
+              ->setRequired(true);
         
         $role = new Zend_Form_Element_Select('role');
-        $role->setLabel('Role');
-        $role->addMultiOption('', '');
-        $role->addMultiOptions(array('Serv_Ag' => 'Serv_Ag', 
+        $role->setLabel('Role')
+             ->addMultiOption('', '')
+             ->addMultiOptions(array('Serv_Ag' => 'Serv_Ag',
                                      'Serv_Ag_Adm' => 'Serv_Ag_Adm', 
                                      'Serv_Com' => 'Serv_Com', 
                                      'Serv_Com_Adm' => 'Serv_Com_Adm',
@@ -168,32 +212,32 @@ class ServDRH_Form_gestpilote extends Zend_Form
                                      'Serv_Plan' => 'Serv_Plan', 
                                      'Serv_Plan_Adm' => 'Serv_Plan_Adm',
                                      'Serv_Stra' => 'Serv_Stra', 
-                                     'Serv_Stra_Adm' => 'Serv_Stra_Adm'));
-        $role->setRequired(false);
+                                     'Serv_Stra_Adm' => 'Serv_Stra_Adm'))
+             ->setRequired(false);
                     
         $labelMetier = new Zend_Form_Element_Select('labelMetier');
         $labelMetier->setLabel('Métier');
         $labelMetier->addMultiOption('', '');
+        $labelMetier->setRequired(false);
         foreach ($listeMetiers as $metier) {
             $labelMetier->addMultiOption($metier->get_labelMetier(), $metier->get_labelMetier());
-        }
-        $labelMetier->setRequired(false);
+        }                    
         
         $password = new Zend_Form_Element_Password('password');
-        $password->setLabel('Mot de passe (6 carac. min.)');
-        $password->addFilter('StripTags');
-        $password->addFilter('StringTrim');
-        $password->addValidator('StringLength', false, array(6, 32));
-        $password->setRequired(false);
-        $password->getDecorator('label')->setOption('tag', null);
+        $password->setLabel('Mot de passe (6 carac. min.)')
+                 ->setAttrib('size', 12)
+                 ->addFilter('StripTags')
+                 ->addFilter('StringTrim')
+                 ->addValidator('StringLength', false, array(6, 32))
+                 ->setRequired(false);
         
         $passwordConfirm = new Zend_Form_Element_Password('passwordConfirm');
-        $passwordConfirm->setLabel('Confirmation du mot de passe');
-        $passwordConfirm->addFilter('StripTags');
-        $passwordConfirm->addFilter('StringTrim');
-        $passwordConfirm->addValidator('StringLength', false, array(6, 32));
-        $passwordConfirm->setRequired(false);
-        $passwordConfirm->getDecorator('label')->setOption('tag', null);
+        $passwordConfirm->setLabel('Confirmation du mot de passe')
+                        ->setAttrib('size', 12)
+                        ->addFilter('StripTags')
+                        ->addFilter('StringTrim')
+                        ->addValidator('StringLength', false, array(6, 32))
+                        ->setRequired(false);
         
         $labelhabilitation = new Zend_Form_Element_MultiCheckbox('habilitation');
         $labelhabilitation->setLabel('Choisissez une habilitation');
@@ -204,37 +248,19 @@ class ServDRH_Form_gestpilote extends Zend_Form
         
         $submit = new Zend_Form_Element_Submit('enregistrer');
         $submit->setLabel('Enregistrer');
-        $submit->setIgnore(true);
+        //$submit->setIgnore(true);
         
         $cancel = new Zend_Form_Element_Submit('annuler');
         $cancel->setLabel('Annuler');
-        $cancel->setIgnore(true);
+        //$cancel->setIgnore(true);
         
-        $this->addElement($nom);
-        $this->addElement($prenom);
-        $this->addElement($prenom2);
-        $this->addElement($prenom3);
-        $this->addElement($dateNaissance);
-        $this->addElement($noAdresse);
-        $this->addElement($labelAdresse);
-        $this->addElement($immeuble);
-        $this->addElement($etage);
-        $this->addElement($porte);
-        $this->addElement($cp);
-        $this->addElement($etatProvince);
-        $this->addElement($ville);
-        $this->addElement($pays);
-        $this->addElement($noINSEE);
-        $this->addElement($email);
-        $this->addElement($role);
-        $this->addElement($labelMetier);
-        $this->addElement($password);
-        $this->addElement($passwordConfirm);
-        $this->addElements(array($labelhabilitation));
-        $this->addElement($submit);
-        $this->addElement($cancel);
+        $this->addElements(array($nom, $prenom, $prenom2, $prenom3, 
+            $jourNaissance, $moisNaissance, $anneeNaissance, $noAdresse,
+            $immeuble, $etage, $porte, $labelAdresse, $cp, $etatProvince, 
+            $ville, $pays, $noINSEE, $email, $role, $labelMetier, $password, 
+            $passwordConfirm, $labelhabilitation, $submit, $cancel));
         
-        $this->setDecorators(array(array('ViewScript', array('viewScript' => '/gestpilote/fmAjoutPersonne.phtml'))));
+        //$this->setDecorators(array(array('ViewScript', array('viewScript' => '/gestpilote/fmAjoutPersonne.phtml'))));
     }
 }
 

@@ -17,7 +17,7 @@ class ServPlaning_ModifplaningController extends Zend_Controller_Action
     }
 
     public function indexAction(){
-
+    var_dump(Application_Model_ApplicationVar::get('ListIncident'));
     }
 }
 

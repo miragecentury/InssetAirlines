@@ -4,7 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <?php
         //Affichage style
-        $this->headLink()->appendStylesheet( '/ressource/css/main.css' );
+        $this->headLink()->appendStylesheet( Zend_Controller_Front::getInstance()->getBaseUrl() . '/ressource/css/main.css' );
         echo $this->headLink() . PHP_EOL;
         //Affichage du titre
         echo $this->headTitle() . PHP_EOL;
