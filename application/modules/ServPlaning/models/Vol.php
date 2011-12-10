@@ -158,7 +158,7 @@ class ServPlaning_Model_Vol {
      * @param int $nbrSemaine
      * @return null|string
      */
-    public static function getSinSemaineAheadFromCurrent($nbrSemaine) {
+    public static function getFinSemaineAheadFromCurrent($nbrSemaine) {
         $date = new DateTime(date(DATE_ATOM));
         $date->modify('Sunday this week');
         if (is_int($nbrSemaine) && $nbrSemaine > 0) {
