@@ -22,16 +22,6 @@ CREATE TABLE IF NOT EXISTS `Vol_has_Agence` (
   `nbReservation` int(10) unsigned NOT NULL,
   `enAttentedeTraitement` tinyint(1) NOT NULL DEFAULT '0',
   `valider` tinyint(1) NOT NULL DEFAULT '0',
+  `heurePost` date NOT NULL,
   PRIMARY KEY (`idVolHasAgence`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
-
---
--- Contenu de la table `Vol_has_Agence`
---
-
-INSERT INTO `Vol_has_Agence` (`idVolHasAgence`, `Vol_noVol`, `Agence_noAgence`, `nbReservation`, `enAttentedeTraitement`, `valider`) VALUES
-(3, 1, 1, 15, 1, 1),
-(4, 1, 1, 10, 0, 0),
-(5, 1, 1, 10, 0, 0),
-(6, 2, 1, 15, 0, 0),
-(7, 1, 1, 250, 0, 0);
