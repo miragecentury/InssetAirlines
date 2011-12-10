@@ -126,10 +126,41 @@ class ServPlaning_Model_Vol {
             return FALSE;
         }
     }
-
+    /**
+     * Renvoie la date du lundi minuit de la semaine S+$nbrSemaine
+     *
+     * @author pewho
+     * @static
+     * @access public
+     * @param int $nbrSemaine
+     * @return null|string
+     */
     public static function getSemaineAheadFromCurrent($nbrSemaine) {
         $date = new DateTime(date(DATE_ATOM));
         $date->modify('Monday this week');
+        if (is_int($nbrSemaine) && $nbrSemaine > 0) {
+            $semaine = '+' . $nbrSemaine . ' week';
+            $date->modify($semaine);
+        } else if ($nbrSemaine == 0) {
+
+        } else {
+            return null;
+        }
+        $date->setTime(0, 0, 0);
+        return $date->format(DATE_ATOM);
+    }
+
+    /**
+     * Renvoie la cate du Dimanche minuit de la semaine S+$nbrSemaine
+     * @author pewho
+     * @access public
+     * @static
+     * @param int $nbrSemaine
+     * @return null|string
+     */
+    public static function getSinSemaineAheadFromCurrent($nbrSemaine) {
+        $date = new DateTime(date(DATE_ATOM));
+        $date->modify('Sunday this week');
         if (is_int($nbrSemaine) && $nbrSemaine > 0) {
             $semaine = '+' . $nbrSemaine . ' week';
             $date->modify($semaine);
