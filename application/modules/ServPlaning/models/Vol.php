@@ -252,15 +252,17 @@ class ServPlaning_Model_Vol {
     public static function getIntervalSemBetweenNowAndDate($date){
         //si la date est un string
         if(is_string($date)){
-            $stop = new DateTime($date(DATE_ATOM));
-            $stop = $stop->format('d/mY');
+            $stop = new DateTime($date);
         } if ($date instanceof DateTime){
-            $stop = $date->format('d/m/Y');
+            $stop = $date;
         } else {
             return null;
         }
+        $stop = $stop->format('d/m/Y');
+
         //génération de la date now
         $start = new DateTime(date(DATE_ATOM));
+        $start->modify('Monday this week');
         $start = $start->format('d/m/Y');
         //expode
         $start = explode('/',$start);
@@ -270,8 +272,9 @@ class ServPlaning_Model_Vol {
         $stop = mktime(0, 0, 0, $stop[1], $stop[0], $stop[2]);
         //calcul
         $result = $stop - $start;
-        $s = ($result/86400)-1;
-        $s = floor($result / 7);
+        $s = ($result/86400);
+
+        $s = floor($s / 7);
         return $s;
     }
 
