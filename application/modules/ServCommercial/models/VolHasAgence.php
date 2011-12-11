@@ -41,6 +41,12 @@ class ServCommercial_Model_VolHasAgence
      * @var bool
      */
     protected $_valider;
+    
+    /**
+     * date du post de l'agence de sa reservation (avec heure)
+     * @var date
+     */
+    protected $_heurePost;
 
     /**
      * Mapper de l'objet
@@ -210,6 +216,17 @@ class ServCommercial_Model_VolHasAgence
     public function set_valider($_valider)
     {
         $this->_valider = $_valider;
+        return $this;
+    }
+    
+    public function get_heurePost()
+    {
+        return $this->_heurePost;
+    }
+    
+    public function set_heurePost($_heurePost)
+    {
+        $this->_heurePost = $_heurePost;
         return $this;
     }
 

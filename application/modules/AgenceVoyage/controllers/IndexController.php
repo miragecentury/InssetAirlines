@@ -37,8 +37,6 @@ class AgenceVoyage_IndexController extends Zend_Controller_Action
         $this->view->pers = $pers;
         $agence = new ServCommercial_Model_Agence;
         $agence = $agence->getAgencebylabel($pers->get_nom());
-        
-        
         if ($agence != null) {
             $form = new AgenceVoyage_Form_Reservation();
             
@@ -51,7 +49,8 @@ class AgenceVoyage_IndexController extends Zend_Controller_Action
                         ->set_Agence_noAgence($agence[0]->get_noAgence())
                         ->set_nbReservation($form->getValue('nbReservation'))
                         ->set_enAttentedeTraitement(0)
-                        ->set_valider(0);
+                        ->set_valider(0)
+                        ->set_heurePost(date('Y-m-d H:i:s'));
                 $item->addReservation();
                 $session = new Zend_Session_Namespace('Redirect');
                 $session->message = "Ajout de la réservation réussi.";

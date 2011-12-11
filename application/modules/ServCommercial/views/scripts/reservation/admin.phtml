@@ -1,4 +1,4 @@
-<h1>Gestion des Reservation</h1>
+<h1>Gestion des Demande de reservation</h1>
 
 <?php
 if ($this->all) {
@@ -9,35 +9,47 @@ if ($this->all) {
                     <th>Nombre de place</th>
                     <th>Traitement</th>
                     <th>Validation</th>
-                </tr>";
+                    <th>Date du post</th>
+                </tr>\n";
     foreach ($this->all as $val) {
-        echo "  <tr>
-                    <td>" . $val->get_Vol_noVol() . "</td>
+        $dateExplode = explode("-", $val->get_heurePost());
+        $heureExplode = explode(" ", $dateExplode[2]);
+        $dateExplode[2] = $heureExplode[0];
+        $heureExplode = explode(":", $heureExplode[1]);
+        if ((time() - mktime($heureExplode[0], $heureExplode[1], $heureExplode[2]
+                        , $dateExplode[1], $dateExplode[2], $dateExplode[0])) > 7200) {
+            echo "<tr><td>" . $val->get_Vol_noVol() . "</td>
                     <td>" . $val->get_Agence_noAgence() . "</td>
                     <td>" . $val->get_nbReservation() . "</td>
                     <td>";
-        if ($val->get_enAttentedeTraitement()) {
-            echo "Traité";
-        } else {
-            echo "Non traité";
+            if ($val->get_enAttentedeTraitement()) {
+                echo "Traité";
+            } else {
+                echo "Non traité";
+            }
+            echo "</td><td>";
+            if ($val->get_valider()) {
+                echo "Validé";
+            } else {
+                echo "Non validé";
+            }
+            echo"</td><td>" . $val->get_heurePost() . "</td>
+                <td><a class='enSavoirPlus' href='/ServCommercial/Reservation/detail?id="
+            . $val->get_idVolHasAgence() . "'>Detail</a></td>
+                <td><a class='enSavoirPlus' href='/ServCommercial/Reservation/upd?id="
+            . $val->get_idVolHasAgence() . "'>Modifier</a></td>";
+            if (!$val->get_enAttentedeTraitement()) {
+                echo "<td><a class='enSavoirPlus' href='/ServCommercial/Place/addplaces?idag=" .
+                $val->get_Agence_noAgence() . "&idvol=" . $val->get_Vol_noVol()
+                . "&nb=" . $val->get_nbReservation() . "&idr=" .
+                $val->get_idVolHasAgence() . "'>Ajout des places</a></td>";
+            }
+            echo"</tr>\n";
         }
-        echo "</td><td>";
-        if ($val->get_valider()) {
-            echo "Validé";
-        } else {
-            echo "Non validé";
-        }
-        echo "</td>
-                    <td><a class='enSavoirPlus' href='/ServCommercial/Reservation/detail?id=" . $val->get_idVolHasAgence() . "'>Detail</a></td>
-                    <td><a class='enSavoirPlus' href='/ServCommercial/Reservation/upd?id=" . $val->get_idVolHasAgence() . "'>Modifier</a></td>
-                </tr>";
     }
-    echo "</table>";
+    echo "</table><br/>";
 } else {
-    echo "<div>Il n'y a pas de reservation dans la base de donnée</div>";
+    echo "<div>Il n'y a pas de reservation confirmée dans la base de donnée</div>";
 }
 ?>
-<center>
-    <a class="enSavoirPlus" href='/ServCommercial/Reservation/new'>Ajouter</a>
-    <a class="enSavoirPlus" href='/ServCommercial/Reservation/'>Retour</a><br/><br/>
-</center>
+
