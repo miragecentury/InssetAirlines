@@ -42,8 +42,8 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
             $this->view->formS = $formS;
             $noAeroD = $this->getRequest()->getParam('noAeroD');
             $noAeroA = $this->getRequest()->getParam('noAeroA');
-            if(isset($noAeroD)&&
-               isset($noAeroA)) {
+            if (isset($noAeroD) &&
+                    isset($noAeroA)) {
                 // A modifier en fonction des Aeroport;
                 echo "$noAeroD=>$noAeroA";
                 $this->view->vol = ServPlaning_Model_Vol::getVolsDuJour();
@@ -56,7 +56,8 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
                     ->set_Agence_noAgence($form->getValue('noAgence'))
                     ->set_nbReservation($form->getValue('nbReservation'))
                     ->set_enAttentedeTraitement($form->getValue('enAttentedeTraitement'))
-                    ->set_valider($form->getValue('valider'));
+                    ->set_valider($form->getValue('valider'))
+                    ->set_heurePost(date('Y-m-d H:i:s'));
             $item->addReservation();
             $session = new Zend_Session_Namespace('Redirect');
             $session->message = "Ajout de l'agence réussi.";
@@ -71,8 +72,9 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
         $form = new ServCommercial_Form_Reservation();
         $formS = new ServPlaning_Form_SearchVol();
         $item = new ServCommercial_Model_VolHasAgence();
+        $item = $item->getReservation($this->getRequest()->getParam('id'));
         if (empty($_POST) || !$form->isValid($_POST)) {
-            $item = $item->getReservation($this->getRequest()->getParam('id'));
+
             if ($item != null) {
                 $form->getElement('noVol')->setValue($item->get_Vol_noVol());
                 $form->getElement('noAgence')->setValue($item->get_Agence_noAgence());
@@ -84,8 +86,8 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
             $this->view->formS = $formS;
             $noAeroD = $this->getRequest()->getParam('noAeroD');
             $noAeroA = $this->getRequest()->getParam('noAeroA');
-            if(isset($noAeroD)&&
-               isset($noAeroA)) {
+            if (isset($noAeroD) &&
+                    isset($noAeroA)) {
                 // A modifier en fonction des Aeroport;
                 echo "$noAeroD=>$noAeroA";
                 $this->view->vol = ServPlaning_Model_Vol::getVolsDuJour();
@@ -98,7 +100,8 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
                     ->set_Agence_noAgence($form->getValue('noAgence'))
                     ->set_nbReservation($form->getValue('nbReservation'))
                     ->set_enAttentedeTraitement($form->getValue('enAttentedeTraitement'))
-                    ->set_valider($form->getValue('valider'));
+                    ->set_valider($form->getValue('valider'))
+                    ->set_heurePost($item->get_heurePost());
             $item->addReservation();
             $session = new Zend_Session_Namespace('Redirect');
             $session->message = "Modification réussi.";

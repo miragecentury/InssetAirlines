@@ -22,6 +22,14 @@ CREATE TABLE IF NOT EXISTS `Vol_has_Agence` (
   `nbReservation` int(10) unsigned NOT NULL,
   `enAttentedeTraitement` tinyint(1) NOT NULL DEFAULT '0',
   `valider` tinyint(1) NOT NULL DEFAULT '0',
-  `heurePost` date NOT NULL,
+  `heurePost` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`idVolHasAgence`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+
+CREATE TABLE IF NOT EXISTS `Place` (
+  `noPlace` int(11) NOT NULL AUTO_INCREMENT,
+  `noAgence` int(10) unsigned NOT NULL,
+  `Personne_noPersonne` int(10) unsigned DEFAULT NULL,
+  `noVol` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`noPlace`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=236 ;

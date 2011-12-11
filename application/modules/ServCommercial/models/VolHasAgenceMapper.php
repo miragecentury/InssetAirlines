@@ -11,7 +11,9 @@ class ServCommercial_Model_VolHasAgenceMapper extends Spesx_Mapper_Mapper
                 ->set_Agence_noAgence($row->Agence_noAgence)
                 ->set_nbReservation($row->nbReservation)
                 ->set_enAttentedeTraitement($row->enAttentedeTraitement)
-                ->set_valider($row->valider);
+                ->set_valider($row->valider)
+                ->set_heurePost($row->heurePost);
+        
 
         return $item;
     }
@@ -25,6 +27,7 @@ class ServCommercial_Model_VolHasAgenceMapper extends Spesx_Mapper_Mapper
             'nbReservation' => $item->get_nbReservation(),
             'enAttentedeTraitement' => $item->get_enAttentedeTraitement(),
             'valider' => $item->get_valider(),
+            'heurePost' => $item->get_heurePost(),
         );
     }
 

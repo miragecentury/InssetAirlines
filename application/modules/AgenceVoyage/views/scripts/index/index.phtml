@@ -9,6 +9,7 @@ if ($this->reservation) {
                     <th>Nombre de place</th>
                     <th>Traitement</th>
                     <th>Validation</th>
+                    <th>Date du post</th>
                 </tr>";
     foreach ($this->reservation as $val) {
         echo "  <tr>
@@ -26,7 +27,8 @@ if ($this->reservation) {
         } else {
             echo "Non validé";
         }
-        echo"</td></tr>";
+        echo"</td><td>" . $val->get_heurePost() . "</td>
+        </tr>";
     }
     echo "</table>";
 } else {
