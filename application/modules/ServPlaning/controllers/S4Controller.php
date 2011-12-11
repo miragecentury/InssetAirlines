@@ -34,7 +34,7 @@ class ServPlaning_S4Controller extends Zend_Controller_Action
 
         //----------------------------------------------------------------------
         //recupération des vols planifiés pour S+4
-        $listeVols = ServPlaning_Model_Vol::getVolsBySemaine( 3 );
+        $listeVols = ServPlaning_Model_Vol::getVolsBySemaine( 4 );
         if ( is_array($listeVols )) {
             $page = Zend_Paginator::factory( $listeVols );
             $page->setPageRange( 3 );

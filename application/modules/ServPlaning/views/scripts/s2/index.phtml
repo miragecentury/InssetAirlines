@@ -4,5 +4,80 @@
 </div>
 <div class="clear"></div>
 <div class="prefix_1 grid_15">
+ <div class="sep">
+        <h3>Modification de planification : Incidents</h3>
+        <?php
+            $liste = $this->listeIncidentS2;
+            foreach ($liste as $keyType => $valueType){
+                $typeIncident = ServExploitation_Model_TypeIncident::getStaticTypeIncident($keyType);
+                echo "<div class='cached'>";
+                echo "<h6 class='sep'>" . $typeIncident->get_labelTypeIncident() . "</h6>";
+                echo "<table>";
+                    echo "<tr>";
+                        echo "<th>Vol</th>";
+                        echo "<th>Date de Décolage</th>";
+                        echo "<th>Date d'atterissage</th>";
+                    echo "</tr>";
+                    foreach ($valueType as $idVol => $keyIncident){
+                        echo "<tr>";
+                            $vol = ServPlaning_Model_Vol::getVol($idVol);
+                            $aeroDep = Application_Model_Aeroport::getStaticAeroport($vol->get_noAeroportDeco());
+                            $aeroAtt = Application_Model_Aeroport::getStaticAeroport($vol->get_noAeroportAtte());
+                            echo "<td>" . $aeroDep->get_labelAeroport() . " - " .
+                                $aeroAtt->get_labelAeroport() . "</td>";
+                            $dateDecollage = new DateTime($vol->get_heuredecollage());
+                            $dateDecollage = $dateDecollage->format('d/m/Y H:i');
+                            echo "<td>$dateDecollage</td>";
+                            $dateAtterissage = new DateTime($vol->get_heureAtterissage());
+                            $dateAtterissage = $dateAtterissage->format('d/m/Y H:i');
+                            echo "<td>$dateAtterissage</td>";
+                            echo "<td><a href='" .
+                                Zend_Controller_Front::getInstance()->getBaseUrl() .
+                                "/ServPlaning/S2/planifier/idVol/" .
+                                $idVol .
+                                "/idIncident/" .
+                                $keyIncident .
+                                "' class='enSavoirPlus'>Planifier</a></td>";
+                        echo "</tr>";
+                    }
+                echo "</table>";
+                echo "</div>";
 
+            }
+        ?>
+    </div>
+    <div class="sep">
+        <h3>Liste des Vols en S+2</h3>
+        <p class="red">La modification de ces vols, hors incident, ne doit etre fait que de façon
+        exceptionnelle</p>
+        <?php
+            foreach ($this->listeVols as $vol){
+                echo "<table class='sep'>";
+                    echo "<tr>";
+                        echo "<th>Vol</th>";
+                        echo "<th>Date de décollage</th>";
+                        echo "<th>Date d'atterrissage</th>";
+                    echo "</tr>";
+                    echo "<tr>";
+                        $aeroDep = Application_Model_Aeroport::getStaticAeroport($vol->get_noAeroportDeco());
+                        $aeroAtt = Application_Model_Aeroport::getStaticAeroport($vol->get_noAeroportAtte());
+                        echo "<td>" . $aeroDep->get_labelAeroport() . " - " .
+                            $aeroAtt->get_labelAeroport() . "</td>";
+                        $dateDecollage = new DateTime($vol->get_heuredecollage());
+                        $dateDecollage = $dateDecollage->format('d/m/Y H:i');
+                        echo "<td>$dateDecollage</td>";
+                        $dateAtterissage = new DateTime($vol->get_heureAtterissage());
+                        $dateAtterissage = $dateAtterissage->format('d/m/Y H:i');
+                        echo "<td>$dateAtterissage</td>";
+                        echo "<td><a href='" .
+                            Zend_Controller_Front::getInstance()->getBaseUrl() .
+                            "/ServPlaning/S2/planifier/idVol/" .
+                            $vol->get_noVol() .
+                            "' class='enSavoirPlus'>Planifier</a></td>";
+                    echo "</tr>";
+                echo "</table>";
+            }
+            echo $this->listeVols;
+        ?>
+    </div>
 </div>
