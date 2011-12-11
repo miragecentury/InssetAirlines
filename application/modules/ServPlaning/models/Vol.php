@@ -116,6 +116,24 @@ class ServPlaning_Model_Vol {
             return FALSE;
         }
     }
+    /**
+     * Retourne la liste des vols prevus pour la semaine demandée
+     *
+     * @access public
+     * @static
+     * @param int $noAvion
+     * @author pewho
+     * @return array(ServPlaning_Model_Vol)|false
+     */
+    public static function getVolsBySemaine($noSemaine){
+        //récupération des dates
+        $start = new DateTime(ServPlaning_Model_Vol::getSemaineAheadFromCurrent($noSemaine));
+        $stop = new DateTime(ServPlaning_Model_Vol::getFinSemaineAheadFromCurrent($noSemaine));
+        //Selection
+        $mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
+        $return = $mapper->findAllVolsInInterval($start,$stop);
+        return $return;
+    }
 
     public static function getVolByAvionOnCurrentTime($noAvion) {
         self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
@@ -379,13 +397,14 @@ class ServPlaning_Model_Vol {
      * S'il n'existe pas, retourne null.
      *
      * @access public
+     * @static
      * @author charles
      * @param int $noVol
      * @return null|ServPlaning_Model_Vol
      *
      */
-    public function getVol($noVol) {
-        self::init();
+    public static function getVol($noVol) {
+       self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
         return self::$_mapper->find($noVol);
     }
 
