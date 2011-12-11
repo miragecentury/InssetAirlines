@@ -109,6 +109,21 @@ class ServCommercial_Model_VolHasAgence
     {
         return $this->_mapper->find($id);
     }
+    
+    /**
+     * Retourne une VolHasAgence a partir de son noAgence
+     * Si elle n'existe pas, retourne null.
+     * 
+     * @access public
+     * @author charles
+     * @param int[] int $noVol, int $noAgence
+     * @return null|ServCommercial_Model_Agence_has_AgenceMapper
+     *  
+     */
+    public function getReservationbyAgence($idAgence)
+    {
+        return $this->_mapper->findbyAgence($idAgence);
+    }
 
     /**
      * Retourne tous les vol de toutes les reservation, null si il n'y en as pas 

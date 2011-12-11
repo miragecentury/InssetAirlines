@@ -105,6 +105,21 @@ class ServCommercial_Model_Agence
     {
         return $this->_mapper->find($noAgence);
     }
+    
+    /**
+     * Retourne une Agence a partir de son label
+     * Si elle n'existe pas, retourne null.
+     * 
+     * @access public
+     * @author charles
+     * @param int $noAgence
+     * @return null|ServCommercial_Model_Agence
+     *  
+     */
+    public function getAgencebylabel($labelAgence)
+    {
+        return $this->_mapper->findbylabel($labelAgence);
+    }
 
     /**
      * Retourne toutes les agences, null si il n'y en as pas dans la BD

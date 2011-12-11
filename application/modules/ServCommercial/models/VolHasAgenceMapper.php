@@ -27,6 +27,25 @@ class ServCommercial_Model_VolHasAgenceMapper extends Spesx_Mapper_Mapper
             'valider' => $item->get_valider(),
         );
     }
+
+    public function findbyAgence($idAgence)
+    {
+        try {
+            $select = $this->getDbTable()->select()->where('Agence_noAgence = ?', $idAgence);
+            $result = $this->getDbTable()->fetchAll($select);
+        } catch (Zend_Db_Exception $e) {
+            throw new Spesx_Mapper_Exception(
+                    ' VolHasAgenceMapper : echec Find ',
+                    $e->getCode(),
+                    $e);
+        }
+        if (0 == count($result)) {
+            return;
+        }
+        $return = $this->_createItemsFromRowset($result);
+        return $return;
+    }
+
 }
 
 ?>

@@ -1,1 +1,36 @@
-Agence Commerciale
+<h1>Bienvenue <?php echo $this->pers->get_nom()?></h1>
+
+<h3>Liste de vos reservation</h3>
+<?php
+if ($this->reservation) {
+    echo "<table>
+                <tr>
+                    <th>Vol</th>
+                    <th>Nombre de place</th>
+                    <th>Traitement</th>
+                    <th>Validation</th>
+                </tr>";
+    foreach ($this->reservation as $val) {
+        echo "  <tr>
+                    <td>" . $val->get_Vol_noVol() . "</td>
+                    <td>" . $val->get_nbReservation() . "</td>
+                    <td>";
+        if ($val->get_enAttentedeTraitement()) {
+            echo "Traité";
+        } else {
+            echo "Non traité";
+        }
+        echo "</td><td>";
+        if ($val->get_valider()) {
+            echo "Validé";
+        } else {
+            echo "Non validé";
+        }
+        echo"</td></tr>";
+    }
+    echo "</table>";
+} else {
+    echo "<div>Vous n'avez aucune reservation</div>";
+}
+?>
+<a class="enSavoirPlus" href="/AgenceVoyage/index/new">Ajouter une réservation</a>

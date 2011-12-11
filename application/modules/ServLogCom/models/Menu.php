@@ -47,7 +47,7 @@ class ServLogCom_Model_Menu
      */
     public function addMenu()
     {
-        $this->_mapper->save($this, 'idMenu');
+        return $this->_mapper->save($this, 'idMenu');
     }
 
     /**
