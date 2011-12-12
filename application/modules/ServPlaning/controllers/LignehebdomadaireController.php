@@ -16,7 +16,10 @@ class ServPlaning_LignehebdomadaireController extends Zend_Controller_Action
     }
 
     public function indexAction(){
-
+        $this->view->listeHeb = Application_Model_ApplicationVar::get('LstVolAPlan_S');
+    }
+    public function addPlanificationAction(){
+        
     }
 }
 

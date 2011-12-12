@@ -15,9 +15,30 @@ class ServPlaning_SController extends Zend_Controller_Action
         $this->view->render('../../../../views/scripts/user/_ServPlaningSidebar.phtml');
     }
 
-    public function indexAction(){
+    public function indexAction()
+    {
+        //recupération de la liste d'incident
+        $listeIncident = Application_Model_ApplicationVar::get( 'ListIncident' );
+        $listeIncidentS = array( );
+        //recupération des types Incidents
+        $listeTypeIncident = ServExploitation_Model_TypeIncident::getListeTypeIncident();
+        //Parcours du tableau ListeIncident
+        foreach ( $listeTypeIncident as $typeIncident ) {
+            if ( isset( $listeIncident[ $typeIncident->get_idTypeIncident() ][ 0 ] ) ) {
+                $listeIncidentS[ $typeIncident->get_idTypeIncident() ] = $listeIncident[ $typeIncident->get_idTypeIncident() ][ 0 ];
+            }
+        }
+        //envoie e la liste à la vue
+        $this->view->listeIncidentS = $listeIncidentS;
+
 
     }
+
+    public function planifierAction()
+    {
+
+    }
+
 }
 
 ?>

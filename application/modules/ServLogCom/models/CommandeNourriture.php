@@ -59,7 +59,7 @@ class ServLogCom_Model_CommandeNourriture
      */
     public function addCommandeNourriture()
     {
-        $this->_mapper->save($this, 'noCommandeNourriture');
+        return $this->_mapper->save($this, 'noCommandeNourriture');
     }
 
     /**

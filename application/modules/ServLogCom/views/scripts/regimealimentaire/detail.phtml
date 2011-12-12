@@ -9,15 +9,23 @@ if ($this->item) {
                 <tr>
                     <td>Label</td>
                     <td>" . $this->item->get_labelRegimeAlimentaire() . "</td>
-                </tr>
-            </table>";
-    
-    echo "<a class='enSavoirPlus' href='/ServLogCom/Regimealimentaire/upd?id=". $this->id ."'>Modifier</a>
-          <a class='enSavoirPlus' href='/ServLogCom/Regimealimentaire/del?id=". $this->id ."'>Supprimer</a>
+                </tr>";
+    if ($this->tab) {
+        foreach ($this->tab as $key => $val) {
+            echo "<tr>";
+            if ($key == 0)
+                echo "<td>Menu</td>";
+            else
+                echo "<td></td>";
+            echo "<td>" . $val . "</td>
+                  </tr>";
+        }
+    }
+    echo "</table>";
+
+    echo "<a class='enSavoirPlus' href='/ServLogCom/Regimealimentaire/upd?id=" . $this->id . "'>Modifier</a>
           <a class='enSavoirPlus' href='/ServLogCom/Regimealimentaire/admin'>Retour</a>";
 } else {
-    echo "Ce Regime Alimentaire n'existe pas dans la base de donnée! <br/><br/>
-        <a class='enSavoirPlus' href='/ServLogCom/Regimealimentaire/admin'>Retour</a>";
+    echo "Ce Regime Alimentaire n'existe pas dans la base de donnée! <br/><br/>";
 }
-
 ?>

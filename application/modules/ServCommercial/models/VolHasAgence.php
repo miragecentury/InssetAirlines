@@ -41,6 +41,12 @@ class ServCommercial_Model_VolHasAgence
      * @var bool
      */
     protected $_valider;
+    
+    /**
+     * date du post de l'agence de sa reservation (avec heure)
+     * @var date
+     */
+    protected $_heurePost;
 
     /**
      * Mapper de l'objet
@@ -108,6 +114,21 @@ class ServCommercial_Model_VolHasAgence
     public function getReservation($id)
     {
         return $this->_mapper->find($id);
+    }
+    
+    /**
+     * Retourne une VolHasAgence a partir de son noAgence
+     * Si elle n'existe pas, retourne null.
+     * 
+     * @access public
+     * @author charles
+     * @param int[] int $noVol, int $noAgence
+     * @return null|ServCommercial_Model_Agence_has_AgenceMapper
+     *  
+     */
+    public function getReservationbyAgence($idAgence)
+    {
+        return $this->_mapper->findbyAgence($idAgence);
     }
 
     /**
@@ -195,6 +216,17 @@ class ServCommercial_Model_VolHasAgence
     public function set_valider($_valider)
     {
         $this->_valider = $_valider;
+        return $this;
+    }
+    
+    public function get_heurePost()
+    {
+        return $this->_heurePost;
+    }
+    
+    public function set_heurePost($_heurePost)
+    {
+        $this->_heurePost = $_heurePost;
         return $this;
     }
 

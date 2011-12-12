@@ -8,6 +8,8 @@ class ServCommercial_PlaceController extends Zend_Controller_Action
         $this->view->setLfiProtection(false);
         $this->view->render('../../../../views/scripts/user/_sidebar.phtml');
         $this->view->render('../../../../views/scripts/user/_login.phtml');
+        $this->view->render('sidebar/_homeServComSidebar.phtml');
+        $this->view->render('sidebar/_homeServComPlaceSidebar.phtml');
         $this->_acl = Zend_Registry::get('Acl');
         //ACL
         $authSession = new Zend_Session_Namespace('Zend_Auth');
@@ -26,11 +28,13 @@ class ServCommercial_PlaceController extends Zend_Controller_Action
 
     public function adminAction()
     {
+        $this->view->render('sidebar/_homeServComPlaceAdminSidebar.phtml');
         $this->view->all = ServCommercial_Model_Place::getListePlace();
     }
 
     public function newAction()
     {
+        $this->view->render('sidebar/_homeServComPlaceAdminSidebar.phtml');
         $form = new ServCommercial_Form_Place();
         if (empty($_POST) || !$form->isValid($_POST)) {
             $this->view->form = $form;
@@ -50,6 +54,7 @@ class ServCommercial_PlaceController extends Zend_Controller_Action
 
     public function updAction()
     {
+        $this->view->render('sidebar/_homeServComPlaceAdminSidebar.phtml');
         $form = new ServCommercial_Form_Place();
         $item = new ServCommercial_Model_Place();
         if (empty($_POST) || !$form->isValid($_POST)) {
@@ -76,6 +81,7 @@ class ServCommercial_PlaceController extends Zend_Controller_Action
 
     public function delAction()
     {
+        $this->view->render('sidebar/_homeServComPlaceAdminSidebar.phtml');
         $Mod = new ServCommercial_Model_Place();
         $item = $Mod->getPlace($this->getRequest()->getParam('id'));
         $session = new Zend_Session_Namespace('Redirect');
@@ -98,9 +104,34 @@ class ServCommercial_PlaceController extends Zend_Controller_Action
 
     public function detailAction()
     {
+        $this->view->render('sidebar/_homeServComPlaceAdminSidebar.phtml');
         $Mod = new ServCommercial_Model_Place();
         $this->view->item = $Mod->getPlace($this->getRequest()->getParam('id'));
         $this->view->id = $this->getRequest()->getParam('id');
     }
 
+    public function addplacesAction()
+    {
+        $request=$this->getRequest();
+        $reservation = new ServCommercial_Model_VolHasAgence;
+        $reservation = $reservation->getReservation($request->getParam('idr'));
+        $reservation->set_enAttentedeTraitement(1);
+        for($i=0;$i<$request->getParam('nb');$i++) {
+            $item = new ServCommercial_Model_Place();
+            $item->set_noVol($request->getParam('idvol'))
+                    ->set_noAgence($request->getParam('idag'))
+                    ->set_Personne_noPersonne(null);//Nul
+            /**
+             * TO DO
+             * Trouver quel personne définir
+             */
+            $item->addPlace();
+        }
+        $session = new Zend_Session_Namespace('Redirect');
+        $session->message = "Modification réussi.";
+        $session->redirection = "/ServCommercial/Reservation/admin";
+        $reservation->set_valider(1);
+        $reservation->addReservation();
+        $this->_redirect('/redirection/success');
+    }
 }

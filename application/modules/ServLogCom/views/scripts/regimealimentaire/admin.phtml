@@ -13,13 +13,11 @@ if ($this->all) {
                 <td>" . $val->get_labelRegimeAlimentaire() . "</td>
                 <td><a class='enSavoirPlus' href='/ServLogCom/Regimealimentaire/detail?id=" . $val->get_noRegimeAlimentaire() . "'>Detail</a></td>
                 <td><a class='enSavoirPlus' href='/ServLogCom/Regimealimentaire/upd?id=" . $val->get_noRegimeAlimentaire() . "'>Modifier</a></td>
-                <td><a class='enSavoirPlus' href='/ServLogCom/Regimealimentaire/del?id=" . $val->get_noRegimeAlimentaire() . "'>Supprimer</a></td>
               </tr>";
     }
     echo "</table>";
 } else {
     echo "<div>Il n'y a pas de Regime Alimentaire dans la base de donnée</div>";
 }
-echo "<a class='enSavoirPlus' href='/ServLogCom/Regimealimentaire'>Retour</a>
-    <a class='enSavoirPlus' href='/ServLogCom/Regimealimentaire/new'>Ajouter</a><br/>";
+echo "<a class='enSavoirPlus' href='/ServLogCom/Regimealimentaire/new'>Ajouter</a><br/>";
 ?>

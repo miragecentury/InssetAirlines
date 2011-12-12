@@ -18,7 +18,7 @@ class ServCommercial_Form_Reservation extends Zend_Form
         $num = new Zend_Validate_Int;
         
         //Creation du champ permettant de selectionner le vol
-        $vol = ServPlaning_Model_Vol::getSelectVol('noVol', 'No Vol :');
+        
 
         //Creation du champ permettant de selectionner une agence
         $agence = ServCommercial_Model_Agence::getSelectAgence('noAgence', 'Agence :');
@@ -33,6 +33,11 @@ class ServCommercial_Form_Reservation extends Zend_Form
         $trait->setLabel('Etat du traitement de la demande :');
         $trait->setRequired();
         
+        //Creation du champ permettant d'entrer un num vol
+        $noVol = new Zend_Form_Element_Text('noVol');
+        $noVol->setLabel('No Vol :');
+        $noVol->setRequired();
+        
         //Adresse
         $val = new Zend_Form_Element_Checkbox('valider');
         $val->setLabel('Etat de la validation :');
@@ -44,7 +49,7 @@ class ServCommercial_Form_Reservation extends Zend_Form
         $submit->setIgnore(true);
 
         //Creation du formulaire
-        $this->addElement($vol);
+        $this->addElement($noVol);
         $this->addElement($agence);
         $this->addElement($reserv);
         $this->addElement($trait);

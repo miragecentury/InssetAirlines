@@ -21,8 +21,7 @@ if ($this->item) {
                 </tr>
             </table>";
     echo "
-        <a class='enSavoirPlus'  href='/ServCommercial/Place/upd?id=" . $this->id . "'>Modifier</a><br/><br/>
-        <a class='enSavoirPlus'  href='/ServCommercial/Place/del?id=" . $this->id . "'>Supprimer</a><br/><br/>";
+        <a class='enSavoirPlus'  href='/ServCommercial/Place/upd?id=" . $this->id . "'>Modifier</a><br/><br/>";
 } else {
     echo "Cet Aéroport n'existe pas dans la base de donnée!<br/><br/>
         <a class='enSavoirPlus'  href='/ServCommercial/Place/admin'>Retour</a><br/>";

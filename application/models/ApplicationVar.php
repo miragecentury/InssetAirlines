@@ -92,8 +92,8 @@ class Application_Model_ApplicationVar {
         if ($UpdateCipherAnnee != $CurrentDate->format('Y')) {
             //echo 'Update Annee';
             $boolInt = 0;
-            //$boolInt = (INT) 
-            if ($boolInt == 0) {
+            $boolInt += (INT) ServStrategique_Model_Ligne::changementAnnee();
+            if ($boolInt == 1){
                 Spesx_Log::LogINFO('Update Annee Ok');
                 Application_Model_ApplicationVar::set('UpdateCipherAnnee', $CurrentDate->format('Y'));
             } else {
@@ -104,7 +104,9 @@ class Application_Model_ApplicationVar {
         if ($UpdateCipherMois != $CurrentDate->format('m')) {
             //echo 'Update Mois';
             $boolInt = 0;
-            if ($boolInt == 0) {
+            $boolInt += (INT) ServStrategique_Model_Ligne::changementMois();
+
+            if ($boolInt == 1) {
                 Spesx_Log::LogINFO('Update Mois Ok');
                 Application_Model_ApplicationVar::set('UpdateCipherMois', $CurrentDate->format('m'));
             } else {
@@ -114,8 +116,10 @@ class Application_Model_ApplicationVar {
         if ($UpdateCipherSemaine != $CurrentDate->format('W')) {
             //echo 'Update Annee';
             $boolInt = 0;
-            
-            if ($boolInt == 0) {
+            $boolInt += (INT) ServStrategique_Model_Ligne::changementSemaine();
+            $boolInt += (INT) ServExploitation_Model_Incident::changementSemaine();
+
+            if ($boolInt == 2) {
                 Spesx_Log::LogINFO('Update Semaine Ok');
                 Application_Model_ApplicationVar::set('UpdateCipherSemaine', $CurrentDate->format('W'));
             } else {
@@ -125,8 +129,9 @@ class Application_Model_ApplicationVar {
         if ($UpdateCipherJour != $CurrentDate->format('d')) {
             //echo 'Update Jour';
             $boolInt = 0;
+            $boolInt += (INT) ServStrategique_Model_Ligne::changementJour();
 
-            if ($boolInt == 0) {
+            if ($boolInt == 1) {
                 Spesx_Log::LogINFO('Update Jour Ok');
                 Application_Model_ApplicationVar::set('UpdateCipherJour', $CurrentDate->format('d'));
             } else {

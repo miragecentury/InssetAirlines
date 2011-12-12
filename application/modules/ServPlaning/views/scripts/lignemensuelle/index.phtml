@@ -1,8 +1,45 @@
 <div class="grid_16 sep">
     <h2 style="display:inline;">Service Planing</h2>
     <h5 style="display:inline;"> - Planification S+4, mensuelle</h5>
+    <h6>Nombre de jours avant la fin du mois : <span class="red"><?= $this->nbrJourAvantFinMois; ?></span></h6>
 </div>
 <div class="clear"></div>
 <div class="prefix_1 grid_15">
+    <?php
+    if ($this->derniereSemaine){
+        echo '<p class="red">Attention : La semaine actuelle est la derniere semaine du mois,
+            les planifications affichées sont obligatoires !</p>';
+    } else {
+       echo  '<p class="red">Attention : la planification de ces recurences ne sont pas forcement obligatoire,
+        mais doivent être planifié avant la fin du mois</p>';
+    }
 
+
+    ?>
+
+    <table>
+        <tr>
+            <th style='min-width:300px;'>Ligne</th>
+            <th>Nombre de vol à planifier</th>
+        </tr>
+        <tr>
+            <?php
+            foreach ( $this->listeMen as $key => $value ) {
+
+                echo '<td>';
+                echo $value[ 'label' ];
+                echo '</td>';
+                echo '<td>';
+                echo $value[ 'recurence' ];
+                echo '</td>';
+                echo '<td>';
+                echo '<a href="' . Zend_Controller_Front::getInstance()->getBaseUrl() .
+                '/ServPlaning/Lignemensuelle/addPlanification/id/' .
+                $key .
+                '" class="enSavoirPlus">Planifier</a>';
+                echo '</td>';
+            }
+            ?>
+        </tr>
+    </table>
 </div>

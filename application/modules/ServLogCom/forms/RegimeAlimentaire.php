@@ -23,6 +23,13 @@ class ServLogCom_Form_RegimeAlimentaire extends Zend_Form
         $labelRegimeAlimentaire->setValidators(array($alnum));
         $labelRegimeAlimentaire->setRequired();
 
+        $menu = new Zend_Form_Element_Multiselect('LstMenu');
+        $menu->setLabel('Menu');
+        $allmenu = ServLogCom_Model_Menu::getListeMenu();
+        foreach ($allmenu as $val) {
+            $menu->addMultiOption($val->get_idMenu(),$val->get_labelMenu());
+        }
+        
         //Creation du submit
         $submit = new Zend_Form_Element_Submit('submit');
         $submit->setLabel('Valider');
@@ -30,6 +37,7 @@ class ServLogCom_Form_RegimeAlimentaire extends Zend_Form
 
         //Creation du formulaire
         $this->addElement($labelRegimeAlimentaire);
+        $this->addElement($menu);
         $this->addElement($submit);
     }
 

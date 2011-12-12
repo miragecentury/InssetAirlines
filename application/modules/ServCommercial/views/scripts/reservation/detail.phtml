@@ -29,12 +29,11 @@ if ($this->item) {
     } else {
         echo "Non validé";
     }
-    echo"</td>
+    echo"</td><tr><td>Date de la réservation</td><td>" . $this->item->get_heurePost() . "</td>
                 </tr>                
             </table>";
 
-    echo "<center><a class='enSavoirPlus' href='/ServCommercial/Reservation/upd?id=" . $this->id . "'>Modifier</a>
-          <a class='enSavoirPlus' href='/ServCommercial/Reservation/del?id=" . $this->id . "'>Supprimer</a>";
+    echo "<center><a class='enSavoirPlus' href='/ServCommercial/Reservation/upd?id=" . $this->id . "'>Modifier</a>";
 } else {
     echo "Cette Agence n'existe pas dans la base de donnée!<center>";
 }

@@ -273,3 +273,11 @@ tr:nth-child(even){
     background-color : #ff8b00;
     text-decoration: none;
 }
+.cached table{
+    display:none;
+
+}
+.cached:hover table{
+    display:block;
+    width:100%;
+}

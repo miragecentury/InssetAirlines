@@ -47,7 +47,7 @@ class ServLogCom_Model_RegimeAlimentaire
      */
     public function addRegimeAlimentaire()
     {
-        $this->_mapper->save($this, 'noRegimeAlimentaire');
+        return $this->_mapper->save($this, 'noRegimeAlimentaire');
     }
 
     /**
