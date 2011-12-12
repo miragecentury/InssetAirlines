@@ -21,8 +21,6 @@ class ServMaintenance_Model_Avion {
     protected $_enService;
     protected $_noModele;
     protected static $_mapper = null;
-    protected static $checkMiseHorsService = FALSE;
-    protected static $checkMaintenance = FALSE;
     protected static $message = 'ServMaintenance_Model_Avion : ';
 
     //**************************************************************************
@@ -33,14 +31,6 @@ class ServMaintenance_Model_Avion {
             if (($mapper = Spesx_Mapper_MapperFactory::getMapper('ServMaintenance_Model_Avion')) instanceof ServMaintenance_Model_AvionMapper) {
                 self::$_mapper = $mapper;
             }
-        }
-
-        if (self::$checkMiseHorsService === FALSE) {
-            self::checkUpdateHorsService();
-        }
-
-        if (self::$checkMaintenance === FALSE) {
-            self::checkMaintenance();
         }
     }
 
@@ -110,6 +100,12 @@ class ServMaintenance_Model_Avion {
         }
         $DateHorsService->setTime(0, 0, 0);
         $DateHorsService = $DateHorsService->format(DATE_ATOM);
+        echo $DateHorsService;
+        $CurrentDate = new DateTime();
+        $Border = ServPlaning_Model_Vol::getSemaineAheadFromCurrent(5);
+        var_dump($Border);
+        
+        
     }
 
     public static function findDispoAvionsAtDateTimeInterval($Start, $End) {
@@ -159,7 +155,7 @@ class ServMaintenance_Model_Avion {
      * @param DateTime|String(DATE_ATOM) $Date 
      */
     public function miseHorsServiceAt($Date) {
-        
+        return self::miseHorsServiceAtDateTime($Date, $this->_noAvion);
     }
 
     public function del() {

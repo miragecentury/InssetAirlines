@@ -11,7 +11,7 @@ class ServMaintenance_GestappareilController extends Zend_Controller_Action {
     }
 
     public function indexAction() {
-
+        
     }
 
     public function affavionallAction() {
@@ -55,16 +55,19 @@ class ServMaintenance_GestappareilController extends Zend_Controller_Action {
                     /** TODO:
                      *      Controle de la date
                      */
+                    $Date = $_POST['dateHorsService'];
+                    $Date = new DateTime($Date);
                     try {
-                        $avion->set_dateMiseHorsService(date(DATE_ATOM));
-                        $avion->set_enService(0);
-                        $avion->save();
+                        $avion->miseHorsServiceAt($Date);
+                        //$avion->set_dateMiseHorsService(date(DATE_ATOM));
+                        //$avion->set_enService(0);
+                        //$avion->save();
                     } catch (Exception $e) {
                         $this->getResponse()->setHeader('refresh', '0,url=/ServMaintenance/Gestappareil/Misehorsservice');
                     }
                     $this->message = 'Appareil' . $avion->get_label() . ' mis Hors Service';
                 } else {
-                    $this->view->message = 'Confirmer la Mise Hors Service de cet Appareil !!';
+                    $this->view->message = 'Données Incorrectes';
                     $this->view->avion = $avion;
                     $this->view->form = new ServMaintenance_Form_Avion_HorsService($id);
                 }

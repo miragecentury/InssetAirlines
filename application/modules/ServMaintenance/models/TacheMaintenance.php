@@ -19,10 +19,6 @@ class ServMaintenance_Model_TacheMaintenance {
     //**************************************************************************
     //public static
 
-    public static function getPlusLongueTypeMaintenance() {
-        
-    }
-
     public static function nbMaintenanceEnCoursAujourdhui() {
         
     }

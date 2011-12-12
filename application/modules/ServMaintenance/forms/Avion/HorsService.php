@@ -14,9 +14,8 @@ class ServMaintenance_Form_Avion_HorsService extends Zend_Form {
 
         //**********************************************************************
         $dateHorsService = new Zend_Form_Element_Text('dateHorsService');
-        $dateHorsService->setLabel(('Date de Mise Hors Service ('.DATE_ATOM.')'));
-        $dateHorsService->addValidator(new Zend_Validate_Alnum(TRUE));
-        $dateHorsService->addValidator(new Zend_Validate_Date(array('format' => DATE_ATOM)));
+        $dateHorsService->setLabel(('Date de Mise Hors Service (Y-m-d)'));
+        $dateHorsService->addValidator(new Zend_Validate_Date());
         $dateHorsService->setRequired(TRUE);
 
         parent::addElement($dateHorsService);
