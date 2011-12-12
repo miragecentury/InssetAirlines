@@ -232,11 +232,12 @@ class Application_Model_Personne
     public function savePersonneById($id)
     {
         try {
-            $this->_mapper->save($this, 'noPersonne');
+            $return = $this->_mapper->save($this, 'noPersonne');
         } catch (Spesx_Mapper_Exception $e) {
             Spesx_Log::Log(
                 $e->getMessage() . ' ' . $e->getPrevious()->getMessage(), Zend_Log::ERR);
         }
+        return $return;
     }
 
     /**

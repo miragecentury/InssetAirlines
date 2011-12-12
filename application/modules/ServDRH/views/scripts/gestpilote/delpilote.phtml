@@ -1,17 +1,33 @@
-<?php  
-    if ($this->employe->get_Personne_noPersonne() != null) {
-        if (!isset($_GET['rep'])) {
-            echo "<div><p>Êtes-sur de vouloir supprimer cet employé ?</p>
-                     <p>
-                         <a class='enSavoirPlus' href='delpilote?rep=non&id=
-                         ".$_GET['id']."'>Non </a>
-                         <a class='enSavoirPlus' href='delpilote?rep=oui&id=
-                         ".$_GET['id']."'>Oui</a>
-                     </p>
-                  </div>";
+<center><h1>Suppression d'un employé</h1><center>
+        
+<?php
+    //Si l'id de l'employé existe
+    if (!isset($this->erreurGetId)) {
+        //Si l'id de l'employé est valide
+        if (!isset($this->erreurId)) {
+            //Si l'employé existe 
+            if (isset($this->employe)) {
+                //Affiche la confirmation de suppression
+                if (!isset($_GET['rep'])) {
+                    echo "<center><p>Êtes-sur de vouloir supprimer cet employé ?</p>
+                             <p>
+                                 <a class='enSavoirPlus' href='delpilote?rep=non&id=".$_GET['id']."'>Non </a>
+                                 <a class='enSavoirPlus' href='delpilote?rep=oui&id=".$_GET['id']."'>Oui</a>
+                             </p>
+                          </center>";
+                } else {
+                    //Affiche la confirmation de la suppression
+                    if ($_GET['rep'] == "oui") {
+                        echo $this->delete;
+                    }
+                }
+            } else {
+                echo $this->erreurEmploye;
+            }
+        } else {
+            echo $this->erreurId;
         }
     } else {
-        echo "Employé inexistant<br />";
-        echo "<a href='/ServDRH'>Retour</a>"; //Revoir la redirection vers la page gestpilote
+        echo $this->erreurGetId;
     }
 ?>

@@ -1,8 +1,17 @@
 <center><h1>Ajout d'une personne</h1></center>
 
-<?php  
+<?php      
     if (!is_null($this->form)) {
-        $messagesErreur = $this->form->getMessages();
+        $messagesErreur = $this->form->getMessages();  
+        if (isset($this->erreurMdp)) {
+            echo $this->erreurMdp;
+        }
+        if (isset($this->erreurDate)) {
+            echo $this->erreurDate;
+        }
+        if (isset($this->erreurQualifications)) {
+            echo $this->erreurQualifications;
+        }
 ?>
     <form name="nouvel_employe" action="" method="post">
         <table>
@@ -319,7 +328,11 @@
                                    if (isset($messagesErreur['passwordConfirm']['isEmpty'])) {
                                        echo "<br />";
                                        echo $messagesErreur['passwordConfirm']['isEmpty'];
-                                   }                    
+                                   }
+                                   if (isset($messagesErreur['passwordConfirm']['stringLengthTooShort'])) {
+                                       echo "<br />";
+                                       echo $messagesErreur['passwordConfirm']['stringLengthTooShort'];
+                                   }
                                 ?>
                             </td>
                         </tr>
@@ -335,7 +348,11 @@
                                    if (isset($messagesErreur['labelMetier']['isEmpty'])) {
                                        echo "<br />";
                                        echo $messagesErreur['labelMetier']['isEmpty'];
-                                   }                    
+                                   }
+                                   if (isset($messagesErreur['labelMetier']['stringLengthTooShort'])) {
+                                       echo "<br />";
+                                       echo $messagesErreur['labelMetier']['stringLengthTooShort'];
+                                   }                   
                                 ?>
                             </td>
                         </tr>

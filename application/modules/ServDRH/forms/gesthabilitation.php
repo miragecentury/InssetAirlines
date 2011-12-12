@@ -13,26 +13,27 @@
 class ServDRH_Form_gesthabilitation extends Zend_Form
 {
     public function init(){       
+        //Récupère la liste des avions et modèles
         $metier = new ServDRH_Model_Metier;
-        $listeMetiers = $metier->getMetiers();
-        
         $modeleAvion = new ServMaintenance_Model_Modele;
+        $listeMetiers = $metier->getMetiers();        
         $listeAvion = $modeleAvion->getAll();
+        
+        //Crée et ajoute les éléments du formulaire
+        $this->setMethod('POST')
+             ->setName('fm_ajoutHabilitation');
                                    
         $intitule = new Zend_Form_Element_Text('labelHabilitation');
-        $intitule->setLabel('Intitulé* ');
-        $intitule->addFilter('StripTags');
-        $intitule->addFilter('StringTrim');
-        $intitule->addValidator('StringLength', false, array(1, 45));
-        $intitule->setRequired(true);
+        $intitule->setLabel('Intitulé* ')
+                 ->setAttrib('size', 12)
+                 ->addFilter('StripTags')
+                 ->addFilter('StringTrim')
+                 ->addValidator('StringLength', false, array(1, 45))
+                 ->setRequired(true);
         
         $labelMetier = new Zend_Form_Element_Select('labelMetier');
-        $labelMetier->setLabel('Métier*');
-        $labelMetier->addMultiOption('', '');
-        foreach ($listeMetiers as $metier) {
-            $labelMetier->addMultiOption($metier->get_labelMetier(), $metier->get_labelMetier());
-        }
-        $labelMetier->setRequired(true);
+        $labelMetier->setLabel('Métier*')
+                    ->addMultiOption('Pilote', 'Pilote');
                      
         $labelModele = new Zend_Form_Element_Select('labelModele');
         $labelModele->setLabel('Modèle*');
@@ -44,19 +45,12 @@ class ServDRH_Form_gesthabilitation extends Zend_Form
                 
         $ajouter = new Zend_Form_Element_Submit('enregistrer');
         $ajouter->setLabel('Enregistrer');
-        $ajouter->setIgnore(true);
         
         $annuler = new Zend_Form_Element_Submit('annuler');
         $annuler->setLabel('Annuler');
-        $annuler->setIgnore(true);
         
-        $this->addElement($intitule);
-        $this->addElement($labelMetier);
-        $this->addElement($labelModele);
-        $this->addElement($ajouter);
-        $this->addElement($annuler);
-        
-        $this->setDecorators(array(array('ViewScript', array('viewScript' => '/gesthabilitation/fmAjoutHabilitation.phtml'))));
+        $this->addElements(array($intitule, $labelMetier, $labelModele, $ajouter,
+            $annuler));        
     }
 }
 ?>

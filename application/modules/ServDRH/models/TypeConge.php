@@ -4,7 +4,7 @@ class ServDRH_Model_TypeConge
 {
     protected $_labelTypeConge;
     
-     public function getTypeConges(){
+    public function getTypeConges(){
         $mapper = new ServDRH_Model_TypeCongeMapper();
         return $mapper->findAll();
     }

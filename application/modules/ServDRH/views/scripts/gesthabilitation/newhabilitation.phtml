@@ -1,7 +1,62 @@
 <center><h1>Ajout d'une habilitation</h1></center>
 
 <?php  
-    if ($this->form != false) {
-        echo $this->form;
+    //Récupère les messages d'erreur si le formulaire est invalide
+    if (isset($this->form)) {
+        $messagesErreur = $this->form->getMessages();      
+        //Affiche un message si l'habilitation existe déjà
+        if (isset($this->erreurLabel)) {
+            echo $this->erreurLabel;
+        }
+    }
+    
+    //Si le formulaire n'est pas posté
+    if (is_null($this->habilitation)) {
+        //Affichage du formulaire
+?>
+        <form method='post' action='' name='fm_ajoutHabilitation'>
+            <table>
+                <tr>
+                    <td><?php echo $this->form->labelHabilitation->renderLabel();?></td>
+                    <td>
+                        <?php 
+                            echo $this->form->labelHabilitation->renderViewHelper();
+                            if (isset($messagesErreur['labelHabilitation']['isEmpty'])) {
+                                echo "<br />".$messagesErreur['labelHabilitation']['isEmpty'];
+                            }
+                        ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td><?php echo $this->form->labelMetier->renderLabel();?></td>
+                    <td>
+                        <?php 
+                            echo $this->form->labelMetier->renderViewHelper();
+                        ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td><?php echo $this->form->labelModele->renderLabel();?></td>
+                    <td>
+                        <?php 
+                           echo $this->form->labelModele->renderViewHelper();
+                           if (isset($messagesErreur['labelModele']['isEmpty'])) {
+                               echo "<br />".$messagesErreur['labelModele']['isEmpty'];
+                           }
+                        ?>
+                    </td>
+                </tr>
+            </table>
+            <center>
+                <?php
+                    echo $this->form->enregistrer->renderViewHelper();
+                    echo $this->form->annuler->renderViewHelper();
+                ?>
+            </center>
+       </form>
+<?php
+    } else {
+        //Affiche le message de confirmation de l'ajout
+        echo $this->habilitation;
     }
 ?>

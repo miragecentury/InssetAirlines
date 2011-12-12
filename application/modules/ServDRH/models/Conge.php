@@ -27,6 +27,11 @@ class ServDRH_Model_Conge
         $mapper->saveByLabel($this, 'noConge');
     }
     
+    public function delete($noConge) {
+        $mapper = new ServDRH_Model_CongeMapper();
+        $mapper->delete('noConge', $noConge);
+    }
+    
     public function get_noConge() 
     {
         return $this->_noConge;

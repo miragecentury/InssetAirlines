@@ -22,6 +22,11 @@ class ServDRH_Model_Habilitation
         return $mapper->find($noHabilitation);
     }
     
+    public function getHabilitationByLabel($label){
+        $mapper = new ServDRH_Model_HabilitationMapper();
+        return $mapper->findByLabel($label);
+    }
+    
     public function delHabilitation($noHabilitation) {
         $mapper = new ServDRH_Model_HabilitationMapper();
         try {

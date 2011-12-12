@@ -1,7 +1,77 @@
-<h1>Modification d'une habilitation</h1>
+<center><h1>Modification d'une habilitation</h1></center>
 
 <?php  
-    if($this->updForm != false) {
-        echo ($this->updForm->render());
+    //Récupère les messages d'erreur si le formulaire n'est pas valide
+    if (isset($this->updForm)) {
+        $messagesErreur = $this->updForm->getMessages();
+        //Affiche un message si l'habilitation existe déjà
+        if (isset($this->erreurLabel)) {
+            echo $this->erreurLabel;
+        }
+    }
+    
+    //S'il n'y a pas d'erreur dans l'id passé en paramètre
+    if (!isset($this->erreurId)) {
+        //Si le formulaire n'est pas posté
+        if (!isset($this->habilitation)) {
+?>
+            <form method='post' action=''>
+                <table>
+                    <tr>
+                        <td>
+                            <?php echo $this->updForm
+                                       ->labelHabilitation->renderLabel(); ?>
+                        </td>
+                        <td>
+                            <?php 
+                                echo $this->updForm
+                                     ->labelHabilitation->renderViewHelper(); 
+                                if (isset($messagesErreur['labelHabilitation']['isEmpty'])) {
+                                    echo "<br />".$messagesErreur['labelHabilitation']['isEmpty'];
+                                }
+                            ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <?php echo $this->updForm
+                                       ->labelMetier->renderLabel(); ?>
+                        </td>
+                        <td>
+                            <?php 
+                                echo $this->updForm
+                                     ->labelMetier->renderViewHelper(); 
+                            ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <?php echo $this->updForm
+                                       ->labelModele->renderLabel(); ?>
+                        </td>
+                        <td>
+                            <?php 
+                                echo $this->updForm
+                                     ->labelModele->renderViewHelper(); 
+                                if (isset($messagesErreur['labelModele']['isEmpty'])) {
+                                    echo "<br />".$messagesErreur['labelModele']['isEmpty'];
+                                }
+                            ?>
+                        </td>
+                    </tr>
+                </table>
+                <center>
+                    <?php
+                        echo $this->updForm->enregistrer->renderViewHelper();
+                        echo $this->updForm->annuler->renderViewHelper();
+                    ?>
+                </center>
+            </form>            
+<?php            
+        } else {
+            echo $this->habilitation;
+        }
+    } else {
+        echo $this->erreurId;
     }
 ?>

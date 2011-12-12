@@ -17,7 +17,7 @@ class ServDRH_Form_gestpilote extends Zend_Form
         $listehabilitations = ServDRH_Model_Habilitation::getHabilitations();
         
         $this->setMethod('POST')
-             ->setName('nouvel_employe');               
+             ->setName('nouvel_employe');
         
         $nom = new Zend_Form_Element_Text("nom");
         $nom->setLabel("Nom*")
@@ -70,7 +70,11 @@ class ServDRH_Form_gestpilote extends Zend_Form
         $jourNaissance->setLabel('Jour de naissance');
         $jourNaissance->addMultiOption('','');
         for ($i=1; $i<=31; $i++) {
-            $jourNaissance->addMultiOption($i, $i);
+            $j = $i;
+            if ($j < 10) {
+                $j = '0'.$j;
+            }
+            $jourNaissance->addMultiOption($i, $j);
         }            
         $jourNaissance->addValidator('notEmpty');
         $jourNaissance->addFilter('StripTags');
@@ -81,7 +85,11 @@ class ServDRH_Form_gestpilote extends Zend_Form
         $moisNaissance->setLabel('Mois de naissance');
         $moisNaissance->addMultiOption('','');
         for ($i=1; $i<=12; $i++) {
-            $moisNaissance->addMultiOption($i, $i);
+            $j = $i;
+            if ($j < 10) {
+                $j = '0'.$j;
+            }
+            $moisNaissance->addMultiOption($i, $j);
         }
         $moisNaissance->addValidator('notEmpty');
         $moisNaissance->addFilter('StripTags');
@@ -248,19 +256,15 @@ class ServDRH_Form_gestpilote extends Zend_Form
         
         $submit = new Zend_Form_Element_Submit('enregistrer');
         $submit->setLabel('Enregistrer');
-        //$submit->setIgnore(true);
         
         $cancel = new Zend_Form_Element_Submit('annuler');
         $cancel->setLabel('Annuler');
-        //$cancel->setIgnore(true);
         
         $this->addElements(array($nom, $prenom, $prenom2, $prenom3, 
             $jourNaissance, $moisNaissance, $anneeNaissance, $noAdresse,
             $immeuble, $etage, $porte, $labelAdresse, $cp, $etatProvince, 
             $ville, $pays, $noINSEE, $email, $role, $labelMetier, $password, 
-            $passwordConfirm, $labelhabilitation, $submit, $cancel));
-        
-        //$this->setDecorators(array(array('ViewScript', array('viewScript' => '/gestpilote/fmAjoutPersonne.phtml'))));
+            $passwordConfirm, $labelhabilitation, $submit, $cancel));        
     }
 }
 

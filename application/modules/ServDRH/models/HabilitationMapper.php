@@ -23,19 +23,27 @@ class ServDRH_Model_HabilitationMapper extends Spesx_Mapper_Mapper
             );
     }
     
-    //Récupère les habilitations pour un métier donné
-    public function _getHabilitations($labelMetier)
-    {
-        //On récupère tous les enregistrements de la table en fonction du métier
-        $rows = $this->_getDbTableName()->fetchAll(
-                $this->_getDbTableName()->select()
-                                        ->where('labelMetier', $labelMetier));
-        //On créer la liste des habilitations (un tableau d'objet d'habilitations)
-        $habilitations = $this->_createItemsFromRowset($rows);
+    //Récupère les habilitations pour un label donné
+    public function findByLabel($label)
+    {        
+        try {
+            $select = $this->getDbTable()->select()
+                ->where('labelHabilitation = ?', $label);
+            $result = $this->getDbTable()->fetchRow($select);           
+        } catch (Zend_Db_Exception $e) {
+            throw new Spesx_Mapper_Exception(
+                'Habilitation : Echec Methode findByLabel',
+                $e->getCode(),
+                $e);
+        }        
+        if ($result != null) {
+            $return = $this->_createItemFromRow($result);       
+        } else {
+            $return = new ServDRH_Model_Habilitation;
+        }
         
-        return $habilitations;
-    }
-    
+        return $return;
+    }            
 }
 
 ?>

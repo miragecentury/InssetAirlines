@@ -1,0 +1,24 @@
+<center><h1>Suppression d'une demande de congé</h1></center>
+
+<?php
+    //Si l'id de la demande existe
+    if (!isset($this->erreurGetId)) {
+        //Si l'id de la demande est valide
+        if (!isset($this->erreurId)) {    
+            //Si la demande peut être supprimée
+            if (isset($this->confirmation)) {
+                //Demande la confirmation à l'utilisateur
+                echo $this->confirmation;
+                echo "<center><a class='enSavoirPlus' href='/ServDRH/gestpilote/delcongepilote?id=".
+                      $_GET['id']."&conge=".$_GET['conge']."&rep=oui'>Oui</a>
+                      <a class='enSavoirPlus' href='/ServDRH/gestpilote/delcongepilote?id=".
+                      $_GET['id']."&conge=".$_GET['conge']."&rep=non'>Non</a>                      
+                      </center>";
+            }
+        } else {
+            echo $this->erreurId;
+        }
+    } else {
+        echo $this->erreurGetId;
+    }
+?>

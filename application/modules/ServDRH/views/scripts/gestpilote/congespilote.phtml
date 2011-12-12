@@ -1,58 +1,119 @@
 <center><h1>Gestion des conges</h1>
 <?php
-        if ($this->message != '') {
-            echo $this->message;
-        }
-        $enAttente = true;
-        $conges = new ServDRH_Model_Conge;
-        $conges = $conges->getCongesByNoPersonne($_GET['id']);
-        if (!empty($conges)) {
-            echo "<table>
-                  <tr>
-                    <div class='sep'>
-                        <th>Type congé</th>
-                        <th>Date début</th>
-                        <th>Date fin</th>
-                        <th>Motif</th>
-                        <th>Etat</th>";
-                  foreach ($conges as $conge) {
-                      if ($enAttente == true) {
-                        if ($conge->get_enAttentedeTraitement() == 1) {
-                            echo "<th></th>";
-                            $enAttente = false;
-                        }
-                      }
-                  }
-            echo    "</div>
-                  </tr>";
-            foreach ($conges as $conge) {
-            echo "<tr>
-                    <td>";
-                        echo $conge->get_labelTypeConge();   
-            echo    "</td>
-                     <td>";
-                        echo $conge->get_dateDebut();   
-            echo    "</td>
-                     <td>";
-                        echo $conge->get_dateFin();   
-            echo    "</td>
-                     <td>";
-                        echo $conge->get_motif();   
-            echo    "</td>";
-                        if ($conge->get_enAttentedeTraitement() == 1) {
-                            echo "<td>En attente</td>";
-            echo    "<td>
-                        <a class='enSavoirPlus' href='congespilote?id=".$_GET['id']."&conge=".$conge->get_noConge()."'>Valider</a>
-                     </td>";
-                        } else {
-                            echo "<td>Validé</td>";
-                        }
-            echo    "</tr>";                    
+    //Vérifie si un congé est sélectionné
+    if (isset($_GET['conge'])) {
+      //Si l'id de la demande de congé est valide
+      if (is_null($this->erreurIdConge)) {
+          //Si la demande de congé existe
+          if (is_null($this->erreurConge)) {
+              //Le formulaire est mis à jour selon l'action et réaffiché
+          } else {
+              echo $this->erreurConge;
+          }
+      } else {
+          echo $this->erreurIdConge;
+      }
+    } else { 
+    /*
+     * Si aucune action n'est effectuée (validation ou refus),
+     * on affiche la liste des congés 
+     */
+    //Si l'id de l'employé est valide
+    if (is_null($this->erreurIdEmploye)) {
+        //Si l'id de l'employé existe
+        if (is_null($this->erreurInexistant)) {
+            //Si la liste des congés n'est pas vide
+            if (!empty($this->conges)) {
+                /*
+                 * Affichage de la liste des congés de l'employé dont l'id
+                 * est passé en paramètre
+                 */
+                $enAttente = false;
+                echo "<table>
+                        <tr>
+                            <div class='sep'>
+                                <th>Type congé</th>
+                                <th>Date début</th>
+                                <th>Date fin</th>
+                                <th>Motif</th>
+                                <th>Etat</th>";
+                                foreach ($this->conges as $conge) {
+                                    if ($conge->get_enAttentedeTraitement() == 1) {
+                                        $enAttente = true;
+                                    }
+                                }
+                                if ($enAttente == true) {
+                                    echo "<th></th>";
+                                    echo "<th></th>";
+                                    echo "<th></th>";
+                                    echo "<th></th>";
+                                } else {
+                                    echo "<th></th>";
+                                    echo "<th></th>";
+                                }
+                     echo "</div>
+                        </tr>";
+               foreach ($this->conges as $conge) {
+                   echo "<tr>
+                            <td>";
+                                echo $conge->get_labelTypeConge();   
+                      echo "</td>
+                            <td>";
+                                echo $conge->get_dateDebut();   
+                      echo "</td>
+                            <td>";
+                              echo $conge->get_dateFin();   
+                      echo "</td>
+                            <td>";
+                              echo $conge->get_motif();   
+                      echo "</td>";
+                /*
+                 * Affiche l'état de la demande selon la valeur dans la BDD
+                 * -1: refusée, 0: validée
+                 */                 
+                if ($conge->get_enAttentedeTraitement() == 1) {
+                    echo   "<td>En attente</td>";
+                } else {
+                    if ($conge->get_valider() == -1) {
+                        echo "<td>Annulé</td>";
+                    }
+                    if ($conge->get_valider() == 1) {
+                        echo "<td>Validé</td>";
+                    }
+                }
+                /*
+                 * Affiche les boutons d'actions selon l'état de la demande
+                 */
+                        echo "<td>
+                                 <a class='enSavoirPlus' href='updcongepilote?id=".$_GET['id']."&conge=".$conge->get_noConge()."'>Modifier</a>
+                             </td>";
+                if ($conge->get_enAttentedeTraitement() == 1) {
+                    echo    "<td>
+                                <a class='enSavoirPlus' href='congespilote?id=".$_GET['id']."&conge=".$conge->get_noConge()."&action=valid'>Valider</a>
+                             </td>
+                             <td>
+                                <a class='enSavoirPlus' href='congespilote?id=".$_GET['id']."&conge=".$conge->get_noConge()."&action=refus'>Refuser</a>
+                             </td>";
+                }
+                echo        "<td>
+                                <a class='enSavoirPlus' href='delcongepilote?id=".$_GET['id']."&conge=".$conge->get_noConge()."'>Supprimer</a>
+                             </td>";                            
+                echo    "</tr>";                    
+               }
+               echo "</table>
+                     <br />"; 
+               echo "<a href='../gestpilote'>Retour</a>";                                           
+            } else {
+                //Message d'erreur si aucun congés
+                echo $this->aucunConges;         
             }
-            echo "</table>
-                  <br />";
         } else {
-            echo "<p>Aucun congés</p>";         
+            //Message d'erreur si employé inexistant
+            echo $this->erreurInexistant;
         }
-            echo "<a href='/ServDRH'>Retour</a>";
+    } else {
+        //Message d'erreur si employé non valide
+        echo $this->erreurIdEmploye;
+    }
+    }
 ?>

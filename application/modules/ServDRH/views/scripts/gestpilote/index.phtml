@@ -3,19 +3,18 @@
     echo "<p align=right><a class='enSavoirPlus' href='gestpilote/newpilote'>Ajouter un nouveau pilote</a></p>";
     if (!empty($this->AllPersonnes)) {
         echo "<table>";
-        //echo "<p align=right><a class='enSavoirPlus' href='gestpilote/newpilote'>Ajouter un nouveau pilote</a></p>";
         echo "<tr>
             <div class='sep'>
-            <td>M&eacute;tier</td>
-            <td>Nom</td>
-            <td>Pr&eacute;nom</td>
-            <td>Deuxième pr&eacute;nom</td>
-            <td>Troisième pr&eacute;nom</td>
-            <td>Date de naissance</td>
-            <td>Num&eacute;ro INSEE</td>
-            <td>Adresse</td>
-            <td>Pays</td>
-            <td>E-mail</td>
+            <th>M&eacute;tier</th>
+            <th>Nom</th>
+            <th>Pr&eacute;nom</th>
+            <th>Deuxième pr&eacute;nom</th>
+            <th>Troisième pr&eacute;nom</th>
+            <th>Date de naissance</th>
+            <th>Num&eacute;ro INSEE</th>
+            <th>Adresse</th>
+            <th>Pays</th>
+            <th>E-mail</th>
             <td></td>
             <td></td>
             <td></td>    
@@ -41,7 +40,10 @@
             $i++;
         }
         echo "</table>
-              <br /><a href='/ServDRH'>Retour</a>
-              </center>";
+              <p align='center'><a href='/ServDRH'>Retour</a></p>";
+    } else {
+        echo "<br />
+              <p align='center'>Aucun employé n'est enregistré</p>
+              <p align='center'><a href='/ServDRH'>Retour</a></p>";
     }
 ?>

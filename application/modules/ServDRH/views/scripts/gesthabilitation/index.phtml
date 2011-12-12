@@ -1,9 +1,9 @@
 <center><h1>Service DRH - Gestion des habilitations </h1>
 
+<p align=right><a class='enSavoirPlus' href='gesthabilitation/newhabilitation' >Ajouter une nouvelle habilitation</a></p>
 <?php
 if (!empty($this->Allhabilitations)){
-    echo "<table>
-    <p align=right><a class='enSavoirPlus' href='gesthabilitation/newhabilitation' >Ajouter une nouvelle habilitation</a></p>
+    echo "<table>    
     <tr>
         <div class='sep'>
         <th>Num&eacute;ro de l'habilitation</th>
@@ -32,6 +32,8 @@ if (!empty($this->Allhabilitations)){
     }
     echo "</table>";
     echo "<p><a href='/ServDRH'>Retour</a></p>";
+} else {
+    echo $this->aucuneHabilitation;
 }
 ?>
 </center>
