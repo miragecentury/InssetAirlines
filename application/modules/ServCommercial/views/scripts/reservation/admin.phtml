@@ -34,12 +34,15 @@ if ($this->all) {
                 echo "Non validé";
             }
             echo"</td><td>" . $val->get_heurePost() . "</td>
-                <td><a class='enSavoirPlus' href='/ServCommercial/Reservation/detail?id="
+                <td><a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServCommercial/Reservation/detail?id="
             . $val->get_idVolHasAgence() . "'>Detail</a></td>
-                <td><a class='enSavoirPlus' href='/ServCommercial/Reservation/upd?id="
+                <td><a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServCommercial/Reservation/upd?id="
             . $val->get_idVolHasAgence() . "'>Modifier</a></td>";
             if (!$val->get_enAttentedeTraitement()) {
-                echo "<td><a class='enSavoirPlus' href='/ServCommercial/Place/addplaces?idag=" .
+                echo "<td><a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServCommercial/Place/addplaces?idag=" .
                 $val->get_Agence_noAgence() . "&idvol=" . $val->get_Vol_noVol()
                 . "&nb=" . $val->get_nbReservation() . "&idr=" .
                 $val->get_idVolHasAgence() . "'>Ajout des places</a></td>";

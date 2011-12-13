@@ -28,11 +28,14 @@ if($this->item) {
                     <td>" . $this->item->get_noAdresse() . "</td>
                 </tr>
             </table>";
-    
-    echo "<div><a class='enSavoirPlus' href='/ServCommercial/Agence/admin'>Non </a>
-          <a class='enSavoirPlus' href='/ServCommercial/Agence/del?ok=ok&id=".$this->id."'>Oui</a></div>";
+
+    echo "<div><a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServCommercial/Agence/admin'>Non </a>
+          <a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServCommercial/Agence/del?ok=ok&id=".$this->id."'>Oui</a></div>";
 }
 else {
     echo "Cette Agence n'existe pas dans la base de donnée!<br/><br/>
-        <div><a class='enSavoirPlus' href='/ServCommercial/Agence/admin'>Retour </a>";
+        <div><a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServCommercial/Agence/admin'>Retour </a>";
 }

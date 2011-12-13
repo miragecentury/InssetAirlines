@@ -17,7 +17,7 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
             $session = new Zend_Session_Namespace('Redirect');
             $session->message = "Vous n'avez pas les droits pour acceder à ce service";
             $session->redirection = "/";
-            $this->_redirect('/redirection/fail');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/fail');
         }
     }
 
@@ -62,7 +62,7 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
             $session = new Zend_Session_Namespace('Redirect');
             $session->message = "Ajout de l'agence réussi.";
             $session->redirection = "/ServCommercial/Reservation/admin";
-            $this->_redirect('/redirection/success');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/success');
         }
     }
 
@@ -106,7 +106,7 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
             $session = new Zend_Session_Namespace('Redirect');
             $session->message = "Modification réussi.";
             $session->redirection = "/ServCommercial/Reservation/admin";
-            $this->_redirect('/redirection/success');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/success');
         }
     }
 
@@ -121,11 +121,11 @@ class ServCommercial_ReservationController extends Zend_Controller_Action
             if ($item != null) {
                 $item->delReservation($this->getRequest()->getParam('id'));
                 $session->message = "Supression réussi.";
-                $this->_redirect('/redirection/success');
+                $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/success');
             } else {
                 Zend_Registry::get('Log')->log('ReservationController : del : Acces a la base de donnée impossible', Zend_Log::ALERT);
                 $session->message = "Echec de supression.";
-                $this->_redirect('/redirection/fail');
+                $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/fail');
             }
         } else {
             $this->view->item = $item;

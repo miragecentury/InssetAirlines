@@ -35,5 +35,7 @@ if ($this->all) {
 } else {
     echo "<div>Il n'y a pas d'agence dans la base de donnée</div>";
 }
-echo "<a class='enSavoirPlus' href='/ServCommercial/Agence/admin'>Admin</a>
-      <a class='enSavoirPlus' href='/ServCommercial/Place'>Retour</a>";
+echo "<a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServCommercial/Agence/admin'>Admin</a>
+      <a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServCommercial/Place'>Retour</a>";

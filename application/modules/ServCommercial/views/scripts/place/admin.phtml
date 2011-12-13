@@ -15,15 +15,20 @@ if ($this->all) {
                 <td>" . $val->get_labelAgence() . "</td>
                 <td>" . $val->get_Personne_noPersonne() . "</td>
                 <td>" . $val->get_noVol() . "</td>
-                <td><a class='enSavoirPlus' href='/ServCommercial/Place/detail?id=" . $val->get_noPlace() . "'>Detail</a></td>
-                <td><a class='enSavoirPlus' href='/ServCommercial/Place/upd?id=" . $val->get_noPlace() . "'>Modifier</a></td>
+                <td><a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServCommercial/Place/detail?id=" . $val->get_noPlace() . "'>Detail</a></td>
+                <td><a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServCommercial/Place/upd?id=" . $val->get_noPlace() . "'>Modifier</a></td>
             </tr>";
     }
     echo "</table>";
-        
+
 } else {
     echo "<div>Il n'y a pas de place dans la base de donnée</div>";
 }
-echo "<br/><a class='enSavoirPlus' href='/ServCommercial/Place/new'>Ajouter</a>
-    <a class='enSavoirPlus' href='/ServCommercial/Agence/'>Gestion des Agences</a>
-    <a class='enSavoirPlus' href='/ServCommercial/Place/'>Retour</a>";
+echo "<br/><a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServCommercial/Place/new'>Ajouter</a>
+    <a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServCommercial/Agence/'>Gestion des Agences</a>
+    <a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServCommercial/Place/'>Retour</a>";

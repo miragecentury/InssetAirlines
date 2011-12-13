@@ -14,12 +14,12 @@ class ServCommercial_IndexController extends Zend_Controller_Action {
             $session = new Zend_Session_Namespace('Redirect');
             $session->message = "Vous n'avez pas les droits pour acceder à ce service";
             $session->redirection = "/";
-            $this->_redirect('/redirection/fail');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/fail');
         }
     }
 
     public function indexAction() {
-        
+
     }
 
 }
