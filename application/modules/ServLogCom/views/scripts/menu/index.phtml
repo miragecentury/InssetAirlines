@@ -17,6 +17,8 @@ if ($this->all) {
 } else {
     echo "<div>Il n'y a pas de menu dans la base de donnée</div>";
 }
-echo "<a class='enSavoirPlus' href='/ServLogCom/Menu/admin'>Panneau d'administration</a>
-    <a class='enSavoirPlus' href='/ServLogCom/Regimealimentaire'>Regime Alimentaire</a>";
+echo "<a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServLogCom/Menu/admin'>Panneau d'administration</a>
+    <a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServLogCom/Regimealimentaire'>Regime Alimentaire</a>";
 ?>

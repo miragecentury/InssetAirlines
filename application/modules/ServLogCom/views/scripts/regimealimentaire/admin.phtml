@@ -11,13 +11,16 @@ if ($this->all) {
         echo "<tr>
                 <td>" . $val->get_noRegimeAlimentaire() . "</td>
                 <td>" . $val->get_labelRegimeAlimentaire() . "</td>
-                <td><a class='enSavoirPlus' href='/ServLogCom/Regimealimentaire/detail?id=" . $val->get_noRegimeAlimentaire() . "'>Detail</a></td>
-                <td><a class='enSavoirPlus' href='/ServLogCom/Regimealimentaire/upd?id=" . $val->get_noRegimeAlimentaire() . "'>Modifier</a></td>
+                <td><a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServLogCom/Regimealimentaire/detail?id=" . $val->get_noRegimeAlimentaire() . "'>Detail</a></td>
+                <td><a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServLogCom/Regimealimentaire/upd?id=" . $val->get_noRegimeAlimentaire() . "'>Modifier</a></td>
               </tr>";
     }
     echo "</table>";
 } else {
     echo "<div>Il n'y a pas de Regime Alimentaire dans la base de donnée</div>";
 }
-echo "<a class='enSavoirPlus' href='/ServLogCom/Regimealimentaire/new'>Ajouter</a><br/>";
+echo "<a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServLogCom/Regimealimentaire/new'>Ajouter</a><br/>";
 ?>

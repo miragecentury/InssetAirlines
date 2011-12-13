@@ -21,8 +21,10 @@ if ($this->item) {
                 </tr>
             </table>";
 
-    echo "<div><a class='enSavoirPlus' href='/ServLogCom/Commandenourriture/admin'>Non </a>
-          <a class='enSavoirPlus' href='/ServLogCom/Commandenourriture/del?ok=ok&id=" . $this->id . "'>Oui</a></div>";
+    echo "<div><a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServLogCom/Commandenourriture/admin'>Non </a>
+          <a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServLogCom/Commandenourriture/del?ok=ok&id=" . $this->id . "'>Oui</a></div>";
 } else {
     echo "Cette commande n'existe pas dans la base de donnée!";
 }

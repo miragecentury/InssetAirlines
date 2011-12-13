@@ -23,9 +23,12 @@ if ($this->item) {
     }
     echo "</table>";
 
-    echo "<a class='enSavoirPlus' href='/ServLogCom/Menu/upd?id=" . $this->id . "'>Modifier</a>
-          <a class='enSavoirPlus' href='/ServLogCom/Menu/del?id=" . $this->id . "'>Supprimer</a>
-          <a class='enSavoirPlus' href='/ServLogCom/Menu/admin'>Retour</a>";
+    echo "<a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServLogCom/Menu/upd?id=" . $this->id . "'>Modifier</a>
+          <a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServLogCom/Menu/del?id=" . $this->id . "'>Supprimer</a>
+          <a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServLogCom/Menu/admin'>Retour</a>";
 } else {
     echo "Ce Menu n'existe pas dans la base de donnée! <br/><br/>";
 }

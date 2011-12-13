@@ -17,7 +17,7 @@ class ServLogCom_MenuController extends Zend_Controller_Action
             $session = new Zend_Session_Namespace('Redirect');
             $session->message = "Vous n'avez pas les droits pour acceder à ce service";
             $session->redirection = "/";
-            $this->_redirect('/redirection/fail');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/fail');
         }
     }
 
@@ -54,7 +54,7 @@ class ServLogCom_MenuController extends Zend_Controller_Action
             $session = new Zend_Session_Namespace('Redirect');
             $session->message = "Ajout du menu réussi.";
             $session->redirection = "/ServLogCom/Menu/admin";
-            //$this->_redirect('/redirection/success');
+            //$this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/success');
         }
     }
 
@@ -102,12 +102,12 @@ class ServLogCom_MenuController extends Zend_Controller_Action
                 // Delete
                 $incompatible->del($tabe[0]->get_id());
             }
-            
+
             $session = new Zend_Session_Namespace('Redirect');
             $session->message = "Modification réussi.";
             $session->redirection = "/ServLogCom/Menu/admin";
 
-            $this->_redirect('/redirection/success');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/success');
         }
     }
 
@@ -122,11 +122,11 @@ class ServLogCom_MenuController extends Zend_Controller_Action
             if ($item != null) {
                 $mod->delMenu($this->getRequest()->getParam('id'));
                 $session->message = "Supression réussi.";
-                $this->_redirect('/redirection/success');
+                $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/success');
             } else {
                 Zend_Registry::get('Log')->log('MenuController : del : Acces a la base de donnée impossible', Zend_Log::ALERT);
                 $session->message = "Echec de supression.";
-                $this->_redirect('/redirection/fail');
+                $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/fail');
             }
         } else {
             $this->view->item = $item;
@@ -138,11 +138,11 @@ class ServLogCom_MenuController extends Zend_Controller_Action
     {
         $this->view->render('sidebar/_homeServLogMenuAdminSidebar.phtml');
         $mod = new ServLogCom_Model_Menu;
-        
-        
+
+
         $this->view->item = $mod->getMenu($this->getRequest()->getParam('id'));
         $this->view->id = $this->getRequest()->getParam('id');
-        
+
         $regime = new ServLogCom_Model_RegimeAlimentaire;
         $incompatible = ServLogCom_Model_Incompatible::getbyMenu($this->getRequest()->getParam('id'));
         if ($incompatible != null) {

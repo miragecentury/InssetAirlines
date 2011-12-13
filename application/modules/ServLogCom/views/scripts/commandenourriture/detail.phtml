@@ -31,9 +31,12 @@ if ($this->item) {
     }
     echo "</table>";
 
-    echo "<a class='enSavoirPlus' href='/ServLogCom/Commandenourriture/upd?id=" . $this->id . "'>Modifier</a>
-          <a class='enSavoirPlus' href='/ServLogCom/Commandenourriture/del?id=" . $this->id . "'>Supprimer</a>
-          <a class='enSavoirPlus' href='/ServLogCom/Commandenourriture/admin'>Retour</a>";
+    echo "<a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServLogCom/Commandenourriture/upd?id=" . $this->id . "'>Modifier</a>
+          <a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServLogCom/Commandenourriture/del?id=" . $this->id . "'>Supprimer</a>
+          <a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServLogCom/Commandenourriture/admin'>Retour</a>";
 } else {
     echo "Cette commande n'existe pas dans la base de donnée!";
 }
