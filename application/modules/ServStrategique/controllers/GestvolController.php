@@ -16,7 +16,7 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
             $session = Zend_Session_Namespace('Redirect');
             $session->message = "Vous n'avez pas les droits pour acceder à ce service";
             $session->redirection = "/";
-            $this->_redirect('/redirect/success');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirect/success');
         }
     }
 
@@ -77,7 +77,7 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
                 default:
                     $session->message = "insertion impossible, veuillez donner le type de récurence !";
                     $session->redirection = '/ServStrategique/gestvol';
-                    $this->_redirect('/redirection/fail');
+                    $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/fail');
             }
 
             //enregistrement
@@ -86,11 +86,11 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
             if ($reussite) {
                 $session->message = 'La ligne a bien été ajouté !';
                 $session->redirection = '/ServStrategique/gestvol';
-                $this->_redirect('/redirection/success');
+                $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/success');
             } else {
                 $session->message = "Erreur lors de l'ajout de la ligne !";
                 $session->redirection = '/ServStrategique/gestvol';
-                $this->_redirect('/redirection/fail');
+                $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/fail');
             }
         } else {
             $this->view->errorMessage = 'Le formulaire est invalide !';
@@ -114,7 +114,7 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
         if (is_null($ligne)) {
             $session->message = "Erreur : la ligne n'existe pas !";
             $session->redirection = '/ServStrategique/gestvol';
-            $this->_redirect('/redirection/fail');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/fail');
         }
 
         //Préremplissage de la form
@@ -164,7 +164,7 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
                 default:
                     $session->message = "insertion impossible, veuillez donner le type de récurence !";
                     $session->redirection = '/ServStrategique/gestvol';
-                    $this->_redirect('/redirection/fail');
+                    $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/fail');
             }
 
             //enregistrement
@@ -174,11 +174,11 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
             if ($reussite) {
                 $session->message = 'La ligne a bien été modifié !';
                 $session->redirection = '/ServStrategique/gestvol';
-                $this->_redirect('/redirection/success');
+                $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/success');
             } else {
                 $session->message = "Erreur lors de la modifier de la ligne !";
                 $session->redirection = '/ServStrategique/gestvol';
-                $this->_redirect('/redirection/fail');
+                $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/fail');
             }
         } else {
             $this->view->errorMessage = 'Le formulaire est invalide !';
@@ -198,7 +198,7 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
         if (is_null($ligne)) {
             $session->message = "Erreur : la ligne n'existe pas !";
             $session->redirection = '/ServStrategique/gestvol';
-            $this->_redirect('/redirection/fail');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/fail');
         }
         //Suppression
         $reussite = $ligne->delLigne($id);
@@ -207,11 +207,11 @@ class ServStrategique_GestvolController extends Zend_Controller_Action
         if ($reussite) {
             $session->message = 'La ligne a bien été supprimé !';
             $session->redirection = '/ServStrategique/gestvol';
-            $this->_redirect('/redirection/success');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/success');
         } else {
             $session->message = "Erreur lors de la suppression de la ligne !";
             $session->redirection = '/ServStrategique/gestvol';
-            $this->_redirect('/redirection/fail');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/fail');
         }
     }
 

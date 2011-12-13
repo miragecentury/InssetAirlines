@@ -38,10 +38,12 @@
                 echo "<td>" . $ligne->get_mois() . "</td>";
                 echo "<td>" . $ligne->get_annees() . "</td>";
                 echo "<td>" . $ligne->getStatusLigne() . "</td>";
-                echo "<td><a href='/ServStrategique/gestvol/updvol/id/" .
+                echo "<td><a href='" . Zend_Registry::get('BaseUrl') .
+                "/ServStrategique/gestvol/updvol/id/" .
                     $ligne->get_noLigne() .
                     "' class='enSavoirPlus'>Modifier</a></td>";
-                echo "<td><a href='/ServStrategique/gestvol/delvol/id/" .
+                echo "<td><a href='" . Zend_Registry::get('BaseUrl') .
+                "/ServStrategique/gestvol/delvol/id/" .
                     $ligne->get_noLigne() .
                     "' class='enSavoirPlus'>Supprimer</a></td>";
 
@@ -51,7 +53,7 @@
         </tr>
     </table>
     <div class="alpha omega grid_3 prefix_12">
-        <a href="/ServStrategique/gestvol/newvol" class='enSavoirPlus'>Ajouter une ligne</a>
+        <a href="<?= Zend_Registry::get('BaseUrl'); ?>/ServStrategique/gestvol/newvol" class='enSavoirPlus'>Ajouter une ligne</a>
     </div>
     <div class="clear"></div>
 </div>
