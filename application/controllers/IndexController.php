@@ -3,8 +3,8 @@
 class IndexController extends Zend_Controller_Action {
 
     public function init() {
-        $this->view->render(Zend_Registry::get('BaseUrl') . 'user/_frontSidebar.phtml');
-        $this->view->render(Zend_Registry::get('BaseUrl') . 'user/_loginfront.phtml');
+        $this->view->render('user/_frontSidebar.phtml');
+        $this->view->render('user/_loginfront.phtml');
         $this->_helper->layout->setLayout('front');
     }
 

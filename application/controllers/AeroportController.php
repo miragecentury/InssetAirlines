@@ -5,8 +5,8 @@ class AeroportController extends Zend_Controller_Action
 
     public function init()
     {
-        $this->view->render(Zend_Registry::get('BaseUrl') . '/user/_frontSidebar.phtml');
-        $this->view->render(Zend_Registry::get('BaseUrl') . '/user/_login.phtml');
+        $this->view->render('user/_frontSidebar.phtml');
+        $this->view->render('user/_login.phtml');
     }
 
     public function indexAction()

@@ -26,7 +26,7 @@ class AuthController extends Zend_Controller_Action
      */
     public function init()
     {
-        $this->view->render(Zend_Registry::get('BaseUrl') . 'user/_sidebar.phtml');
+        $this->view->render('user/_sidebar.phtml');
         //$this->view->render('user/_login.phtml');
         $this->_acl = Zend_Registry::get('Acl');
     }
