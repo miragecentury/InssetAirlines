@@ -5,8 +5,8 @@ class AeroportController extends Zend_Controller_Action
 
     public function init()
     {
-        $this->view->render('user/_frontSidebar.phtml');
-        $this->view->render('user/_login.phtml');
+        $this->view->render(Zend_Registry::get('BaseUrl') . '/user/_frontSidebar.phtml');
+        $this->view->render(Zend_Registry::get('BaseUrl') . '/user/_login.phtml');
     }
 
     public function indexAction()
@@ -37,11 +37,11 @@ class AeroportController extends Zend_Controller_Action
             if ($item != null) {
                 $Mod->delAeroport($request->getParam('id'));
                 $session->message = "Supression réussi.";
-                $this->_redirect('/redirection/success');
+                $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/success');
             } else {
                 Zend_Registry::get('Log')->log('AeroportController : del : Acces a la base de donnée impossible', Zend_Log::ALERT);
                 $session->message = "Echec de supression.";
-                $this->_redirect('/redirection/fail');
+                $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/fail');
             }
         } else {
             $this->view->item = $item;
@@ -63,7 +63,7 @@ class AeroportController extends Zend_Controller_Action
             $session = new Zend_Session_Namespace('Redirect');
             $session->message = "Ajout de l'aeroport réussi.";
             $session->redirection = "/Aeroport/admin";
-            $this->_redirect('/redirection/success');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/success');
         }
     }
 
@@ -88,7 +88,7 @@ class AeroportController extends Zend_Controller_Action
             $session = new Zend_Session_Namespace('Redirect');
             $session->message = "Modification réussi.";
             $session->redirection = "/Aeroport/admin";
-            $this->_redirect('/redirection/success');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/success');
         }
     }
 

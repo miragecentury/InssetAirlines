@@ -18,9 +18,9 @@ class RedirectionController extends Zend_Controller_Action
 
     public function init()
     {
-        $this->view->render('user/_sidebar.phtml');
-        $this->view->render('user/_utilisateurSidebar.phtml');
-        $this->view->render('user/_login.phtml');
+        $this->view->render(Zend_Registry::get('BaseUrl') . 'user/_sidebar.phtml');
+        $this->view->render(Zend_Registry::get('BaseUrl') . 'user/_utilisateurSidebar.phtml');
+        $this->view->render(Zend_Registry::get('BaseUrl') . 'user/_login.phtml');
         //recupération de la session
         $this->_session = $this->_getSession();
     }
@@ -30,10 +30,10 @@ class RedirectionController extends Zend_Controller_Action
         //redirection automatique au bout de 3 secondes
         if ($this->_session) {
             $this->view->success = $this->_message;
-            $this->getResponse()->setHeader('refresh', '1,url=' . $this->_redirection);
+            $this->getResponse()->setHeader('refresh', '1,url=' . Zend_Registry::get('BaseUrl') . $this->_redirection);
         } else {
             $this->view->success = 'Succes !';
-            $this->getResponse()->setHeader('refresh', '1,url=/');
+            $this->getResponse()->setHeader('refresh', '1,url=' . Zend_Registry::get('BaseUrl') . '/');
         }
     }
 
@@ -42,10 +42,10 @@ class RedirectionController extends Zend_Controller_Action
         //redirection automatique au bout de 3 secondes
         if ($this->_session) {
             $this->view->fail = $this->_message;
-            $this->getResponse()->setHeader('refresh', '1,url=' . $this->_redirection);
+            $this->getResponse()->setHeader('refresh', '1,url=' . Zend_Registry::get('BaseUrl') . $this->_redirection);
         } else {
             $this->view->fail = 'Echec !';
-            $this->getResponse()->setHeader('refresh', '1,url=/');
+            $this->getResponse()->setHeader('refresh', '1,url=' . Zend_Registry::get('BaseUrl') . '/');
         }
     }
 

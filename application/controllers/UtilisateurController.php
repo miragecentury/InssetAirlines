@@ -14,9 +14,9 @@ class UtilisateurController extends Zend_Controller_Action
 
     public function init()
     {
-        $this->view->render('user/_sidebar.phtml');
-        $this->view->render('user/_utilisateurSidebar.phtml');
-        $this->view->render('user/_login.phtml');
+        $this->view->render(Zend_Registry::get('BaseUrl') . 'user/_sidebar.phtml');
+        $this->view->render(Zend_Registry::get('BaseUrl') . 'user/_utilisateurSidebar.phtml');
+        $this->view->render(Zend_Registry::get('BaseUrl') . 'user/_login.phtml');
         $this->_acl = Zend_Registry::get('Acl');
 
 
@@ -25,7 +25,7 @@ class UtilisateurController extends Zend_Controller_Action
             $session = new Zend_Session_Namespace('Redirect');
             $session->message = "Vous n'êtes pas logué !";
             $session->redirection = "/";
-            $this->_redirect('/redirection/fail');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/fail');
         }
     }
 
@@ -55,7 +55,7 @@ class UtilisateurController extends Zend_Controller_Action
                 if (null !== $pers->get_noPersonne()) {
                     $pers->savePersonneById($pers->get_noPersonne());
                     $this->_personneActuelle = null;
-                    $this->_redirect('/utilisateur');
+                    $this->_redirect(Zend_Registry::get('BaseUrl') . '/utilisateur');
                 } else {
                     $this->view->errorMessage = "Erreur lors de l'enregistrement du mot de passe";
                 }
@@ -111,7 +111,7 @@ class UtilisateurController extends Zend_Controller_Action
                 $authSession->storage = $email;
                 //reinit
                 $this->_personneActuelle = null;
-                $this->_redirect('/utilisateur/profil/');
+                $this->_redirect(Zend_Registry::get('BaseUrl') . '/utilisateur/profil/');
             } else {
                 $this->view->errorMessage = "Non connecté, veuiller vous logger";
             }
@@ -149,7 +149,7 @@ class UtilisateurController extends Zend_Controller_Action
             $adresse->addAdresse();
 
             //reinit
-            $this->_redirect('/utilisateur/profil/');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/utilisateur/profil/');
             $this->_PersonneActuelle = null;
         } else {
             $this->view->errorMessage = 'Le formulaire est invalide !';
@@ -200,7 +200,7 @@ class UtilisateurController extends Zend_Controller_Action
                 $assoc->addAssoc();
                 //SUCCESS !
                 //réinit
-                $this->_redirect('/utilisateur/profil/');
+                $this->_redirect(Zend_Registry::get('BaseUrl') . '/utilisateur/profil/');
                 $this->_PersonneActuelle = null;
             }
         } else {
@@ -274,7 +274,7 @@ class UtilisateurController extends Zend_Controller_Action
                 $this->getRequest()->setParam('id', $this->getRequest()->getParam('id'));
 
                 //réinit
-                $this->_redirect('/utilisateur/profil/');
+                $this->_redirect(Zend_Registry::get('BaseUrl') .  '/utilisateur/profil/');
                 $this->_PersonneActuelle = null;
             } else {
                 $this->view->errorMessage = 'Le formulaire est invalide !';
@@ -313,7 +313,7 @@ class UtilisateurController extends Zend_Controller_Action
         if (!empty($authSession->storage) && isset($authSession->storage)) {
             $this->_email = $authSession->storage;
         } else {
-            $this->_redirect('/');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/');
         }
     }
 
