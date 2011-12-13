@@ -20,12 +20,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     protected function _initConfig() {
         $Config = $this->getOptions();
         Zend_Registry::set('Config', $Config);
-        
+
         //Pare-feu (Site dans un dossier d'un domaine)
         // le helper n'étant pas accessible hors des vues
         // on utilise cette méthode
         Zend_Registry::set('BaseUrl', $Config['InssetAirlines']['BaseUrl']);
-        
+
         return $Config;
     }
 
@@ -173,14 +173,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     }
 
     public function _initView() {
+        $this->bootstrap('Config');
 //initialisation de la view
         $view = new Zend_View;
         $view->doctype('HTML5');
         $view->headTitle('Insset Airlines');
         $view->headTitle()->setSeparator('-');
-        $view->headLink()->prependStylesheet('/ressource/css/reset.css')
-                ->appendStylesheet('/ressource/css/960.css')
-                ->appendStylesheet('/ressource/css/text.css');
+        $view->headLink()->prependStylesheet(Zend_Registry::get('BaseUrl') . '/ressource/css/reset.css')
+                ->appendStylesheet(Zend_Registry::get('BaseUrl') . '/ressource/css/960.css')
+                ->appendStylesheet(Zend_Registry::get('BaseUrl') . '/ressource/css/text.css');
 
 //configuration du renderer
         $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
