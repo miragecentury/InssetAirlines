@@ -20,6 +20,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     protected function _initConfig() {
         $Config = $this->getOptions();
         Zend_Registry::set('Config', $Config);
+        
+        //Pare-feu (Site dans un dossier d'un domaine)
+        // le helper n'étant pas accessible hors des vues
+        // on utilise cette méthode
+        Zend_Registry::set('BaseUrl', $Config['InssetAirlines']['BaseUrl']);
+        
         return $Config;
     }
 
