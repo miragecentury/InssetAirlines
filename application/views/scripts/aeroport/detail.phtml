@@ -22,10 +22,13 @@ if ($this->item) {
                 </tr>
             </table>";
     echo "
-        <a class='enSavoirPlus'  href='/Aeroport/upd?id=" . $this->id . "'>Modifier</a>
-        <a class='enSavoirPlus'  href='/Aeroport/del?id=" . $this->id . "'>Supprimer</a><br/><br/>";
+        <a class='enSavoirPlus'  href='" . Zend_Registry::get('BaseUrl') .
+                "/Aeroport/upd?id=" . $this->id . "'>Modifier</a>
+        <a class='enSavoirPlus'  href='" . Zend_Registry::get('BaseUrl') .
+                "/Aeroport/del?id=" . $this->id . "'>Supprimer</a><br/><br/>";
 } else {
     echo "Cet Aéroport n'existe pas dans la base de donnée!<br/><br/>
-        <a class='enSavoirPlus'  href='/Aeroport/admin/'>Retour</a><br/>";
+        <a class='enSavoirPlus'  href='" . Zend_Registry::get('BaseUrl') .
+                "/Aeroport/admin/'>Retour</a><br/>";
 }
 ?>
