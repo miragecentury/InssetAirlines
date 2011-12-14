@@ -151,7 +151,8 @@ class ServPlaning_Model_EnVolMapper extends Spesx_Mapper_Mapper
                         $e->getCode(),
                         $e);
             }
-
+        }
+    }
     /**
      * Recupere le prochain vol du pilote passé en param
      * @access public
