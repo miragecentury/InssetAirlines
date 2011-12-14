@@ -4,7 +4,8 @@
  *
  *
  */
-class ServPlaning_Model_Vol {
+class ServPlaning_Model_Vol
+{
     //le vol est ok;
     const ETAT_OK = 0;
 
@@ -78,7 +79,8 @@ class ServPlaning_Model_Vol {
      */
     private static $_mapper;
 
-    public static function init() {
+    public static function init()
+    {
         if (self::$_mapper === null) {
             self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
         }
@@ -89,45 +91,54 @@ class ServPlaning_Model_Vol {
 //--------------------------------------------------------------------------
 //******************************************************************************
 //public static
-    
-    public static function findAllVolsInInterval(DateTime $start, DateTime $stop){
+
+    public static function findAllVolsInInterval(DateTime $start, DateTime $stop)
+    {
         self::init();
-        return self::$_mapper->findAllVolsInInterval( $start, $stop);
+        return self::$_mapper->findAllVolsInInterval($start, $stop);
     }
 
-    public static function FindAllVolsByAvionAtDateTimeInterval(DateTime $Start, DateTime $End, $noAvion) {
+    public static function FindAllVolsByAvionAtDateTimeInterval(DateTime $Start, DateTime $End, $noAvion)
+    {
         self::init();
         return self::$_mapper->FindAllVolsByAvionAtDateTimeInterval($Start, $End, $noAvion);
     }
 
-    public static function getVolsByAvionFromDateTimeEffectif(DateTime $DateTime, $noAvion) {
+    public static function getVolsByAvionFromDateTimeEffectif(DateTime $DateTime, $noAvion)
+    {
         self::init();
         return self::$_mapper->getVolsByAvionFromDateTimeEffectif($DateTime, $noAvion);
     }
 
-    public static function changementSemaine() {
-        
+    public static function changementSemaine()
+    {
+
     }
 
-    public static function changementMois() {
-        
+    public static function changementMois()
+    {
+
     }
 
-    public static function changementJour() {
-        
+    public static function changementJour()
+    {
+
     }
 
-    public static function getVolsByAvion($noAvion) {
+    public static function getVolsByAvion($noAvion)
+    {
         self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
         return self::$_mapper->getVolsByAvion($noAvion);
     }
 
-    public static function findAllVolsInIntervalByEtat(DateTime $start, DateTime $stop, $etat) {
+    public static function findAllVolsInIntervalByEtat(DateTime $start, DateTime $stop, $etat)
+    {
         self::init();
         return self::$_mapper->findAllVolsInIntervalByEtat($start, $stop, $etat);
     }
 
-    public static function IsEnVolByAvionOnCurrentTime($noAvion) {
+    public static function IsEnVolByAvionOnCurrentTime($noAvion)
+    {
         self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
         $vols = self::$_mapper->getVolsByAvionOnCurrentTime($noAvion);
         if (count($vols) > 0) {
@@ -146,7 +157,8 @@ class ServPlaning_Model_Vol {
      * @author pewho
      * @return array(ServPlaning_Model_Vol)|false
      */
-    public static function getVolsBySemaine($noSemaine) {
+    public static function getVolsBySemaine($noSemaine)
+    {
         //récupération des dates
         $start = new DateTime(ServPlaning_Model_Vol::getSemaineAheadFromCurrent($noSemaine));
         $stop = new DateTime(ServPlaning_Model_Vol::getFinSemaineAheadFromCurrent($noSemaine));
@@ -156,7 +168,8 @@ class ServPlaning_Model_Vol {
         return $return;
     }
 
-    public static function getVolByAvionOnCurrentTime($noAvion) {
+    public static function getVolByAvionOnCurrentTime($noAvion)
+    {
         self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
         $vols = self::$_mapper->getVolsByAvionOnCurrentTime($noAvion);
         if (count($vols) == 1) {
@@ -175,14 +188,15 @@ class ServPlaning_Model_Vol {
      * @param int $nbrSemaine
      * @return null|string
      */
-    public static function getSemaineAheadFromCurrent($nbrSemaine) {
+    public static function getSemaineAheadFromCurrent($nbrSemaine)
+    {
         $date = new DateTime(date(DATE_ATOM));
         $date->modify('Monday this week');
         if (is_int($nbrSemaine) && $nbrSemaine > 0) {
             $semaine = '+' . $nbrSemaine . ' week';
             $date->modify($semaine);
         } else if ($nbrSemaine == 0) {
-            
+
         } else {
             return null;
         }
@@ -198,14 +212,15 @@ class ServPlaning_Model_Vol {
      * @param int $nbrSemaine
      * @return null|string
      */
-    public static function getFinSemaineAheadFromCurrent($nbrSemaine) {
+    public static function getFinSemaineAheadFromCurrent($nbrSemaine)
+    {
         $date = new DateTime(date(DATE_ATOM));
         $date->modify('Sunday this week');
         if (is_int($nbrSemaine) && $nbrSemaine > 0) {
             $semaine = '+' . $nbrSemaine . ' week';
             $date->modify($semaine);
         } else if ($nbrSemaine == 0) {
-            
+
         } else {
             return null;
         }
@@ -213,18 +228,20 @@ class ServPlaning_Model_Vol {
         return $date->format(DATE_ATOM);
     }
 
-    public static function repercutionMiseHorsServiceAvion($noAvion, $DateTime) {
+    public static function repercutionMiseHorsServiceAvion($noAvion, $DateTime)
+    {
         $End = self::getSemaineAheadFromCurrent(5);
         if ($DateTime instanceof DateTime) {
             $Start = $DateTime;
         } elseif (is_string($DateTime)) {
-            
+
         } else {
             return FALSE;
         }
     }
 
-    public static function getJourFromWeek($weekDate, $jour) {
+    public static function getJourFromWeek($weekDate, $jour)
+    {
         if ($weekDate instanceof DateTime) {
             $date = $weekDate;
         } else if (is_string($weekDate)) {
@@ -259,7 +276,8 @@ class ServPlaning_Model_Vol {
         }
     }
 
-    public static function getMoisFromWeek($weekDate) {
+    public static function getMoisFromWeek($weekDate)
+    {
         if ($weekDate instanceof DateTime) {
             $date = $weekDate;
         } else if (is_string($weekDate)) {
@@ -271,7 +289,8 @@ class ServPlaning_Model_Vol {
         return $date->format(DATE_ATOM);
     }
 
-    public static function getAnneeFromWeek($weekDate) {
+    public static function getAnneeFromWeek($weekDate)
+    {
         if ($weekDate instanceof DateTime) {
             $date = $weekDate;
         } else if (is_string($weekDate)) {
@@ -290,7 +309,8 @@ class ServPlaning_Model_Vol {
      * @static
      * @return array(ServPlaning_Model_Vol)
      */
-    public static function getVolsDuJour() {
+    public static function getVolsDuJour()
+    {
         //création des dates butoirs
         //butoir gauche aujourd'hui minuit
         $dateStart = new DateTime(date(DATE_ATOM));
@@ -321,7 +341,8 @@ class ServPlaning_Model_Vol {
      * @param int $date
      * @return int $s
      */
-    public static function getIntervalSemBetweenNowAndDate($date) {
+    public static function getIntervalSemBetweenNowAndDate($date)
+    {
         //si la date est un string
         if (is_string($date)) {
             $stop = new DateTime($date);
@@ -364,12 +385,14 @@ class ServPlaning_Model_Vol {
      * @access public
      *
      */
-    public function addVol() {
+    public function addVol()
+    {
         self::init();
         self::$_mapper->save($this, 'noVol');
     }
 
-    public function addRetardDecollage($nbHeure, $nbMinute) {
+    public function addRetardDecollage($nbHeure, $nbMinute)
+    {
         self::init();
         $date = new DateTime($this->get_heuredecollage());
         $date->modify("+" . $nbHeure . " hour +" . $nbMinute . " min");
@@ -379,20 +402,74 @@ class ServPlaning_Model_Vol {
         $this->set_heureAtterissage($date->format(DATE_ATOM));
         try {
             $this->save();
+            $this->addRetardRec($nbHeure, $nbMinute);
         } catch (Exception $e) {
-            
+
         }
     }
 
-    public function addRetardAtterissage($nbHeure, $nbMinute) {
+    /**
+     * Permet de gerer l'effet boule de neige lors de l'ajout d'un retard.
+     *
+     * @access private
+     * @author pewho
+     * @param int $nbHeure
+     * @param int $nbMin
+     */
+    private function addRetardRec($nbHeure, $nbMinute)
+    {
+        //init
+        $volSuivant = null;
+        self::init();
+
+
+        //1 Etape : recuperation et test du prochain vol de l'avion utilisé
+        $volSuivant = self::$_mapper->getNextVolByAvion($this);
+
+
+        //Si le vol est en conflit
+        if ($volSuivant instanceof ServPlaning_Model_Vol &&
+            $this->get_heureAtterissage() > $volSuivant->get_heureDecollage()) {
+            $arrayEnVol = ServPlaning_Model_EnVol::getEnVolByVol($volSuivant->get_noVol());
+            //modification de la date Start / stop de chaque en Vol
+            foreach ($arrayEnVol as $enVol) {
+                $dateStart = new DateTime($enVol->get_heureStart());
+                $dateStop = new DateTime($enVol->get_heureStop());
+                $dateStart->modify("+" . $nbHeure . " hour +" . $nbMinute . " min");
+                $dateStop->modify("+" . $nbHeure . " hour +" . $nbMinute . " min");
+                $enVol->set_heureStart($dateStart->format(DATE_ATOM));
+                $enVol->set_heureStop($dateStop->format(DATE_ATOM));
+                $envol->save();
+            }
+            $volSuivant->addRetardDecollage($nbHeure, $nbMinute);
+        }
+
+        //2 Etape : recuperation et test des pilotes de l'avion utilisé
+        $enVols = ServPlaning_Model_EnVol::getEnVolByVol($this->get_noVol());
+        $compteur = 0; // afin de ses souvenir que vol a deja ete modifié
+        foreach ($enVols as $enVol) {
+            //Pour chaque EnVol Courant
+            $enVolSuivant = ServPlaning_Model_EnVol::getNextEnVolByEnVol($enVol);
+            if ($enVolSuivant instanceof ServPlaning_Model_EnVol &&
+                $enVol->get_heureStop() > $enVolSuivant->get_heureStart()) {
+                    $VolMod = ServPlaning_Model_Vol::getVol($enVolSuivant->get_noVol());
+                    $VolMod->addRetardRec($nbHeure, $nbMinute);
+            }
+        }
+    }
+
+    public function addRetardAtterissage($nbHeure, $nbMinute)
+    {
         self::init();
     }
 
-    public function deroute($noAeroportAtterissage) {
+    public function deroute($noAeroportAtterissage)
+    {
         self::init();
     }
 
-    public function annule() {
+    public function annule()
+    {
         self::init();
     }
 
@@ -404,7 +481,8 @@ class ServPlaning_Model_Vol {
      * @param string $noVol
      *
      */
-    public function delVol($noVol) {
+    public function delVol($noVol)
+    {
         self::init();
         try {
             self::$_mapper->delete('noVol', $noVol);
@@ -426,12 +504,14 @@ class ServPlaning_Model_Vol {
      * @return null|ServPlaning_Model_Vol
      *
      */
-    public static function getVol($noVol) {
+    public static function getVol($noVol)
+    {
         self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
         return self::$_mapper->find($noVol);
     }
 
-    public function save() {
+    public function save()
+    {
         self::init();
         return self::$_mapper->save($this, 'noVol');
     }
@@ -439,84 +519,102 @@ class ServPlaning_Model_Vol {
     //--------------------------------------------------------------------------
     // Getter / setter
     //--------------------------------------------------------------------------
-    public function get_noVol() {
+    public function get_noVol()
+    {
         return $this->_noVol;
     }
 
-    public function set_noVol($_noVol) {
+    public function set_noVol($_noVol)
+    {
         $this->_noVol = $_noVol;
         return $this;
     }
 
-    public function get_labelvol() {
+    public function get_labelvol()
+    {
         return $this->_labelvol;
     }
 
-    public function set_labelvol($_labelvol) {
+    public function set_labelvol($_labelvol)
+    {
         $this->_labelvol = $_labelvol;
         return $this;
     }
 
-    public function get_noAeroportAtte() {
+    public function get_noAeroportAtte()
+    {
         return $this->_noAeroportAtte;
     }
 
-    public function set_noAeroportAtte($_labelAeroportAtte) {
+    public function set_noAeroportAtte($_labelAeroportAtte)
+    {
         $this->_noAeroportAtte = $_labelAeroportAtte;
         return $this;
     }
 
-    public function get_noAeroportDeco() {
+    public function get_noAeroportDeco()
+    {
         return $this->_noAeroportDeco;
     }
 
-    public function set_noAeroportDeco($_labelAeroportDeco) {
+    public function set_noAeroportDeco($_labelAeroportDeco)
+    {
         $this->_noAeroportDeco = $_labelAeroportDeco;
         return $this;
     }
 
-    public function get_noAvion() {
+    public function get_noAvion()
+    {
         return $this->_noAvion;
     }
 
-    public function set_noAvion($_noAvion) {
+    public function set_noAvion($_noAvion)
+    {
         $this->_noAvion = $_noAvion;
         return $this;
     }
 
-    public function get_noLigne() {
+    public function get_noLigne()
+    {
         return $this->_noLigne;
     }
 
-    public function set_noLigne($_noLigne) {
+    public function set_noLigne($_noLigne)
+    {
         $this->_noLigne = $_noLigne;
         return $this;
     }
 
-    public function get_heuredecollage() {
+    public function get_heuredecollage()
+    {
         return $this->_heuredecollage;
     }
 
-    public function set_heuredecollage($_heuredecollage) {
+    public function set_heuredecollage($_heuredecollage)
+    {
         $this->_heuredecollage = $_heuredecollage;
         return $this;
     }
 
-    public function get_heureAtterissage() {
+    public function get_heureAtterissage()
+    {
         return $this->_heureAtterissage;
     }
 
-    public function set_heureAtterissage($_heureAtterissage) {
+    public function set_heureAtterissage($_heureAtterissage)
+    {
         $this->_heureAtterissage = $_heureAtterissage;
         return $this;
     }
 
-    public function set_etat($_etat) {
+    public function set_etat($_etat)
+    {
         $this->_etat = $_etat;
         return $this;
     }
 
-    public function get_etat() {
+    public function get_etat()
+    {
         return $this->_etat;
     }
 

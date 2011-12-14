@@ -120,6 +120,21 @@ class ServPlaning_Model_EnVol {
         $mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_EnVol");
         return $mapper->IsLibreAtIntervalByEmploye($Start, $End, $noEmploye);
     }
+    /** Permet de récuperer les envols dépendant d'un vol
+     * @access public
+     * @author pewho
+     * @return array(ServPlaning_Model_Envol)
+     * @param int $idVol
+     * @static
+     */
+    public static function getEnVolByVol($idVol){
+        $mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_EnVol");
+        return $mapper->getEnvolByVol($idVol);
+    }
+    public static function getNextEnVolByEnVol($item){
+        $mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_EnVol");
+        return $mapper->getNextEnVolByPilote($item);
+    }
 
     //--------------------------------------------------------------------------
     // Getter / setter
