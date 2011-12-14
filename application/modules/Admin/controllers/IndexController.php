@@ -12,7 +12,6 @@ class Admin_IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        echo 'Vous etes sur le module admin!';
     }
 
 }
