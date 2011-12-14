@@ -113,25 +113,27 @@ class Application_Model_ApplicationVar {
                 Spesx_Log::LogINFO('Update Mois Err:');
             }
         }
-        if ($UpdateCipherSemaine != $CurrentDate->format('W')) {
+        if ($UpdateCipherSemaine != $CurrentDate->format('W') || TRUE) {
             //echo 'Update Annee';
             $boolInt = 0;
             $boolInt += (INT) ServStrategique_Model_Ligne::changementSemaine();
             $boolInt += (INT) ServExploitation_Model_Incident::changementSemaine();
-
-            if ($boolInt == 2) {
+            $boolInt += (INT) ServMaintenance_Model_Avion::changementSemaine();
+            if ($boolInt == 3) {
                 Spesx_Log::LogINFO('Update Semaine Ok');
                 Application_Model_ApplicationVar::set('UpdateCipherSemaine', $CurrentDate->format('W'));
             } else {
                 Spesx_Log::LogINFO('Update Semaine Err:');
             }
         }
-        if ($UpdateCipherJour != $CurrentDate->format('d')) {
+        if ($UpdateCipherJour != $CurrentDate->format('d') || TRUE) {
             //echo 'Update Jour';
             $boolInt = 0;
             $boolInt += (INT) ServStrategique_Model_Ligne::changementJour();
-
-            if ($boolInt == 1) {
+            $boolInt += (INT) ServMaintenance_Model_Avion::changementJour();
+            $boolInt += (INT) ServMaintenance_Model_TacheMaintenance::actualisationcloturedesMaintenances();
+            $boolInt += (INT) ServMaintenance_Model_TacheMaintenance::actualisationlstTacheUrgenteAplanifier();
+            if ($boolInt == 4) {
                 Spesx_Log::LogINFO('Update Jour Ok');
                 Application_Model_ApplicationVar::set('UpdateCipherJour', $CurrentDate->format('d'));
             } else {

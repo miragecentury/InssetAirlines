@@ -2,39 +2,94 @@
     <h1 style='display: inline;'>Service Maintenance - </h1>
     <h3 style='display: inline;'>Gestion des Tâches de Maintenance - </h3>
     </br></br></br>
-    
     <div>
+        <a class="enSavoirPlus">Voir Tâche Finies</a>
+    </div>
+    <br/>
+    <div>
+        <br/>
         <h6>Tâche(s) en cours:</h6>
         <p style="margin-left: 30px;">
-            <span style="color: green"><?php echo'x'; ?> Maintenance(s) Préventive(s) </span><br/>
-            <span style="color: red"><?php echo 'x'; ?> Maintenance(s) Urgente(s)</span><br/>
-            
-            <br/><a style="margin-left: 30px;" class="enSavoirPlus">Voir</a><br/><br/>
+            <span style="color: green"><?php echo $this->nbAff['encoursP']; ?> Maintenance(s) Préventive(s) </span><br/>
+            <span style="color: red"><?php echo $this->nbAff['encoursU']; ?> Maintenance(s) Urgente(s)</span><br/>
+
+            <br/><a style="margin-left: 30px;" href="<?php echo $this->baseUrl(); ?>/ServMaintenance/Gesttachemaintenance/encours" class="enSavoirPlus">Voir</a><br/><br/>
         </p>
     </div>
+    <h6 style="color: red;">Tâche(s) Urgente(s) à planifier: <?php echo ServMaintenance_Model_TacheMaintenance::nbMaintenanceUrgenteAPlanifier(); ?></h6>
     <div>
-        <h6>Tâche(s) pour (s à s+4):</h6>
-        <p style="margin-left: 30px;">
-            <span style="color: green"><?php echo 'x'; ?> Maintenance(s) Préventive(s) Planifiée(s)</span>
-            </br>
-            <span style="color: orange"><?php echo 'x'; ?> Maintenance(s) Urgente(s) Planifiée(s)</span>
-            </br>
-            <span style="color: red"><?php echo 'x'; ?> Maintenance(s) Urgente(s) à Planifiée(s)</span>
-            </br>
-            <br/><a style="margin-left: 30px;" class="enSavoirPlus">Planifier</a> (Risque d'entraîner des Interruptions de Service)<br/><br/>
-        </p>
+        <?php
+        if (isset($this->lstTacheAPlanifier) && is_array($this->lstTacheAPlanifier)) {
+            if (count($this->lstTacheAPlanifier) > 0) {
+                echo '<table>';
+                echo '
+                    <tr>
+                        <th style="background-color: red; color: white;">N.</th>
+                        <th style="background-color: red; color: white;">Matricule</th>
+                        <th style="background-color: red; color: white;">Modele</th>
+                        <th style="background-color: red; color: white;">Type de Maintenance</th>
+                        <th style="background-color: red; color: white;">Nb d`Heure Vol dépassées</th>
+                        <td></td>
+                    </tr>
+                ';
+                foreach ($this->lstTacheAPlanifier as $tacheplanifier) {
+                    $avion = ServMaintenance_Model_Avion::findOne($tacheplanifier['noAvion']);
+                    $typemaintenance = ServMaintenance_Model_TypeMaintenance::findOne($tacheplanifier['typeMaintenance']);
+                    if (($avion instanceof ServMaintenance_Model_Avion) && ($typemaintenance instanceof ServMaintenance_Model_TypeMaintenance)) {
+                        $modele = ServMaintenance_Model_Modele::findOne($avion->get_noModele());
+                        if ($modele instanceof ServMaintenance_Model_Modele) {
+                            $constructeur = ServMaintenance_Model_Constructeur::FindOne($modele->get_noConstructeur());
+                            if ($constructeur instanceof ServMaintenance_Model_Constructeur) {
+                                echo '<tr>
+                                        <td><h6>'.$avion->get_noAvion().'</h6></td>
+                                        <td><h6>'.$avion->get_label().'</h6></td>
+                                        <td><h6>'.$modele->get_label().' 
+                                        '.$constructeur->get_label().'</h6></td>
+                                        <td><h6>'.$typemaintenance->get_label().'</h6></td>
+                                        <td><h6>'.$tacheplanifier['nbHeuredeVol'].'</h6></td>
+                                        <td style="padding-top: 10px;"><a  class="enSavoirPlusUrg" href="'.$this->baseUrl().'/ServMaintenance/Gesttachemaintenance/aplanifier/noavion/'.$avion->get_noAvion().'/notypemaintenance/'.$typemaintenance->get_noTypeMaintenance().'">Planifier</a></td>';
+                                echo '</tr>';
+                            } else {
+                                echo '<tr><td>Err!</td></tr>';
+                            }
+                        } else {
+                            echo '<tr><td>Err!</td></tr>';
+                        }
+                    } else {
+                        echo '<tr><td>Err!</td></tr>';
+                    }
+                }
+                echo '</table>';
+            } else {
+                echo '<p> Aucune Tâche Urgente à planifier </p>';
+            }
+        }
+        ?>
+        <br/>
+        <a class="enSavoirPlus" href="<?php echo $this->baseUrl()?>/ServMaintenance/Gesttachemaintenance/aplanifier">Planifier une tâche préventive !</a>
     </div>
+    <br/>
     <div>
-        <h6>Tâche(s) pour (s+5 à s+8):</h6>
+        <h6>Tâche(s) planifiée(s):</h6>
         <p style="margin-left: 30px;">
-            <span style="color: green"><?php echo 'x'; ?> Maintenance(s) Préventive(s) Planifiée(s)</span>
-            </br>
-            <span style="color: orange"><?php echo 'x'; ?> Maintenance(s) Urgente(s) Planifiée(s)</span>
-            </br>
-            <span style="color: red"><?php echo 'x'; ?> Maintenance(s) Urgente(s) à Planifiée(s)</span>
-            </br>
-            <br/><a style="margin-left: 30px;" class="enSavoirPlus">Planifier</a><br/><br/>
+            <?php
+            if (isset($this->lstTacheplanifier) && is_array($this->lstTacheplanifier) && (count($this->lstTacheplanifier) > 0)) {
+                echo '<table>';
+                foreach ($this->lstTacheplanifier as $maintenance) {
+                    if ($maintenance instanceof ServMaintenance_Model_TacheMaintenance) {
+                        echo '<tr>';
+                            
+                        echo '</tr>';
+                    } else {
+                        echo '<tr><td colspan="">Err!</td></tr>';
+                    }
+                }
+                echo '</table>';
+            } else {
+                echo '<span style="margin-left: 30px;">Aucune Tâche Planifiée</span>';
+            }
+            ?>
         </p>
     </div>
-    
+
 </div> 

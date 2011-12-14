@@ -90,21 +90,31 @@ class ServPlaning_Model_Vol {
 //******************************************************************************
 //public static
 
-    public static function changementSemaine() {
+    public static function getVolsByAvionFromDateTimeEffectif(DateTime $DateTime, $noAvion) {
+        self::init();
+        return self::$_mapper->getVolsByAvionFromDateTimeEffectif($DateTime, $noAvion);
+    }
 
+    public static function changementSemaine() {
+        
     }
 
     public static function changementMois() {
-
+        
     }
 
     public static function changementJour() {
-
+        
     }
 
     public static function getVolsByAvion($noAvion) {
         self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
         return self::$_mapper->getVolsByAvion($noAvion);
+    }
+
+    public static function findAllVolsInIntervalByEtat(DateTime $start, DateTime $stop, $etat) {
+        self::init();
+        return self::$_mapper->findAllVolsInIntervalByEtat($start, $stop, $etat);
     }
 
     public static function IsEnVolByAvionOnCurrentTime($noAvion) {
@@ -116,6 +126,7 @@ class ServPlaning_Model_Vol {
             return FALSE;
         }
     }
+
     /**
      * Retourne la liste des vols prevus pour la semaine demandée
      *
@@ -125,13 +136,13 @@ class ServPlaning_Model_Vol {
      * @author pewho
      * @return array(ServPlaning_Model_Vol)|false
      */
-    public static function getVolsBySemaine($noSemaine){
+    public static function getVolsBySemaine($noSemaine) {
         //récupération des dates
         $start = new DateTime(ServPlaning_Model_Vol::getSemaineAheadFromCurrent($noSemaine));
         $stop = new DateTime(ServPlaning_Model_Vol::getFinSemaineAheadFromCurrent($noSemaine));
         //Selection
         $mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
-        $return = $mapper->findAllVolsInInterval($start,$stop);
+        $return = $mapper->findAllVolsInInterval($start, $stop);
         return $return;
     }
 
@@ -144,6 +155,7 @@ class ServPlaning_Model_Vol {
             return FALSE;
         }
     }
+
     /**
      * Renvoie la date du lundi minuit de la semaine S+$nbrSemaine
      *
@@ -160,7 +172,7 @@ class ServPlaning_Model_Vol {
             $semaine = '+' . $nbrSemaine . ' week';
             $date->modify($semaine);
         } else if ($nbrSemaine == 0) {
-
+            
         } else {
             return null;
         }
@@ -183,7 +195,7 @@ class ServPlaning_Model_Vol {
             $semaine = '+' . $nbrSemaine . ' week';
             $date->modify($semaine);
         } else if ($nbrSemaine == 0) {
-
+            
         } else {
             return null;
         }
@@ -196,7 +208,7 @@ class ServPlaning_Model_Vol {
         if ($DateTime instanceof DateTime) {
             $Start = $DateTime;
         } elseif (is_string($DateTime)) {
-
+            
         } else {
             return FALSE;
         }
@@ -289,6 +301,7 @@ class ServPlaning_Model_Vol {
             return null;
         }
     }
+
     /**
      * Retourne le nombre de semaine entre aujourd'hui et $date
      *
@@ -298,11 +311,11 @@ class ServPlaning_Model_Vol {
      * @param int $date
      * @return int $s
      */
-    public static function getIntervalSemBetweenNowAndDate($date){
+    public static function getIntervalSemBetweenNowAndDate($date) {
         //si la date est un string
-        if(is_string($date)){
+        if (is_string($date)) {
             $stop = new DateTime($date);
-        } if ($date instanceof DateTime){
+        } if ($date instanceof DateTime) {
             $stop = $date;
         } else {
             return null;
@@ -314,14 +327,14 @@ class ServPlaning_Model_Vol {
         $start->modify('Monday this week');
         $start = $start->format('d/m/Y');
         //expode
-        $start = explode('/',$start);
-        $stop = explode('/',$stop);
+        $start = explode('/', $start);
+        $stop = explode('/', $stop);
         //timestamp
         $start = mktime(0, 0, 0, $start[1], $start[0], $start[2]);
         $stop = mktime(0, 0, 0, $stop[1], $stop[0], $stop[2]);
         //calcul
         $result = $stop - $start;
-        $s = ($result/86400);
+        $s = ($result / 86400);
 
         $s = floor($s / 7);
         return $s;
@@ -357,7 +370,7 @@ class ServPlaning_Model_Vol {
         try {
             $this->save();
         } catch (Exception $e) {
-
+            
         }
     }
 
@@ -404,7 +417,7 @@ class ServPlaning_Model_Vol {
      *
      */
     public static function getVol($noVol) {
-       self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
+        self::$_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_Vol");
         return self::$_mapper->find($noVol);
     }
 
@@ -494,7 +507,7 @@ class ServPlaning_Model_Vol {
     }
 
     public function get_etat() {
-        return $this->get_etat();
+        return $this->_etat;
     }
 
 }

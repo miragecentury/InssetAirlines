@@ -1,10 +1,9 @@
 <?php
 
 class ServMaintenance_Model_TypeMaintenance {
-    
-    /*heure de vol avant planification
-    * à augmenter avec le nombre de vol
-    * géré*/
+    /* heure de vol avant planification
+     * à augmenter avec le nombre de vol
+     * géré */
     const TOLERANCE = 10;
 
     protected $_noTypeMaintenance;
@@ -25,6 +24,11 @@ class ServMaintenance_Model_TypeMaintenance {
     public static function findAllByModele($noModele) {
         self::init();
         return self::$mapper->findAllByModele($noModele);
+    }
+
+    public static function findAll() {
+        self::init();
+        return self::$mapper->findAll();
     }
 
     public static function findOne($noTypeMaintenance) {
@@ -93,5 +97,3 @@ class ServMaintenance_Model_TypeMaintenance {
     }
 
 }
-
-?>
