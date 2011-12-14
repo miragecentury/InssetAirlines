@@ -7,6 +7,14 @@
             <ul class="sousLogin">
                 <li><p><?php echo Zend_Auth::getInstance()->getIdentity(); ?></p></li>
                 <hr/>
+                <?php
+                        $auth = new Zend_Session_Namespace('Zend_Auth');
+                        $roleCourant = $auth->role;
+                        if ($roleCourant == 'Adm'){
+                            echo "<li><a href='" . Zend_Registry::get('BaseUrl') .
+                                "/Admin/'>Administration</a></li>";
+                        }
+                ?>
                 <li><a href="<?= Zend_Registry::get('BaseUrl'); ?>/utilisateur/profil">Gestion du profil</a></li>
                 <li><a href="<?= Zend_Registry::get('BaseUrl'); ?>/utilisateur/modifMdp">Changer le Mot de Passe</a></li>
                 <li> <a href="<?= Zend_Registry::get('BaseUrl'); ?>/auth/deconnection">Déconnection</a></li>
