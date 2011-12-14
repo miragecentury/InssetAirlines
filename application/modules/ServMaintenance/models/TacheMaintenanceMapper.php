@@ -149,8 +149,7 @@ class ServMaintenance_Model_TacheMaintenanceMapper extends Spesx_Mapper_Mapper {
         $CurrentTime->setTime(0, 0, 0);
         try {
             $select = $this->getDbTable()->select()
-                    ->where('? <= dateDebut', $CurrentTime->format(DATE_ATOM))
-                    ->where('? > dateFin', $CurrentTime->format(DATE_ATOM));
+                    ->where('? <= dateDebut', $CurrentTime->format(DATE_ATOM));
             $result = $this->getDbTable()->fetchAll($select);
         } catch (Zend_Db_Exception $e) {
             throw new Spesx_Mapper_Exception(
@@ -166,9 +165,8 @@ class ServMaintenance_Model_TacheMaintenanceMapper extends Spesx_Mapper_Mapper {
         $CurrentTime = new DateTime(date(DATE_ATOM));
         $CurrentTime->setTime(0, 0, 0);
         try {
-
             $select = $this->getDbTable()->select()
-                    ->where('? >= dateDebut', $CurrentTime->format((DATE_ATOM)))
+                    ->where('? <= dateDebut', $CurrentTime->format((DATE_ATOM)))
                     ->where('? = noAvion', $noAvion)
                     ->where('? = noTypeMaintenance', $TypeMaintenance);
             $result = $this->getDbTable()->fetchAll($select);

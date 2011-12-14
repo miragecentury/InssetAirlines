@@ -64,7 +64,7 @@ class ServMaintenance_Form_TacheMaintenance_planifier extends Zend_Form {
     }
 
     public function setForUrg($noAvion, $noTypeMaintenance) {
-        
+        parent::removeElement('AvionTypeMaintenance');
     }
 
 }

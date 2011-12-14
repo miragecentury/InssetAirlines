@@ -6,6 +6,9 @@
 } ?></h5>
     </br></br></br>
     <?php
+    if(isset($this->affAvionTypeMaintenance)){
+        echo '<h6>'.$this->affAvionTypeMaintenance.'</h6>';
+    }
     if (isset($this->message)) {
         echo $this->message;
     }

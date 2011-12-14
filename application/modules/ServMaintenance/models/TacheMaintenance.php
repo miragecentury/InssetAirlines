@@ -113,7 +113,7 @@ class ServMaintenance_Model_TacheMaintenance {
                                         }
                                         if ($nbHeuredeVol >= $TypeMaintenance->get_periode()) {
 
-                                            if (self::IsPlanifierByTypeMaintenanceByAvionAtCurrentTime($TypeMaintenance->get_noTypeMaintenance(), $Avion->get_noAvion())) {
+                                            if (!self::IsPlanifierByTypeMaintenanceByAvionAtCurrentTime($TypeMaintenance->get_noTypeMaintenance(), $Avion->get_noAvion())) {
                                                 $lstTacheUrgenteAplanifier[] = 
                                                 array(
                                                     'noAvion' => $Avion->get_noAvion(), 

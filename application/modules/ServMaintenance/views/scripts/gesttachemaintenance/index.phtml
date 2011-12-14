@@ -3,7 +3,7 @@
     <h3 style='display: inline;'>Gestion des Tâches de Maintenance - </h3>
     </br></br></br>
     <div>
-        <a class="enSavoirPlus">Voir Tâche Finies</a>
+        <!--<a class="enSavoirPlus">Voir Tâche Finies</a>-->
     </div>
     <br/>
     <div>
@@ -75,10 +75,34 @@
             <?php
             if (isset($this->lstTacheplanifier) && is_array($this->lstTacheplanifier) && (count($this->lstTacheplanifier) > 0)) {
                 echo '<table>';
+                echo '  
+                        <tr>
+                            <th>N.</th>
+                            <th>Matricule</th>
+                            <th>Modele</th>
+                            <th>Type de Maintenance</th>
+                            <th>DateDebut</th>
+                            <th>DateFin</th>
+                            <th>Etat</th>
+                        </tr>
+                ';
                 foreach ($this->lstTacheplanifier as $maintenance) {
                     if ($maintenance instanceof ServMaintenance_Model_TacheMaintenance) {
+                        $avion = ServMaintenance_Model_Avion::findOne($maintenance->get_noAvion());
+                        $modele = ServMaintenance_Model_Modele::findOne($avion->get_noModele());
+                        $typemaintenance = ServMaintenance_Model_TypeMaintenance::findOne($maintenance->get_noTypeMaintenance());
                         echo '<tr>';
-                            
+                            echo '<td>'.$maintenance->get_noMaintenance().'</td>';
+                            echo '<td>'.$avion->get_label().'</td>';
+                            echo '<td>'.$modele->get_label().'</td>';
+                            echo '<td>'.$typemaintenance->get_label().'</td>';
+                            echo '<td>'.$maintenance->get_dateDebut().'</td>';
+                            echo '<td>'.$maintenance->get_dateFin().'</td>';
+                            if($maintenance->get_etat() == ServMaintenance_Model_TacheMaintenance::TACHE_URGENTE){
+                                echo '<td><h6 style="color: red;">Urgente</h6></td>';
+                            }else{
+                                echo '<td><h6 style="color: green;">Préventive</h6></td>';
+                            }
                         echo '</tr>';
                     } else {
                         echo '<tr><td colspan="">Err!</td></tr>';
