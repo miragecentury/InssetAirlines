@@ -45,7 +45,7 @@ class ServPlaning_LignejournaliereController extends Zend_Controller_Action {
                     $Start = new DateTime(ServPlaning_Model_Vol::getSemaineAheadFromCurrent(4));
                     $Start->setTime(0, 0, 0);
                     $this->view->Start = $Start;
-                    
+
                     $Start->modify('monday');
                     $Start->modify('+' . $jour . 'day');
                     $End = new DateTime($Start->format(DATE_ATOM));
@@ -78,10 +78,10 @@ class ServPlaning_LignejournaliereController extends Zend_Controller_Action {
                                                 $_POST['datedecollage'] < $_POST['dateAtterissage'] &&
                                                 $diff->h >= $Ligne->get_duree()
                                         ) {
-                                            
+
                                             $dateAtterissageStr = $dateAtterissage->format(DATE_ATOM);
                                             $datedecollageStr = $datedecollage->format(DATE_ATOM);
-                                            
+
                                             if (count(ServMaintenance_Model_TacheMaintenance::findAllByAvionAtDateTimeInterval($datedecollage, $dateAtterissage, $Avion->get_noAvion()) == 0)) {
                                                 if (count(ServPlaning_Model_Vol::FindAllVolsByAvionAtDateTimeInterval($datedecollage, $dateAtterissage, $Avion->get_noAvion())) == 0) {
                                                     if (ServPlaning_Model_EnVol::IsLibreAtIntervalByEmploye($datedecollage, $dateAtterissage, $Personne1->get_Personne_noPersonne())) {
@@ -114,6 +114,36 @@ class ServPlaning_LignejournaliereController extends Zend_Controller_Action {
 
                                                                 $EnVol1->save();
                                                                 $EnVol2->save();
+                                                                //-1 dans la liste
+                                                                Switch ($jour){
+                                                                    case 1:
+                                                                        $nomListe='LstVolAPlan_J_Lun';
+                                                                        break;
+                                                                    case 2:
+                                                                        $nomListe='LstVolAPlan_J_Mar';
+                                                                        break;
+                                                                    case 3:
+                                                                        $nomListe='LstVolAPlan_J_Mer';
+                                                                        break;
+                                                                    case 4:
+                                                                        $nomListe='LstVolAPlan_J_Jeu';
+                                                                        break;
+                                                                    case 5:
+                                                                        $nomListe='LstVolAPlan_J_Ven';
+                                                                        break;
+                                                                    case 6:
+                                                                        $nomListe='LstVolAPlan_J_Sam';
+                                                                        break;
+                                                                    case 7:
+                                                                        $nomListe='LstVolAPlan_J_Dim';
+                                                                        break;
+                                                                }
+                                                                $liste = Application_Model_ApplicationVar::get($nomListe);
+                                                                $liste[$noLigne]['recurence'] -=1;
+                                                                if ($liste[$noLigne]['recurence'] == 0){
+                                                                    unset($liste[$noLigne]);
+                                                                }
+                                                                Application_Model_ApplicationVar::set($nomListe, $liste);
                                                             }
                                                         } else {
                                                             $this->view->message = 'Le Co-Pilote est déjà sur une vol pendant la période donnée!';
@@ -157,14 +187,26 @@ class ServPlaning_LignejournaliereController extends Zend_Controller_Action {
                 } else {
                     $this->view->message = 'Erreur d\'aéropport sur Ligne';
                     //redirect
+                    $session = Zend_Session_Namespace('Redirect');
+            $session->message = "Erreur Aeroport";
+            $session->redirection = "/ServPlaning/";
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirect/fail');
                 }
             } else {
                 $this->view->message = 'Ligne non active';
                 //redirect
+                $session = Zend_Session_Namespace('Redirect');
+            $session->message = "ligne non active";
+            $session->redirection = "/ServPlaning/";
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirect/fail');
             }
         } else {
             $this->view->message = 'Erreur de Ligne';
             //redirect
+            $session = Zend_Session_Namespace('Redirect');
+            $session->message = "Erreur Ligne";
+            $session->redirection = "/ServPlaning/";
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirect/fail');
         }
     }
 

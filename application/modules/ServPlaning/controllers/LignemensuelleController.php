@@ -147,6 +147,14 @@ class ServPlaning_LignemensuelleController extends Zend_Controller_Action {
 
                                                                 $EnVol1->save();
                                                                 $EnVol2->save();
+
+                                                                //-1 dans la liste
+                                                                $liste = Application_Model_ApplicationVar::get('LstVolAPlan_M');
+                                                                $liste[$noLigne]['recurence'] -=1;
+                                                                if ($liste[$noLigne]['recurence'] == 0){
+                                                                    unset($liste[$noLigne]);
+                                                                }
+                                                                Application_Model_ApplicationVar::set('LstVolAPlan_M', $liste);
                                                             }
                                                         } else {
                                                             $this->view->message = 'Le Co-Pilote est déjà sur une vol pendant la période donnée!';
@@ -190,14 +198,26 @@ class ServPlaning_LignemensuelleController extends Zend_Controller_Action {
                 } else {
                     $this->view->message = 'Erreur d\'aéropport sur Ligne';
                     //redirect
+                    $session = Zend_Session_Namespace('Redirect');
+            $session->message = "Erreur D'aeroport";
+            $session->redirection = "/ServPlaning/";
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirect/fail');
                 }
             } else {
                 $this->view->message = 'Ligne non active';
                 //redirect
+                $session = Zend_Session_Namespace('Redirect');
+            $session->message = "Ligne non active";
+            $session->redirection = "/ServPlaning/";
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirect/fail');
             }
         } else {
             $this->view->message = 'Erreur de Ligne';
             //redirect
+            $session = Zend_Session_Namespace('Redirect');
+            $session->message = "Erreur Ligne";
+            $session->redirection = "/ServPlaning/";
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirect/fail');
         }
     }
 

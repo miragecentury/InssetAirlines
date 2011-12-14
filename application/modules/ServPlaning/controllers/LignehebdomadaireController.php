@@ -5,20 +5,24 @@
  *
  * @author pewho
  */
-class ServPlaning_LignehebdomadaireController extends Zend_Controller_Action {
+class ServPlaning_LignehebdomadaireController extends Zend_Controller_Action
+{
 
-    public function init() {
+    public function init()
+    {
         $this->view->setLfiProtection(false);
         $this->view->render('../../../../views/scripts/user/_sidebar.phtml');
         $this->view->render('../../../../views/scripts/user/_login.phtml');
         $this->view->render('../../../../views/scripts/user/_ServPlaningSidebar.phtml');
     }
 
-    public function indexAction() {
+    public function indexAction()
+    {
         $this->view->listeHeb = Application_Model_ApplicationVar::get('LstVolAPlan_S');
     }
 
-    public function addplanificationAction() {
+    public function addplanificationAction()
+    {
         $noLigne = $this->getRequest()->getParam('noLigne');
         $Ligne = ServStrategique_Model_Ligne::getLigne($noLigne);
         if ($Ligne instanceof ServStrategique_Model_Ligne) {
@@ -54,7 +58,7 @@ class ServPlaning_LignehebdomadaireController extends Zend_Controller_Action {
                         $s = $Cipher->format(DATE_ATOM);
                         $Cipher->modify('+1days');
                         $e = $Cipher->format(DATE_ATOM);
-                        $Vols[] = ServPlaning_Model_Vol::findAllVolsInInterval(new DateTime($s), new  DateTime($e));
+                        $Vols[] = ServPlaning_Model_Vol::findAllVolsInInterval(new DateTime($s), new DateTime($e));
                     }
                     if (is_array($Vols) && count($Vols) > 0) {
                         $this->view->lstVols = $Vols;
@@ -75,9 +79,9 @@ class ServPlaning_LignehebdomadaireController extends Zend_Controller_Action {
                                         $_POST['dateAtterissage'] = $dateAtterissage->format(DATE_ATOM);
                                         $diff = $datedecollage->diff($dateAtterissage, TRUE);
                                         if (
-                                                $_POST['datedecollage'] != $_POST['dateAtterissage'] &&
-                                                $_POST['datedecollage'] < $_POST['dateAtterissage'] &&
-                                                $diff->h >= $Ligne->get_duree()
+                                            $_POST['datedecollage'] != $_POST['dateAtterissage'] &&
+                                            $_POST['datedecollage'] < $_POST['dateAtterissage'] &&
+                                            $diff->h >= $Ligne->get_duree()
                                         ) {
 
                                             $dateAtterissageStr = $dateAtterissage->format(DATE_ATOM);
@@ -115,6 +119,14 @@ class ServPlaning_LignehebdomadaireController extends Zend_Controller_Action {
 
                                                                 $EnVol1->save();
                                                                 $EnVol2->save();
+
+                                                                //-1 dans la liste
+                                                                $liste = Application_Model_ApplicationVar::get('LstVolAPlan_S');
+                                                                $liste[$noLigne]['recurence'] -=1;
+                                                                if ($liste[$noLigne]['recurence'] == 0) {
+                                                                    unset($liste[$noLigne]);
+                                                                }
+                                                                Application_Model_ApplicationVar::set('LstVolAPlan_S', $liste);
                                                             }
                                                         } else {
                                                             $this->view->message = 'Le Co-Pilote est déjà sur une vol pendant la période donnée!';
@@ -158,14 +170,26 @@ class ServPlaning_LignehebdomadaireController extends Zend_Controller_Action {
                 } else {
                     $this->view->message = 'Erreur d\'aéropport sur Ligne';
                     //redirect
+                    $session = Zend_Session_Namespace('Redirect');
+                    $session->message = "Erreur Aeroport";
+                    $session->redirection = "/ServPlaning/";
+                    $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirect/fail');
                 }
             } else {
                 $this->view->message = 'Ligne non active';
                 //redirect
+                $session = Zend_Session_Namespace('Redirect');
+                $session->message = "Erreur Ligne non active ";
+                $session->redirection = "/ServPlaning/";
+                $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirect/fail');
             }
         } else {
             $this->view->message = 'Erreur de Ligne';
             //redirect
+            $session = Zend_Session_Namespace('Redirect');
+            $session->message = "Erreur Ligne";
+            $session->redirection = "/ServPlaning/";
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirect/fail');
         }
     }
 
