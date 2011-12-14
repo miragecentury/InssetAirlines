@@ -13,17 +13,5 @@ class ServMaintenance_GestmaintenanceController extends Zend_Controller_Action {
         
     }
 
-    public function newmaintenanceAction() {
-        
-    }
-
-    public function updmaintenanceAction() {
-        
-    }
-
-    public function delmaintenanceAction() {
-        
-    }
-
 }
 

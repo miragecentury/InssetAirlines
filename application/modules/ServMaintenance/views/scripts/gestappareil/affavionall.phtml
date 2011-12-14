@@ -13,7 +13,7 @@
             <th>Hors Service le:</th>
             <th>Nomb. de Place Max</th>
             <th>Nomb. d'Incident</th>
-            <th>Nomb. Heure de Vol Prévu</th>
+            <th>Nomb. Heure de Vol</th>
             <th>Etat Actuelle :</th>
             <td></td>
             <td></td>
@@ -53,15 +53,22 @@
                         <td>' . $avion->get_nbIncident() . '</td>
                         <td>' . $avion->get_nbHeureVol() . '</td>
                     ';
-                    if (ServPlaning_Model_Vol::IsEnVolByAvionOnCurrentTime($avion->get_noAvion()) === FALSE) {
-                        echo '<td style="color: green;"> Au Sol </td>';
-                    } elseif (ServPlaning_Model_Vol::IsEnVolByAvionOnCurrentTime($avion->get_noAvion()) === TRUE) {
+                    if (ServPlaning_Model_Vol::IsEnVolByAvionOnCurrentTime($avion->get_noAvion()) === TRUE) {
                         $vol = ServPlaning_Model_Vol::getVolByAvionOnCurrentTime($avion->get_noAvion());
                         if ($vol instanceof ServPlaning_Model_Vol) {
                             echo '<td style="color: orange:"> En Vol : ' . $vol->get_labelvol() . '</td>';
                         } else {
                             echo '<td style="color: orange;"> En Vol </td>';
                         }
+                    } else if (ServMaintenance_Model_Avion::IsEnMaintenanceAtCurrentTime($avion->get_noAvion()) === TRUE) {
+                        $maintenance = ServMaintenance_Model_TacheMaintenance::findOneByAvionAtCurrentTime($avion->get_noAvion());
+                        if ($maintenance instanceof ServMaintenance_Model_TacheMaintenance) {
+                            echo '<td style="color: red;"> En Maintenance jusque: ' . $maintenance->get_dateFin() . ' </td>';
+                        } else {
+                            echo '<td style="color: red;"> En Maintenance Err!</td>';
+                        }
+                    } else if (ServPlaning_Model_Vol::IsEnVolByAvionOnCurrentTime($avion->get_noAvion()) === FALSE) {
+                        echo '<td style="color: green;"> Au Sol </td>';
                     } else {
                         echo '<td> Err! </td>';
                     }

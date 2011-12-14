@@ -1,0 +1,66 @@
+<div>
+    <h1 style='display: inline;'>Service Maintenance - </h1>
+    <h3 style='display: inline;'>Gestion des Tâches de Maintenance - </h3>
+    <h5 style='display: inline;'>Tâche de Maintenance en Cours  </h5>
+    </br></br></br>
+
+    <?php
+    if (is_array($this->lstencours) && count($this->lstencours) > 0) {
+        foreach ($this->lstencours as $tachemaintenance) {
+            if ($tachemaintenance instanceof ServMaintenance_Model_TacheMaintenance) {
+
+                $TypeMaintenance = ServMaintenance_Model_TypeMaintenance::findOne($tachemaintenance->get_noTypeMaintenance());
+                $avion = ServMaintenance_Model_Avion::findOne($tachemaintenance->get_noAvion());
+                $modele = ServMaintenance_Model_Modele::findOne($avion->get_noAvion());
+                $constructeur = ServMaintenance_Model_Constructeur::FindOne($modele->get_noConstructeur());
+
+
+                if (
+                        $TypeMaintenance instanceof ServMaintenance_Model_TypeMaintenance &&
+                        $avion instanceof ServMaintenance_Model_Avion &&
+                        $modele instanceof ServMaintenance_Model_Modele &&
+                        $constructeur instanceof ServMaintenance_Model_Constructeur
+                ) {
+                    echo '
+                    <table>
+                        <tr>
+                            <th>Modèle :<h5 style="display: inline;"> ' . $modele->get_label() . ' - ' . $constructeur->get_label() . '</h5></th>
+                            <th>Label : <h5 style="display: inline;"> ' . $avion->get_label() . '</h5></th>
+                            <th></th>
+                            <th>Type de Maintenance : <h5 style="display: inline;"> ' . $TypeMaintenance->get_label() . '</h5></th>
+                            
+                        </tr>
+                        <tr>
+                            <td>Date de Début : ' . $tachemaintenance->get_dateDebut() . '</td>
+                            <td>Date de Fin (provisoire) : ' . $tachemaintenance->get_dateFin() . '</td>
+                            <td>Retard : '.$tachemaintenance->get_retard().' J</td>
+                            <td>';
+                    if ($tachemaintenance->get_etat() == 0) {
+                        echo '<h6 style="display: inline; color: green;"> Intervention Préventive </h6>';
+                    } elseif ($tachemaintenance->get_etat() == 1) {
+                        echo '<h6 style="display: inline; color: red;"> Intervention Urgente </h6>';
+                    } else {
+                        echo 'Err!';
+                    }
+                    echo '</td>
+                            
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <a class="enSavoirPlus" href="../Gesttachemaintenance/completer/id/'.$tachemaintenance->get_noMaintenance().'">Compléter</a>
+                            </td>
+                        </tr>
+                    </table><br/>';
+                }
+            }
+        }
+    } else {
+        echo '
+            <div style="background-color: #DDDDDD;">
+                <table><tr><td><h6>Aucune Maintenance aujourd\'hui !</h6></td></tr></table>
+            </div>
+            ';
+    }
+    ?>
+
+</div>

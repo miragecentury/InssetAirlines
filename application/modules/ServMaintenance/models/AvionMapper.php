@@ -65,6 +65,24 @@ class ServMaintenance_Model_AvionMapper extends Spesx_Mapper_Mapper {
             return null;
         }
     }
+    
+    public function findAllForMiseHorsServiceAtCurrentTime(){
+        $CurrentTime = new DateTime(date(DATE_ATOM));
+        $CurrentTime->setTime(0,0,0);
+        try {
+            $select = $this->getDbTable()->select()
+                    ->where('enService = ?', ServMaintenance_Model_Avion::ETAT_ATT_HORSERVICE)
+                    ->where('dateHorsService = ?',$CurrentTime->format(DATE_ATOM));
+            $result = $this->getDbTable()->fetchAll($select);
+        } catch (Zend_Db_Exception $e) {
+            throw new Spesx_Mapper_Exception(
+                    'ServMaintenance : Echec Methode findAllByModele ',
+                    $e->getCode(),
+                    $e);
+        }
+        $return = $this->_createItemsFromRowset($result);
+        return $return;
+    }
 
     public function findAllEnServiceAtDateTimeInterval($start, $end) {
         if (is_string($start)) {
@@ -81,9 +99,6 @@ class ServMaintenance_Model_AvionMapper extends Spesx_Mapper_Mapper {
         } else {
             return FALSE;
         }
-        
-        
-        
     }
 
     private static function whereEtats($etats) {
@@ -101,7 +116,6 @@ class ServMaintenance_Model_AvionMapper extends Spesx_Mapper_Mapper {
             return null;
         }
     }
-
 }
 
 ?>

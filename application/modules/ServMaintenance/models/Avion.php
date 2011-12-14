@@ -40,6 +40,73 @@ class ServMaintenance_Model_Avion {
 
     //**************************************************************************
 
+    public static function changementJour() {
+        self::initialisation();
+        $lstAmettreHorsService = self::$_mapper->findAllForMiseHorsServiceAtCurrentTime();
+        if (count($lstAmettreHorsService) > 0) {
+            foreach ($lstAmettreHorsService as $avion) {
+                if ($avion instanceof ServMaintenance_Model_Avion) {
+                    $avion->set_enService(ServMaintenance_Model_Avion::ETAT_HORSSERVICE);
+                    $avion->save();
+                }
+            }
+        }
+
+        //**********************************************************************
+        //**********************************************************************
+
+        $DateStart = new DateTime(date(DATE_ATOM));
+        $DateStart->modify('-1 day');
+        $DateStart->setTime(0, 0, 0);
+
+        $lstOK = ServPlaning_Model_Vol::findAllVolsInIntervalByEtat($DateStart, new DateTime(date(DATE_ATOM)), ServPlaning_Model_Vol::ETAT_OK);
+        $lstRetardD = ServPlaning_Model_Vol::findAllVolsInIntervalByEtat($DateStart, new DateTime(date(DATE_ATOM)), ServPlaning_Model_Vol::ETAT_RETARD_AT);
+        $lstRetardA = ServPlaning_Model_Vol::findAllVolsInIntervalByEtat($DateStart, new DateTime(date(DATE_ATOM)), ServPlaning_Model_Vol::ETAT_RETARD_DE);
+        $lstOK = array_merge($lstOK,$lstRetardA,$lstRetardD);
+        //mettre à finir
+
+        if (is_array($lstOK) && (count($lstOK) > 0)) {
+            foreach ($lstOK as $vol) {
+                if ($vol instanceof ServPlaning_Model_Vol) {
+                    $avion = ServMaintenance_Model_Avion::findOne($vol->get_noAvion());
+                    if ($avion instanceof ServMaintenance_Model_Avion) {
+                        $start = new DateTime($vol->get_heuredecollage());
+                        $end = new DateTime($vol->get_heureAtterissage());
+                        $diff = $end->diff($start, TRUE);
+                        $avion->addHeureVol($diff->h);
+                        $vol->set_etat(ServPlaning_Model_Vol::ETAT_EFFECTUER);
+                        $vol->save();
+                    }
+                }
+            }
+        }
+        //**********************************************************************
+
+        $lstIncident = ServPlaning_Model_Vol::findAllVolsInIntervalByEtat($DateStart, new DateTime(date(DATE_ATOM)), ServPlaning_Model_Vol::ETAT_NOAVION);
+        $lstIncident1 = ServPlaning_Model_Vol::findAllVolsInIntervalByEtat($DateStart, new DateTime(date(DATE_ATOM)), ServPlaning_Model_Vol::ETAT_MQ_PERSONNEL);
+        $lstIncident = array_merge($lstIncident, $lstIncident1);
+        //mettre en annules
+        if (is_array($lstIncident) && (count($lstIncident) > 0)) {
+            foreach ($lstIncident as $vol) {
+                if ($vol instanceof ServPlaning_Model_Vol) {
+                    $vol->set_etat(ServPlaning_Model_Vol::ETAT_ANNULE);
+                    $vol->save();
+                }
+            }
+        }
+        //**********************************************************************
+        
+        
+        
+        //**********************************************************************
+        return FALSE;
+    }
+
+    public static function changementSemaine() {
+        self::initialisation();
+        return TRUE;
+    }
+
     /**
      * Fonction retournant l'avion correspondant à l'id passé en paramètre
      * @param int $noAvion
@@ -100,12 +167,16 @@ class ServMaintenance_Model_Avion {
         }
         $DateHorsService->setTime(0, 0, 0);
         $DateHorsService = $DateHorsService->format(DATE_ATOM);
-        echo $DateHorsService;
         $CurrentDate = new DateTime();
         $Border = ServPlaning_Model_Vol::getSemaineAheadFromCurrent(5);
         var_dump($Border);
-        
-        
+        if ($DateHorsService < ServPlaning_Model_Vol::getSemaineAheadFromCurrent(5)) {
+            echo 'inférieur à 5 Semaines';
+            //enlever les maintenances dépassant la date de mise hors service
+            //générer des erreurs etc... au niveau des vols
+        } else {
+            //enlever les maintenances dépassant la date de mise hors service
+        }
     }
 
     public static function findDispoAvionsAtDateTimeInterval($Start, $End) {
@@ -140,6 +211,11 @@ class ServMaintenance_Model_Avion {
 
     public static function IsEnMaintenanceAtCurrentTime($noAvion) {
         self::initialisation();
+        if (count(ServMaintenance_Model_TacheMaintenance::findOneByAvionAtCurrentTime($noAvion)) == 1) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
     }
 
     /**
@@ -149,6 +225,12 @@ class ServMaintenance_Model_Avion {
      * @return type 
      */
     //**************************************************************************
+
+    public function addHeureVol($nbHeureVol) {
+        $nbHeureVol = $this->get_nbHeureVol() + $nbHeureVol;
+        $this->set_nbHeureVol($nbHeureVol);
+        $this->save();
+    }
 
     /**
      *
