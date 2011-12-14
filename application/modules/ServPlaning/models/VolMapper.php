@@ -196,6 +196,30 @@ class ServPlaning_Model_VolMapper extends Spesx_Mapper_Mapper {
         $return = $this->_createItemsFromRowset($result);
         return $return;
     }
+    /**
+     * Recupere le prochain vol utilisant l'avion en param
+     * @author pexho
+     * @access public
+     * @param ServPlaning_Model_Vol $item
+     * @return ServPlaning_Model_Vol $vol
+     */
+    public function getNextVolByAvion($item){
+        try{
+            $select = $this->getDbTable()->select()
+                ->where("noAvion = '" . $item->get_noAvion() . "'")
+                ->where("heureDecollage > '" . $item->get_heureAtterissage() . "'")
+                ->order("heureDecollage ASC")
+                ->limit(1);
+            $row = $this->getDbTable()->fetch($select);
+            $volSuivant = $this->_createItemFromRow($row);
+            return $volSuivant;
+        } catch (Zend_Db_Exception $e){
+            Spesx_Log::LogERR('Erreur de recupération du prochain vol par avion : ' .
+                $e->getMessage());
+            return null;
+        }
+    }
+    
 
 }
 
