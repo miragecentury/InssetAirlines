@@ -19,7 +19,7 @@ class ServPlaning_LignehebdomadaireController extends Zend_Controller_Action {
     }
 
     public function addplanificationAction() {
-        $noLigne = $this->getRequest()->getParam('id');
+        $noLigne = $this->getRequest()->getParam('noLigne');
         $Ligne = ServStrategique_Model_Ligne::getLigne($noLigne);
         if ($Ligne instanceof ServStrategique_Model_Ligne) {
             if ($Ligne->get_etat() == ServStrategique_Model_Ligne::ETAT_ACTIVE) {
@@ -29,30 +29,36 @@ class ServPlaning_LignehebdomadaireController extends Zend_Controller_Action {
                     $this->view->lignelabel = 'Ligne ' . $Ligne->get_noLigne() . ' : (' . $Aeroport1->get_labelAeroport() . ' ' . $Aeroport1->get_labelPays() . ')';
                     $this->view->lignelabel.= '->(' . $Aeroport2->get_labelAeroport() . ' ' . $Aeroport2->get_labelPays() . ')';
                     //var_dump($Ligne);
+
+
+
                     $Start = new DateTime(ServPlaning_Model_Vol::getSemaineAheadFromCurrent(4));
                     $Start->setTime(0, 0, 0);
+                    $this->view->Start = $Start;
 
                     $Start->modify('monday');
                     $End = new DateTime($Start->format(DATE_ATOM));
                     $End->modify('sunday');
                     $End->setTime(24, 0, 0);
-                    $this->view->date = $Start->format('d/M/Y');
+
+                    var_dump($Start);
+                    var_dump($End);
+
+                    $Cipher = new DateTime($Start->format(DATE_ATOM));
+
+                    $this->view->End = $End;
+                    $this->view->Start = $Start;
                     $form = new ServPlaning_Form_Vol($Start, $End);
                     $this->view->lstM = $form->returnMaintenances();
-                    $this->view->Start = $Start;
-                    $this->view->End = $End;
-                    $Vols = ServPlaning_Model_Vol::findAllVolsInInterval($Start, $End);
-                    $VolsByJour = array(0, 1, 2, 3, 4, 5, 6);
-                    var_dump($Vols);
+                    for ($i = 0; $i < 7; $i++) {
+                        $s = $Cipher->format(DATE_ATOM);
+                        $Cipher->modify('+1days');
+                        $e = $Cipher->format(DATE_ATOM);
+                        $Vols[] = ServPlaning_Model_Vol::findAllVolsInInterval(new DateTime($s), new  DateTime($e));
+                    }
                     if (is_array($Vols) && count($Vols) > 0) {
                         $this->view->lstVols = $Vols;
-                        foreach ($Vols as $Vol) {
-                            if ($Vol instanceof ServPlaning_Model_Vol) {
-                                
-                            }
-                        }
                     }
-                    $this->view->lstVolbyJ = $VolsByJour;
                     if (isset($_POST) && !empty($_POST)) {
                         $this->view->message = 'POST';
                         if ($form->isValid($_POST)) {
@@ -73,24 +79,43 @@ class ServPlaning_LignehebdomadaireController extends Zend_Controller_Action {
                                                 $_POST['datedecollage'] < $_POST['dateAtterissage'] &&
                                                 $diff->h >= $Ligne->get_duree()
                                         ) {
+
+                                            $dateAtterissageStr = $dateAtterissage->format(DATE_ATOM);
+                                            $datedecollageStr = $datedecollage->format(DATE_ATOM);
+
                                             if (count(ServMaintenance_Model_TacheMaintenance::findAllByAvionAtDateTimeInterval($datedecollage, $dateAtterissage, $Avion->get_noAvion()) == 0)) {
                                                 if (count(ServPlaning_Model_Vol::FindAllVolsByAvionAtDateTimeInterval($datedecollage, $dateAtterissage, $Avion->get_noAvion())) == 0) {
                                                     if (ServPlaning_Model_EnVol::IsLibreAtIntervalByEmploye($datedecollage, $dateAtterissage, $Personne1->get_Personne_noPersonne())) {
                                                         if (ServPlaning_Model_EnVol::IsLibreAtIntervalByEmploye($datedecollage, $dateAtterissage, $Personne2->get_Personne_noPersonne())) {
                                                             $Vol = new ServPlaning_Model_Vol();
-                                                            $Vol->set_heuredecollage($datedecollage->format(DATE_ATOM));
+                                                            $Vol->set_heuredecollage($datedecollageStr);
                                                             $Vol->set_noAeroportDeco($Ligne->get_noAeroportDeco());
-                                                            $Vol->set_heureAtterissage($dateAtterissage->format(DATE_ATOM));
+                                                            $Vol->set_heureAtterissage($dateAtterissageStr);
                                                             $Vol->set_noAeroportAtte($Ligne->get_noAeroportAtte());
                                                             $Vol->set_etat(ServPlaning_Model_Vol::ETAT_OK);
                                                             $Vol->set_noAvion($Avion->get_noAvion());
                                                             $Vol->set_noLigne($Ligne->get_noLigne());
                                                             $Vol->set_labelvol($_POST['label']);
                                                             $noVol = $Vol->save();
-                                                            var_dump($noVol);
-                                                            //manque décrémentation
-                                                            //manque envol
-                                                            
+                                                            if ($noVol != null && FALSE) {
+                                                                $EnVol1 = new ServPlaning_Model_EnVol();
+                                                                $EnVol2 = new ServPlaning_Model_EnVol();
+
+                                                                $EnVol1->set_heureEnd($dateAtterissageStr);
+                                                                $EnVol2->set_heureEnd($dateAtterissageStr);
+
+                                                                $EnVol1->set_heureStart($datedecollageStr);
+                                                                $EnVol2->set_heureStart($datedecollageStr);
+
+                                                                $EnVol1->set_noVol($noVol);
+                                                                $EnVol2->set_noVol($noVol);
+
+                                                                $EnVol1->set_noEmploye($Personne1->get_Personne_noPersonne());
+                                                                $EnVol2->set_noEmploye($Personne2->get_Personne_noPersonne());
+
+                                                                $EnVol1->save();
+                                                                $EnVol2->save();
+                                                            }
                                                         } else {
                                                             $this->view->message = 'Le Co-Pilote est déjà sur une vol pendant la période donnée!';
                                                             $this->view->form = $form;

@@ -65,19 +65,22 @@ if (isset($this->lignelabel)) {
                             $End->setTime(24, 0, 0);
                             $SUP = FALSE;
                             $DELTA = 26;
+                            echo' SUpINf';
                         } elseif ($End->format(DATE_ATOM) > $this->End->format(DATE_ATOM)) {
                             $SUP = FALSE;
                             $DELTA = 24 - $Start->format('H') + 1;
                             $End->setTime(24, 0, 0);
+                            echo'Sup';
                         } elseif ($Start->format(DATE_ATOM) < $this->Start->format(DATE_ATOM)) {
                             $Start->setTime(24, 0, 0);
                             $DELTA = $End->format('H') - $Start->format('H') + 1;
+                            echo 'Inf';
                         } else {
                             $DELTA = $End->format('H') - $Start->format('H');
                         }
 
                         if ($Start->format('H') > 0) {
-                            echo '<td colspan="' . ($Start->format('H') + 1) . '"></td>';
+                            echo '<td style="background-color: #DDD;" colspan="' . ($Start->format('H') + 1) . '"></td>';
                         }
 
                         echo '
@@ -87,10 +90,10 @@ if (isset($this->lignelabel)) {
                         '</p></td>
                 ';
                         if ($End->format('H') > 0) {
-                            echo '<td colspan="' . (24 - $End->format('H')) . '"></td>';
+                            echo '<td style="background-color: #DDD;" colspan="' . (24 - $End->format('H')) . '"></td>';
                         }
                         if ($SUP) {
-                            echo '<td></td>';
+                            echo '<td style="background-color: #DDD;"></td>';
                         }
                         //var_dump($Vol->get_heureAtterissage());
                         //var_dump($Vol->get_heuredecollage());

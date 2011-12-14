@@ -78,21 +78,43 @@ class ServPlaning_LignejournaliereController extends Zend_Controller_Action {
                                                 $_POST['datedecollage'] < $_POST['dateAtterissage'] &&
                                                 $diff->h >= $Ligne->get_duree()
                                         ) {
+                                            
+                                            $dateAtterissageStr = $dateAtterissage->format(DATE_ATOM);
+                                            $datedecollageStr = $datedecollage->format(DATE_ATOM);
+                                            
                                             if (count(ServMaintenance_Model_TacheMaintenance::findAllByAvionAtDateTimeInterval($datedecollage, $dateAtterissage, $Avion->get_noAvion()) == 0)) {
                                                 if (count(ServPlaning_Model_Vol::FindAllVolsByAvionAtDateTimeInterval($datedecollage, $dateAtterissage, $Avion->get_noAvion())) == 0) {
                                                     if (ServPlaning_Model_EnVol::IsLibreAtIntervalByEmploye($datedecollage, $dateAtterissage, $Personne1->get_Personne_noPersonne())) {
                                                         if (ServPlaning_Model_EnVol::IsLibreAtIntervalByEmploye($datedecollage, $dateAtterissage, $Personne2->get_Personne_noPersonne())) {
                                                             $Vol = new ServPlaning_Model_Vol();
-                                                            $Vol->set_heuredecollage($datedecollage->format(DATE_ATOM));
+                                                            $Vol->set_heuredecollage($datedecollageStr);
                                                             $Vol->set_noAeroportDeco($Ligne->get_noAeroportDeco());
-                                                            $Vol->set_heureAtterissage($dateAtterissage->format(DATE_ATOM));
+                                                            $Vol->set_heureAtterissage($dateAtterissageStr);
                                                             $Vol->set_noAeroportAtte($Ligne->get_noAeroportAtte());
                                                             $Vol->set_etat(ServPlaning_Model_Vol::ETAT_OK);
                                                             $Vol->set_noAvion($Avion->get_noAvion());
                                                             $Vol->set_noLigne($Ligne->get_noLigne());
                                                             $Vol->set_labelvol($_POST['label']);
                                                             $noVol = $Vol->save();
-                                                            var_dump($noVol);
+                                                            if ($noVol != null && FALSE) {
+                                                                $EnVol1 = new ServPlaning_Model_EnVol();
+                                                                $EnVol2 = new ServPlaning_Model_EnVol();
+
+                                                                $EnVol1->set_heureEnd($dateAtterissageStr);
+                                                                $EnVol2->set_heureEnd($dateAtterissageStr);
+
+                                                                $EnVol1->set_heureStart($datedecollageStr);
+                                                                $EnVol2->set_heureStart($datedecollageStr);
+
+                                                                $EnVol1->set_noVol($noVol);
+                                                                $EnVol2->set_noVol($noVol);
+
+                                                                $EnVol1->set_noEmploye($Personne1->get_Personne_noPersonne());
+                                                                $EnVol2->set_noEmploye($Personne2->get_Personne_noPersonne());
+
+                                                                $EnVol1->save();
+                                                                $EnVol2->save();
+                                                            }
                                                         } else {
                                                             $this->view->message = 'Le Co-Pilote est déjà sur une vol pendant la période donnée!';
                                                             $this->view->form = $form;

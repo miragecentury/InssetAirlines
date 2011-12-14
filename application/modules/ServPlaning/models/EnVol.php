@@ -136,6 +136,11 @@ class ServPlaning_Model_EnVol {
         return $mapper->getNextEnVolByPilote($item);
     }
 
+    public function save() {
+        $mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_EnVol");
+        self::$_mapper->saveAssoc($this);
+    }
+
     //--------------------------------------------------------------------------
     // Getter / setter
     //--------------------------------------------------------------------------

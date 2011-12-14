@@ -15,14 +15,131 @@ if (isset($this->lignelabel)) {
         }
 ?></h6>
         <?php
-        if (isset($this->lstVolbyJ) && is_array($this->lstVolbyJ)) {
-            foreach ($this->lstVolbyJ as $Jour => $Vols) {
-                if (is_array($Vols) && count($Vols) > 0) {
+        if (isset($this->lstVols) && is_array($this->lstVols) && count($this->lstVols) > 0) {
+            foreach ($this->lstVols as $key => $Vols) {
+                switch ($key) {
+                    case 0:
+                        echo '<br/><h6>Lundi</h6>';
+                        break;
+                    case 1:
+                        echo '<br/><h6>Mardi</h6>';
+                        break;
+                    case 2:
+                        echo '<br/><h6>Mercredi</h6>';
+                        break;
+                    case 3:
+                        echo '<br/><h6>Jeudi</h6>';
+                        break;
+                    case 4:
+                        echo '<br/><h6>Vendredi</h6>';
+                        break;
+                    case 5:
+                        echo '<br/><h6>Samedi</h6>';
+                        break;
+                    case 6:
+                        echo '<br/><h6>Dimanche</h6>';
+                        break;
+                    default:
+                        break;
+                }
+                if (count($Vols) > 0) {
+                    echo '<div>';
+                    echo '<table>';
+                    echo '
+            <tr>
+                <th>J-1</th>
+                <th>0h-1h</th>
+                <th>1h-2h</th>
+                <th>2h-3h</th>
+                <th>3h-4h</th>
+                <th>4h-5h</th>
+                <th>5h-6h</th>
+                <th>6h-7h</th>
+                <th>7h-8h</th>
+                <th>8h-9h</th>
+                <th>9h-10h</th>
+                <th>10h-11h</th>
+                <th>11h-12h</th>
+                <th>12h-13h</th>
+                <th>13h-14h</th>
+                <th>14h-15h</th>
+                <th>15h-16h</th>
+                <th>16h-17h</th>
+                <th>17h-18h</th>
+                <th>18h-19h</th>
+                <th>19h-20h</th>
+                <th>20h-21h</th>
+                <th>21h-22h</th>
+                <th>22h-23h</th>
+                <th>23h-24h</th>
+                <th>J+1</th>
+            </tr>
+            ';
                     foreach ($Vols as $Vol) {
-                        
+                        if ($Vol instanceof ServPlaning_Model_Vol) {
+                            $Avion = ServMaintenance_Model_Avion::findOne($Vol->get_noAvion());
+                            $Aer0 = Application_Model_Aeroport::getStaticAeroport($Vol->get_noAeroportDeco());
+                            $Aer1 = Application_Model_Aeroport::getStaticAeroport($Vol->get_noAeroportAtte());
+                            $Personnes = null;
+                            if ($Avion instanceof ServMaintenance_Model_Avion && $Aer0 instanceof Application_Model_Aeroport && $Aer1 instanceof Application_Model_Aeroport) {
+                                echo '<tr>';
+                                $Start = new DateTime($Vol->get_heuredecollage());
+                                $End = new DateTime($Vol->get_heureAtterissage());
+                                $DELTA = 0;
+                                $SUP = TRUE;
+                                if (($Start->format(DATE_ATOM) < $this->Start->format(DATE_ATOM)) && ($End->format(DATE_ATOM) > $this->End->format(DATE_ATOM))) {
+                                    $Start->setTime(24, 0, 0);
+                                    $End->setTime(24, 0, 0);
+                                    $SUP = FALSE;
+                                    $DELTA = 26;
+                                    echo' SUpINf';
+                                } elseif ($End->format(DATE_ATOM) > $this->End->format(DATE_ATOM)) {
+                                    $SUP = FALSE;
+                                    $DELTA = 24 - $Start->format('H') + 1;
+                                    $End->setTime(24, 0, 0);
+                                    echo'Sup';
+                                } elseif ($Start->format(DATE_ATOM) < $this->Start->format(DATE_ATOM)) {
+                                    $Start->setTime(24, 0, 0);
+                                    $DELTA = $End->format('H') - $Start->format('H') + 1;
+                                    echo 'Inf';
+                                } else {
+                                    $DELTA = $End->format('H') - $Start->format('H');
+                                }
+
+                                if ($Start->format('H') > 0) {
+                                    echo '<td style="background-color: #DDD;" colspan="' . ($Start->format('H') + 1) . '"></td>';
+                                }
+
+                                echo '
+                        <td style="background-color: red; color: white;" colspan="' .
+                                $DELTA . '"><p>' . $Vol->get_labelvol() .
+                                '-' . $Avion->get_label() . ' </p><p> ' . $Aer0->get_labelAeroport() . '->' . $Aer1->get_labelAeroport() .
+                                '</p></td>
+                ';
+                                if ($End->format('H') > 0) {
+                                    echo '<td style="background-color: #DDD;" colspan="' . (24 - $End->format('H')) . '"></td>';
+                                }
+                                if ($SUP) {
+                                    echo '<td style="background-color: #DDD;"></td>';
+                                }
+                                //var_dump($Vol->get_heureAtterissage());
+                                //var_dump($Vol->get_heuredecollage());
+                                echo '</tr>';
+                            } else {
+                                echo '<tr><td colspan="24">Err!</td></tr>';
+                            }
+                        } else {
+                            echo '<tr><td colspan="24">Aucun Vol Aujourd\'hui</td></tr>';
+                        }
                     }
+                    echo '</table>';
+                    echo '</div>';
+                } else {
+                    echo 'Aucun Vol pour ce Jour';
                 }
             }
+        } else {
+            echo 'Aucun Vol Planifié';
         }
         ?>
     </div>
