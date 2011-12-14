@@ -13,10 +13,10 @@
       } else {
           echo $this->erreurIdConge;
       }
-    } else { 
+    } else {
     /*
      * Si aucune action n'est effectuée (validation ou refus),
-     * on affiche la liste des congés 
+     * on affiche la liste des congés
      */
     //Si l'id de l'employé est valide
     if (is_null($this->erreurIdEmploye)) {
@@ -56,21 +56,21 @@
                foreach ($this->conges as $conge) {
                    echo "<tr>
                             <td>";
-                                echo $conge->get_labelTypeConge();   
+                                echo $conge->get_labelTypeConge();
                       echo "</td>
                             <td>";
-                                echo $conge->get_dateDebut();   
+                                echo $conge->get_dateDebut();
                       echo "</td>
                             <td>";
-                              echo $conge->get_dateFin();   
+                              echo $conge->get_dateFin();
                       echo "</td>
                             <td>";
-                              echo $conge->get_motif();   
+                              echo $conge->get_motif();
                       echo "</td>";
                 /*
                  * Affiche l'état de la demande selon la valeur dans la BDD
                  * -1: refusée, 0: validée
-                 */                 
+                 */
                 if ($conge->get_enAttentedeTraitement() == 1) {
                     echo   "<td>En attente</td>";
                 } else {
@@ -85,27 +85,32 @@
                  * Affiche les boutons d'actions selon l'état de la demande
                  */
                         echo "<td>
-                                 <a class='enSavoirPlus' href='updcongepilote?id=".$_GET['id']."&conge=".$conge->get_noConge()."'>Modifier</a>
+                                 <a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServDRH/gestpilote/updcongepilote?id=".$_GET['id']."&conge=".$conge->get_noConge()."'>Modifier</a>
                              </td>";
                 if ($conge->get_enAttentedeTraitement() == 1) {
                     echo    "<td>
-                                <a class='enSavoirPlus' href='congespilote?id=".$_GET['id']."&conge=".$conge->get_noConge()."&action=valid'>Valider</a>
+                                <a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServDRH/gestpilote/congespilote?id=".$_GET['id']."&conge=".$conge->get_noConge()."&action=valid'>Valider</a>
                              </td>
                              <td>
-                                <a class='enSavoirPlus' href='congespilote?id=".$_GET['id']."&conge=".$conge->get_noConge()."&action=refus'>Refuser</a>
+                                <a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServDRH/gestpilote/congespilote?id=".$_GET['id']."&conge=".$conge->get_noConge()."&action=refus'>Refuser</a>
                              </td>";
                 }
                 echo        "<td>
-                                <a class='enSavoirPlus' href='delcongepilote?id=".$_GET['id']."&conge=".$conge->get_noConge()."'>Supprimer</a>
-                             </td>";                            
-                echo    "</tr>";                    
+                                <a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServDRH/gestpilote/delcongepilote?id=".$_GET['id']."&conge=".$conge->get_noConge()."'>Supprimer</a>
+                             </td>";
+                echo    "</tr>";
                }
                echo "</table>
-                     <br />"; 
-               echo "<a href='../gestpilote'>Retour</a>";                                           
+                     <br />";
+               echo "<a href='" . Zend_Registry::get('BaseUrl') .
+                "/ServDRH/gestpilote/'>Retour</a>";
             } else {
                 //Message d'erreur si aucun congés
-                echo $this->aucunConges;         
+                echo $this->aucunConges;
             }
         } else {
             //Message d'erreur si employé inexistant

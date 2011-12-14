@@ -1,17 +1,19 @@
 <center><h1>Suppression d'une habilitation</h1></center>
 
-<?php  
+<?php
     if (isset($this->habilitation)) {
         echo "<center>
                 <p>
-                    Êtes-sur de vouloir supprimer l'habilitation : 
+                    Êtes-sur de vouloir supprimer l'habilitation :
                     '".$this->habilitation->get_labelHabilitation()."' ?
                 </p>
                 <p>
-                    <a class='enSavoirPlus' href='delhabilitation?rep=non&id=".$_GET['id']."'>Non </a>
-                    <a class='enSavoirPlus' href='delhabilitation?rep=oui&id=".$_GET['id']."'>Oui</a>
+                    <a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServDRH/gesthabilitation/delhabilitation?rep=non&id=".$_GET['id']."'>Non </a>
+                    <a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServDRH/gesthabilitation/delhabilitation?rep=oui&id=".$_GET['id']."'>Oui</a>
                 </p>
-             </center>";        
+             </center>";
     } else {
         echo $this->erreurId;
     }

@@ -18,7 +18,7 @@ class ServLogCom_RegimealimentaireController extends Zend_Controller_Action
             $session = new Zend_Session_Namespace('Redirect');
             $session->message = "Vous n'avez pas les droits pour acceder à ce service";
             $session->redirection = "/";
-            $this->_redirect('/redirection/fail');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/fail');
         }
     }
 
@@ -54,7 +54,7 @@ class ServLogCom_RegimealimentaireController extends Zend_Controller_Action
             $session = new Zend_Session_Namespace('Redirect');
             $session->message = "Ajout d'un regime alimentaire réussi.";
             $session->redirection = "/ServLogCom/Regimealimentaire/admin";
-            $this->_redirect('/redirection/success');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/success');
         }
     }
 
@@ -106,7 +106,7 @@ class ServLogCom_RegimealimentaireController extends Zend_Controller_Action
             $session = new Zend_Session_Namespace('Redirect');
             $session->message = "Modification réussi.";
             $session->redirection = "/ServLogCom/Regimealimentaire/admin";
-            $this->_redirect('/redirection/success');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/success');
         }
     }
 
@@ -121,11 +121,11 @@ class ServLogCom_RegimealimentaireController extends Zend_Controller_Action
             if ($item != null) {
                 $mod->delRegimeAlimentaire($this->getRequest()->getParam('id'));
                 $session->message = "Supression réussi.";
-                $this->_redirect('/redirection/success');
+                $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/success');
             } else {
                 Zend_Registry::get('Log')->log('RegimeAlimentaireController : del : Acces a la base de donnée impossible', Zend_Log::ALERT);
                 $session->message = "Echec de supression.";
-                $this->_redirect('/redirection/fail');
+                $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/fail');
             }
         } else {
             $this->view->item = $item;
@@ -139,7 +139,7 @@ class ServLogCom_RegimealimentaireController extends Zend_Controller_Action
         $mod = new ServLogCom_Model_RegimeAlimentaire;
         $this->view->item = $mod->getRegimeAlimentaire($this->getRequest()->getParam('id'));
         $this->view->id = $this->getRequest()->getParam('id');
-        
+
         $incompatible = ServLogCom_Model_Incompatible::getbyRegime($this->getRequest()->getParam('id'));
         $menu = new ServLogCom_Model_Menu;
         if ($incompatible != null) {

@@ -17,13 +17,13 @@ if ($this->all) {
             </tr>";
     }
     echo "</table>";
-            
+
 } else {
     echo "<div>Il n'y a pas d'aeroport dans la base de donnée</div>";
 }
 ?>
 
 <center>
-    <a class='enSavoirPlus' href='/Aeroport/admin'>Paneau d'administration</a><br/><br/>
-    <img src="http://inssetairlines.spesx.com/media/image/disponibilite.jpg"/>
+    <a class='enSavoirPlus' href='<?= Zend_Registry::get('BaseUrl') ?>/Aeroport/admin'>Paneau d'administration</a><br/><br/>
+    <img src="<?= Zend_Registry::get('BaseUrl') ?>/media/image/disponibilite.jpg"/>
 </center>

@@ -30,12 +30,15 @@ if ($this->item) {
         echo "Non validé";
     }
     echo"</td>
-                </tr>  
+                </tr>
             </table>";
 
-    echo "<div><a class='enSavoirPlus' href='/ServCommercial/Reservation/admin'>Non </a>
-          <a class='enSavoirPlus' href='/ServCommercial/Reservation/del?ok=ok&id=" . $this->id . "'>Oui</a></div>";
+    echo "<div><a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServCommercial/Reservation/admin'>Non </a>
+          <a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServCommercial/Reservation/del?ok=ok&id=" . $this->id . "'>Oui</a></div>";
 } else {
     echo "Cette Agence n'existe pas dans la base de donnée!<br/><br/>
-        <div><a class='enSavoirPlus' href='/ServCommercial/Reservation/admin'>Retour </a>";
+        <div><a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServCommercial/Reservation/admin'>Retour </a>";
 }

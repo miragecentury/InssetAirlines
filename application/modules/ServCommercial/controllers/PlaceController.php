@@ -17,7 +17,7 @@ class ServCommercial_PlaceController extends Zend_Controller_Action
             $session = new Zend_Session_Namespace('Redirect');
             $session->message = "Vous n'avez pas les droits pour acceder à ce service";
             $session->redirection = "/";
-            $this->_redirect('/redirection/fail');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/fail');
         }
     }
 
@@ -48,7 +48,7 @@ class ServCommercial_PlaceController extends Zend_Controller_Action
             $session = new Zend_Session_Namespace('Redirect');
             $session->message = "Ajout de la place réussi.";
             $session->redirection = "/ServCommercial/Place/admin";
-            $this->_redirect('/redirection/success');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/success');
         }
     }
 
@@ -75,7 +75,7 @@ class ServCommercial_PlaceController extends Zend_Controller_Action
             $session = new Zend_Session_Namespace('Redirect');
             $session->message = "Modification réussi.";
             $session->redirection = "/ServCommercial/Place/admin";
-            $this->_redirect('/redirection/success');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/success');
         }
     }
 
@@ -90,11 +90,11 @@ class ServCommercial_PlaceController extends Zend_Controller_Action
             if ($item != null) {
                 $Mod->delPlace($this->getRequest()->getParam('id'));
                 $session->message = "Supression réussi.";
-                $this->_redirect('/redirection/success');
+                $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/success');
             } else {
                 Zend_Registry::get('Log')->log('PlaceController : del : Acces a la base de donnée impossible', Zend_Log::ALERT);
                 $session->message = "Echec de supression.";
-                $this->_redirect('/redirection/fail');
+                $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/fail');
             }
         } else {
             $this->view->item = $item;
@@ -132,6 +132,6 @@ class ServCommercial_PlaceController extends Zend_Controller_Action
         $session->redirection = "/ServCommercial/Reservation/admin";
         $reservation->set_valider(1);
         $reservation->addReservation();
-        $this->_redirect('/redirection/success');
+        $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/success');
     }
 }

@@ -1,10 +1,10 @@
 <?php $this->placeholder('login')->captureStart(); ?>
 <?php if (Zend_Auth::getInstance()->hasIdentity()): ?>
 
-    <a href="/auth/redirection"><img src="/media/image/lock.png" /></a>
+    <a href="<?= Zend_Registry::get('BaseUrl'); ?>/auth/redirection"><img src="<?= Zend_Registry::get('BaseUrl'); ?>/media/image/lock.png" /></a>
 
 <?php else: ?>
-    <a href="/auth/login"><img src="/media/image/lock.png" /></a>
+    <a href="<?= Zend_Registry::get('BaseUrl'); ?>/auth/login"><img src="<?= Zend_Registry::get('BaseUrl'); ?>/media/image/lock.png" /></a>
 <?php endif; ?>
 
 <?php $this->placeholder('login')->captureEnd(); ?>

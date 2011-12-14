@@ -1,18 +1,20 @@
 <center><h1>Suppression d'un employé</h1><center>
-        
+
 <?php
     //Si l'id de l'employé existe
     if (!isset($this->erreurGetId)) {
         //Si l'id de l'employé est valide
         if (!isset($this->erreurId)) {
-            //Si l'employé existe 
+            //Si l'employé existe
             if (isset($this->employe)) {
                 //Affiche la confirmation de suppression
                 if (!isset($_GET['rep'])) {
                     echo "<center><p>Êtes-sur de vouloir supprimer cet employé ?</p>
                              <p>
-                                 <a class='enSavoirPlus' href='delpilote?rep=non&id=".$_GET['id']."'>Non </a>
-                                 <a class='enSavoirPlus' href='delpilote?rep=oui&id=".$_GET['id']."'>Oui</a>
+                                 <a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServDRH/gestpilote/delpilote?rep=non&id=".$_GET['id']."'>Non </a>
+                                 <a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServDRH/gestpilote/delpilote?rep=oui&id=".$_GET['id']."'>Oui</a>
                              </p>
                           </center>";
                 } else {

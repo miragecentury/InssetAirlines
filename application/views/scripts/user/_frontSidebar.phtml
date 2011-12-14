@@ -1,5 +1,5 @@
 <?php $this->placeholder('sidebar')->captureStart() ?>
-<a href="<?php echo $this->baseUrl(); ?>/">Home</a></li>
-<li><a href="<?php echo $this->baseUrl(); ?>/index/contact">Contact</a></li>
-<li><a href="<?php echo $this->baseUrl(); ?>/index/pattern">Template Css</a>
+<a href="<?= Zend_Registry::get('BaseUrl'); ?>/">Home</a></li>
+<li><a href="<?= Zend_Registry::get('BaseUrl'); ?>/index/contact">Contact</a></li>
+<li><a href="<?= Zend_Registry::get('BaseUrl'); ?>/index/pattern">Template Css</a>
 <?php $this->placeholder('sidebar')->captureEnd() ?>

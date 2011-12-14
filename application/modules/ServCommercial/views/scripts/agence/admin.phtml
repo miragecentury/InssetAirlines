@@ -32,14 +32,18 @@ if ($this->all) {
 
         echo "<td>" . $val->get_noAdresse() . "</td>";
 
-        echo "  <td><a href='/ServCommercial/Agence/detail?id=" . $val->get_noAgence() . "'>Detail</a></td>
-                <td><a href='/ServCommercial/Agence/upd?id=" . $val->get_noAgence() . "'>Modifier</a></td>
+        echo "  <td><a href='" . Zend_Registry::get('BaseUrl') .
+                "/ServCommercial/Agence/detail?id=" . $val->get_noAgence() . "'>Detail</a></td>
+                <td><a href='" . Zend_Registry::get('BaseUrl') .
+                "/ServCommercial/Agence/upd?id=" . $val->get_noAgence() . "'>Modifier</a></td>
             </tr>";
     }
     echo "</table>";
-        
+
 } else {
     echo "<div>Il n'y a pas d'agence dans la base de donnée</div>";
 }
-echo "<br/><a class='enSavoirPlus' href='/ServCommercial/Agence/new'>Ajouter</a>
-    <a class='enSavoirPlus' href='/ServCommercial/Agence/'>Retour</a>";
+echo "<br/><a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServCommercial/Agence/new'>Ajouter</a>
+    <a class='enSavoirPlus' href='" . Zend_Registry::get('BaseUrl') .
+                "/ServCommercial/Agence/'>Retour</a>";

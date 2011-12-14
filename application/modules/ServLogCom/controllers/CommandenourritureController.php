@@ -16,7 +16,7 @@ class ServLogCom_CommandenourritureController extends Zend_Controller_Action
             $session = new Zend_Session_Namespace('Redirect');
             $session->message = "Vous n'avez pas les droits pour acceder à ce service";
             $session->redirection = "/";
-            $this->_redirect('/redirection/fail');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/fail');
         }
     }
 
@@ -49,7 +49,7 @@ class ServLogCom_CommandenourritureController extends Zend_Controller_Action
             $session = new Zend_Session_Namespace('Redirect');
             $session->message = "Ajout de la commande réussi.";
             $session->redirection = "/ServLogCom/Commandenourriture/admin";
-            $this->_redirect('/redirection/success');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/success');
         }
     }
 
@@ -61,7 +61,7 @@ class ServLogCom_CommandenourritureController extends Zend_Controller_Action
         // Tableau de stockage des menus déja dans la base pour cette commande
         $tab = array();
         $estcommande = new ServLogCom_Model_EstCommande;
-        $items = $estcommande->getbyCommande($this->getRequest()->getParam('id'));  
+        $items = $estcommande->getbyCommande($this->getRequest()->getParam('id'));
         if ($items != null) {
             foreach ($items as $val) {
                 $tab[] = $val->get_idMenu();
@@ -108,12 +108,12 @@ class ServLogCom_CommandenourritureController extends Zend_Controller_Action
                 // Delete
                 $moddel->del($itemdel[0]->get_id());
             }
-            
-            
+
+
             $session = new Zend_Session_Namespace('Redirect');
             $session->message = "Modification réussi.";
             $session->redirection = "/ServLogCom/Commandenourriture/admin";
-            $this->_redirect('/redirection/success');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/success');
         }
     }
 
@@ -128,11 +128,11 @@ class ServLogCom_CommandenourritureController extends Zend_Controller_Action
             if($item != null) {
                 $mod->delCommandeNourriture($this->getRequest()->getParam('id'));
                 $session->message = "Supression réussi.";
-                $this->_redirect('/redirection/success');
+                $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/success');
             } else {
                 Zend_Registry::get('Log')->log('CommandenourritureController : del : Acces a la base de donnée impossible', Zend_Log::ALERT);
                 $session->message = "Echec de supression.";
-                $this->_redirect('/redirection/fail');
+                $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/fail');
             }
         } else {
             $this->view->item = $item;
@@ -146,7 +146,7 @@ class ServLogCom_CommandenourritureController extends Zend_Controller_Action
         $mod = new ServLogCom_Model_CommandeNourriture;
         $this->view->item = $mod->getCommandeNourriture($this->getRequest()->getParam('id'));
         $this->view->id = $this->getRequest()->getParam('id');
-        
+
         $menu = new ServLogCom_Model_Menu;
         $estcommande = ServLogCom_Model_EstCommande::getbyCommande($this->getRequest()->getParam('id'));
         if ($estcommande != null) {

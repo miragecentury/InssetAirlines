@@ -129,7 +129,7 @@ class AuthController extends Zend_Controller_Action
         $auth = Zend_Auth::getInstance();
         $auth->clearIdentity();
         $session = Zend_Session::destroy();
-        $this->_redirect('/');
+        $this->_redirect(Zend_Registry::get('BaseUrl') . '/');
     }
 
     /**
@@ -148,29 +148,29 @@ class AuthController extends Zend_Controller_Action
 
 //si la ressource est autorisé pour un role particulier
         if ($this->_acl->isAllowed($roleCourant, 'Mod_Admin')) {
-            $this->_redirect('/Admin');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/Admin');
         } elseif ($this->_acl->isAllowed($roleCourant, 'Mod_Serv_DRH')) {
-            $this->_redirect('/ServDRH');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/ServDRH');
         } elseif ($this->_acl->isAllowed($roleCourant, 'Mod_Serv_Com')) {
-            $this->_redirect('/ServCommercial');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/ServCommercial');
         } elseif ($this->_acl->isAllowed($roleCourant, 'Mod_Serv_Log')) {
-            $this->_redirect('/ServLogCom');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/ServLogCom');
         } elseif ($this->_acl->isAllowed($roleCourant, 'Mod_Serv_Exp')) {
-            $this->_redirect('/ServExploitation');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/ServExploitation');
         } elseif ($this->_acl->isAllowed($roleCourant, 'Mod_Serv_Maint')) {
-            $this->_redirect('/ServMaintenance');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/ServMaintenance');
         } elseif ($this->_acl->isAllowed($roleCourant, 'Mod_Serv_Plan')) {
-            $this->_redirect('/ServPlaning');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/ServPlaning');
         } elseif ($this->_acl->isAllowed($roleCourant, 'Mod_Serv_Strat')) {
-            $this->_redirect('/ServStrategique');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/ServStrategique');
         } elseif ($this->_acl->isAllowed($roleCourant, 'Mod_Serv_Agence')) {
-            $this->_redirect('/AgenceVoyage');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/AgenceVoyage');
         } else {
             //sinon redirection avec message d'erreur sur le front
             $session = new Zend_Session_Namespace('Redirect');
             $session->message = "Vous n'êtes pas logué !";
             $session->redirection = "/";
-            $this->_redirect('/redirection/fail');
+            $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/fail');
         }
     }
 

@@ -11,7 +11,7 @@ class Application_Form_Utilisateur_modifAdresse extends Zend_Form
     protected $_capsule;
     protected $_petiteCapsule;
     protected $_capsuleReboot;
-protected $_submitCapsule;
+    protected $_submitCapsule;
 
     public function init()
     {

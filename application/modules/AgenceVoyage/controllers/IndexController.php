@@ -39,7 +39,7 @@ class AgenceVoyage_IndexController extends Zend_Controller_Action
         $agence = $agence->getAgencebylabel($pers->get_nom());
         if ($agence != null) {
             $form = new AgenceVoyage_Form_Reservation();
-            
+
             if (empty($_POST) || !$form->isValid($_POST)) {
                 $this->view->form = $form;
                 $this->view->vol = ServPlaning_Model_Vol::getVolsDuJour();
@@ -55,7 +55,7 @@ class AgenceVoyage_IndexController extends Zend_Controller_Action
                 $session = new Zend_Session_Namespace('Redirect');
                 $session->message = "Ajout de la réservation réussi.";
                 $session->redirection = "/AgenceVoyage";
-                $this->_redirect('/redirection/success');
+                $this->_redirect(Zend_Registry::get('BaseUrl') . '/redirection/success');
             }
         }
     }
