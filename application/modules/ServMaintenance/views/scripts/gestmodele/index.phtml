@@ -15,8 +15,8 @@
             <td></td>
         <tr>
             <?php
-            foreach ($this->listeModele as $value) {
-                $constructeur = ServMaintenance_Model_Constructeur::FindOne($value->get_noConstructeur());
+            foreach ( $this->listeModele as $value ) {
+                $constructeur = ServMaintenance_Model_Constructeur::FindOne( $value->get_noConstructeur() );
                 echo '
             <tr>
                 <td>' . $value->get_noModele() . '</td>
@@ -27,8 +27,10 @@
                 <td>' . $value->get_distMinAtt() . '</td>
                 <td>' . $value->get_distMinDec() . '</td>
                 <td>' . $value->get_dateLancement() . '</td>
-                <td><a class="enSavoirPlus" href="' . $this->baseUrl() . '/ServMaintenance/Gestmodele/updmodele?id=' . $value->get_noModele() . '">Editer</a></td>
-                <td><a class="enSavoirPlus" href="' . $this->baseUrl() . '/ServMaintenance/Gestmodele/delmodele?id=' . $value->get_noModele() . '">Supprimer</a></td>    
+                <td><a class="enSavoirPlus" href="' . Zend_Registry::get( 'BaseUrl' ) .
+                    '/ServMaintenance/Gestmodele/updmodele?id=' . $value->get_noModele() . '">Editer</a></td>
+                <td><a class="enSavoirPlus" href="' . Zend_Registry::get( 'BaseUrl' ) .
+                    '/ServMaintenance/Gestmodele/delmodele?id=' . $value->get_noModele() . '">Supprimer</a></td>
             </tr>';
             }
             ?>
@@ -36,8 +38,8 @@
     </table>
     <table>
         <tr>
-            <td> 
-                <a class='enSavoirPlus' href='<?php $this->baseUrl(); ?>/ServMaintenance/Gestmodele/newmodele'>Ajout d'un modele</a>
+            <td>
+                <a class='enSavoirPlus' href='<?= Zend_Registry::get( 'BaseUrl' ); ?>/ServMaintenance/Gestmodele/newmodele'>Ajout d'un modele</a>
             </td>
         </tr>
     </table>

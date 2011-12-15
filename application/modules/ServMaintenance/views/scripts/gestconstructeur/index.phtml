@@ -10,25 +10,26 @@
         </tr>
 
         <?php
-        if (isset($this->lstConstructeur) && is_array($this->lstConstructeur)) {
-            foreach ($this->lstConstructeur as $value) {
+        if ( isset( $this->lstConstructeur ) && is_array( $this->lstConstructeur ) ) {
+            foreach ( $this->lstConstructeur as $value ) {
                 echo '
                 <tr>
                     <td>' . $value->get_noConstructeur() . '</td>
                     <td>' . $value->get_label() . '</td>';
-                $adresse = Application_Model_Adresse::getAdresse($value->get_noAdresse());
+                $adresse = Application_Model_Adresse::getAdresse( $value->get_noAdresse() );
                 echo'
-                    <td>' . $adresse->get_numero() .' '. $adresse->get_adresse()." ".$adresse->get_codepostal() .' '. $adresse->get_labelVille().' '. $adresse->get_etatProvince().' '. $adresse->get_labelPays() . '</td>
-                    <td><a class="enSavoirPlus" href="' . $this->baseUrl() . '/ServMaintenance/Gestconstructeur/delconstructeur/id/' . $value->get_noConstructeur() . '">Supprimer</a> </td>
+                    <td>' . $adresse->get_numero() . ' ' . $adresse->get_adresse() . " " . $adresse->get_codepostal() . ' ' . $adresse->get_labelVille() . ' ' . $adresse->get_etatProvince() . ' ' . $adresse->get_labelPays() . '</td>
+                    <td><a class="enSavoirPlus" href="' . Zend_Registry::get( 'BaseUrl' ) .
+                '/ServMaintenance/Gestconstructeur/delconstructeur/id/' . $value->get_noConstructeur() . '">Supprimer</a> </td>
                 </tr>';
             }
         }
         ?>
-        </table>
+    </table>
     <br/>
     <table>
         <tr>
-            <td><a class='enSavoirPlus' href='<?php $this->baseUrl(); ?>/ServMaintenance/Gestconstructeur/newconstructeur'>Ajouter un Constructeur</a></td>
+            <td><a class='enSavoirPlus' href='<?= Zend_Registry::get('BaseUrl'); ?>/ServMaintenance/Gestconstructeur/newconstructeur'>Ajouter un Constructeur</a></td>
         </tr>
     </table>
 </div>

@@ -1,11 +1,11 @@
 <div>
     <p>Service Maintenance: Modifier un modèle:</p>
     <ul>
-        <li><a href='<?php $this->baseUrl(); ?>/ServMaintenance/Gestmodele'>Retour</a></li>
+        <li><a href='<?= Zend_Registry::get('BaseUrl'); ?>/ServMaintenance/Gestmodele'>Retour</a></li>
     </ul>
 </div>
 <div>
-    <?php 
+    <?php
     if(isset($this->message)) {
         echo $this->message;
     }
@@ -13,5 +13,5 @@
         echo $this->form;
     }
     ?>
-    
+
 </div>

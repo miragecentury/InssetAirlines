@@ -2,16 +2,16 @@
     <h1 style='display: inline;'>Service Maintenance - </h1><h3 style='display: inline;'>Gestion du Parc d'Appareils - </h3>
     </br></br></br>
     <h3 style='display: inline; margin-right: 50px;'>Liste des Appareils</h3>
-    <a class="enSavoirPlus" style='display: inline;' href='/ServMaintenance/Gestappareil/Affavionenservice'>En Service</a>-
-    <a class="enSavoirPlus" style='display: inline;' href='/ServMaintenance/Gestappareil/Affavionall'>Tous</a>-
-    <a class="enSavoirPlus" style='display: inline;' href='/ServMaintenance/Gestappareil/Affavionhorsservice'>Hors Service</a>
+    <a class="enSavoirPlus" style='display: inline;' href='<?= Zend_Registry::get('BaseUrl'); ?>/ServMaintenance/Gestappareil/Affavionenservice'>En Service</a>-
+    <a class="enSavoirPlus" style='display: inline;' href='<?= Zend_Registry::get('BaseUrl'); ?>/ServMaintenance/Gestappareil/Affavionall'>Tous</a>-
+    <a class="enSavoirPlus" style='display: inline;' href='<?= Zend_Registry::get('BaseUrl'); ?>/ServMaintenance/Gestappareil/Affavionhorsservice'>Hors Service</a>
     <br/><br/><br/>
-    <a class='enSavoirPlus' href='/ServMaintenance/Gestappareil/Newappareil'>Ajouter un Appareil</a>
+    <a class='enSavoirPlus' href='<?= Zend_Registry::get('BaseUrl'); ?>/ServMaintenance/Gestappareil/Newappareil'>Ajouter un Appareil</a>
     <br/><br/><br/>
-    <a class='enSavoirPlus'  href='/ServMaintenance/Gestappareil/Misehorsservice'>Mise Hors Service Planifié (Supérieur à 5 Semaines)</a>
+    <a class='enSavoirPlus'  href='<?= Zend_Registry::get('BaseUrl'); ?>/ServMaintenance/Gestappareil/Misehorsservice'>Mise Hors Service Planifié (Supérieur à 5 Semaines)</a>
     <br/><br/>
 
-    <a class='enSavoirPlusUrg'  href=''>Mise Hors Service Urgente (Inférieur à 5 Semaines)</a><span> <- En implémentation </span>
+    <a class='enSavoirPlusUrg'  href='<?= Zend_Registry::get('BaseUrl'); ?>'>Mise Hors Service Urgente (Inférieur à 5 Semaines)</a><span> <- En implémentation </span>
     <br/><br/>
     <p>
         Attention !! la mise Hors-Service d'un appreil entrainera des complications pour le Service Planning.

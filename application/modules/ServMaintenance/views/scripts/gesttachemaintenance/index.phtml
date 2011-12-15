@@ -10,17 +10,17 @@
         <br/>
         <h6>Tâche(s) en cours:</h6>
         <p style="margin-left: 30px;">
-            <span style="color: green"><?php echo $this->nbAff['encoursP']; ?> Maintenance(s) Préventive(s) </span><br/>
-            <span style="color: red"><?php echo $this->nbAff['encoursU']; ?> Maintenance(s) Urgente(s)</span><br/>
+            <span style="color: green"><?php echo $this->nbAff[ 'encoursP' ]; ?> Maintenance(s) Préventive(s) </span><br/>
+            <span style="color: red"><?php echo $this->nbAff[ 'encoursU' ]; ?> Maintenance(s) Urgente(s)</span><br/>
 
-            <br/><a style="margin-left: 30px;" href="<?php echo $this->baseUrl(); ?>/ServMaintenance/Gesttachemaintenance/encours" class="enSavoirPlus">Voir</a><br/><br/>
+            <br/><a style="margin-left: 30px;" href="<?= Zend_Registry::get( 'BaseUrl' ); ?>/ServMaintenance/Gesttachemaintenance/encours" class="enSavoirPlus">Voir</a><br/><br/>
         </p>
     </div>
     <h6 style="color: red;">Tâche(s) Urgente(s) à planifier: <?php echo ServMaintenance_Model_TacheMaintenance::nbMaintenanceUrgenteAPlanifier(); ?></h6>
     <div>
         <?php
-        if (isset($this->lstTacheAPlanifier) && is_array($this->lstTacheAPlanifier)) {
-            if (count($this->lstTacheAPlanifier) > 0) {
+        if ( isset( $this->lstTacheAPlanifier ) && is_array( $this->lstTacheAPlanifier ) ) {
+            if ( count( $this->lstTacheAPlanifier ) > 0 ) {
                 echo '<table>';
                 echo '
                     <tr>
@@ -32,22 +32,25 @@
                         <td></td>
                     </tr>
                 ';
-                foreach ($this->lstTacheAPlanifier as $tacheplanifier) {
-                    $avion = ServMaintenance_Model_Avion::findOne($tacheplanifier['noAvion']);
-                    $typemaintenance = ServMaintenance_Model_TypeMaintenance::findOne($tacheplanifier['typeMaintenance']);
-                    if (($avion instanceof ServMaintenance_Model_Avion) && ($typemaintenance instanceof ServMaintenance_Model_TypeMaintenance)) {
-                        $modele = ServMaintenance_Model_Modele::findOne($avion->get_noModele());
-                        if ($modele instanceof ServMaintenance_Model_Modele) {
-                            $constructeur = ServMaintenance_Model_Constructeur::FindOne($modele->get_noConstructeur());
-                            if ($constructeur instanceof ServMaintenance_Model_Constructeur) {
+                foreach ( $this->lstTacheAPlanifier as $tacheplanifier ) {
+                    $avion = ServMaintenance_Model_Avion::findOne( $tacheplanifier[ 'noAvion' ] );
+                    $typemaintenance = ServMaintenance_Model_TypeMaintenance::findOne( $tacheplanifier[ 'typeMaintenance' ] );
+                    if ( ($avion instanceof ServMaintenance_Model_Avion) && ($typemaintenance instanceof ServMaintenance_Model_TypeMaintenance) ) {
+                        $modele = ServMaintenance_Model_Modele::findOne( $avion->get_noModele() );
+                        if ( $modele instanceof ServMaintenance_Model_Modele ) {
+                            $constructeur = ServMaintenance_Model_Constructeur::FindOne( $modele->get_noConstructeur() );
+                            if ( $constructeur instanceof ServMaintenance_Model_Constructeur ) {
                                 echo '<tr>
-                                        <td><h6>'.$avion->get_noAvion().'</h6></td>
-                                        <td><h6>'.$avion->get_label().'</h6></td>
-                                        <td><h6>'.$modele->get_label().' 
-                                        '.$constructeur->get_label().'</h6></td>
-                                        <td><h6>'.$typemaintenance->get_label().'</h6></td>
-                                        <td><h6>'.$tacheplanifier['nbHeuredeVol'].'</h6></td>
-                                        <td style="padding-top: 10px;"><a  class="enSavoirPlusUrg" href="'.$this->baseUrl().'/ServMaintenance/Gesttachemaintenance/aplanifier/noavion/'.$avion->get_noAvion().'/notypemaintenance/'.$typemaintenance->get_noTypeMaintenance().'">Planifier</a></td>';
+                                        <td><h6>' . $avion->get_noAvion() . '</h6></td>
+                                        <td><h6>' . $avion->get_label() . '</h6></td>
+                                        <td><h6>' . $modele->get_label() . '
+                                        ' . $constructeur->get_label() . '</h6></td>
+                                        <td><h6>' . $typemaintenance->get_label() . '</h6></td>
+                                        <td><h6>' . $tacheplanifier[ 'nbHeuredeVol' ] . '</h6></td>
+                                        <td style="padding-top: 10px;"><a  class="enSavoirPlusUrg" href="' . Zend_Registry::get( 'BaseUrl' ) .
+                                            '/ServMaintenance/Gesttachemaintenance/aplanifier/noavion/' .
+                                            $avion->get_noAvion() . '/notypemaintenance/' .
+                                            $typemaintenance->get_noTypeMaintenance() . '">Planifier</a></td>';
                                 echo '</tr>';
                             } else {
                                 echo '<tr><td>Err!</td></tr>';
@@ -66,16 +69,16 @@
         }
         ?>
         <br/>
-        <a class="enSavoirPlus" href="<?php echo $this->baseUrl()?>/ServMaintenance/Gesttachemaintenance/aplanifier">Planifier une tâche préventive !</a>
+        <a class="enSavoirPlus" href="<?= Zend_Registry::get( 'BaseUrl' ); ?>/ServMaintenance/Gesttachemaintenance/aplanifier">Planifier une tâche préventive !</a>
     </div>
     <br/>
     <div>
         <h6>Tâche(s) planifiée(s):</h6>
         <p style="margin-left: 30px;">
             <?php
-            if (isset($this->lstTacheplanifier) && is_array($this->lstTacheplanifier) && (count($this->lstTacheplanifier) > 0)) {
+            if ( isset( $this->lstTacheplanifier ) && is_array( $this->lstTacheplanifier ) && (count( $this->lstTacheplanifier ) > 0) ) {
                 echo '<table>';
-                echo '  
+                echo '
                         <tr>
                             <th>N.</th>
                             <th>Matricule</th>
@@ -86,23 +89,23 @@
                             <th>Etat</th>
                         </tr>
                 ';
-                foreach ($this->lstTacheplanifier as $maintenance) {
-                    if ($maintenance instanceof ServMaintenance_Model_TacheMaintenance) {
-                        $avion = ServMaintenance_Model_Avion::findOne($maintenance->get_noAvion());
-                        $modele = ServMaintenance_Model_Modele::findOne($avion->get_noModele());
-                        $typemaintenance = ServMaintenance_Model_TypeMaintenance::findOne($maintenance->get_noTypeMaintenance());
+                foreach ( $this->lstTacheplanifier as $maintenance ) {
+                    if ( $maintenance instanceof ServMaintenance_Model_TacheMaintenance ) {
+                        $avion = ServMaintenance_Model_Avion::findOne( $maintenance->get_noAvion() );
+                        $modele = ServMaintenance_Model_Modele::findOne( $avion->get_noModele() );
+                        $typemaintenance = ServMaintenance_Model_TypeMaintenance::findOne( $maintenance->get_noTypeMaintenance() );
                         echo '<tr>';
-                            echo '<td>'.$maintenance->get_noMaintenance().'</td>';
-                            echo '<td>'.$avion->get_label().'</td>';
-                            echo '<td>'.$modele->get_label().'</td>';
-                            echo '<td>'.$typemaintenance->get_label().'</td>';
-                            echo '<td>'.$maintenance->get_dateDebut().'</td>';
-                            echo '<td>'.$maintenance->get_dateFin().'</td>';
-                            if($maintenance->get_etat() == ServMaintenance_Model_TacheMaintenance::TACHE_URGENTE){
-                                echo '<td><h6 style="color: red;">Urgente</h6></td>';
-                            }else{
-                                echo '<td><h6 style="color: green;">Préventive</h6></td>';
-                            }
+                        echo '<td>' . $maintenance->get_noMaintenance() . '</td>';
+                        echo '<td>' . $avion->get_label() . '</td>';
+                        echo '<td>' . $modele->get_label() . '</td>';
+                        echo '<td>' . $typemaintenance->get_label() . '</td>';
+                        echo '<td>' . $maintenance->get_dateDebut() . '</td>';
+                        echo '<td>' . $maintenance->get_dateFin() . '</td>';
+                        if ( $maintenance->get_etat() == ServMaintenance_Model_TacheMaintenance::TACHE_URGENTE ) {
+                            echo '<td><h6 style="color: red;">Urgente</h6></td>';
+                        } else {
+                            echo '<td><h6 style="color: green;">Préventive</h6></td>';
+                        }
                         echo '</tr>';
                     } else {
                         echo '<tr><td colspan="">Err!</td></tr>';
@@ -116,4 +119,4 @@
         </p>
     </div>
 
-</div> 
+</div>
