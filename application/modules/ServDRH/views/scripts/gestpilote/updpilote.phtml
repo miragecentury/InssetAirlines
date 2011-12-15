@@ -106,7 +106,11 @@
                                         if (isset($messagesErreur['noINSEE']['isEmpty'])) {
                                             echo "<br />";
                                             echo $messagesErreur['noINSEE']['isEmpty'];
-                                        }                    
+                                        }
+                                        if (isset($messagesErreur['noINSEE']['stringLengthTooShort'])) {
+                                            echo "<br />";
+                                            echo $messagesErreur['noINSEE']['stringLengthTooShort'];
+                                        }
                                     ?>
                                 </td>
                             </tr>
