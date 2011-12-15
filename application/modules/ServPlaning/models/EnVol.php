@@ -1,7 +1,6 @@
 <?php
 
-class ServPlaning_Model_EnVol
-{
+class ServPlaning_Model_EnVol {
 
     //--------------------------------------------------------------------------
     //Attributs
@@ -47,8 +46,7 @@ class ServPlaning_Model_EnVol
      * return void
      * @author charles
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_EnVol");
     }
 
@@ -65,8 +63,7 @@ class ServPlaning_Model_EnVol
      * @return null|ServPlaning_Model_EnVol
      *
      */
-    public function getEnVol($_noVol, $_noEmploye)
-    {
+    public function getEnVol($_noVol, $_noEmploye) {
         return $this->_mapper->find(array($_noVol, $_noEmploye));
     }
 
@@ -78,8 +75,7 @@ class ServPlaning_Model_EnVol
      * @return null|array(Application_Model_EnVol)
      *
      */
-    public function getListeEnVol()
-    {
+    public function getListeEnVol() {
         $this->_mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_EnVol");
         try {
             return $mapper->findAll();
@@ -88,7 +84,7 @@ class ServPlaning_Model_EnVol
         }
     }
 
-    public static function getEmployesLibresDuJour(){
+    public static function getEmployesLibresDuJour() {
         $mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_EnVol");
 
         //création des dates butoirs
@@ -101,67 +97,74 @@ class ServPlaning_Model_EnVol
 
         //Récupération des Employés
         //recup de la liste
-        if (($return = self::$_mapper->getEmployeLibreInInterval($dateStart, $dateStop)) != false){
+        if (($return = self::$_mapper->getEmployeLibreInInterval($dateStart, $dateStop)) != false) {
             return $return;
         } else {
             return null;
         }
     }
 
+    public static function getEmployesLibresAtInterval(DateTime $Start, DateTime $End) {
+        $mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_EnVol");
+
+        //Récupération des Employés
+        //recup de la liste
+        if (($return = self::$_mapper->getEmployeLibreInInterval($Start, $End)) != false) {
+            return $return;
+        } else {
+            return null;
+        }
+    }
+
+    public static function IsLibreAtIntervalByEmploye(DateTime $Start, DateTime $End, $noEmploye) {
+        $mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_EnVol");
+        return $mapper->IsLibreAtIntervalByEmploye($Start, $End, $noEmploye);
+    }
+
     //--------------------------------------------------------------------------
     // Getter / setter
     //--------------------------------------------------------------------------
-    public function get_noVol()
-    {
+    public function get_noVol() {
         return $this->_noVol;
     }
 
-    public function set_noVol($_noVol)
-    {
+    public function set_noVol($_noVol) {
         $this->_noVol = $_noVol;
         return $this;
     }
 
-    public function get_noEmploye()
-    {
+    public function get_noEmploye() {
         return $this->_noEmploye;
     }
 
-    public function set_noEmploye($_noEmploye)
-    {
+    public function set_noEmploye($_noEmploye) {
         $this->_noEmploye = $_noEmploye;
         return $this;
     }
 
-    public function get_equipageSecours()
-    {
+    public function get_equipageSecours() {
         return $this->_equipageSecours;
     }
 
-    public function set_equipageSecours($_equipageSecours)
-    {
+    public function set_equipageSecours($_equipageSecours) {
         $this->_equipageSecours = $_equipageSecours;
         return $this;
     }
 
-    public function get_heureStart()
-    {
+    public function get_heureStart() {
         return $this->_heureStart;
     }
 
-    public function set_heureStart($_heureStart)
-    {
+    public function set_heureStart($_heureStart) {
         $this->_heureStart = $_heureStart;
         return $this;
     }
 
-    public function get_heureEnd()
-    {
+    public function get_heureEnd() {
         return $this->_heureEnd;
     }
 
-    public function set_heureEnd($_heureEnd)
-    {
+    public function set_heureEnd($_heureEnd) {
         $this->_heureEnd = $_heureEnd;
         return $this;
     }

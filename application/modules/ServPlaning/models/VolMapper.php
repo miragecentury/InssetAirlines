@@ -128,6 +128,29 @@ class ServPlaning_Model_VolMapper extends Spesx_Mapper_Mapper {
         return $return;
     }
 
+    public function FindAllVolsByAvionAtDateTimeInterval(DateTime $Start, DateTime $End, $noAvion) {
+        //formatage de la date pour compatiblité
+        $start = $Start->format(DATE_ATOM);
+        $stop = $End->format(DATE_ATOM);
+
+        //Selection
+        try {
+            $select = $this->getDbTable()->select()
+                    ->where("noAvion = ?", $noAvion)
+                    ->where("
+                (heureDecollage >= '$start' AND heureDecollage <= '$stop') OR
+                (heureAtterissage >= '$start' AND heureAtterissage <= '$stop') OR
+                (heureDecollage <= '$start' AND heureAtterissage >= '$stop')");
+            $returnRowset = $this->getDbTable()->fetchAll($select);
+        } catch (Zend_Db_Exception $e) {
+            Spesx_Log::Log('findAllVolsInInterval : Echec de récupération de la liste<br /> '
+                    . $e->getMessage(), Zend_Log::ERR);
+            return false;
+        }
+        $return = $this->_createItemsFromRowset($returnRowset);
+        return $return;
+    }
+
     public function findAllVolsInIntervalByEtat(DateTime $start, DateTime $stop, $etat) {
         //formatage de la date pour compatiblité
         $start = $start->format(DATE_ATOM);
@@ -159,10 +182,10 @@ class ServPlaning_Model_VolMapper extends Spesx_Mapper_Mapper {
                     ->where('noAvion = ?', $noAvion)
                     ->where('heureAtterissage <= ?', $currentTime->format(DATE_ATOM))
                     ->where('heureDecollage >= ?', $DateTime->format(DATE_ATOM))
-                    ->where("etat <> ? ",ServPlaning_Model_Vol::ETAT_ANNULE)
-                    ->where("etat <> ? ",ServPlaning_Model_Vol::ETAT_MQ_PERSONNEL)
-                    ->where("etat <> ? ",ServPlaning_Model_Vol::ETAT_NOAVION)
-                    ;
+                    ->where("etat <> ? ", ServPlaning_Model_Vol::ETAT_ANNULE)
+                    ->where("etat <> ? ", ServPlaning_Model_Vol::ETAT_MQ_PERSONNEL)
+                    ->where("etat <> ? ", ServPlaning_Model_Vol::ETAT_NOAVION)
+            ;
             $result = $this->getDbTable()->fetchAll($select);
         } catch (Zend_Db_Exception $e) {
             throw new Spesx_Mapper_Exception(

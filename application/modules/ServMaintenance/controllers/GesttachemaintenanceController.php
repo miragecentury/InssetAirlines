@@ -59,20 +59,25 @@ class ServMaintenance_GesttachemaintenanceController extends Zend_Controller_Act
                             } else {
                                 if ($dateDebut->format(DATE_ATOM) < ServPlaning_Model_Vol::getSemaineAheadFromCurrent(5)) {
                                     //implication pour Vol
-                                } else {
-                                    $tacheMaintenance = new ServMaintenance_Model_TacheMaintenance();
-                                    $tacheMaintenance->set_dateDebut($dateDebut->format(DATE_ATOM));
-                                    $tacheMaintenance->set_dateFin($dateEnd->format(DATE_ATOM));
-                                    if (isset($this->view->affAvionTypeMaintenance)) {
-                                        $tacheMaintenance->set_etat(ServMaintenance_Model_TacheMaintenance::TACHE_URGENTE);
-                                    } else {
-                                        $tacheMaintenance->set_etat(ServMaintenance_Model_TacheMaintenance::TACHE_PREVENTIVE);
-                                    }
-                                    $tacheMaintenance->set_noTypeMaintenance($TypeMaintenance->get_noTypeMaintenance());
-                                    $tacheMaintenance->set_noAvion($Avion->get_noAvion());
-                                    $tacheMaintenance->set_retard(0);
-                                    $tacheMaintenance->save();
+                                    echo 'Attention les répercutions ne sont pas gérées';
                                 }
+                                $tacheMaintenance = new ServMaintenance_Model_TacheMaintenance();
+                                $tacheMaintenance->set_dateDebut($dateDebut->format(DATE_ATOM));
+                                $tacheMaintenance->set_dateFin($dateEnd->format(DATE_ATOM));
+                                if (isset($this->view->affAvionTypeMaintenance)) {
+                                    $tacheMaintenance->set_etat(ServMaintenance_Model_TacheMaintenance::TACHE_URGENTE);
+                                    $lst = Application_Model_ApplicationVar::get('lstTacheUrgenteAplanifier');
+                                    unset($lst[$Avion->get_noAvion() . '-' . $tacheMaintenance->get_noTypeMaintenance()]);
+                                    Application_Model_ApplicationVar::set('lstTacheUrgenteAplanifier', $lst);
+                                } else {
+                                    $tacheMaintenance->set_etat(ServMaintenance_Model_TacheMaintenance::TACHE_PREVENTIVE);
+                                }
+                                $tacheMaintenance->set_noTypeMaintenance($TypeMaintenance->get_noTypeMaintenance());
+                                $tacheMaintenance->set_noAvion($Avion->get_noAvion());
+                                $tacheMaintenance->set_retard(0);
+                                $tacheMaintenance->save();
+                                $this->view->message = 'Tâche planifiée!';
+                                //redirect
                             }
                         } else {
                             $this->view->message = 'Merci de mettre une date supérieur à demain!';

@@ -96,8 +96,8 @@ class ServMaintenance_Model_TacheMaintenanceMapper extends Spesx_Mapper_Mapper {
     }
 
     public function findAllByAvionAtDateTimeInterval(DateTime $start, DateTime $end, $noAvion) {
-        $start->setTime(0,0,0);
-        $end->setTime(0,0,0);
+        $start->setTime(0, 0, 0);
+        $end->setTime(0, 0, 0);
         $start = $start->format(DATE_ATOM);
         $end = $end->format(DATE_ATOM);
         $where = "
@@ -105,7 +105,7 @@ class ServMaintenance_Model_TacheMaintenanceMapper extends Spesx_Mapper_Mapper {
             (dateFin > '$start' AND dateFin <= '$end') OR
             (dateDebut <= '$start' AND dateFin >= '$end')
         ";
-        
+
         try {
             $select = $this->getDbTable()->select()
                     ->where('noAvion = ?', $noAvion)
@@ -113,7 +113,32 @@ class ServMaintenance_Model_TacheMaintenanceMapper extends Spesx_Mapper_Mapper {
             $result = $this->getDbTable()->fetchAll($select);
         } catch (Zend_Db_Exception $e) {
             throw new Spesx_Mapper_Exception(
-                    'ServMaintenance : Echec Methode findAllPlanifierAtCurrentTime'.$e->getMessage(),
+                    'ServMaintenance : Echec Methode findAllPlanifierAtCurrentTime' . $e->getMessage(),
+                    $e->getCode(),
+                    $e);
+        }
+        $return = $this->_createItemsFromRowset($result);
+        return $return;
+    }
+
+    public function findAllAtDateTimeInterval(DateTime $start, DateTime $end) {
+        $start->setTime(0, 0, 0);
+        $end->setTime(0, 0, 0);
+        $start = $start->format(DATE_ATOM);
+        $end = $end->format(DATE_ATOM);
+        $where = "
+            (dateDebut >= '$start' AND dateDebut < '$end') OR
+            (dateFin > '$start' AND dateFin <= '$end') OR
+            (dateDebut <= '$start' AND dateFin >= '$end')
+        ";
+
+        try {
+            $select = $this->getDbTable()->select()
+                    ->where($where);
+            $result = $this->getDbTable()->fetchAll($select);
+        } catch (Zend_Db_Exception $e) {
+            throw new Spesx_Mapper_Exception(
+                    'ServMaintenance : Echec Methode findAllPlanifierAtCurrentTime' . $e->getMessage(),
                     $e->getCode(),
                     $e);
         }

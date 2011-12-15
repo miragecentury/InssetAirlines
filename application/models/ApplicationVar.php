@@ -113,7 +113,7 @@ class Application_Model_ApplicationVar {
                 Spesx_Log::LogINFO('Update Mois Err:');
             }
         }
-        if ($UpdateCipherSemaine != $CurrentDate->format('W') || TRUE) {
+        if ($UpdateCipherSemaine != $CurrentDate->format('W')) {
             //echo 'Update Annee';
             $boolInt = 0;
             $boolInt += (INT) ServStrategique_Model_Ligne::changementSemaine();
@@ -126,7 +126,7 @@ class Application_Model_ApplicationVar {
                 Spesx_Log::LogINFO('Update Semaine Err:');
             }
         }
-        if ($UpdateCipherJour != $CurrentDate->format('d') || TRUE) {
+        if ($UpdateCipherJour != $CurrentDate->format('d')) {
             //echo 'Update Jour';
             $boolInt = 0;
             $boolInt += (INT) ServStrategique_Model_Ligne::changementJour();

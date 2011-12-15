@@ -65,14 +65,14 @@ class ServMaintenance_Model_AvionMapper extends Spesx_Mapper_Mapper {
             return null;
         }
     }
-    
-    public function findAllForMiseHorsServiceAtCurrentTime(){
+
+    public function findAllForMiseHorsServiceAtCurrentTime() {
         $CurrentTime = new DateTime(date(DATE_ATOM));
-        $CurrentTime->setTime(0,0,0);
+        $CurrentTime->setTime(0, 0, 0);
         try {
             $select = $this->getDbTable()->select()
                     ->where('enService = ?', ServMaintenance_Model_Avion::ETAT_ATT_HORSERVICE)
-                    ->where('dateHorsService = ?',$CurrentTime->format(DATE_ATOM));
+                    ->where('dateHorsService = ?', $CurrentTime->format(DATE_ATOM));
             $result = $this->getDbTable()->fetchAll($select);
         } catch (Zend_Db_Exception $e) {
             throw new Spesx_Mapper_Exception(
@@ -88,7 +88,7 @@ class ServMaintenance_Model_AvionMapper extends Spesx_Mapper_Mapper {
         if (is_string($start)) {
             $DateTimeStart = new DateTime($start);
         } elseif ($start instanceof DateTime) {
-            
+            $DateTimeStart = $start;
         } else {
             return FALSE;
         }
@@ -99,6 +99,20 @@ class ServMaintenance_Model_AvionMapper extends Spesx_Mapper_Mapper {
         } else {
             return FALSE;
         }
+        $Start = $DateTimeStart->format(DATE_ATOM);
+        $End = $DateTimeEnd->format(DATE_ATOM);
+        try {
+            $select = $this->getDbTable()->select()
+                    ->where("(`dateHorsService` <= '$End') OR (`dateHorsService` IS NULL )");
+            $result = $this->getDbTable()->fetchAll($select);
+        } catch (Zend_Db_Exception $e) {
+            throw new Spesx_Mapper_Exception(
+                    'ServMaintenance : Echec Methode findAllByModele ',
+                    $e->getCode(),
+                    $e);
+        }
+        $return = $this->_createItemsFromRowset($result);
+        return $return;
     }
 
     private static function whereEtats($etats) {
@@ -116,6 +130,7 @@ class ServMaintenance_Model_AvionMapper extends Spesx_Mapper_Mapper {
             return null;
         }
     }
+
 }
 
 ?>

@@ -20,7 +20,7 @@ class ServPlaning_LignemensuelleController extends Zend_Controller_Action
         $this->view->nbrJourAvantFinMois = $this->calculNbrJoursAvantFinMois();
         $this->view->listeMen = Application_Model_ApplicationVar::get('LstVolAPlan_M');
     }
-    public function addPlanificationAction(){
+    public function addplanificationAction(){
 
     }
     /**

@@ -25,6 +25,19 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         // le helper n'étant pas accessible hors des vues
         // on utilise cette méthode
         Zend_Registry::set('BaseUrl', $Config['InssetAirlines']['BaseUrl']);
+        if (isset($Config['InssetAirlines']['BaseUrlDocumentRoot'])) {
+            /**
+             * Distribue la requête avec une base d'URL réglé
+             * avec Zend_Controller_Front.
+             */
+            $router = new Zend_Controller_Router_Rewrite();
+            $controller = Zend_Controller_Front::getInstance();
+            $controller->setControllerDirectory('./application/controllers')
+                    ->setRouter($router)
+                    ->setBaseUrl($Config['InssetAirlines']['BaseUrlDocumentRoot']); // affecte la base d'url
+            $response = $controller->dispatch();
+        }
+
 
         return $Config;
     }
@@ -47,7 +60,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
             echo $e->getMessage();
         }
 
-//pare-feu de control
+        //pare-feu de control
         if ($Log === null || $Log === FALSE) {
             $Log = new Zend_Log();
             $Log->addWriter(new Zend_Log_Writer_Null());

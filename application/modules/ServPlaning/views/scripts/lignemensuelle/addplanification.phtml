@@ -1,0 +1,124 @@
+<div>
+    <h1 style='display: inline;'>Service Planning - </h1>
+    <h3 style='display: inline;'>Planification des Vols Semaine+4 - </h3>
+    <h5 style='display: inline;'>Création d'un Vol </h5>
+    </br></br></br>
+    <div>
+        <h6>Planing de la journée: <?php
+if (isset($this->date)) {
+    echo $this->date;
+}
+?></h6>
+        <?php
+        if (isset($this->lstVols) && is_array($this->lstVols) && count($this->lstVols) > 0) {
+            echo '<div>';
+            echo '<table>';
+            echo '
+            <tr>
+                <th>0h-1h</th>
+                <th>1h-2h</th>
+                <th>2h-3h</th>
+                <th>3h-4h</th>
+                <th>4h-5h</th>
+                <th>5h-6h</th>
+                <th>6h-7h</th>
+                <th>7h-8h</th>
+                <th>8h-9h</th>
+                <th>9h-10h</th>
+                <th>10h-11h</th>
+                <th>11h-12h</th>
+                <th>12h-13h</th>
+                <th>13h-14h</th>
+                <th>14h-15h</th>
+                <th>15h-16h</th>
+                <th>16h-17h</th>
+                <th>17h-18h</th>
+                <th>18h-19h</th>
+                <th>19h-20h</th>
+                <th>20h-21h</th>
+                <th>21h-22h</th>
+                <th>22h-23h</th>
+                <th>23h-24h</th>
+            </tr>
+            ';
+            foreach ($this->lstVols as $Vol) {
+                if ($Vol instanceof ServPlaning_Model_Vol) {
+                    $Avion = ServMaintenance_Model_Avion::findOne($Vol->get_noAvion());
+                    $Aer0 = Application_Model_Aeroport::getStaticAeroport($Vol->get_noAeroportDeco());
+                    $Aer1 = Application_Model_Aeroport::getStaticAeroport($Vol->get_noAeroportAtte());
+                    $Personnes = null;
+                    if ($Avion instanceof ServMaintenance_Model_Avion && $Aer0 instanceof Application_Model_Aeroport && $Aer1 instanceof Application_Model_Aeroport) {
+                        echo '<tr>';
+                        $Start = new DateTime($Vol->get_heuredecollage());
+                        $End = new DateTime($Vol->get_heureAtterissage());
+                        //var_dump($Start->format('h'));
+                        if ($Start->format('h') > 0) {
+                            echo '<td colspan="' . $Start->format('h') . '"></td>';
+                        }
+
+                        echo '
+                    <td style="background-color: red; color: white;" colspan="' .
+                        ($End->format('h') - $Start->format('h')) . '">' . $Vol->get_labelvol() .
+                        '-' . $Avion->get_label() . ' : ' . $Aer0->get_labelAeroport() . '->' . $Aer1->get_labelAeroport() .
+                        ' : ' . null
+                        . '</td>
+                ';
+                        if ($End->format('h') > 0) {
+                            echo '<td colspan="' . (24 - $End->format('h')) . '"></td>';
+                        }
+                        //var_dump($Vol->get_heureAtterissage());
+                        //var_dump($Vol->get_heuredecollage());
+                        echo '</tr>';
+                    } else {
+                        echo '<tr><td colspan="24">Err!</td></tr>';
+                    }
+                } else {
+                    echo '<tr><td colspan="24">Aucun Vol Aujourd\'hui</td></tr>';
+                }
+            }
+            echo '</table>';
+            echo '</div>';
+        }else{
+            echo 'Aucun Vol Planifié';
+        }
+        ?>
+    </div>
+    <div>
+        <h6>Avions en Maintenance:</h6>
+        <?php
+        if (isset($this->lstM) && is_array($this->lstM) && count($this->lstM) > 0) {
+            echo '<table style="width: 400px;">';
+            echo'
+                <tr>
+                    <th>Avion</th>
+                    <th>Jusque</th>
+                </tr>
+            ';
+            foreach ($this->lstM as $Maintenance) {
+                if ($Maintenance instanceof ServMaintenance_Model_TacheMaintenance) {
+                    $Avion = ServMaintenance_Model_Avion::findOne($Maintenance->get_noAvion());
+                    if ($Avion instanceof ServMaintenance_Model_Avion) {
+                        echo'<tr>
+                        <td>'.$Avion->get_noModele().':'.$Avion->get_label().'</td>
+                        <td>'.$Maintenance->get_dateFin().'</td>
+                    </tr>';
+                    }
+                }
+            }
+            echo '</table>';
+        } else {
+            echo 'Aucun Avion en Maintenance';
+        }
+        ?>
+    </div>
+    <div>
+        
+        <h5>PLanifier:</h5>
+        <h6><?php if(isset($this->message)){echo $this->message;} ?></h6>
+        <?php
+        if (isset($this->form)) {
+            echo $this->form;
+        }
+        ?>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+<div>
+    <h1 style='display: inline;'>Service Planning - </h1>
+    <h3 style='display: inline;'>Planification des Vols Semaine+4 - </h3>
+    <h5 style='display: inline;'>Création d'un Vol </h5>
+    </br></br></br>
+    <h3><?php
+if (isset($this->lignelabel)) {
+    echo $this->lignelabel;
+}
+?></h3>
+    <div>
+        <h6>Planing de la Semaine: <?php
+        if (isset($this->Start) && isset($this->End)) {
+            echo $this->Start->format(DATE_COOKIE) . ' à ' . $this->End->format(DATE_COOKIE);
+        }
+?></h6>
+        <?php
+        if (isset($this->lstVolbyJ) && is_array($this->lstVolbyJ)) {
+            foreach ($this->lstVolbyJ as $Jour => $Vols) {
+                if (is_array($Vols) && count($Vols) > 0) {
+                    foreach ($Vols as $Vol) {
+                        
+                    }
+                }
+            }
+        }
+        ?>
+    </div>
+    <div>
+        <h6>Avions en Maintenance:</h6>
+        <?php
+        if (isset($this->lstM) && is_array($this->lstM) && count($this->lstM) > 0) {
+            echo '<table style="width: 400px;">';
+            echo'
+                <tr>
+                    <th>Avion</th>
+                    <th>Du</th>
+                    <th>Jusque</th>
+                </tr>
+            ';
+            foreach ($this->lstM as $Maintenance) {
+                if ($Maintenance instanceof ServMaintenance_Model_TacheMaintenance) {
+                    $Avion = ServMaintenance_Model_Avion::findOne($Maintenance->get_noAvion());
+                    if ($Avion instanceof ServMaintenance_Model_Avion) {
+                        echo'<tr>
+                        <td>' . $Avion->get_noModele() . ':' . $Avion->get_label() . '</td>
+                        <td>' . $Maintenance->get_dateDebut() . '</td>
+                        <td>' . $Maintenance->get_dateFin() . '</td>
+                    </tr>';
+                    }
+                }
+            }
+            echo '</table>';
+        } else {
+            echo 'Aucun Avion en Maintenance';
+        }
+        ?>
+    </div>
+    <div>
+
+        <h5>PLanifier:</h5>
+        <h6><?php
+        if (isset($this->message)) {
+            echo $this->message;
+        }
+        ?></h6>
+        <?php
+        if (isset($this->form)) {
+            echo $this->form;
+        }
+        ?>
+    </div>
+</div>

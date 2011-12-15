@@ -89,6 +89,16 @@ class ServPlaning_Model_Vol {
 //--------------------------------------------------------------------------
 //******************************************************************************
 //public static
+    
+    public static function findAllVolsInInterval(DateTime $start, DateTime $stop){
+        self::init();
+        return self::$_mapper->findAllVolsInInterval( $start, $stop);
+    }
+
+    public static function FindAllVolsByAvionAtDateTimeInterval(DateTime $Start, DateTime $End, $noAvion) {
+        self::init();
+        return self::$_mapper->FindAllVolsByAvionAtDateTimeInterval($Start, $End, $noAvion);
+    }
 
     public static function getVolsByAvionFromDateTimeEffectif(DateTime $DateTime, $noAvion) {
         self::init();

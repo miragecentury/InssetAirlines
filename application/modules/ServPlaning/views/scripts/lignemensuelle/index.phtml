@@ -6,15 +6,13 @@
 <div class="clear"></div>
 <div class="prefix_1 grid_15">
     <?php
-    if ($this->derniereSemaine){
+    if ($this->derniereSemaine) {
         echo '<p class="red">Attention : La semaine actuelle est la derniere semaine du mois,
             les planifications affichées sont obligatoires !</p>';
     } else {
-       echo  '<p class="red">Attention : la planification de ces recurences ne sont pas forcement obligatoire,
+        echo '<p class="red">Attention : la planification de ces recurences ne sont pas forcement obligatoire,
         mais doivent être planifié avant la fin du mois</p>';
     }
-
-
     ?>
 
     <table>
@@ -24,20 +22,24 @@
         </tr>
         <tr>
             <?php
-            foreach ( $this->listeMen as $key => $value ) {
+            if (isset($this->listeMen) && is_array($this->listeMen) && count($this->listeMen) > 0) {
+                foreach ($this->listeMen as $key => $value) {
 
-                echo '<td>';
-                echo $value[ 'label' ];
-                echo '</td>';
-                echo '<td>';
-                echo $value[ 'recurence' ];
-                echo '</td>';
-                echo '<td>';
-                echo '<a href="' . Zend_Controller_Front::getInstance()->getBaseUrl() .
-                '/ServPlaning/Lignemensuelle/addPlanification/id/' .
-                $key .
-                '" class="enSavoirPlus">Planifier</a>';
-                echo '</td>';
+                    echo '<td>';
+                    echo $value['label'];
+                    echo '</td>';
+                    echo '<td>';
+                    echo $value['recurence'];
+                    echo '</td>';
+                    echo '<td>';
+                    echo '<a href="' . Zend_Controller_Front::getInstance()->getBaseUrl() .
+                    '/ServPlaning/Lignemensuelle/addplanification/id/' .
+                    $key .
+                    '" class="enSavoirPlus">Planifier</a>';
+                    echo '</td>';
+                }
+            } else {
+                echo '<td colspan="2">Aucun Vol à planifier</td>';
             }
             ?>
         </tr>

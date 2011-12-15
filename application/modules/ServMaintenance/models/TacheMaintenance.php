@@ -114,7 +114,7 @@ class ServMaintenance_Model_TacheMaintenance {
                                         if ($nbHeuredeVol >= $TypeMaintenance->get_periode()) {
 
                                             if (!self::IsPlanifierByTypeMaintenanceByAvionAtCurrentTime($TypeMaintenance->get_noTypeMaintenance(), $Avion->get_noAvion())) {
-                                                $lstTacheUrgenteAplanifier[] = 
+                                                $lstTacheUrgenteAplanifier[$Avion->get_noAvion().'-'.$TypeMaintenance->get_noTypeMaintenance()] = 
                                                 array(
                                                     'noAvion' => $Avion->get_noAvion(), 
                                                     'typeMaintenance' => $TypeMaintenance->get_noTypeMaintenance(),
@@ -184,8 +184,9 @@ class ServMaintenance_Model_TacheMaintenance {
         return self::$mapper->findAllAtCurrentTime();
     }
 
-    public static function findAllAtDateTimeInterval($start, $end) {
+    public static function findAllAtDateTimeInterval(DateTime $start, DateTime $end) {
         self::init();
+        return self::$mapper->findAllAtDateTimeInterval($start,$end);
     }
 
     public static function findAllByAvionAtDateTimeInterval(DateTime $start, DateTime $end, $noAvion) {

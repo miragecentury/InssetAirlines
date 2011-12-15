@@ -23,8 +23,8 @@ class ServMaintenance_Model_Avion {
     protected static $_mapper = null;
     protected static $message = 'ServMaintenance_Model_Avion : ';
 
-    //**************************************************************************
-    //public static
+//**************************************************************************
+//public static
 
     public static function initialisation() {
         if (self::$_mapper === null) {
@@ -38,7 +38,7 @@ class ServMaintenance_Model_Avion {
         self::initialisation();
     }
 
-    //**************************************************************************
+//**************************************************************************
 
     public static function changementJour() {
         self::initialisation();
@@ -52,8 +52,8 @@ class ServMaintenance_Model_Avion {
             }
         }
 
-        //**********************************************************************
-        //**********************************************************************
+//**********************************************************************
+//**********************************************************************
 
         $DateStart = new DateTime(date(DATE_ATOM));
         $DateStart->modify('-1 day');
@@ -62,8 +62,8 @@ class ServMaintenance_Model_Avion {
         $lstOK = ServPlaning_Model_Vol::findAllVolsInIntervalByEtat($DateStart, new DateTime(date(DATE_ATOM)), ServPlaning_Model_Vol::ETAT_OK);
         $lstRetardD = ServPlaning_Model_Vol::findAllVolsInIntervalByEtat($DateStart, new DateTime(date(DATE_ATOM)), ServPlaning_Model_Vol::ETAT_RETARD_AT);
         $lstRetardA = ServPlaning_Model_Vol::findAllVolsInIntervalByEtat($DateStart, new DateTime(date(DATE_ATOM)), ServPlaning_Model_Vol::ETAT_RETARD_DE);
-        $lstOK = array_merge($lstOK,$lstRetardA,$lstRetardD);
-        //mettre à finir
+        $lstOK = array_merge($lstOK, $lstRetardA, $lstRetardD);
+//mettre à finir
 
         if (is_array($lstOK) && (count($lstOK) > 0)) {
             foreach ($lstOK as $vol) {
@@ -80,12 +80,12 @@ class ServMaintenance_Model_Avion {
                 }
             }
         }
-        //**********************************************************************
+//**********************************************************************
 
         $lstIncident = ServPlaning_Model_Vol::findAllVolsInIntervalByEtat($DateStart, new DateTime(date(DATE_ATOM)), ServPlaning_Model_Vol::ETAT_NOAVION);
         $lstIncident1 = ServPlaning_Model_Vol::findAllVolsInIntervalByEtat($DateStart, new DateTime(date(DATE_ATOM)), ServPlaning_Model_Vol::ETAT_MQ_PERSONNEL);
         $lstIncident = array_merge($lstIncident, $lstIncident1);
-        //mettre en annules
+//mettre en annules
         if (is_array($lstIncident) && (count($lstIncident) > 0)) {
             foreach ($lstIncident as $vol) {
                 if ($vol instanceof ServPlaning_Model_Vol) {
@@ -94,12 +94,9 @@ class ServMaintenance_Model_Avion {
                 }
             }
         }
-        //**********************************************************************
-        
-        
-        
-        //**********************************************************************
-        return FALSE;
+//**********************************************************************
+//**********************************************************************
+        return TRUE;
     }
 
     public static function changementSemaine() {
@@ -138,6 +135,11 @@ class ServMaintenance_Model_Avion {
         }
     }
 
+    public static function findAllEnServiceAtDateTime(DateTime $start, DateTime $end) {
+        self::initialisation();
+        return self::$_mapper->findAllEnServiceAtDateTimeInterval($start, $end);
+    }
+
     public static function finAllEnServiceForMiseHorsServiceAtCurrentTime() {
         self::initialisation();
         if (count(($array = self::$_mapper->findAllServiceAtCurrentTime(array(self::ETAT_ENSERVICE)))) == 0) {
@@ -172,15 +174,11 @@ class ServMaintenance_Model_Avion {
         var_dump($Border);
         if ($DateHorsService < ServPlaning_Model_Vol::getSemaineAheadFromCurrent(5)) {
             echo 'inférieur à 5 Semaines';
-            //enlever les maintenances dépassant la date de mise hors service
-            //générer des erreurs etc... au niveau des vols
+//enlever les maintenances dépassant la date de mise hors service
+//générer des erreurs etc... au niveau des vols
         } else {
-            //enlever les maintenances dépassant la date de mise hors service
+//enlever les maintenances dépassant la date de mise hors service
         }
-    }
-
-    public static function findDispoAvionsAtDateTimeInterval($Start, $End) {
-        
     }
 
     public static function findAllHorsService() {
@@ -207,7 +205,7 @@ class ServMaintenance_Model_Avion {
         }
     }
 
-    //**************************************************************************
+//**************************************************************************
 
     public static function IsEnMaintenanceAtCurrentTime($noAvion) {
         self::initialisation();
@@ -224,7 +222,7 @@ class ServMaintenance_Model_Avion {
      * @param DateTime|String $Date
      * @return type 
      */
-    //**************************************************************************
+//**************************************************************************
 
     public function addHeureVol($nbHeureVol) {
         $nbHeureVol = $this->get_nbHeureVol() + $nbHeureVol;
@@ -288,9 +286,9 @@ class ServMaintenance_Model_Avion {
         
     }
 
-    //**************************************************************************
-    // *  Getter / Setter
-    //**************************************************************************
+//**************************************************************************
+// *  Getter / Setter
+//**************************************************************************
 
     public function get_noAvion() {
         return $this->_noAvion;
