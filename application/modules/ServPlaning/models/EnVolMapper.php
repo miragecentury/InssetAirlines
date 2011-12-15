@@ -1,19 +1,22 @@
 <?php
 
-class ServPlaning_Model_EnVolMapper extends Spesx_Mapper_Mapper {
+class ServPlaning_Model_EnVolMapper extends Spesx_Mapper_Mapper
+{
 
-    protected function _createItemFromRow(Zend_Db_Table_Row $row) {
+    protected function _createItemFromRow(Zend_Db_Table_Row $row)
+    {
         $item = new ServPlaning_Model_EnVol();
         $item->set_noVol($row->noVol)
-                ->set_noEmploye($row->noEmploye)
-                ->set_equipageSecours($row->equipageSecours)
-                ->set_heureStart($row->heureStart)
-                ->set_heureEnd($row->heureEnd);
+            ->set_noEmploye($row->noEmploye)
+            ->set_equipageSecours($row->equipageSecours)
+            ->set_heureStart($row->heureStart)
+            ->set_heureEnd($row->heureEnd);
 
         return $item;
     }
 
-    protected function _getDataArrayFromItem($item) {
+    protected function _getDataArrayFromItem($item)
+    {
         return array(
             'noVol' => $item->get_noVol(),
             'noEmploye' => $item->get_noEmploye(),
@@ -24,14 +27,15 @@ class ServPlaning_Model_EnVolMapper extends Spesx_Mapper_Mapper {
     }
 
 //Permet de récupérer un résultat
-    public function find($id) {
+    public function find($id)
+    {
         try {
             $result = $this->getDbTable()->find($id[0], $id[1]);
         } catch (Zend_Db_Exception $e) {
             throw new Spesx_Mapper_Exception(
-                    'EnVolMapper : echec Find',
-                    $e->getCode(),
-                    $e);
+                'EnVolMapper : echec Find',
+                $e->getCode(),
+                $e);
         }
         if (0 == count($result)) {
             return;
@@ -40,8 +44,10 @@ class ServPlaning_Model_EnVolMapper extends Spesx_Mapper_Mapper {
         return $return;
     }
 
-    public function getEmployeLibreInInterval(DateTime $start, DateTime $stop) {
-        //formatage des dates
+    public function getEmployeLibreInInterval(DateTime $start, DateTime $stop)
+    {
+//formatage des dates
+
         $start = $start->format(DATE_ATOM);
         $stop = $stop->format(DATE_ATOM);
 
@@ -61,14 +67,15 @@ class ServPlaning_Model_EnVolMapper extends Spesx_Mapper_Mapper {
             $rowset = $this->getDbTable()->fetchAll($select);
         } catch (Zend_Db_Exception $e) {
             Spesx_Log::Log('getEmployeLibreInInterval : Echec de récupération de la liste<br /> '
-                    . $e->getMessage(), Zend_Log::ERR);
+                . $e->getMessage(), Zend_Log::ERR);
             return false;
         }
         $return = $this->_createItemsFromRowset($rowset);
         return $return;
     }
 
-    public function IsLibreAtIntervalByEmploye(DateTime $Start, DateTime $End, $noEmploye) {
+    public function IsLibreAtIntervalByEmploye(DateTime $Start, DateTime $End, $noEmploye)
+    {
         //formatage des dates
         $start = $Start->format(DATE_ATOM);
         $stop = $End->format(DATE_ATOM);
@@ -86,7 +93,7 @@ class ServPlaning_Model_EnVolMapper extends Spesx_Mapper_Mapper {
             $rowset = $this->getDbTable()->fetchAll($select);
         } catch (Zend_Db_Exception $e) {
             Spesx_Log::Log('getEmployeLibreInInterval : Echec de récupération de la liste<br /> '
-                    . $e->getMessage(), Zend_Log::ERR);
+                . $e->getMessage(), Zend_Log::ERR);
             return null;
         }
         $return = $this->_createItemsFromRowset($rowset);
@@ -96,6 +103,7 @@ class ServPlaning_Model_EnVolMapper extends Spesx_Mapper_Mapper {
             return TRUE;
         }
     }
+
 
     public function saveAssoc(ServPlaning_Model_EnVol $item) {
         //Vérification de l'existence dans la BDD de l'enregistrement
@@ -143,7 +151,44 @@ class ServPlaning_Model_EnVolMapper extends Spesx_Mapper_Mapper {
                         $e->getCode(),
                         $e);
             }
+
+    /**
+     * Recupere le prochain vol du pilote passé en param
+     * @access public
+     * @author pewho
+     * @param ServPlaning_Model_EnVol $item
+     * @return ServPlaning_model_EnVol $item
+     */
+    public function getNextEnVolByPilote($item)
+    {
+        try {
+            $select = $this->getDbTable()->select()
+                ->where("noEmploye = '" . $item->get_noEmploye() . "'")
+                ->where("heureStart > '" . $item->get_heureStart() . "'")
+                ->order("heureStart ASC")
+                ->limit(1);
+            $row = $this->getDbTable()->fetch($select);
+            $volSuivant = $this->_createItemFromRow($row);
+            return $volSuivant;
+        } catch (Zend_Db_Exception $e) {
+            Spesx_Log::LogERR('Erreur de recupération du prochain envol par pilote: ' .
+                $e->getMessage());
+            return null;
         }
+    }
+
+    public function getEnvolByVol($idVol)
+    {
+        try {
+            $select = $this->getDbTable()->select()
+                ->where("noVol = $idVol");
+            $rowset = $this->getDbTable()->fetchAll($select);
+            return $this->_createItemsFromRowset($rowset);
+        } catch (Zend_Db_Exception $e) {
+            Spesx_Log::LogERR('Erreur de recupération des envols par vol : ' .
+                $e->getMessage());
+            return null;
+       }
     }
 
 }
