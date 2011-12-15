@@ -35,7 +35,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
             $controller->setControllerDirectory('./application/controllers')
                     ->setRouter($router)
                     ->setBaseUrl($Config['InssetAirlines']['BaseUrlDocumentRoot']); // affecte la base d'url
-            $response = $controller->dispatch();
+            //$response = $controller->dispatch();
         }
 
 
