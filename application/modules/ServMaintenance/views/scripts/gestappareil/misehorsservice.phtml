@@ -5,14 +5,14 @@
     </br></br></br>
     <div>
         <?php
-        if (isset($this->message)) {
+        if ( isset( $this->message ) ) {
             echo '<h4>' . $this->message . '<h4>';
         }
         ?>
     </div>
     <div>
         <?php
-        if (isset($this->avions) && is_array($this->avions)) {
+        if ( isset( $this->avions ) && is_array( $this->avions ) ) {
             echo "
         <table>
         <tr>
@@ -27,18 +27,18 @@
             <td></td>
             </tr>
             ";
-            foreach ($this->avions as $avion) {
-                if ($avion instanceof ServMaintenance_Model_Avion) {
+            foreach ( $this->avions as $avion ) {
+                if ( $avion instanceof ServMaintenance_Model_Avion ) {
                     echo'
             <tr>
             <td>' . $avion->get_noAvion() . '</td>
             <td>' . $avion->get_label() . '</td>
             <td>';
-                    $modele = ServMaintenance_Model_Modele::findOne($avion->get_noModele());
-                    if ($modele instanceof ServMaintenance_Model_Modele) {
+                    $modele = ServMaintenance_Model_Modele::findOne( $avion->get_noModele() );
+                    if ( $modele instanceof ServMaintenance_Model_Modele ) {
                         echo $modele->get_label() . '</td>';
-                        $constructeur = ServMaintenance_Model_Constructeur::FindOne($modele->get_noConstructeur());
-                        if ($constructeur instanceof ServMaintenance_Model_Constructeur) {
+                        $constructeur = ServMaintenance_Model_Constructeur::FindOne( $modele->get_noConstructeur() );
+                        if ( $constructeur instanceof ServMaintenance_Model_Constructeur ) {
                             echo '<td>' . $constructeur->get_label() . '</td>';
                         } else {
                             echo '<td> Err!</td>';
@@ -53,11 +53,11 @@
             <td>' . $avion->get_nbPlaceMax() . '</td>
             <td>' . $avion->get_nbIncident() . '</td>
             ';
-                    if (ServPlaning_Model_Vol::IsEnVolByAvionOnCurrentTime($avion->get_noAvion()) === FALSE) {
+                    if ( ServPlaning_Model_Vol::IsEnVolByAvionOnCurrentTime( $avion->get_noAvion() ) === FALSE ) {
                         echo '<td style="color: green;"> Au Sol </td>';
-                    } elseif (ServPlaning_Model_Vol::IsEnVolByAvionOnCurrentTime($avion->get_noAvion()) === TRUE) {
-                        $vol = ServPlaning_Model_Vol::getVolByAvionOnCurrentTime($avion->get_noAvion());
-                        if ($vol instanceof ServPlaning_Model_Vol) {
+                    } elseif ( ServPlaning_Model_Vol::IsEnVolByAvionOnCurrentTime( $avion->get_noAvion() ) === TRUE ) {
+                        $vol = ServPlaning_Model_Vol::getVolByAvionOnCurrentTime( $avion->get_noAvion() );
+                        if ( $vol instanceof ServPlaning_Model_Vol ) {
                             echo '<td style="color: orange:"> En Vol : ' . $vol->get_labelvol() . '</td>';
                         } else {
                             echo '<td style="color: orange;"> En Vol </td>';
@@ -66,7 +66,8 @@
                         echo '<td> Err!</td>';
                     }
 
-                    echo '<td><a href="/ServMaintenance/Gestappareil/Misehorsservice/status/1/id/' . $avion->get_noAvion() . '" class="enSavoirPlus">Hors Service</a></td>';
+                    echo '<td><a href="' . Zend_Registry::get( 'BaseUrl' ) .
+                    '/ServMaintenance/Gestappareil/Misehorsservice/status/1/id/' . $avion->get_noAvion() . '" class="enSavoirPlus">Hors Service</a></td>';
 
                     echo '
             </tr>';
@@ -78,9 +79,9 @@
     </div>
     <div>
         <?php
-        if (isset($this->form) && isset($this->avion)) {
+        if ( isset( $this->form ) && isset( $this->avion ) ) {
             $avion = $this->avion;
-            if ($avion instanceof ServMaintenance_Model_Avion) {
+            if ( $avion instanceof ServMaintenance_Model_Avion ) {
                 echo "
                 <table>
                     <tr>
@@ -100,11 +101,11 @@
             <td>' . $avion->get_noAvion() . '</td>
             <td>' . $avion->get_label() . '</td>
             <td>';
-                $modele = ServMaintenance_Model_Modele::findOne($avion->get_noModele());
-                if ($modele instanceof ServMaintenance_Model_Modele) {
+                $modele = ServMaintenance_Model_Modele::findOne( $avion->get_noModele() );
+                if ( $modele instanceof ServMaintenance_Model_Modele ) {
                     echo $modele->get_label() . '</td>';
-                    $constructeur = ServMaintenance_Model_Constructeur::FindOne($modele->get_noConstructeur());
-                    if ($constructeur instanceof ServMaintenance_Model_Constructeur) {
+                    $constructeur = ServMaintenance_Model_Constructeur::FindOne( $modele->get_noConstructeur() );
+                    if ( $constructeur instanceof ServMaintenance_Model_Constructeur ) {
                         echo '<td>' . $constructeur->get_label() . '</td>';
                     } else {
                         echo '<td> Err!</td>';
@@ -119,11 +120,11 @@
             <td>' . $avion->get_nbPlaceMax() . '</td>
             <td>' . $avion->get_nbIncident() . '</td>
             ';
-                if (ServPlaning_Model_Vol::IsEnVolByAvionOnCurrentTime($avion->get_noAvion()) === FALSE) {
+                if ( ServPlaning_Model_Vol::IsEnVolByAvionOnCurrentTime( $avion->get_noAvion() ) === FALSE ) {
                     echo '<td style="color: green;"> Au Sol </td>';
-                } elseif (ServPlaning_Model_Vol::IsEnVolByAvionOnCurrentTime($avion->get_noAvion()) === TRUE) {
-                    $vol = ServPlaning_Model_Vol::getVolByAvionOnCurrentTime($avion->get_noAvion());
-                    if ($vol instanceof ServPlaning_Model_Vol) {
+                } elseif ( ServPlaning_Model_Vol::IsEnVolByAvionOnCurrentTime( $avion->get_noAvion() ) === TRUE ) {
+                    $vol = ServPlaning_Model_Vol::getVolByAvionOnCurrentTime( $avion->get_noAvion() );
+                    if ( $vol instanceof ServPlaning_Model_Vol ) {
                         echo '<td style="color: orange:"> En Vol : ' . $vol->get_labelvol() . '</td>';
                     } else {
                         echo '<td style="color: orange;"> En Vol </td>';
@@ -137,8 +138,9 @@
             }
 
             echo $this->form;
-            
-            echo '<br/> <a href="/ServMaintenance/Gestappareil/Misehorsservice/" class="enSavoirPlus" />Annuler</a>';
+
+            echo '<br/> <a href="' . Zend_Registry::get( 'BaseUrl' ) .
+            '/ServMaintenance/Gestappareil/Misehorsservice/" class="enSavoirPlus" />Annuler</a>';
         }
         ?>
     </div>

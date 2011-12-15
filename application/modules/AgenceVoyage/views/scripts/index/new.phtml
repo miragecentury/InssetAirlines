@@ -5,7 +5,7 @@ if($this->form != FALSE)
     echo ($this->form->render());
 
 if ($this->vol) {
-    echo "<h3>Liste des vols</h3>
+    echo "<h3>Liste des vols prevu pour les prochaines semaines</h3>
         <table>
             <tr>
                 <th>Vol</th>
@@ -23,7 +23,7 @@ if ($this->vol) {
     }
     echo "</table>";
 } else {
-    echo "<div>Il n'y a pas de vol aujourd'hui</div>";
+    echo "<div>Il n'y a pas de vol programmé pour les 4 semaines a venir!</div>";
 }
 
 if($this->formS != FALSE)

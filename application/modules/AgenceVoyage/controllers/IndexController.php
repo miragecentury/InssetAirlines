@@ -42,7 +42,10 @@ class AgenceVoyage_IndexController extends Zend_Controller_Action
 
             if (empty($_POST) || !$form->isValid($_POST)) {
                 $this->view->form = $form;
-                $this->view->vol = ServPlaning_Model_Vol::getVolsDuJour();
+                $today = new DateTime(date(DATE_ATOM));
+                $infourweeks = new DateTime(date(DATE_ATOM));
+                $infourweeks = $infourweeks->modify('+4 week');
+                $this->view->vol = ServPlaning_Model_Vol::findAllVolsInIntervalByEtat($today,$infourweeks,0);
             } else {
                 $item = new ServCommercial_Model_VolHasAgence();
                 $item->set_Vol_noVol($form->getValue('noVol'))

@@ -8,28 +8,28 @@
     <ul>
         <li class="sep">
             Planification des lignes journalières :
-            <a href="/ServPlaning/Lignejournaliere" class="enSavoirPlus">Planifier</a>
+            <a href="<?= Zend_Registry::get('BaseUrl'); ?>/ServPlaning/Lignejournaliere" class="enSavoirPlus">Planifier</a>
             <p>Il reste : <span class='aPlanifie'>
                 <?= $this->nbPlanJourAFaire ?>
                 </span> planification(s) à faire</p>
         </li>
         <li class="sep">
             Planification des lignes hebdomadaires :
-            <a href="/ServPlaning/Lignehebdomadaire" class="enSavoirPlus">Planifier</a>
+            <a href="<?= Zend_Registry::get('BaseUrl'); ?>/ServPlaning/Lignehebdomadaire" class="enSavoirPlus">Planifier</a>
             <p>Il reste : <span class='aPlanifie'>
                 <?= $this->nbPlanHebAFaire ?>
                 </span> planification(s) à faire</p>
         </li>
         <li class="sep">
             Planification des lignes mensuels :
-            <a href="/ServPlaning/Lignemensuelle" class="enSavoirPlus">Planifier</a>
+            <a href="<?= Zend_Registry::get('BaseUrl'); ?>/ServPlaning/Lignemensuelle" class="enSavoirPlus">Planifier</a>
             <p>Il reste : <span class='aPlanifie'>
                 <?= $this->nbPlanMoisAFaire ?>
                 </span> planification(s) à faire</p>
         </li>
         <li class="sep">
             Planification des lignes annuelles :
-            <a href="/ServPlaning/Ligneannuelle" class="enSavoirPlus">Planifier</a>
+            <a href="<?= Zend_Registry::get('BaseUrl'); ?>/ServPlaning/Ligneannuelle" class="enSavoirPlus">Planifier</a>
             <p>Il reste : <span class='aPlanifie'>
                 <?= $this->nbPlanAnnAFaire ?>
                 </span> planification(s) à faire</p>
@@ -39,7 +39,7 @@
     <ul>
         <li>
             Modification des vols planifiés pour la semaine S+4 :
-            <a href="/ServPlaning/s4" class="enSavoirPlus">Modifier</a>
+            <a href="<?= Zend_Registry::get('BaseUrl'); ?>/ServPlaning/s4" class="enSavoirPlus">Modifier</a>
         </li>
     </ul>
 </div>
