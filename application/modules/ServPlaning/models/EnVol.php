@@ -121,6 +121,11 @@ class ServPlaning_Model_EnVol {
         return $mapper->IsLibreAtIntervalByEmploye($Start, $End, $noEmploye);
     }
 
+    public function save() {
+        $mapper = Spesx_Mapper_MapperFactory::getMapper("ServPlaning_Model_EnVol");
+        self::$_mapper->saveAssoc($this);
+    }
+
     //--------------------------------------------------------------------------
     // Getter / setter
     //--------------------------------------------------------------------------

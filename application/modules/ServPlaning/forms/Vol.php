@@ -42,6 +42,7 @@ class ServPlaning_Form_Vol extends Zend_Form {
         $dateAtterissage->setRequired(TRUE);
         $dateAtterissage->setLabel('Date d\'Atterissage:');
         $dateAtterissage->setValue('yyyy-mm-dd hh:00');
+        $dateAtterissage->addValidator(new Zend_Validate_Date(array("format"=>'yyyy-MM-dd hh:00')));
         parent::addElement($dateAtterissage);
 
         //**********************************************************************

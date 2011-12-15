@@ -96,6 +96,8 @@ class ServMaintenance_Model_TacheMaintenanceMapper extends Spesx_Mapper_Mapper {
     }
 
     public function findAllByAvionAtDateTimeInterval(DateTime $start, DateTime $end, $noAvion) {
+        $start = new DateTime($start->format(DATE_ATOM));
+        $end = new DateTime($end->format(DATE_ATOM));
         $start->setTime(0, 0, 0);
         $end->setTime(0, 0, 0);
         $start = $start->format(DATE_ATOM);
